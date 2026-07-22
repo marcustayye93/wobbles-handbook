@@ -7,6 +7,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "wouter";
 import { PageShell, Eyebrow } from "@/components/AppShell";
+import SyncIndicator from "@/components/SyncIndicator";
 import QuickLogSheet from "@/components/QuickLogSheet";
 import { TRACKERS, TRACKER_GROUPS, type TrackerEntry } from "@/lib/trackers";
 import { useTrackerFeed, rowToEntry } from "@/hooks/useSyncedData";
@@ -53,7 +54,10 @@ export default function TrackersHub() {
   return (
     <PageShell>
       <header className="relative px-5 pt-9 pb-1 overflow-hidden">
-        <Eyebrow>Trackers</Eyebrow>
+        <div className="flex items-center justify-between">
+          <Eyebrow>Trackers</Eyebrow>
+          <SyncIndicator />
+        </div>
         <h1 className="font-display font-semibold text-[2.4rem] leading-[1.02] mt-1.5">
           Wobbles’ Logbook
         </h1>

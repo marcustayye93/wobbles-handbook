@@ -1,6 +1,8 @@
 import { trpc } from "@/lib/trpc";
 import { COOKIE_NAME, UNAUTHED_ERR_MSG } from '@shared/const';
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient } from "@tanstack/react-query";
+import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
+import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { httpBatchLink, TRPCClientError } from "@trpc/client";
 import { createRoot } from "react-dom/client";
 import superjson from "superjson";
@@ -8,7 +10,33 @@ import App from "./App";
 import { startLogin } from "./const";
 import "./index.css";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // Offline resilience: keep cached data alive for 7 days so the app can
+      // render from the persisted cache when the network is down.
+      gcTime: 1000 * 60 * 60 * 24 * 7,
+      retry: 2,
+    },
+    mutations: {
+      retry: 1,
+    },
+  },
+});
+
+/**
+ * Offline cache persistence — the last good server snapshot (trackers,
+ * checklists, reading progress, photos metadata) is stored on-device and
+ * restored on launch, so the handbook still opens and shows data offline.
+ * Writes still need the network (a clear offline banner tells the family
+ * when logging is paused — see <OfflineBanner /> in App.tsx).
+ */
+const persister = createSyncStoragePersister({
+  storage: typeof window !== "undefined" ? window.localStorage : undefined,
+  key: "wobbles:query-cache",
+  serialize: (client) => superjson.stringify(client),
+  deserialize: (cached) => superjson.parse(cached),
+});
 
 const redirectToLoginIfUnauthorized = (error: unknown) => {
   if (!(error instanceof TRPCClientError)) return;
@@ -74,9 +102,27 @@ const trpcClient = trpc.createClient({
 
 createRoot(document.getElementById("root")!).render(
   <trpc.Provider client={trpcClient} queryClient={queryClient}>
-    <QueryClientProvider client={queryClient}>
+    <PersistQueryClientProvider
+      client={queryClient}
+      persistOptions={{
+        persister,
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+        buster: "v1",
+        dehydrateOptions: {
+          // Never persist the photo upload payloads or auth state; keep the
+          // cache focused on renderable household data.
+          shouldDehydrateQuery: (query) => query.state.status === "success",
+        },
+      }}
+      onSuccess={() => {
+        // After the persisted cache is restored, refresh anything stale.
+        queryClient.resumePausedMutations().then(() => {
+          queryClient.invalidateQueries();
+        });
+      }}
+    >
       <App />
-    </QueryClientProvider>
+    </PersistQueryClientProvider>
   </trpc.Provider>
 );
 

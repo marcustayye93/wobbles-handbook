@@ -36,8 +36,14 @@ export const appRouter = router({
   }),
 
   trackers: router({
-    /** All tracker entries, newest first (family-shared). */
-    list: protectedProcedure.query(() => db.listTrackerEntries()),
+    /**
+     * Tracker entries, newest first (family-shared).
+     * Optional pagination guard so the payload stays bounded as the
+     * journal grows over the years (client currently reads the default).
+     */
+    list: protectedProcedure
+      .input(z.object({ limit: z.number().int().min(1).max(5000).optional() }).optional())
+      .query(({ input }) => db.listTrackerEntries(input?.limit ?? 2000)),
 
     add: protectedProcedure.input(trackerEntryInput).mutation(async ({ ctx, input }) => {
       const id = await db.addTrackerEntry({
@@ -72,6 +78,13 @@ export const appRouter = router({
             createdByName: ctx.user.name ?? undefined,
           })),
         );
+        // Audit trail: record who imported what, when (kept in shared_state).
+        await db.appendImportAuditLog({
+          at: new Date().toISOString(),
+          by: ctx.user.id,
+          byName: ctx.user.name ?? null,
+          count: input.entries.length,
+        });
         return { imported: input.entries.length, skipped: false } as const;
       }),
   }),
@@ -81,7 +94,10 @@ export const appRouter = router({
     all: protectedProcedure.query(async () => {
       const rows = await db.getAllSharedState();
       const map: Record<string, unknown> = {};
-      for (const row of rows) map[row.stateKey] = row.value;
+      for (const row of rows) {
+        if (row.stateKey === "legacyImportLog") continue; // server-side audit only
+        map[row.stateKey] = row.value;
+      }
       return map;
     }),
 
@@ -90,6 +106,25 @@ export const appRouter = router({
       .mutation(async ({ ctx, input }) => {
         await db.setSharedState(input.key, input.value ?? null, ctx.user.id);
         return { success: true } as const;
+      }),
+
+    /**
+     * Conflict-safe partial update for map-valued keys (checklists,
+     * 100-things, reading progress). Merges only the changed entries
+     * server-side so two phones editing at once can't wipe each other's
+     * ticks the way a whole-map `set` could.
+     */
+    patch: protectedProcedure
+      .input(
+        z.object({
+          key: z.string().min(1).max(128),
+          entries: z.record(z.string(), z.unknown()).default({}),
+          deletes: z.array(z.string()).max(500).default([]),
+        }),
+      )
+      .mutation(async ({ ctx, input }) => {
+        const merged = await db.patchSharedState(input.key, input.entries, input.deletes, ctx.user.id);
+        return { success: true, value: merged } as const;
       }),
   }),
 

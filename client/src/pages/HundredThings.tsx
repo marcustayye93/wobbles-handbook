@@ -6,6 +6,7 @@
  */
 import { useMemo, useRef, useState } from "react";
 import { PageShell, PageHeader, ProgressRing, Eyebrow } from "@/components/AppShell";
+import SyncIndicator from "@/components/SyncIndicator";
 import { HUNDRED, HUNDRED_TOTAL } from "@/content/hundredThings";
 import { ASSETS } from "@/content/wobbles";
 import { useSharedState } from "@/hooks/useSyncedData";
@@ -123,7 +124,10 @@ export default function HundredThings() {
             </span>
           </ProgressRing>
           <div className="min-w-0 flex-1">
-            <Eyebrow>Wisdom absorbed</Eyebrow>
+            <div className="flex items-center justify-between">
+              <Eyebrow>Wisdom absorbed</Eyebrow>
+              <SyncIndicator />
+            </div>
             <p className="text-[13px] font-body text-muted-foreground leading-relaxed mt-1.5">
               {learnedCount === 0
                 ? "Every one of these was learned the hard way by someone. Learn them the easy way."

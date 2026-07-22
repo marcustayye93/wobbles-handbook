@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle,
 } from "@/components/ui/dialog";
-import { todayISO } from "@/hooks/useLocalStorage";
+import { todayISO } from "@/lib/dates";
 import { formatDate } from "@/content/wobbles";
 import { Camera, Loader2, Plus, Trash2, X } from "lucide-react";
 import { toast } from "sonner";
@@ -81,13 +81,21 @@ export default function PhotoJournal() {
   const [pending, setPending] = useState<{ file: File; preview: string } | null>(null);
   const [caption, setCaption] = useState("");
   const [date, setDate] = useState(todayISO());
-  const [uploading, setUploading] = useState(false);
+  const [phase, setPhase] = useState<"idle" | "compressing" | "uploading">("idle");
+  const uploading = phase !== "idle";
   const [viewer, setViewer] = useState<number | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   const pick = (f: File | undefined) => {
     if (!f) return;
     if (!f.type.startsWith("image/") && f.type !== "") {
       toast.error("Please choose an image");
+      return;
+    }
+    // Photos are downscaled before upload, but truly enormous originals
+    // (>25MB) can stall older phones during decode — nudge early.
+    if (f.size > 25 * 1024 * 1024) {
+      toast.error("That photo is very large — try a smaller one (under ~25MB)");
       return;
     }
     setPending({ file: f, preview: URL.createObjectURL(f) });
@@ -97,9 +105,10 @@ export default function PhotoJournal() {
 
   const doUpload = async () => {
     if (!pending || uploading) return;
-    setUploading(true);
+    setPhase("compressing");
     try {
       const { dataBase64, mimeType } = await compressImage(pending.file);
+      setPhase("uploading");
       await uploadMutation.mutateAsync({
         fileName: pending.file.name || `photo-${Date.now()}.jpg`,
         mimeType,
@@ -112,7 +121,7 @@ export default function PhotoJournal() {
     } catch {
       /* toast handled in onError */
     } finally {
-      setUploading(false);
+      setPhase("idle");
     }
   };
 
@@ -244,7 +253,11 @@ export default function PhotoJournal() {
                 disabled={uploading}
                 className="btn-ink w-full h-12 rounded-2xl mt-4 font-body font-extrabold text-[14px] press-scale flex items-center justify-center gap-2 disabled:opacity-60"
               >
-                {uploading ? (
+                {phase === "compressing" ? (
+                  <>
+                    <Loader2 size={16} className="animate-spin" /> Compressing…
+                  </>
+                ) : phase === "uploading" ? (
                   <>
                     <Loader2 size={16} className="animate-spin" /> Uploading…
                   </>
@@ -252,13 +265,24 @@ export default function PhotoJournal() {
                   "Save to album"
                 )}
               </button>
+              <p className="text-[10px] font-body text-muted-foreground text-center mt-2">
+                Photos are resized on your phone before upload, so they save data and load fast.
+              </p>
             </div>
           )}
         </DialogContent>
       </Dialog>
 
       {/* viewer dialog */}
-      <Dialog open={viewerPhoto != null} onOpenChange={(o) => !o && setViewer(null)}>
+      <Dialog
+        open={viewerPhoto != null}
+        onOpenChange={(o) => {
+          if (!o) {
+            setViewer(null);
+            setConfirmDelete(false);
+          }
+        }}
+      >
         <DialogContent className="bg-[#FFFDF8] max-w-[380px] rounded-3xl p-3">
           {viewerPhoto && (
             <div>
@@ -278,16 +302,38 @@ export default function PhotoJournal() {
                   </p>
                 )}
                 <div className="flex justify-end mt-2">
-                  <button
-                    onClick={() => {
-                      const id = viewerPhoto.id;
-                      setViewer(null);
-                      removeMutation.mutate({ id });
-                    }}
-                    className="flex items-center gap-1.5 text-[12px] font-body font-extrabold text-[#B4512E] px-3 py-2 rounded-xl bg-[#C66A3D]/10 press-scale"
-                  >
-                    <Trash2 size={14} /> Remove
-                  </button>
+                  {confirmDelete ? (
+                    <div className="flex items-center gap-2">
+                      <span className="text-[12px] font-body font-bold" style={{ color: INK }}>
+                        Remove from the family album?
+                      </span>
+                      <button
+                        onClick={() => setConfirmDelete(false)}
+                        className="min-h-[44px] flex items-center gap-1 text-[12px] font-body font-extrabold px-3 rounded-xl bg-[#22364D]/8 press-scale"
+                        style={{ color: INK }}
+                      >
+                        <X size={14} /> Keep
+                      </button>
+                      <button
+                        onClick={() => {
+                          const id = viewerPhoto.id;
+                          setConfirmDelete(false);
+                          setViewer(null);
+                          removeMutation.mutate({ id });
+                        }}
+                        className="min-h-[44px] flex items-center gap-1.5 text-[12px] font-body font-extrabold text-[#FFFDF8] px-3 rounded-xl bg-[#B4512E] press-scale"
+                      >
+                        <Trash2 size={14} /> Remove
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => setConfirmDelete(true)}
+                      className="min-h-[44px] flex items-center gap-1.5 text-[12px] font-body font-extrabold text-[#B4512E] px-3 rounded-xl bg-[#C66A3D]/10 press-scale"
+                    >
+                      <Trash2 size={14} /> Remove
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

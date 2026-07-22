@@ -8,7 +8,7 @@ import { useParams } from "wouter";
 import { PageShell, PageHeader, PawDivider, Eyebrow } from "@/components/AppShell";
 import { getTracker } from "@/lib/trackers";
 import { useTrackerEntries, useAddTrackerEntry, useRemoveTrackerEntry } from "@/hooks/useSyncedData";
-import { todayISO, nowHM, friendlyDate } from "@/hooks/useLocalStorage";
+import { todayISO, nowHM, friendlyDate } from "@/lib/dates";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";

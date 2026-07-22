@@ -14,6 +14,8 @@ vi.mock("./db", () => ({
     { id: 1, stateKey: "checklist", value: { a: true }, updatedBy: 1, updatedAt: new Date() },
   ]),
   setSharedState: vi.fn(async () => undefined),
+  patchSharedState: vi.fn(async () => ({})),
+  appendImportAuditLog: vi.fn(async () => undefined),
   listPhotos: vi.fn(async () => []),
   addPhoto: vi.fn(async () => 7),
   getPhotoById: vi.fn(async () => undefined),

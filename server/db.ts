@@ -108,13 +108,14 @@ function requireDb<T>(db: T | null): asserts db is T {
 
 /* ---- Tracker entries ---- */
 
-export async function listTrackerEntries() {
+export async function listTrackerEntries(limit = 2000) {
   const db = await getDb();
   requireDb(db);
   return db
     .select()
     .from(trackerEntries)
-    .orderBy(desc(trackerEntries.date), desc(trackerEntries.time), desc(trackerEntries.id));
+    .orderBy(desc(trackerEntries.date), desc(trackerEntries.time), desc(trackerEntries.id))
+    .limit(limit);
 }
 
 export async function addTrackerEntry(entry: InsertTrackerEntry): Promise<number> {
@@ -159,6 +160,58 @@ export async function setSharedState(stateKey: string, value: unknown, updatedBy
     .insert(sharedState)
     .values({ stateKey, value, updatedBy })
     .onDuplicateKeyUpdate({ set: { value, updatedBy } });
+}
+
+export async function getSharedState(stateKey: string) {
+  const db = await getDb();
+  requireDb(db);
+  const rows = await db.select().from(sharedState).where(eq(sharedState.stateKey, stateKey)).limit(1);
+  return rows[0];
+}
+
+/**
+ * Conflict-safe shallow merge for map-valued shared state (checklists,
+ * 100-things, reading progress). Instead of replacing the whole map with a
+ * client snapshot (last-write-wins, can drop the other spouse's concurrent
+ * ticks), this applies only the changed entries and deletions server-side.
+ */
+export async function patchSharedState(
+  stateKey: string,
+  entries: Record<string, unknown>,
+  deletes: string[],
+  updatedBy?: number,
+) {
+  const db = await getDb();
+  requireDb(db);
+  const existing = await getSharedState(stateKey);
+  const base =
+    existing && existing.value && typeof existing.value === "object" && !Array.isArray(existing.value)
+      ? (existing.value as Record<string, unknown>)
+      : {};
+  const merged: Record<string, unknown> = { ...base, ...entries };
+  for (const k of deletes) delete merged[k];
+  await db
+    .insert(sharedState)
+    .values({ stateKey, value: merged, updatedBy })
+    .onDuplicateKeyUpdate({ set: { value: merged, updatedBy } });
+  return merged;
+}
+
+/** Import audit entry stored under shared_state key "legacyImportLog". */
+export interface ImportAuditEntry {
+  at: string;
+  by: number;
+  byName: string | null;
+  count: number;
+}
+
+export async function appendImportAuditLog(entry: ImportAuditEntry) {
+  const existing = await getSharedState("legacyImportLog");
+  const log: ImportAuditEntry[] = Array.isArray(existing?.value)
+    ? (existing.value as ImportAuditEntry[])
+    : [];
+  log.push(entry);
+  await setSharedState("legacyImportLog", log.slice(-50), entry.by);
 }
 
 /* ---- Photos ---- */

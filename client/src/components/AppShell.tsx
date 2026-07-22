@@ -136,7 +136,7 @@ export function StatChip({ label, value }: { label: string; value: string }) {
   return (
     <div className="sticker-card px-3 py-2.5 text-center">
       <p className="font-display font-bold text-lg leading-tight text-[#22364D]">{value}</p>
-      <p className="text-[9px] font-body font-bold text-[#C66A3D] uppercase tracking-[0.12em] mt-0.5">{label}</p>
+      <p className="text-[9px] font-body font-bold text-[#B4512E] uppercase tracking-[0.12em] mt-0.5">{label}</p>
     </div>
   );
 }

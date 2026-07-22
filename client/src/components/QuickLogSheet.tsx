@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { TRACKERS, getTracker } from "@/lib/trackers";
 import { useAddTrackerEntry } from "@/hooks/useSyncedData";
-import { todayISO, nowHM } from "@/hooks/useLocalStorage";
+import { todayISO, nowHM } from "@/lib/dates";
 import { cn } from "@/lib/utils";
 import { ChevronLeft } from "lucide-react";
 import { toast } from "sonner";

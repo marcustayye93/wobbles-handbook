@@ -117,7 +117,7 @@ export default function About() {
             href={WOBBLES.breeder.listingUrl}
             target="_blank"
             rel="noreferrer"
-            className="inline-block text-xs font-extrabold text-[#C66A3D] mt-2"
+            className="inline-block text-xs font-extrabold text-[#B4512E] mt-2"
           >
             View the RightPaw listing →
           </a>
@@ -147,7 +147,7 @@ export default function About() {
                 >
                   <Icon size={10} />
                 </span>
-                <p className="text-[11px] font-extrabold uppercase tracking-wider text-[#C66A3D]">
+                <p className="text-[11px] font-extrabold uppercase tracking-wider text-[#B4512E]">
                   {formatDate(m.date)}
                   {!past && daysUntil(m.date) <= 90 && (
                     <span className="ml-1.5 text-muted-foreground normal-case tracking-normal font-bold">

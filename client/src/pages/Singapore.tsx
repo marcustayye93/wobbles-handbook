@@ -105,7 +105,7 @@ export default function Singapore() {
                         </span>
                         <div className="min-w-0">
                           <p className="font-bold text-[14px] leading-snug text-[#22364D]">{s.title}</p>
-                          <p className="text-[10px] font-bold text-[#C66A3D] uppercase tracking-wide">{s.timing}</p>
+                          <p className="text-[10px] font-bold text-[#B4512E] uppercase tracking-wide">{s.timing}</p>
                         </div>
                       </div>
                       <p className="text-[13px] text-muted-foreground leading-relaxed">{s.detail}</p>

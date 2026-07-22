@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import AuthGate from "@/components/AuthGate";
+import OfflineBanner from "@/components/OfflineBanner";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import Home from "@/pages/Home";
 import About from "@/pages/About";
@@ -45,6 +46,7 @@ export default function App() {
       <ThemeProvider defaultTheme="light">
         <TooltipProvider>
           <Toaster position="top-center" />
+          <OfflineBanner />
           <AuthGate>
             <Router />
           </AuthGate>

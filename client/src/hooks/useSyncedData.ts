@@ -61,11 +61,14 @@ export function rowToEntry(row: TrackerRow): SyncedEntry {
  * One query shared by every page via react-query's cache.
  */
 export function useTrackerFeed() {
-  const query = trpc.trackers.list.useQuery(undefined, {
-    staleTime: 30_000,
-    refetchOnWindowFocus: true,
-  });
-  const rows = (query.data ?? []) as TrackerRow[];
+  const query = trpc.trackers.list.useQuery(
+    {}, // server default limit (2000 newest entries)
+    {
+      staleTime: 30_000,
+      refetchOnWindowFocus: true,
+    },
+  );
+  const rows: TrackerRow[] = query.data ?? [];
   return { ...query, rows };
 }
 
@@ -85,7 +88,7 @@ export function useAddTrackerEntry() {
   return trpc.trackers.add.useMutation({
     onMutate: async (input) => {
       await utils.trackers.list.cancel();
-      const previous = utils.trackers.list.getData();
+      const previous = utils.trackers.list.getData({});
       const optimistic: TrackerRow = {
         id: -Date.now(), // temp negative id until server confirms
         trackerId: input.trackerId,
@@ -98,16 +101,15 @@ export function useAddTrackerEntry() {
         createdByName: null,
         createdAt: new Date(),
       };
-      utils.trackers.list.setData(undefined, (old) => {
-        const next = [optimistic, ...((old ?? []) as TrackerRow[])];
-        return next.sort((a, b) =>
+      utils.trackers.list.setData({}, (old) =>
+        [optimistic, ...(old ?? [])].sort((a, b) =>
           (b.date + (b.time ?? "")).localeCompare(a.date + (a.time ?? "")),
-        ) as never;
-      });
+        ),
+      );
       return { previous };
     },
     onError: (_err, _input, ctx) => {
-      if (ctx?.previous) utils.trackers.list.setData(undefined, ctx.previous);
+      if (ctx?.previous) utils.trackers.list.setData({}, ctx.previous);
       toast.error("Couldn't save — check your connection and try again");
     },
     onSettled: () => utils.trackers.list.invalidate(),
@@ -120,15 +122,12 @@ export function useRemoveTrackerEntry() {
   return trpc.trackers.remove.useMutation({
     onMutate: async ({ id }) => {
       await utils.trackers.list.cancel();
-      const previous = utils.trackers.list.getData();
-      utils.trackers.list.setData(
-        undefined,
-        (old) => ((old ?? []) as TrackerRow[]).filter((r) => r.id !== id) as never,
-      );
+      const previous = utils.trackers.list.getData({});
+      utils.trackers.list.setData({}, (old) => (old ?? []).filter((r) => r.id !== id));
       return { previous };
     },
     onError: (_err, _input, ctx) => {
-      if (ctx?.previous) utils.trackers.list.setData(undefined, ctx.previous);
+      if (ctx?.previous) utils.trackers.list.setData({}, ctx.previous);
       toast.error("Couldn't delete — try again");
     },
     onSettled: () => utils.trackers.list.invalidate(),
@@ -145,36 +144,65 @@ export function useRemoveTrackerEntry() {
  * Backed by ONE sharedState.all query; setter is optimistic and supports
  * functional updates like the old hook.
  */
+export function isPlainObject(v: unknown): v is Record<string, unknown> {
+  return typeof v === "object" && v !== null && !Array.isArray(v);
+}
+
+/** Shallow-diff two maps into { entries (added/changed), deletes (removed) }. */
+export function diffMaps(
+  prev: Record<string, unknown>,
+  next: Record<string, unknown>,
+): { entries: Record<string, unknown>; deletes: string[] } {
+  const entries: Record<string, unknown> = {};
+  const deletes: string[] = [];
+  for (const [k, v] of Object.entries(next)) {
+    if (!(k in prev) || JSON.stringify(prev[k]) !== JSON.stringify(v)) entries[k] = v;
+  }
+  for (const k of Object.keys(prev)) {
+    if (!(k in next)) deletes.push(k);
+  }
+  return { entries, deletes };
+}
+
 export function useSharedState<T>(key: string, initial: T) {
   const utils = trpc.useUtils();
   const query = trpc.sharedState.all.useQuery(undefined, {
     staleTime: 30_000,
     refetchOnWindowFocus: true,
   });
+  const onSyncError = () => {
+    utils.sharedState.all.invalidate();
+    toast.error("Couldn't sync — check your connection");
+  };
   const setMutation = trpc.sharedState.set.useMutation({
-    onError: () => {
-      utils.sharedState.all.invalidate();
-      toast.error("Couldn't sync — check your connection");
-    },
+    onError: onSyncError,
+    onSettled: () => utils.sharedState.all.invalidate(),
+  });
+  const patchMutation = trpc.sharedState.patch.useMutation({
+    onError: onSyncError,
     onSettled: () => utils.sharedState.all.invalidate(),
   });
 
-  const map = query.data as Record<string, unknown> | undefined;
+  const map = query.data;
   const value: T = map && key in map ? (map[key] as T) : initial;
 
   const set = useCallback(
     (next: T | ((prev: T) => T)) => {
-      const current = utils.sharedState.all.getData() as
-        | Record<string, unknown>
-        | undefined;
+      const current = utils.sharedState.all.getData();
       const prev: T = current && key in current ? (current[key] as T) : initial;
       const v = typeof next === "function" ? (next as (p: T) => T)(prev) : next;
       // optimistic cache write so the UI answers instantly
-      utils.sharedState.all.setData(undefined, {
-        ...(current ?? {}),
-        [key]: v,
-      } as never);
-      setMutation.mutate({ key, value: v });
+      utils.sharedState.all.setData(undefined, { ...(current ?? {}), [key]: v });
+      // Conflict safety: for map values, send only the delta so the server
+      // merges changes instead of replacing the whole map (two phones
+      // ticking different boxes at once both keep their ticks).
+      if (isPlainObject(prev) && isPlainObject(v)) {
+        const { entries, deletes } = diffMaps(prev, v);
+        if (Object.keys(entries).length === 0 && deletes.length === 0) return;
+        patchMutation.mutate({ key, entries, deletes });
+      } else {
+        setMutation.mutate({ key, value: v });
+      }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [key, utils],
@@ -187,10 +215,10 @@ export function useSharedState<T>(key: string, initial: T) {
 /* Legacy one-time import                                              */
 /* ------------------------------------------------------------------ */
 
-const MIGRATED_FLAG = "wobbles:migrated";
+export const MIGRATED_FLAG = "wobbles:migrated";
 const LEGACY_KV_KEYS = ["checklists", "hundred", "readProgress"] as const;
 
-function readLegacyTrackerEntries(): {
+export function readLegacyTrackerEntries(): {
   trackerId: string;
   date: string;
   time?: string;

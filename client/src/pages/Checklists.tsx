@@ -6,6 +6,7 @@
  */
 import { useState } from "react";
 import { PageShell, PageHeader } from "@/components/AppShell";
+import SyncIndicator from "@/components/SyncIndicator";
 import { CHECKLISTS } from "@/content/checklists";
 import { useSharedState } from "@/hooks/useSyncedData";
 import { cn } from "@/lib/utils";
@@ -61,23 +62,23 @@ export default function Checklists() {
                 {active.emoji} {active.title}
               </h2>
               <p className="text-[11px] text-muted-foreground mt-0.5">
-                {active.cadence} · {doneCount}/{active.items.length} done
+                {active.cadence} · {doneCount}/{active.items.length} done <SyncIndicator className="ml-1" />
               </p>
             </div>
             <div className="flex gap-1.5">
               <button
                 onClick={resetActive}
-                className="w-9 h-9 rounded-full bg-[#22364D]/8 text-[#22364D] flex items-center justify-center press-scale"
+                className="w-11 h-11 rounded-full bg-[#22364D]/8 text-[#22364D] flex items-center justify-center press-scale"
                 aria-label="Reset list"
               >
-                <RotateCcw size={15} />
+                <RotateCcw size={16} />
               </button>
               <button
                 onClick={() => window.print()}
-                className="w-9 h-9 rounded-full bg-[#C66A3D] text-[#FFFDF8] flex items-center justify-center press-scale"
+                className="w-11 h-11 rounded-full bg-[#C66A3D] text-[#FFFDF8] flex items-center justify-center press-scale"
                 aria-label="Print all checklists"
               >
-                <Printer size={15} />
+                <Printer size={16} />
               </button>
             </div>
           </div>

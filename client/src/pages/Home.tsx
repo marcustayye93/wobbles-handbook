@@ -7,11 +7,12 @@
 import { useMemo, useState } from "react";
 import { Link } from "wouter";
 import { PageShell, Eyebrow } from "@/components/AppShell";
+import SyncIndicator from "@/components/SyncIndicator";
 import QuickLogSheet from "@/components/QuickLogSheet";
 import TodayTimeline, { useDayFeed } from "@/components/TodayTimeline";
 import SearchDialog from "@/components/SearchDialog";
 import { wobblesToday, todaysNudges } from "@/lib/wobblesToday";
-import { todayISO } from "@/hooks/useLocalStorage";
+import { todayISO } from "@/lib/dates";
 import { useTrackerFeed, useSharedState, rowToEntry } from "@/hooks/useSyncedData";
 import { ASSETS, WOBBLES, MILESTONES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
 import { SECTIONS } from "@/content/handbookSections";
@@ -79,10 +80,11 @@ export default function Home() {
               W
             </span>
             <Eyebrow>Wobbles' Handbook</Eyebrow>
+            <SyncIndicator className="ml-auto" />
             <button
               onClick={() => setSearchOpen(true)}
               aria-label="Search the handbook"
-              className="ml-auto w-9 h-9 rounded-full bg-[#FFFDF8] border border-[#E5DAC8] flex items-center justify-center text-[#22364D] press-scale shadow-sm"
+              className="w-11 h-11 rounded-full bg-[#FFFDF8] border border-[#E5DAC8] flex items-center justify-center text-[#22364D] press-scale shadow-sm"
             >
               <Search size={16} />
             </button>
@@ -99,7 +101,7 @@ export default function Home() {
               Handbook
             </h1>
             <p
-              className="relative z-10 mt-3 text-[11px] font-body font-extrabold uppercase tracking-[0.2em] text-[#C66A3D] leading-relaxed fade-up"
+              className="relative z-10 mt-3 text-[11px] font-body font-extrabold uppercase tracking-[0.2em] text-[#B4512E] leading-relaxed fade-up"
               style={{ animationDelay: "80ms" }}
             >
               A guide. A journey.
@@ -155,7 +157,7 @@ export default function Home() {
           </span>
           <div className="flex items-start gap-3 mt-1">
             <div className="min-w-0 flex-1">
-              <p className="text-[10px] font-body font-extrabold uppercase tracking-[0.14em] text-[#7B8C6A]">
+              <p className="text-[10px] font-body font-extrabold uppercase tracking-[0.14em] text-[#6B7C5A]">
                 {today.stage}
               </p>
               <h2 className="font-display font-semibold text-[1.65rem] leading-tight text-[#22364D] mt-0.5">
@@ -174,7 +176,7 @@ export default function Home() {
               ["Training", today.training],
             ].map(([k, v]) => (
               <div key={k} className="flex gap-2.5 items-baseline">
-                <dt className="shrink-0 w-[86px] text-[9px] font-body font-extrabold uppercase tracking-[0.12em] text-[#C66A3D]">
+                <dt className="shrink-0 w-[86px] text-[9px] font-body font-extrabold uppercase tracking-[0.12em] text-[#B4512E]">
                   {k}
                 </dt>
                 <dd className="text-[12.5px] font-body text-[#33475C] leading-snug">{v}</dd>
