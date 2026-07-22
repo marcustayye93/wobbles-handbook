@@ -22,7 +22,7 @@ const INK = "#22364D";
 const SIENNA = "#C66A3D";
 
 /** Downscale + JPEG-compress an image file, return base64 (no data: prefix). */
-async function compressImage(file: File, maxEdge = 1600, quality = 0.82): Promise<{
+export async function compressImage(file: File, maxEdge = 1600, quality = 0.82): Promise<{
   dataBase64: string;
   mimeType: string;
 }> {

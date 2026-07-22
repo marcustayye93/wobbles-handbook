@@ -131,6 +131,10 @@ export function MapView({
       console.error("Map container not found");
       return;
     }
+    if (!window.google?.maps) {
+      console.error("Google Maps not available (script failed to load)");
+      return;
+    }
     map.current = new window.google.maps.Map(mapContainer.current, {
       zoom: initialZoom,
       center: initialCenter,

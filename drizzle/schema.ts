@@ -78,6 +78,8 @@ export const photos = mysqlTable("photos", {
   caption: text("caption"),
   /** ISO date YYYY-MM-DD the photo is "about" (defaults to upload day) */
   date: varchar("date", { length: 10 }).notNull(),
+  /** Optional place tag (id from client/src/content/places.ts) for Wobbles' Map */
+  placeId: varchar("placeId", { length: 64 }),
   createdBy: int("createdBy"),
   createdByName: varchar("createdByName", { length: 120 }),
   createdAt: timestamp("createdAt").defaultNow().notNull(),

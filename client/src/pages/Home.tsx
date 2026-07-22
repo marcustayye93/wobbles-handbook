@@ -396,7 +396,7 @@ export default function Home() {
           <Eyebrow className="mb-2.5">Coming up</Eyebrow>
           <div className="space-y-2.5">
             {nextMilestones.map((m) => (
-              <div key={m.date} className="sticker-card px-4 py-3 flex items-center gap-3.5">
+              <div key={`${m.date}-${m.label}`} className="sticker-card px-4 py-3 flex items-center gap-3.5">
                 <div className="shrink-0 text-center w-12">
                   <p className="font-display font-bold text-[1.35rem] text-[#B4512E] leading-none">
                     {daysUntil(m.date)}

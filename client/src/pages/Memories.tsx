@@ -151,7 +151,7 @@ export default function Memories() {
                 ? `${Math.abs(dUntil)} days ago`
                 : `in ${dUntil} days`;
             return (
-              <li key={m.date} className="relative pl-12 pb-5 last:pb-0">
+              <li key={`${m.date}-${m.label}`} className="relative pl-12 pb-5 last:pb-0">
                 <span
                   className={cn(
                     "absolute left-0 top-0 w-9 h-9 rounded-full flex items-center justify-center border-2",

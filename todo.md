@@ -112,4 +112,16 @@
 - [x] Past list rendering: preserve and show done state (✅ vs 📌, strike-through on done text) so archived history is honest; person tag + done count in the collapsed summary
 - [x] Settings sheet: upcoming list stays tidy automatically; past collapsed section gains done markers; no manual archive button needed
 - [x] Tests: archive split logic (done today stays upcoming, done yesterday goes past with done preserved, undone yesterday goes past + normalize round-trip), suite 90/90 passing, tsc + build clean
-- [ ] Screenshot, checkpoint, push GitHub, deliver
+- [x] Screenshot, checkpoint (4cc29ca3), push GitHub, deliver
+
+# Map tab: places, visits, photos, journal (user request)
+
+- [x] Data model: places content file (client/src/content/places.ts — Home Blk 587, park next to block, Woodlands Waterfront, Admiralty Park, Sembawang dog run with OneMap-verified coords + blurbs) + shared place-log state (client/src/lib/placeLog.ts: visits, journal entries per place, normalization)
+- [x] Map integration: template MapView (Google Maps via Forge proxy), keepsake emoji pins per park, tap pin or list card opens place sheet; explored-count badge overlay
+- [x] Place sheet: visit log with dates + person tags, journal entries (add/view), photos tagged to the place via placeId column on photos table (upload with compression reused from PhotoJournal, lightbox viewing)
+- [x] Bottom nav: MAP tab with MapPin icon added (6-col layout), route /map registered in App.tsx
+- [x] Shared sync: visits/journal via useSharedState("placeLog") in shared_state, photos via photos router with optional placeId — both phones see the same data (verified in code: ParkMap.tsx, placeLog.ts, routers.ts:145/160, schema.ts:82, App.tsx:38 route, AppShell.tsx:16 nav tab)
+- [x] Tests: server/placeLog.test.ts (9 tests) — suite 99/99 passing, tsc + production build clean
+- [x] Bonus fixes: duplicate React key warning on Home/Memories milestones (2026-08-21 shared by two milestones); Map.tsx hardened against failed script load
+- [x] Verified: page layout via screenshot; map tiles blank only in the internal screenshot renderer (Forge maps proxy rejects its 127.0.0.1 origin — confirmed via curl that the public preview/published origin gets HTTP 200 + Maps JS)
+- [ ] Checkpoint, push GitHub, deliver

@@ -141,6 +141,8 @@ export const appRouter = router({
           dataBase64: z.string().max(7_500_000),
           caption: z.string().max(500).optional(),
           date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+          /** Optional place tag for Wobbles' Map (id from places content) */
+          placeId: z.string().max(64).optional(),
         }),
       )
       .mutation(async ({ ctx, input }) => {
@@ -155,6 +157,7 @@ export const appRouter = router({
           url,
           caption: input.caption,
           date: input.date,
+          placeId: input.placeId,
           createdBy: ctx.user.id,
           createdByName: ctx.user.name ?? undefined,
         });

@@ -5,7 +5,7 @@
  * Bottom nav: Home / Chapters / Trackers / 100 Things / Memories (navy pill bar).
  */
 import { Link, useLocation } from "wouter";
-import { Home, BookOpen, ClipboardList, Award, Camera, ChevronLeft, PawPrint } from "lucide-react";
+import { Home, BookOpen, ClipboardList, Award, Camera, MapPin, ChevronLeft, PawPrint } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const TABS = [
@@ -13,6 +13,7 @@ const TABS = [
   { href: "/handbook", label: "Chapters", icon: BookOpen },
   { href: "/trackers", label: "Trackers", icon: ClipboardList },
   { href: "/handbook/100-things", label: "100 Things", icon: Award },
+  { href: "/map", label: "Map", icon: MapPin },
   { href: "/memories", label: "Memories", icon: Camera },
 ] as const;
 
@@ -31,7 +32,7 @@ export function BottomNav() {
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
     >
       <div className="mx-3 mb-2.5 rounded-[26px] bg-[#22364D] shadow-[0_10px_30px_rgba(34,54,77,0.35)]">
-        <div className="grid grid-cols-5 py-2 px-1.5">
+        <div className="grid grid-cols-6 py-2 px-1">
           {TABS.map((t) => {
             const active = isTabActive(t.href, loc);
             const Icon = t.icon;
