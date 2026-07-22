@@ -13,10 +13,13 @@ export interface TrackerEntry {
   note?: string;
 }
 
+export type TrackerGroup = "daily" | "health" | "growing";
+
 export interface TrackerMeta {
   id: string;
   title: string;
   emoji: string;
+  group: TrackerGroup;
   empty: string;
   intro: string;
   /** which fields the add-form shows */
@@ -37,6 +40,7 @@ export const TRACKERS: TrackerMeta[] = [
     id: "weight",
     title: "Weight",
     emoji: "⚖️",
+    group: "health",
     empty: "Weekly weigh-ins",
     intro:
       "Weigh weekly as a puppy (hold him on bathroom scales, subtract yourself), then monthly as an adult. Toy Cavoodles typically land at 5–8 kg full-grown; Wobbles is predicted ≈8 kg.",
@@ -55,6 +59,7 @@ export const TRACKERS: TrackerMeta[] = [
     id: "feeding",
     title: "Feeding",
     emoji: "🍽️",
+    group: "daily",
     empty: "Meals & amounts",
     intro:
       "Puppies eat 3–4 small meals a day until ~6 months, then 2. Log meals in the first weeks to spot appetite dips early — a puppy skipping two meals in a row needs a vet call.",
@@ -74,6 +79,7 @@ export const TRACKERS: TrackerMeta[] = [
     id: "toilet",
     title: "Toilet",
     emoji: "🚽",
+    group: "daily",
     empty: "Wees, poos & accidents",
     intro:
       "The fastest route to toilet training: log every success and accident for the first 2–3 weeks. Patterns jump out (after meals, after naps, after play) and you'll pre-empt instead of clean up.",
@@ -92,6 +98,7 @@ export const TRACKERS: TrackerMeta[] = [
     id: "stool",
     title: "Poo Quality",
     emoji: "💩",
+    group: "health",
     empty: "Bristol-style scoring",
     intro:
       "Vets score dog poo 1–7: 1 = hard pellets, 2 = firm segmented (ideal), 3 = log with cracks (good), 4 = soft but formed, 5 = soft blobs, 6 = mushy, 7 = liquid. Log daily in the first month.",
@@ -111,6 +118,7 @@ export const TRACKERS: TrackerMeta[] = [
     id: "vaccines",
     title: "Health & Vaccines",
     emoji: "💉",
+    group: "health",
     empty: "Shots, worming & vet visits",
     intro:
       "Australian puppies typically get C3 vaccines at ~6–8, 10–12 and 14–16 weeks, then annual boosters. Wobbles' first shot happens at the breeder before homecoming; log everything here for the Singapore paperwork later.",
@@ -139,6 +147,7 @@ export const TRACKERS: TrackerMeta[] = [
     id: "social",
     title: "Socialisation",
     emoji: "🌏",
+    group: "growing",
     empty: "New experiences log",
     intro:
       "The critical window closes around 12–16 weeks. Every calm, positive new experience now pays off for a decade. Aim for a few tiny novelties a day — carried in your arms is fine before full vaccination.",
@@ -168,6 +177,7 @@ export const TRACKERS: TrackerMeta[] = [
     id: "grooming",
     title: "Grooming Log",
     emoji: "✂️",
+    group: "daily",
     empty: "Brushing, baths & trims",
     intro:
       "Little and often wins: 2–3 minute brush sessions most days, a proper line-brush weekly, bath every 2–4 weeks, full groom every 4–6 weeks. Log it so 'I brushed him recently' meets reality.",
@@ -197,6 +207,7 @@ export const TRACKERS: TrackerMeta[] = [
     id: "training",
     title: "Training Log",
     emoji: "🎓",
+    group: "growing",
     empty: "Skills & sessions",
     intro:
       "Puppy attention spans are 3–5 minutes. Two or three micro-sessions a day beat one long one. Log what you worked on and how it went — progress is addictive once you can see it.",
@@ -230,6 +241,13 @@ export const TRACKERS: TrackerMeta[] = [
 export function getTracker(id: string): TrackerMeta | undefined {
   return TRACKERS.find((t) => t.id === id);
 }
+
+/** Ordered groups for the hub: routine first, then health, then development. */
+export const TRACKER_GROUPS: { id: TrackerGroup; title: string; blurb: string }[] = [
+  { id: "daily", title: "Daily care", blurb: "The everyday routine" },
+  { id: "health", title: "Health & vet", blurb: "Watch the trends" },
+  { id: "growing", title: "Growing up", blurb: "Skills & experiences" },
+];
 
 /** Entries for one tracker, newest first. */
 export function useTrackerEntries(id: string) {

@@ -16,6 +16,7 @@ import Checklists from "@/pages/Checklists";
 import Singapore from "@/pages/Singapore";
 import TrackersHub from "@/pages/TrackersHub";
 import TrackerPage from "@/pages/TrackerPage";
+import Memories from "@/pages/Memories";
 import NotFound from "@/pages/NotFound";
 
 function Router() {
@@ -30,6 +31,7 @@ function Router() {
       <Route path="/singapore" component={Singapore} />
       <Route path="/trackers" component={TrackersHub} />
       <Route path="/trackers/:id" component={TrackerPage} />
+      <Route path="/memories" component={Memories} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>

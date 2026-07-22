@@ -1,19 +1,27 @@
 /*
- * Storybook Picture-Book theme — app shell components.
- * Cream paper bg, chestnut primary, sticker cards, bottom tab bar (5 tabs),
- * Fraunces display + Nunito body, paw motifs, gentle fade-up entrances.
+ * Redesign v2 — "Keepsake Field Guide" app shell.
+ * Paper #F8F3EB bg w/ grain, ivory cards, Ink Navy #22364D nav bar + CTAs,
+ * Burnt Sienna #C66A3D active/eyebrow accents, Cormorant Garamond display.
+ * Bottom nav: Home / Chapters / Trackers / 100 Things / Memories (navy pill bar).
  */
 import { Link, useLocation } from "wouter";
-import { Home, BookOpen, ClipboardList, Plane, PawPrint, ChevronLeft } from "lucide-react";
+import { Home, BookOpen, ClipboardList, Award, Camera, ChevronLeft, PawPrint } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const TABS = [
   { href: "/", label: "Home", icon: Home },
-  { href: "/handbook", label: "Handbook", icon: BookOpen },
+  { href: "/handbook", label: "Chapters", icon: BookOpen },
   { href: "/trackers", label: "Trackers", icon: ClipboardList },
-  { href: "/singapore", label: "Singapore", icon: Plane },
-  { href: "/about", label: "Wobbles", icon: PawPrint },
+  { href: "/handbook/100-things", label: "100 Things", icon: Award },
+  { href: "/memories", label: "Memories", icon: Camera },
 ] as const;
+
+function isTabActive(href: string, loc: string) {
+  if (href === "/") return loc === "/";
+  if (href === "/handbook/100-things") return loc === "/handbook/100-things";
+  if (href === "/handbook") return loc.startsWith("/handbook") && loc !== "/handbook/100-things";
+  return loc.startsWith(href);
+}
 
 export function BottomNav() {
   const [loc] = useLocation();
@@ -22,33 +30,27 @@ export function BottomNav() {
       className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md z-50 print:hidden"
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
     >
-      <div className="mx-3 mb-2 rounded-3xl bg-card/95 backdrop-blur-md border border-border shadow-[0_-2px_20px_oklch(0.52_0.115_45/0.12),0_4px_14px_oklch(0.52_0.115_45/0.10)]">
-        <div className="grid grid-cols-5 py-1.5 px-1">
+      <div className="mx-3 mb-2.5 rounded-[26px] bg-[#22364D] shadow-[0_10px_30px_rgba(34,54,77,0.35)]">
+        <div className="grid grid-cols-5 py-2 px-1.5">
           {TABS.map((t) => {
-            const active = t.href === "/" ? loc === "/" : loc.startsWith(t.href);
+            const active = isTabActive(t.href, loc);
             const Icon = t.icon;
             return (
               <Link
                 key={t.href}
                 href={t.href}
                 className={cn(
-                  "flex flex-col items-center gap-0.5 py-1.5 rounded-2xl press-scale select-none",
-                  active ? "text-primary" : "text-muted-foreground",
+                  "flex flex-col items-center gap-1 py-1 rounded-2xl press-scale select-none transition-colors duration-200",
+                  active ? "text-[#E8935C]" : "text-[#8FA0B5]",
                 )}
               >
+                <Icon size={19} strokeWidth={active ? 2.4 : 1.9} />
                 <span
                   className={cn(
-                    "flex items-center justify-center w-10 h-6 rounded-full transition-colors duration-200",
-                    active && "bg-primary/12",
+                    "text-[8.5px] leading-none uppercase tracking-[0.08em]",
+                    active ? "font-extrabold" : "font-semibold",
                   )}
                 >
-                  <Icon
-                    size={19}
-                    strokeWidth={active ? 2.5 : 2}
-                    className={cn("transition-transform duration-200", active && "scale-110")}
-                  />
-                </span>
-                <span className={cn("text-[10px] leading-none", active ? "font-extrabold" : "font-semibold")}>
                   {t.label}
                 </span>
               </Link>
@@ -60,16 +62,24 @@ export function BottomNav() {
   );
 }
 
-export function PageShell({ children, className }: { children: React.ReactNode; className?: string }) {
+export function PageShell({
+  children,
+  className,
+  hideNav,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  hideNav?: boolean;
+}) {
   return (
-    <div className="phone-shell">
-      <main className={cn("safe-bottom", className)}>{children}</main>
-      <BottomNav />
+    <div className="phone-shell paper-grain">
+      <main className={cn(hideNav ? "pb-6" : "safe-bottom", className)}>{children}</main>
+      {!hideNav && <BottomNav />}
     </div>
   );
 }
 
-/** Sticky page header with optional back link */
+/** Sticky page header with optional back link — v2 style */
 export function PageHeader({
   title,
   subtitle,
@@ -82,34 +92,41 @@ export function PageHeader({
   emoji?: string;
 }) {
   return (
-    <header className="sticky top-0 z-40 bg-background/92 backdrop-blur-md border-b border-border/60 print:static print:bg-white">
+    <header className="sticky top-0 z-40 bg-[#F8F3EB]/92 backdrop-blur-md border-b border-border/60 print:static print:bg-white">
       <div className="px-4 py-3 flex items-center gap-2.5">
         {back && (
           <Link
             href={back}
-            className="shrink-0 w-9 h-9 -ml-1 rounded-full flex items-center justify-center bg-secondary text-secondary-foreground press-scale print:hidden"
+            className="shrink-0 w-9 h-9 -ml-1 rounded-full flex items-center justify-center bg-[#22364D] text-[#F8F3EB] press-scale print:hidden"
             aria-label="Back"
           >
-            <ChevronLeft size={20} />
+            <ChevronLeft size={19} />
           </Link>
         )}
         {emoji && <span className="text-2xl leading-none">{emoji}</span>}
         <div className="min-w-0">
-          <h1 className="font-display font-bold text-lg leading-tight truncate">{title}</h1>
-          {subtitle && <p className="text-xs text-muted-foreground truncate">{subtitle}</p>}
+          <h1 className="font-display font-bold text-xl leading-tight truncate text-[#22364D]">{title}</h1>
+          {subtitle && (
+            <p className="text-[11px] font-body font-semibold text-muted-foreground truncate">{subtitle}</p>
+          )}
         </div>
       </div>
     </header>
   );
 }
 
+/** Sienna eyebrow label, small-caps, per mockup */
+export function Eyebrow({ children, className }: { children: React.ReactNode; className?: string }) {
+  return <p className={cn("eyebrow", className)}>{children}</p>;
+}
+
 /** Hand-stitched dashed divider with a paw in the middle */
 export function PawDivider() {
   return (
     <div className="flex items-center gap-3 my-6" aria-hidden>
-      <span className="flex-1 border-t-2 border-dashed border-border" />
-      <PawPrint size={14} className="text-primary/50" />
-      <span className="flex-1 border-t-2 border-dashed border-border" />
+      <span className="flex-1 border-t border-dashed border-[#C9BBA4]" />
+      <PawPrint size={13} className="text-[#C66A3D]/60" />
+      <span className="flex-1 border-t border-dashed border-[#C9BBA4]" />
     </div>
   );
 }
@@ -117,9 +134,61 @@ export function PawDivider() {
 /** Small stat chip */
 export function StatChip({ label, value }: { label: string; value: string }) {
   return (
-    <div className="sticker-card px-3 py-2 text-center">
-      <p className="font-display font-bold text-base leading-tight text-primary">{value}</p>
-      <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wide">{label}</p>
+    <div className="sticker-card px-3 py-2.5 text-center">
+      <p className="font-display font-bold text-lg leading-tight text-[#22364D]">{value}</p>
+      <p className="text-[9px] font-body font-bold text-[#C66A3D] uppercase tracking-[0.12em] mt-0.5">{label}</p>
+    </div>
+  );
+}
+
+/** Circular progress ring (SVG), used on chapter covers & 100 Things */
+export function ProgressRing({
+  value,
+  size = 56,
+  stroke = 4,
+  label,
+  className,
+  trackColor = "rgba(34,54,77,0.12)",
+  color = "#C66A3D",
+  children,
+}: {
+  value: number; // 0..1
+  size?: number;
+  stroke?: number;
+  label?: string;
+  className?: string;
+  trackColor?: string;
+  color?: string;
+  children?: React.ReactNode;
+}) {
+  const r = (size - stroke) / 2;
+  const c = 2 * Math.PI * r;
+  const clamped = Math.max(0, Math.min(1, value));
+  return (
+    <div className={cn("relative inline-flex items-center justify-center", className)} style={{ width: size, height: size }}>
+      <svg width={size} height={size} className="-rotate-90">
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={trackColor} strokeWidth={stroke} />
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={r}
+          fill="none"
+          stroke={color}
+          strokeWidth={stroke}
+          strokeLinecap="round"
+          strokeDasharray={c}
+          strokeDashoffset={c * (1 - clamped)}
+          style={{ transition: "stroke-dashoffset 600ms cubic-bezier(0.23,1,0.32,1)" }}
+        />
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        {children ?? (
+          <span className="font-body font-extrabold text-[10px] text-[#22364D] leading-none">
+            {Math.round(clamped * 100)}%
+            {label && <span className="block text-[7px] font-bold text-muted-foreground mt-0.5">{label}</span>}
+          </span>
+        )}
+      </div>
     </div>
   );
 }

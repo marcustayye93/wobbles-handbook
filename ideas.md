@@ -52,3 +52,21 @@ An ultra-clean pastel medical-app look — mint and blush, rounded neumorphic ca
 ## Style Decisions
 - 9:16 mobile-first: max content width 28rem centered; bottom tab bar with safe-area padding; PWA standalone display.
 - Charts use warm palette (chestnut, honey, sage, blush) on cream, never default blues.
+
+---
+
+## Style Decisions (Redesign v2 — user-approved ChatGPT mockup template, 2026-07-22)
+
+This supersedes conflicting details above. Ground truth = the two mockup images in /home/ubuntu/upload (2614987A home cover; 09EFA7F4 four screens: chapter cover, reading view, trackers hub, 100 things).
+
+**Palette:** Paper #F8F3EB (base bg), Warm Ivory #FFFDF8 (cards), Chestnut #6B3F2A (headings-adjacent, illustration fur), Rich Fur #8C4F34, **Ink Navy #22364D** (display headings, bottom nav bar, primary buttons, FAB), **Burnt Sienna #C66A3D** (eyebrow labels, accents, active tab, countdown numeral), Moss #7B8C6A (success/progress secondary), Warm Grey #9C9288 (captions). Deep navy text for display, warm dark brown-grey for body.
+
+**Typography:** Display = Cormorant Garamond (600/700, tight leading, high contrast serif — matches mockup's Canela-like look, NOT Inter). Body = Nunito Sans 400/600/700. Eyebrows = letter-spaced uppercase 11-12px sienna. Scale: hero 44-52, section 30-34, card title 20-22, body 17, caption 13.
+
+**Surfaces:** cards radius 28px, buttons 20px (navy pill w/ white text), chips 999px; single shadow 0 12px 32px rgba(34,54,77,0.10); paper-grain texture overlay on bg; masking-tape motif on keepsake cards (countdown card, diagrams); max one decorative treatment per screen.
+
+**Nav:** ink-navy rounded-top bottom bar, 5 tabs — Home, Chapters, Trackers, 100 Things, Memories — sienna/white active state, cream inactive icons; hidden in chapter reading view (immersive).
+
+**Illustration:** gouache/watercolour Wobbles character (white coat, chestnut ears + eye patches, white blaze, expressive dark eyes, oversized floppy ears), occupying 35-60% of hero screens; pencil-line spot illustrations (dog bed, plants) on paper; illustrations are layout elements, not thumbnails.
+
+**Key screens:** Home = full-bleed cover (badge wordmark, huge serif title, tagline, taped countdown card, hero illustration, peeking "Right Now" ivory card w/ navy CTA). Chapters = collectible full-bleed covers w/ progress ring + read time. Reader = top progress line, "x of n" step, large serif section headings, taped diagram cards. Trackers = grouped Daily Care / Health & Vet / Milestones & Memories, last-logged per card, navy FAB. 100 Things = large progress ring "34 of 100", encouragement, category chips, celebratory rows, Surprise Me navy button.

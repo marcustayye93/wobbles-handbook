@@ -1,5 +1,6 @@
 /*
- * Storybook Picture-Book theme — printable checklists.
+ * Redesign v2 — "Keepsake Field Guide" printable checklists.
+ * Ink navy active chips, moss ticks, keepsake card container.
  * Pick a list, tick paw-checkboxes (saved on device), reset, or print
  * (print stylesheet shows all items with empty boxes).
  */
@@ -41,7 +42,7 @@ export default function Checklists() {
               className={cn(
                 "shrink-0 px-3.5 py-2 rounded-full text-xs font-extrabold press-scale border transition-colors",
                 c.id === activeId
-                  ? "bg-primary text-primary-foreground border-primary"
+                  ? "bg-[#22364D] text-[#FFFDF8] border-transparent"
                   : "bg-card border-border text-foreground/70",
               )}
             >
@@ -53,10 +54,10 @@ export default function Checklists() {
 
       {/* active list (screen) */}
       <div className="px-5 pt-4 print:hidden">
-        <div className="sticker-card p-4">
+        <div className="keepsake-card p-4">
           <div className="flex items-center justify-between gap-2">
             <div>
-              <h2 className="font-display font-bold text-lg leading-tight">
+              <h2 className="font-display font-semibold text-[1.3rem] leading-tight text-[#22364D]">
                 {active.emoji} {active.title}
               </h2>
               <p className="text-[11px] text-muted-foreground mt-0.5">
@@ -66,14 +67,14 @@ export default function Checklists() {
             <div className="flex gap-1.5">
               <button
                 onClick={resetActive}
-                className="w-9 h-9 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center press-scale"
+                className="w-9 h-9 rounded-full bg-[#22364D]/8 text-[#22364D] flex items-center justify-center press-scale"
                 aria-label="Reset list"
               >
                 <RotateCcw size={15} />
               </button>
               <button
                 onClick={() => window.print()}
-                className="w-9 h-9 rounded-full bg-primary text-primary-foreground flex items-center justify-center press-scale"
+                className="w-9 h-9 rounded-full bg-[#C66A3D] text-[#FFFDF8] flex items-center justify-center press-scale"
                 aria-label="Print all checklists"
               >
                 <Printer size={15} />
@@ -83,7 +84,7 @@ export default function Checklists() {
 
           <div className="h-2 rounded-full bg-muted overflow-hidden mt-3">
             <div
-              className="h-full rounded-full bg-[oklch(0.55_0.1_140)] transition-[width] duration-300"
+              className="h-full rounded-full bg-[#7B8C6A] transition-[width] duration-300"
               style={{ width: `${(doneCount / active.items.length) * 100}%` }}
             />
           </div>
@@ -102,8 +103,8 @@ export default function Checklists() {
                       className={cn(
                         "shrink-0 w-6 h-6 rounded-lg border-2 flex items-center justify-center mt-0.5 transition-colors",
                         done
-                          ? "bg-[oklch(0.55_0.1_140)] border-[oklch(0.55_0.1_140)] text-white"
-                          : "border-border bg-card",
+                          ? "bg-[#7B8C6A] border-[#7B8C6A] text-white"
+                          : "border-border bg-background",
                       )}
                     >
                       {done && <PawPrint size={13} />}

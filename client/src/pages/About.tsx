@@ -1,5 +1,6 @@
 /*
- * Storybook Picture-Book theme — All About Wobbles.
+ * Redesign v2 — "Keepsake Field Guide" All About Wobbles.
+ * Taped keepsake photos, ink navy headings, sienna accents, moss done-dots.
  * Baby-book page: photos, verified profile facts, mum & dad, breeder story,
  * milestone timeline, and the AI rendering of adult Wobbles.
  */
@@ -34,12 +35,12 @@ export default function About() {
 
       {/* photos */}
       <div className="px-5 pt-5">
-        <div className="relative">
-          <div className="absolute -inset-2 bg-primary/10 rounded-[2rem] rotate-[1.2deg]" aria-hidden />
+        <div className="relative -rotate-[0.5deg]">
+          <span className="tape" aria-hidden />
           <img
             src={ASSETS.photoFace}
             alt="Cartoon sketch of Wobbles as a young puppy"
-            className="relative w-full aspect-[4/3] object-cover rounded-[1.8rem] border-2 border-card shadow-md -rotate-[0.5deg]"
+            className="relative w-full aspect-[4/3] object-cover rounded-[1.6rem] border-4 border-[#FFFDF8] shadow-[0_12px_32px_rgba(34,54,77,0.12)]"
           />
         </div>
         <div className="flex gap-3 mt-4">
@@ -71,9 +72,9 @@ export default function About() {
 
       {/* profile card */}
       <div className="px-5 mt-6">
-        <div className="sticker-card p-4">
-          <h2 className="font-display font-bold text-lg flex items-center gap-2">
-            <Heart size={17} className="text-primary" /> Puppy passport
+        <div className="keepsake-card p-4">
+          <h2 className="font-display font-semibold text-[1.3rem] text-[#22364D] flex items-center gap-2">
+            <Heart size={17} className="text-[#C66A3D]" /> Puppy passport
           </h2>
           <p className="text-xs text-muted-foreground mt-1">
             {WOBBLES.breed} · {age.born ? `${age.weeks} weeks ${age.remDays} days old` : "arriving soon"}
@@ -82,7 +83,7 @@ export default function About() {
             {FACTS.map((f) => (
               <div key={f.label}>
                 <p className="text-[10px] font-extrabold uppercase tracking-wide text-muted-foreground">{f.label}</p>
-                <p className="text-[13px] font-bold leading-snug mt-0.5">{f.value}</p>
+                <p className="text-[13px] font-bold leading-snug mt-0.5 text-[#22364D]">{f.value}</p>
               </div>
             ))}
           </div>
@@ -91,16 +92,16 @@ export default function About() {
 
       {/* family */}
       <div className="px-5 mt-5">
-        <h2 className="font-display font-bold text-xl mb-3">Mum & Dad</h2>
+        <h2 className="font-display font-semibold text-[1.45rem] text-[#22364D] mb-3">Mum & Dad</h2>
         <div className="grid grid-cols-2 gap-2.5">
           <div className="sticker-card px-3.5 py-3.5 -rotate-[0.4deg]">
             <p className="text-2xl">🐩</p>
-            <p className="font-display font-bold text-[15px] mt-1">{WOBBLES.mum.name}</p>
+            <p className="font-body font-extrabold text-[15px] mt-1 text-[#22364D]">{WOBBLES.mum.name}</p>
             <p className="text-[11px] text-muted-foreground leading-snug mt-1">{WOBBLES.mum.desc}</p>
           </div>
           <div className="sticker-card px-3.5 py-3.5 rotate-[0.4deg]">
             <p className="text-2xl">🐕</p>
-            <p className="font-display font-bold text-[15px] mt-1">{WOBBLES.dad.name}</p>
+            <p className="font-body font-extrabold text-[15px] mt-1 text-[#22364D]">{WOBBLES.dad.name}</p>
             <p className="text-[11px] text-muted-foreground leading-snug mt-1">{WOBBLES.dad.desc}</p>
           </div>
         </div>
@@ -116,7 +117,7 @@ export default function About() {
             href={WOBBLES.breeder.listingUrl}
             target="_blank"
             rel="noreferrer"
-            className="inline-block text-xs font-extrabold text-primary mt-2"
+            className="inline-block text-xs font-extrabold text-[#C66A3D] mt-2"
           >
             View the RightPaw listing →
           </a>
@@ -129,10 +130,10 @@ export default function About() {
 
       {/* milestones */}
       <div className="px-5 pb-4">
-        <h2 className="font-display font-bold text-xl mb-1">Wobbles' first year</h2>
+        <h2 className="font-display font-semibold text-[1.45rem] text-[#22364D] mb-1">Wobbles' first year</h2>
         <p className="text-xs text-muted-foreground mb-4">Every date that matters, from birth to first birthday.</p>
         <div className="relative pl-6 space-y-4">
-          <span className="absolute left-[9px] top-1 bottom-1 border-l-2 border-dashed border-primary/35" aria-hidden />
+          <span className="absolute left-[9px] top-1 bottom-1 border-l-2 border-dashed border-[#22364D]/20" aria-hidden />
           {MILESTONES.map((m) => {
             const Icon = MICONS[m.icon] ?? Star;
             const past = daysUntil(m.date) < 0;
@@ -141,12 +142,12 @@ export default function About() {
                 <span
                   className={cn(
                     "absolute -left-6 top-0.5 w-5 h-5 rounded-full border-2 flex items-center justify-center",
-                    past ? "bg-primary border-primary text-primary-foreground" : "bg-background border-primary/50 text-primary",
+                    past ? "bg-[#7B8C6A] border-[#7B8C6A] text-white" : "bg-background border-[#C66A3D]/60 text-[#C66A3D]",
                   )}
                 >
                   <Icon size={10} />
                 </span>
-                <p className="text-[11px] font-extrabold uppercase tracking-wider text-primary">
+                <p className="text-[11px] font-extrabold uppercase tracking-wider text-[#C66A3D]">
                   {formatDate(m.date)}
                   {!past && daysUntil(m.date) <= 90 && (
                     <span className="ml-1.5 text-muted-foreground normal-case tracking-normal font-bold">
@@ -154,7 +155,7 @@ export default function About() {
                     </span>
                   )}
                 </p>
-                <p className="font-bold text-[14px] mt-0.5">{m.label}</p>
+                <p className="font-bold text-[14px] mt-0.5 text-[#22364D]">{m.label}</p>
                 <p className="text-[13px] text-muted-foreground leading-relaxed mt-0.5">{m.detail}</p>
               </div>
             );
