@@ -139,7 +139,7 @@ describe("photos router", () => {
       mimeType: "image/png",
       dataBase64: png,
       caption: "First day home",
-      date: "2026-08-21",
+      date: "2026-09-18",
     });
     expect(result.id).toBe(7);
     expect(storagePut).toHaveBeenCalledWith(
@@ -148,7 +148,7 @@ describe("photos router", () => {
       "image/png",
     );
     expect(db.addPhoto).toHaveBeenCalledWith(
-      expect.objectContaining({ caption: "First day home", date: "2026-08-21", createdBy: 1 }),
+      expect.objectContaining({ caption: "First day home", date: "2026-09-18", createdBy: 1 }),
     );
   });
 
@@ -159,7 +159,7 @@ describe("photos router", () => {
         fileName: "notes.txt",
         mimeType: "text/plain",
         dataBase64: "aGk=",
-        date: "2026-08-21",
+        date: "2026-09-18",
       }),
     ).rejects.toThrow();
   });

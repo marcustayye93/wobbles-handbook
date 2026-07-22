@@ -35,7 +35,7 @@ export const HUNDRED: HundredCategory[] = [
     title: "Grooming",
     emoji: "✂️",
     items: [
-      "Start handling paws, ears and muzzle at 8 weeks — the grooming battle is won months before the first haircut.",
+      "Start handling paws, ears and muzzle from day one home — the grooming battle is won months before the first haircut.",
       "The first groom (~16 weeks) should be short and happy, not a full makeover. It sets the tone for life.",
       "Bring photos to the groomer. 'Teddy bear cut' means something different in every salon.",
       "Say 'don't poodle my doodle' if you want a round face, not a shaved poodle muzzle.",
@@ -63,7 +63,7 @@ export const HUNDRED: HundredCategory[] = [
       "The socialisation window closes around 16 weeks. It is the highest-leverage project of the dog's life.",
       "Socialisation means positive exposure at the puppy's pace — not being mobbed at a dog park.",
       "Carry the puppy everywhere before vaccinations finish. Being carried counts as socialisation with zero disease risk.",
-      "There's a fear period right at 8 weeks — keep homecoming week gentle and boring.",
+      "Fear periods are real — and landing at 12 weeks after a long flight is a lot. Keep homecoming week gentle and boring.",
       "A second fear period hits around 6–14 months. A confident adolescent suddenly spooking is normal; stay calm.",
       "Comfort a crying puppy at night. Ignoring them doesn't build character, it builds anxiety.",
       "Puppy teeth are needles and teething peaks around 4–6 months. Frozen washcloths and frozen Kongs save furniture.",

@@ -157,4 +157,18 @@
 - [x] Generate matching watercolor illustration for the new module (train-confidence_7ebd9739.png, verified 1920x1440)
 - [x] Wire the module into TRAINING_SKILLS (priority 8, after Socialisation sprint; priorities 9-12 rebumped; "Confidence building" added to training tracker choices), tsc clean + 114/114 tests
 - [x] Screenshot verify expanded card on /training?open=confidence (illustration renders)
-- [ ] Checkpoint (auto-publish) + push GitHub + deliver
+- [x] Checkpoint 54bc6cc5 (auto-published) + pushed to GitHub (main @ 54bc6cc) + delivered
+
+# Timeline alignment audit (user request 2026-07-22)
+- [x] Audit all date sources: WOBBLES dob/homecoming, wobblesToday stages, dailyEngine activity pools, care rota anchors, training startWhen/startWeeks, milestones
+- [x] Training School: all hands-on skills now startWeeks 12+ (his age on homecoming day) — nothing shows actionable before 18 Sep 2026
+- [x] Wobbles Today + nudges: pre-homecoming stages (litter socialisation → breeder export prep) show prep-only guidance; hands-on rota/nudges only fire post-homecoming
+- [x] Care rota anchors re-anchored post-homecoming: bath fortnightly from Mon 21 Sep, parasite dose on the 18th monthly, park-night alternation from 19 Sep
+- [x] Confidence Club + other module copy reframed relative to 12-week homecoming (18 Sep)
+- [x] Tests updated for new anchors + stages; tsc clean; 114/114 tests green; mobile screenshots verified
+- [x] Checkpoint (auto-publish) + push GitHub + deliver
+
+# Homecoming date correction + regulation check (user request 2026-07-22)
+- [x] Research Singapore rules — governing agency is AVS/NParks (not NEA): dogs must be at least 12 weeks old at import into Singapore, so earliest homecoming for DOB 26 Jun 2026 is 18 Sep 2026 (not 6 weeks)
+- [x] Updated WOBBLES.homecoming to 2026-09-18 with the regulation basis documented in code comments and the Singapore chapter
+- [x] Recalculated milestones (vaccines at breeder, import licence, flight day = homecoming day, socialisation window to ~16 Oct) around new homecoming

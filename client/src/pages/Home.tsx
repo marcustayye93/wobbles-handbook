@@ -26,8 +26,6 @@ import { ChevronRight, ArrowRight, PawPrint, CalendarDays, Search, SlidersHorizo
 function nextCountdown(): { days: number; label: string } | null {
   const toHome = daysUntil(WOBBLES.homecoming);
   if (toHome > 0) return { days: toHome, label: "days until homecoming" };
-  const toSg = daysUntil("2026-09-18");
-  if (toSg > 0) return { days: toSg, label: "days until fly-ready" };
   const next = MILESTONES.filter((m) => daysUntil(m.date) > 0)[0];
   if (next) return { days: daysUntil(next.date), label: next.label.toLowerCase() };
   return null;

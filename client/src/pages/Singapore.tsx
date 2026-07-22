@@ -24,7 +24,9 @@ const ICONS: Record<string, LucideIcon> = {
 };
 
 export default function Singapore() {
-  const toFlyReady = daysUntil("2026-09-18");
+  // Homecoming day IS fly day: AVS requires puppies to be ≥12 weeks old at import,
+  // so Wobbles flies BNE → SIN on 18 Sep 2026, the day he turns 12 weeks.
+  const toFlight = daysUntil("2026-09-18");
 
   // group steps by phase, preserving order
   const phases: { phase: string; steps: typeof SG_STEPS }[] = [];
@@ -47,9 +49,9 @@ export default function Singapore() {
             className="w-full aspect-[16/10] object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#22364D]/70 via-transparent to-transparent" aria-hidden />
-          {toFlyReady > 0 && (
+          {toFlight > 0 && (
             <span className="absolute bottom-3 left-3 bg-[#FFFDF8]/92 backdrop-blur px-3 py-1.5 rounded-full text-xs font-extrabold text-[#22364D]">
-              ✈️ Fly-ready in {toFlyReady} days (18 Sep 2026)
+              ✈️ Flies home in {toFlight} days (18 Sep 2026)
             </span>
           )}
         </div>

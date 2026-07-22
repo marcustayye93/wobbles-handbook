@@ -95,7 +95,7 @@ export function dayPlanFor(date: Date): DayPlan {
 /* ---------------- Care rota ----------------
  * Recurring, date-deterministic care tasks. Bath is every other Monday
  * anchored to homecoming week; nails weekly on Mondays; parasite dose on
- * the 21st monthly; teeth a few times a week; ears weekly.
+ * the 18th monthly (homecoming date); teeth a few times a week; ears weekly.
  */
 
 export interface CareTask {
@@ -109,9 +109,9 @@ export interface CareTask {
 }
 
 /** ISO week index used for fortnight alternation, anchored so the first
- * Monday after homecoming (2026-08-24) is a bath Monday. */
+ * Monday after homecoming (2026-09-21) is a bath Monday. */
 function fortnightIndex(date: Date): number {
-  const anchor = new Date("2026-08-24T00:00:00"); // first bath Monday
+  const anchor = new Date("2026-09-21T00:00:00"); // first bath Monday
   const days = Math.floor((date.getTime() - anchor.getTime()) / 86400000);
   return Math.floor(days / 7);
 }
@@ -153,11 +153,11 @@ export function careTasksFor(date: Date): CareTask[] {
     });
   }
 
-  if (dom === 21)
+  if (dom === 18)
     out.push({
       id: "parasite",
       emoji: "🛡️",
-      label: "Monthly parasite dose today (the 21st)",
+      label: "Monthly parasite dose today (the 18th)",
       detail:
         "Heartworm + tick + flea preventive chew or spot-on. Log it in the Health tracker so the family knows it's done.",
       link: "/trackers/health",
@@ -277,7 +277,7 @@ export function bonusActivityFor(date: Date, homecomingFuture: boolean): Activit
  * 7pm park socialisation every other day, anchored to homecoming.
  */
 export function isParkNight(date: Date): boolean {
-  const anchor = new Date("2026-08-22T00:00:00"); // first park night, day after homecoming
+  const anchor = new Date("2026-09-19T00:00:00"); // first park night, day after homecoming
   const days = Math.floor((date.getTime() - anchor.getTime()) / 86400000);
   return days >= 0 && days % 2 === 0;
 }

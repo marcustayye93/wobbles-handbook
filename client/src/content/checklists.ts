@@ -67,7 +67,7 @@ export const CHECKLISTS: Checklist[] = [
     id: "puppy-arrival",
     title: "Puppy Arrival",
     emoji: "🏡",
-    cadence: "Before 21 Aug 2026",
+    cadence: "Before 18 Sep 2026",
     items: [
       "Crate + divider, set up in a quiet corner",
       "Playpen and/or baby gates",

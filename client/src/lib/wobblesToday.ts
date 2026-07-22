@@ -4,7 +4,7 @@
  * PLUS a date-deterministic daily layer: the household weekly schedule
  * (Marcus WFH Mon/Fri, office Tue–Thu; Chesa home most days), recurring
  * care-rota reminders (fortnightly Monday baths, weekly nails/ears,
- * monthly parasite dose on the 21st), a rotating activity idea, and
+ * monthly parasite dose on the 18th), a rotating activity idea, and
  * per-person nudges. Everything is transparent, rule-based and identical
  * for the whole family on any given date. No fake AI.
  */
@@ -54,39 +54,53 @@ export function wobblesToday(now: Date = new Date()): TodayStage {
       link: "/handbook/checklists",
       linkLabel: "Arrival checklist",
     };
-  if (toHome > 0)
+  if (toHome > 0) {
+    if (age.weeks < 8)
+      return {
+        stage: age.weeks < 3 ? "Neonatal — with the litter" : "Litter socialisation",
+        title: "Settle In, Little One",
+        text: `Wobbles is ${age.weeks} weeks old, growing up with his litter at The Doghouse QLD. The breeder is running ENS and Puppy Culture — your job is the humans-only prep: puppy-proof, shop the kit list and read the first-day guide.`,
+        focus: "Puppy-proof one room fully this week; keep working the kit list",
+        expect: "The breeder is running ENS and enrichment — he's learning without you",
+        training: "Decide your cue words now so the household is consistent from day one",
+        link: "/handbook/first-day",
+        linkLabel: "First-day guide",
+      };
     return {
-      stage: age.weeks < 3 ? "Neonatal — with the litter" : "Litter socialisation",
-      title: "Settle In, Little One",
-      text: `Wobbles is ${age.weeks} weeks old, growing up with his litter at The Doghouse QLD. Perfect time to puppy-proof, shop the kit list and read the first-day guide.`,
-      focus: "Puppy-proof one room fully this week",
-      expect: "The breeder is running ENS and enrichment — he's learning without you",
-      training: "Decide your cue words now so the household is consistent from day one",
-      link: "/handbook/first-day",
-      linkLabel: "First-day guide",
+      stage: "With the breeder — export prep (8–12 weeks)",
+      title: "Growing Up at the Farm",
+      text: `${age.weeks} weeks old and still at The Doghouse QLD — AVS won't let him fly before 12 weeks, so he's banking litter manners, farm socialisation and his second vaccination there. ${toHome} days until he lands: nail the admin sprint (AVS import permit, PALS licence, Jetpets booking) and finish the flat.`,
+      focus: "Admin sprint: import permit, PALS licence, Jetpets confirmation, kit list done",
+      expect: "The breeder handles his 2nd vax and enrichment — ask for photo updates and the vaccination record",
+      training: "Train yourselves: agree the house rules, cue words and the first-72-hours plan",
+      link: "/singapore",
+      linkLabel: "Road to Singapore",
     };
-  if (age.weeks < 12)
+  }
+  if (age.weeks < 16) {
+    const daysHome = -toHome; // days since homecoming (0 = arrival day)
+    if (daysHome <= 3)
+      return {
+        stage: "Just landed — decompression bubble",
+        title: "Welcome Home, Wobbles",
+        text: `He's here! Days 1–3 are the decompression bubble: flat-only, calm, predictable. No visitors, no outings — just toilet trips, naps, gentle play and letting him learn that this is home. The socialisation sprint starts from day 4.`,
+        focus: "Quiet flat, toilet-spot repetition, name + hand-feeding, long naps",
+        expect: "Jet-lag tired, some whining at night, toilet accidents — all normal after a big flight",
+        training: "Nothing formal — just reward calm, say his name, hand-feed part of each meal",
+        link: "/handbook/first-day",
+        linkLabel: "First-day guide",
+      };
     return {
-      stage: "Socialisation window — early",
-      title: "The Window Is Open",
-      text: `At ${age.weeks} weeks, every calm new sight, sound and surface is building his adult brain. One tiny new experience a day — carried around Woodlands is perfect pre-vaccination.`,
-      focus: "7:15am toilet walk (carry to the grass), pad practice at home, one carried new experience",
-      expect: "Needle teeth, short naps every 45–90 min, toilet every 30–60 min awake",
-      training: "Name response + 2-minute sit sessions before meals",
+      stage: "Socialisation sprint — window closing",
+      title: "Four Weeks to Make Count",
+      text: `${age.weeks} weeks — he arrived at 12 weeks and the socialisation window closes around 16, so this month IS the sprint. Front-load the Confidence Club and the 100 Things list: people, surfaces, sounds, gentle handling. Carried/lap-based outings until he's fully vaccinated.`,
+      focus: "One or two new socialisation ticks a day; 7:15am walk + 7pm park (carried) rhythm",
+      expect: "Growing confidence, testing boundaries, teething begins",
+      training: "Day-1 skills all start now: name, sit, crate love, recall games — under 5 minutes a session",
       link: "/trackers/social",
       linkLabel: "Log an experience",
     };
-  if (age.weeks < 16)
-    return {
-      stage: "Socialisation window — closing",
-      title: "Last Weeks of the Window",
-      text: `${age.weeks} weeks — the socialisation window closes around 16 weeks. Prioritise variety: people, surfaces, sounds, gentle handling. Keep the 7:15am and evening walk rhythm; the 7pm park sessions stay carried/lap-based until he's fully vaccinated.`,
-      focus: "Tick a new socialisation category this week; keep the walk routine steady",
-      expect: "More confidence, testing boundaries, teething begins",
-      training: "Recall games in the hallway; keep sessions under 5 minutes",
-      link: "/trackers/social",
-      linkLabel: "Log an experience",
-    };
+  }
   if (age.months < 6)
     return {
       stage: "Junior — pre coat change",

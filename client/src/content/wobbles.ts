@@ -59,7 +59,15 @@ export const WOBBLES = {
     listingUrl:
       "https://rightpaw.com.au/l/the-doghouse-qld-theodore-cavoodles/296a0927-5317-4f69-a9ef-de2a28b688d4",
   },
-  homecoming: "2026-08-21",
+  /**
+   * Homecoming = arrival day in Singapore. Driver: AVS (NParks) requires dogs
+   * to be at least 12 weeks old at export from Australia, and Singapore farms/
+   * breeders release only after the second vaccination (~10–12 weeks). Legal
+   * minimum SALE age under AVS breeding conditions is 9 weeks — but the export
+   * rule makes 12 weeks (18 Sep 2026) the earliest realistic homecoming.
+   * (Commonly misremembered as an "NEA 6-weeks-at-the-farm" rule — it's AVS.)
+   */
+  homecoming: "2026-09-18",
 } as const;
 
 export interface Milestone {
@@ -91,39 +99,46 @@ export const MILESTONES: Milestone[] = [
     icon: "syringe",
   },
   {
-    date: "2026-08-21",
-    label: "Homecoming day (8 weeks)",
+    date: "2026-08-28",
+    label: "9 weeks — legal sale age reached (stays at the farm)",
     detail:
-      "Wobbles comes home! He arrives with a mum-scented blanket, his puppy pack, and a seatbelt tether for the drive.",
-    icon: "home",
-  },
-  {
-    date: "2026-08-21",
-    label: "Start monthly parasite preventive (8 weeks)",
-    detail:
-      "Singapore is year-round heartworm, tick and flea territory. Ask the vet to start a monthly combined preventive (NexGard Spectra / Simparica Trio chew, or a spot-on) once weight allows — then repeat on the 21st of every month.",
-    icon: "shield",
+      "Under AVS breeding-licence conditions no puppy may be sold before 9 weeks. Wobbles stays with the breeder until he can fly, banking litter manners and farm socialisation — the breeder keeps running his enrichment curriculum.",
+    icon: "badge-check",
   },
   {
     date: "2026-09-04",
-    label: "Second vaccination window opens (10 weeks)",
+    label: "Second vaccination at the breeder (10 weeks)",
     detail:
-      "Second C3/C5 booster is typically given at 10–12 weeks in Singapore (C5 adds leptospirosis — ask your vet). Book this soon after homecoming; the vet will also confirm the microchip.",
+      "The second C3 booster is given at the farm in Queensland around 10 weeks, before export. Verify the record lands in his puppy pack — Singapore's import inspection and his AVS licence both need it.",
     icon: "syringe",
   },
   {
-    date: "2026-09-11",
-    label: "AVS dog licence — course + PALS application",
+    date: "2026-09-04",
+    label: "Pre-homecoming admin sprint (humans only)",
     detail:
-      "Every dog in Singapore must be licensed. Complete the free online Pet Ownership Course (go.gov.sg/petownershipcourse), then apply on PALS (pals.avs.gov.sg) with the microchip number and vaccination records. Cavoodles are HDB-approved; one dog per flat.",
+      "Two weeks out: finish the free AVS Pet Ownership Course, get his PALS dog licence number, confirm the AVS import permit and Jetpets flight, puppy-proof the flat and finish the kit list. Everything ready before he lands.",
     icon: "badge-check",
   },
   {
     date: "2026-09-18",
-    label: "12 weeks — Singapore export age reached",
+    label: "Homecoming day — lands in Singapore (12 weeks)",
     detail:
-      "Singapore's AVS requires dogs to be at least 12 weeks old at export. From today Wobbles can legally fly to Singapore.",
-    icon: "plane",
+      "The big day! At exactly 12 weeks — the earliest AVS export age — Wobbles flies BNE → SIN, clears Changi's CAPQ inspection (no quarantine) and comes home to Woodlands with his mum-scented blanket and puppy pack.",
+    icon: "home",
+  },
+  {
+    date: "2026-09-18",
+    label: "Start monthly parasite preventive (12 weeks)",
+    detail:
+      "Singapore is year-round heartworm, tick and flea territory. Ask the vet to start a monthly combined preventive (NexGard Spectra / Simparica Trio chew, or a spot-on) at the first Singapore vet visit — then repeat on the 18th of every month, forever.",
+    icon: "shield",
+  },
+  {
+    date: "2026-09-21",
+    label: "First Singapore vet visit + licence wrap-up",
+    detail:
+      "Within his first days home: register with a Woodlands vet, confirm the microchip and vaccination records, start parasite prevention, and finalise the AVS dog licence on PALS. Cavoodles are HDB-approved; one dog per flat.",
+    icon: "stethoscope",
   },
   {
     date: "2026-10-02",
@@ -143,7 +158,7 @@ export const MILESTONES: Milestone[] = [
     date: "2026-10-16",
     label: "Socialisation window closes (~16 weeks)",
     detail:
-      "The critical socialisation period runs to roughly 16 weeks. Every calm, positive new experience before now pays off for life.",
+      "The critical socialisation period runs to roughly 16 weeks — and Wobbles lands with only ~4 weeks of it left. His first month home IS the socialisation sprint: front-load the Confidence Club and carried outings from day 4.",
     icon: "users",
   },
   {

@@ -12,13 +12,13 @@ export const SECTIONS: Section[] = [
     slug: "first-day",
     title: "The First Day & Night",
     emoji: "🏡",
-    tagline: "Homecoming is 21 August 2026 — here's exactly how to nail it",
+    tagline: "Homecoming is 18 September 2026 — here's exactly how to nail it",
     readMins: 8,
     hero: ASSETS.heroFirstDay,
     blocks: [
       {
         type: "p",
-        text: "Wobbles comes home at 8 weeks old on Friday 21 August 2026. He'll arrive with his puppy pack from The Doghouse QLD: a blanket carrying his mum's scent, his puppy passport, microchip and first-vaccination records, and a seatbelt tether for the drive. The first 48 hours set the tone for everything — but they don't have to be perfect, just calm.",
+        text: "Wobbles comes home at 12 weeks old on Friday 18 September 2026 — Singapore's AVS rules mean puppies can only be imported from 12 weeks of age, so he spends his first three months with his litter at The Doghouse QLD. He'll arrive with his puppy pack: a blanket carrying his mum's scent, his puppy passport, microchip and vaccination records (two shots done in Australia). The first 48 hours set the tone for everything — but they don't have to be perfect, just calm. Remember he's also just flown 7+ hours from Brisbane, so day one is about rest, not introductions.",
       },
       { type: "h", text: "Before he arrives" },
       {
@@ -55,8 +55,8 @@ export const SECTIONS: Section[] = [
       },
       {
         type: "tip",
-        title: "The 8-week fear period",
-        text: "Puppies go through a fear-imprint period right around 8 weeks — exactly when Wobbles comes home. Anything genuinely frightening this week can leave a lasting mark. Keep week one gentle, positive and boring (in a good way).",
+        title: "Fear periods & the big move",
+        text: "Puppies go through a fear-imprint period around 8–11 weeks — Wobbles rides most of it out safely at the farm, but the flight and rehoming at 12 weeks are still a big deal, and a second sensitive patch can linger. Anything genuinely frightening this week can leave a lasting mark. Keep week one gentle, positive and boring (in a good way).",
       },
       { type: "h", text: "The first day rhythm" },
       {
@@ -88,7 +88,7 @@ export const SECTIONS: Section[] = [
           "Mum-scented blanket in the crate (it's in his puppy pack), plus something that smells of you.",
           "Comfort a crying puppy. Ignoring him does not 'toughen him up' — it raises his stress and can create lasting anxiety.",
           "Learn his two cries: anxious crying early in the night means he needs reassurance; waking and crying in the middle of the night usually means he needs a toilet trip.",
-          "Night toilet trips are normal: at 8 weeks he can hold roughly 4–6 hours overnight. Keep trips boring — out, wee, praise, back to bed, no play.",
+          "Night toilet trips are normal: at 12 weeks he can hold roughly 5–6 hours overnight, so expect one trip a night at first. Keep trips boring — out, wee, praise, back to bed, no play.",
           "Crying at bedtime typically fades within days to a couple of weeks. Consistency wins.",
         ],
       },
@@ -123,7 +123,7 @@ export const SECTIONS: Section[] = [
           "Manding: when Wobbles sits and looks at you, reward it — he's 'asking politely'. Ignore jumping; reward sitting.",
           "Exchange games: trade a treat for whatever is in his mouth. Never chase-and-snatch — that teaches guarding.",
           "Communication trinity: a marker word or clicker ('yes!') powered up with treats makes every future lesson faster.",
-          "Fear-period awareness: gentle first week home (~8 weeks) and again during the second fear period around 6–14 months.",
+          "Fear-period awareness: gentle first week home (he lands at 12 weeks, fresh off a flight) and again during the second fear period around 6–14 months.",
           "Short game-based sessions: 30 seconds to 2 minutes. Stop while he still wants more.",
         ],
       },
@@ -461,8 +461,8 @@ export const SECTIONS: Section[] = [
       },
       {
         type: "tip",
-        title: "Start at 8 weeks — gently",
-        text: "From day one at home, handle his paws, ears, mouth and tail for a few seconds at a time with treats — a couple of body parts per session, not all of them. At his age, sessions of 2–5 minutes are plenty. His first professional groom (~16 weeks, post-vaccination) should be a short, happy 'intro groom': bath, dry, tidy, party.",
+        title: "Start from day one home — gently",
+        text: "From day one at home (12 weeks), handle his paws, ears, mouth and tail for a few seconds at a time with treats — a couple of body parts per session, not all of them. At his age, sessions of 2–5 minutes are plenty. His first professional groom (~5–6 months, post-vaccination) should be a short, happy 'intro groom': bath, dry, tidy, party.",
       },
     ],
   },
@@ -626,7 +626,7 @@ export const SECTIONS: Section[] = [
       {
         type: "tip",
         title: "The monthly preventive habit — for life",
-        text: "One combined monthly preventive (a chew like NexGard Spectra or Simparica Trio, or a spot-on drip like Revolution Plus) covers ticks, fleas AND heartworm in a single dose — and it starts at homecoming (21 Aug 2026, logged in his calendar). In Singapore this never pauses: heartworm mosquitoes and tropical ticks are active all 12 months, so pick a memorable date (the 21st) and re-dose every month, forever. Log each dose in the Health tracker.",
+        text: "One combined monthly preventive (a chew like NexGard Spectra or Simparica Trio, or a spot-on drip like Revolution Plus) covers ticks, fleas AND heartworm in a single dose — and it starts at homecoming (18 Sep 2026, logged in his calendar). In Singapore this never pauses: heartworm mosquitoes and tropical ticks are active all 12 months, so pick a memorable date (the 18th) and re-dose every month, forever. Log each dose in the Health tracker.",
       },
     ],
   },

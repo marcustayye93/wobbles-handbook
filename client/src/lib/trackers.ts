@@ -126,7 +126,7 @@ export const TRACKERS: TrackerMeta[] = [
     group: "health",
     empty: "Shots, worming & vet visits",
     intro:
-      "Australian puppies typically get C3 vaccines at ~6–8, 10–12 and 14–16 weeks, then annual boosters. Wobbles' first shot happens at the breeder before homecoming; log everything here for the Singapore paperwork later.",
+      "Australian puppies typically get C3 vaccines at ~6–8, 10–12 and 14–16 weeks, then annual boosters. Because Wobbles stays at the breeder until 12 weeks, his first two shots happen in Australia before export — log everything here, since AVS wants the full history for the Singapore paperwork.",
     fields: {
       options: {
         label: "Event",
