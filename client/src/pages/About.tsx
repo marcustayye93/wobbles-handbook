@@ -38,7 +38,7 @@ export default function About() {
           <div className="absolute -inset-2 bg-primary/10 rounded-[2rem] rotate-[1.2deg]" aria-hidden />
           <img
             src={ASSETS.photoFace}
-            alt="Wobbles as a young puppy"
+            alt="Cartoon sketch of Wobbles as a young puppy"
             className="relative w-full aspect-[4/3] object-cover rounded-[1.8rem] border-2 border-card shadow-md -rotate-[0.5deg]"
           />
         </div>
@@ -46,7 +46,7 @@ export default function About() {
           <div className="relative flex-1">
             <img
               src={ASSETS.photoNewborn}
-              alt="Wobbles as a newborn"
+              alt="Cartoon sketch of Wobbles as a newborn"
               className="w-full aspect-square object-cover rounded-3xl border-2 border-card shadow-sm rotate-[0.8deg]"
             />
             <span className="absolute bottom-2 left-2 bg-card/92 px-2 py-1 rounded-full text-[10px] font-extrabold border border-border">
@@ -65,7 +65,7 @@ export default function About() {
           </div>
         </div>
         <p className="text-[11px] text-muted-foreground text-center mt-2 italic">
-          Left: day one. Right: an AI-imagined grown-up Wobbles — red parti fleece coat, teddy trim.
+          Sketches of Wobbles for now — real photos coming once he's home. Right: an AI-imagined grown-up Wobbles.
         </p>
       </div>
 

@@ -10,8 +10,9 @@ export const ASSETS = {
   heroGrooming: "/manus-storage/hero-grooming_fbd52402.png",
   heroSingapore: "/manus-storage/hero-singapore_c2d583c0.png",
   heroFirstDay: "/manus-storage/hero-firstday_4e0b74c1.png",
-  photoFace: "/manus-storage/wobbles-photo-face_6ecdc02f.webp",
-  photoNewborn: "/manus-storage/wobbles-photo-newborn_83be47ee.webp",
+  // 2D cartoon sketch placeholders until better photos arrive (user request)
+  photoFace: "/manus-storage/wobbles-cartoon-face_f9d46ad9.png",
+  photoNewborn: "/manus-storage/wobbles-cartoon-newborn_4c708746.png",
 } as const;
 
 export const WOBBLES = {

@@ -101,7 +101,7 @@ export default function Home() {
           <div className="absolute -inset-2 bg-primary/10 rounded-[2rem] rotate-[1.5deg]" aria-hidden />
           <img
             src={ASSETS.photoFace}
-            alt="Wobbles the red-parti Cavoodle puppy"
+            alt="Cartoon sketch of Wobbles the red-parti Cavoodle puppy"
             className="relative w-full aspect-[4/3] object-cover rounded-[1.8rem] border-2 border-card shadow-lg -rotate-[0.6deg]"
           />
           <span className="absolute bottom-3 left-3 bg-card/92 backdrop-blur px-3 py-1.5 rounded-full text-xs font-extrabold border border-border">
