@@ -1,8 +1,9 @@
 /*
  * Keepsake Field Guide — "Wobbles Today" intelligence.
  * Stage-aware guidance (focus / expect / training) computed from age, plus
- * simple rule-based nudges derived from local tracker data. No fake AI —
- * every rule is transparent and grounded in the handbook content.
+ * simple rule-based nudges derived from the family-shared server data
+ * (passed in by the caller). No fake AI — every rule is transparent and
+ * grounded in the handbook content.
  */
 import { WOBBLES, wobblesAge, daysUntil } from "@/content/wobbles";
 import { type TrackerEntry } from "@/lib/trackers";
@@ -109,14 +110,6 @@ export interface Nudge {
   link: string;
 }
 
-function readEntries(id: string): TrackerEntry[] {
-  try {
-    return JSON.parse(localStorage.getItem(`wobbles:tracker:${id}`) ?? "[]") as TrackerEntry[];
-  } catch {
-    return [];
-  }
-}
-
 function daysSince(iso: string | undefined): number | null {
   if (!iso) return null;
   const then = new Date(iso + "T12:00:00").getTime();
@@ -124,21 +117,26 @@ function daysSince(iso: string | undefined): number | null {
   return Math.round((today - then) / 86400000);
 }
 
-/** Transparent, deterministic nudges from local data. Max 2 returned. */
-export function todaysNudges(): Nudge[] {
+/**
+ * Transparent, deterministic nudges from family-shared server data. Max 2.
+ * @param entriesByTracker newest-first entries per tracker id (server-backed)
+ * @param readProgress shared reading-progress map (slug -> 0..1)
+ */
+export function todaysNudges(
+  entriesByTracker: (id: string) => TrackerEntry[],
+  readProgress: Record<string, number>,
+): Nudge[] {
   const age = wobblesAge();
   const out: Nudge[] = [];
   if (!age.born || daysUntil(WOBBLES.homecoming) > 0) {
     // Pre-homecoming: reading nudge only
-    try {
-      const prog = JSON.parse(localStorage.getItem("wobbles:readProgress") ?? "{}") as Record<string, number>;
-      const started = Object.entries(prog).find(([, v]) => v > 0.05 && v < 0.95);
-      if (started)
-        out.push({ id: "resume", emoji: "📖", text: "Pick up where you left off in the handbook", link: `/handbook/${started[0]}` });
-    } catch { /* ignore */ }
+    const started = Object.entries(readProgress).find(([, v]) => v > 0.05 && v < 0.95);
+    if (started)
+      out.push({ id: "resume", emoji: "📖", text: "Pick up where you left off in the handbook", link: `/handbook/${started[0]}` });
     return out.slice(0, 2);
   }
 
+  const readEntries = entriesByTracker;
   const groom = daysSince(readEntries("grooming")[0]?.date);
   if (groom == null || groom >= 2)
     out.push({ id: "brush", emoji: "🪮", text: groom == null ? "No brushing logged yet — start the daily ritual" : `Last brush was ${groom} days ago — quick 2-minute session?`, link: "/trackers/grooming" });

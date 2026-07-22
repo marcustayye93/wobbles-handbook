@@ -4,7 +4,7 @@
  * Today's timeline → Coming up → Start reading. Paper bg, Cormorant serif,
  * ink navy + sienna, restrained keepsake details.
  */
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "wouter";
 import { PageShell, Eyebrow } from "@/components/AppShell";
 import QuickLogSheet from "@/components/QuickLogSheet";
@@ -12,6 +12,7 @@ import TodayTimeline, { useDayFeed } from "@/components/TodayTimeline";
 import SearchDialog from "@/components/SearchDialog";
 import { wobblesToday, todaysNudges } from "@/lib/wobblesToday";
 import { todayISO } from "@/hooks/useLocalStorage";
+import { useTrackerFeed, useSharedState, rowToEntry } from "@/hooks/useSyncedData";
 import { ASSETS, WOBBLES, MILESTONES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
 import { SECTIONS } from "@/content/handbookSections";
 import { ChevronRight, ArrowRight, PawPrint, CalendarDays, Search } from "lucide-react";
@@ -42,7 +43,18 @@ export default function Home() {
   const today = wobblesToday();
   const countdown = nextCountdown();
   const nextMilestones = MILESTONES.filter((m) => daysUntil(m.date) >= 0).slice(0, 3);
-  const nudges = todaysNudges();
+
+  // Nudges from the family-shared server data (same feed the trackers use)
+  const { rows } = useTrackerFeed();
+  const [readProgress] = useSharedState<Record<string, number>>("readProgress", {});
+  const entriesFor = useMemo(
+    () => (id: string) => rows.filter((r) => r.trackerId === id).map(rowToEntry),
+    [rows],
+  );
+  const nudges = useMemo(
+    () => todaysNudges(entriesFor, readProgress),
+    [entriesFor, readProgress],
+  );
 
   const [sheetOpen, setSheetOpen] = useState(false);
   const [sheetTracker, setSheetTracker] = useState<string | null>(null);
