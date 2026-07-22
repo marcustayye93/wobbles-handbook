@@ -1,47 +1,21 @@
 /*
  * Keepsake Field Guide — QuickLogSheet.
  * One bottom sheet for all logging: a tracker grid (step 1) and an inline
- * mini-form (step 2) that saves straight to localStorage without page
- * navigation. Fires a "wobbles:log" window event so open pages can refresh.
+ * mini-form (step 2) that saves straight to the family-shared server via
+ * tRPC — every phone sees the new entry instantly through the shared cache.
  */
 import { useEffect, useState } from "react";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { TRACKERS, getTracker, type TrackerEntry } from "@/lib/trackers";
+import { TRACKERS, getTracker } from "@/lib/trackers";
+import { useAddTrackerEntry } from "@/hooks/useSyncedData";
 import { todayISO, nowHM } from "@/hooks/useLocalStorage";
 import { cn } from "@/lib/utils";
 import { ChevronLeft } from "lucide-react";
 import { toast } from "sonner";
 
 const INK = "#22364D";
-
-/** Append an entry to a tracker's localStorage list and notify listeners. */
-export function saveQuickEntry(trackerId: string, entry: TrackerEntry) {
-  const key = `wobbles:tracker:${trackerId}`;
-  let arr: TrackerEntry[] = [];
-  try {
-    arr = JSON.parse(localStorage.getItem(key) ?? "[]") as TrackerEntry[];
-  } catch {
-    arr = [];
-  }
-  const next = [entry, ...arr].sort((a, b) =>
-    (b.date + (b.time ?? "")).localeCompare(a.date + (a.time ?? "")),
-  );
-  localStorage.setItem(key, JSON.stringify(next));
-  window.dispatchEvent(new CustomEvent("wobbles:log", { detail: { trackerId } }));
-}
-
-/** Subscribe to quick-log saves (returns a bump counter to invalidate memos). */
-export function useLogVersion(): number {
-  const [v, setV] = useState(0);
-  useEffect(() => {
-    const bump = () => setV((n) => n + 1);
-    window.addEventListener("wobbles:log", bump);
-    return () => window.removeEventListener("wobbles:log", bump);
-  }, []);
-  return v;
-}
 
 interface Props {
   open: boolean;
@@ -51,6 +25,7 @@ interface Props {
 }
 
 export default function QuickLogSheet({ open, onOpenChange, initialTracker }: Props) {
+  const addMutation = useAddTrackerEntry();
   const [trackerId, setTrackerId] = useState<string | null>(null);
   const [date, setDate] = useState(todayISO());
   const [time, setTime] = useState(nowHM());
@@ -94,15 +69,14 @@ export default function QuickLogSheet({ open, onOpenChange, initialTracker }: Pr
       toast.error(`Enter a ${f.value.label.toLowerCase()}`);
       return;
     }
-    const entry: TrackerEntry = {
-      id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+    addMutation.mutate({
+      trackerId: meta.id,
       date,
       ...(f.time ? { time } : {}),
-      ...(f.value && value !== "" ? { value: Number(value) } : {}),
+      ...(f.value && value !== "" ? { value: String(Number(value)) } : {}),
       ...(f.options ? { option } : {}),
       ...(note.trim() ? { note: note.trim() } : {}),
-    };
-    saveQuickEntry(meta.id, entry);
+    });
     onOpenChange(false);
     toast.success(`${meta.emoji} ${meta.title} logged`);
   };

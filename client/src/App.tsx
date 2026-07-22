@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import AuthGate from "@/components/AuthGate";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import Home from "@/pages/Home";
 import About from "@/pages/About";
@@ -18,8 +19,8 @@ import TrackersHub from "@/pages/TrackersHub";
 import TrackerPage from "@/pages/TrackerPage";
 import Memories from "@/pages/Memories";
 import NotFound from "@/pages/NotFound";
-
 function Router() {
+  // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
       <Route path="/" component={Home} />
@@ -44,7 +45,9 @@ export default function App() {
       <ThemeProvider defaultTheme="light">
         <TooltipProvider>
           <Toaster position="top-center" />
-          <Router />
+          <AuthGate>
+            <Router />
+          </AuthGate>
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>

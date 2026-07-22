@@ -1,16 +1,17 @@
 /*
  * Redesign v2 — "Keepsake Field Guide" Memories page.
  * Full-bleed gouache cover, serif title, milestone timeline from MILESTONES,
- * and a taped placeholder card for the future photo journal.
+ * and the live family-shared photo journal (uploads synced via the server).
  */
 import { useMemo } from "react";
 import { PageShell, Eyebrow, PawDivider } from "@/components/AppShell";
-import { ASSETS, MILESTONES, WOBBLES, daysUntil, formatDate, wobblesAge } from "@/content/wobbles";
-import { TRACKERS, type TrackerEntry } from "@/lib/trackers";
-import { useLogVersion } from "@/components/QuickLogSheet";
+import { ASSETS, MILESTONES, daysUntil, formatDate, wobblesAge } from "@/content/wobbles";
+import { TRACKERS } from "@/lib/trackers";
+import { useTrackerFeed, rowToEntry, type TrackerRow } from "@/hooks/useSyncedData";
 import { cn } from "@/lib/utils";
+import PhotoJournal from "@/components/PhotoJournal";
 import {
-  Star, Hand, Syringe, Home as HomeIcon, Plane, Users, Scissors, Cake, Camera, PawPrint,
+  Star, Hand, Syringe, Home as HomeIcon, Plane, Users, Scissors, Cake, PawPrint,
 } from "lucide-react";
 
 const INK = "#22364D";
@@ -36,41 +37,42 @@ interface First {
   summary: string;
 }
 
-/** First-ever entry for each tracker — logged data becomes keepsakes. */
-function readFirsts(): First[] {
+/** First-ever entry for each tracker — logged data becomes keepsakes (server-backed). */
+function computeFirsts(rows: TrackerRow[]): First[] {
+  const byTracker = new Map<string, TrackerRow[]>();
+  for (const r of rows) {
+    const list = byTracker.get(r.trackerId) ?? [];
+    list.push(r);
+    byTracker.set(r.trackerId, list);
+  }
   const out: First[] = [];
   for (const t of TRACKERS) {
-    try {
-      const raw = localStorage.getItem(`wobbles:tracker:${t.id}`);
-      if (!raw) continue;
-      const arr = JSON.parse(raw) as TrackerEntry[];
-      if (arr.length === 0) continue;
-      const first = [...arr].sort((a, b) =>
+    const list = byTracker.get(t.id);
+    if (!list || list.length === 0) continue;
+    const first = rowToEntry(
+      [...list].sort((a, b) =>
         (a.date + (a.time ?? "")).localeCompare(b.date + (b.time ?? "")),
-      )[0];
-      const bits: string[] = [];
-      if (first.option) bits.push(first.option);
-      if (first.value != null) bits.push(`${first.value}${t.fields.value?.unit ? ` ${t.fields.value.unit}` : ""}`);
-      if (first.note) bits.push(first.note);
-      out.push({
-        trackerId: t.id,
-        emoji: t.emoji,
-        title: `First ${t.title.toLowerCase()} logged`,
-        date: first.date,
-        summary: bits.join(" · ") || "The very first entry",
-      });
-    } catch {
-      /* ignore */
-    }
+      )[0],
+    );
+    const bits: string[] = [];
+    if (first.option) bits.push(first.option);
+    if (first.value != null) bits.push(`${first.value}${t.fields.value?.unit ? ` ${t.fields.value.unit}` : ""}`);
+    if (first.note) bits.push(first.note);
+    out.push({
+      trackerId: t.id,
+      emoji: t.emoji,
+      title: `First ${t.title.toLowerCase()} logged`,
+      date: first.date,
+      summary: bits.join(" · ") || "The very first entry",
+    });
   }
   return out.sort((a, b) => a.date.localeCompare(b.date));
 }
 
 export default function Memories() {
   const age = wobblesAge();
-  const logVersion = useLogVersion();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const firsts = useMemo(readFirsts, [logVersion]);
+  const { rows } = useTrackerFeed();
+  const firsts = useMemo(() => computeFirsts(rows), [rows]);
 
   return (
     <PageShell>
@@ -96,22 +98,8 @@ export default function Memories() {
       </div>
 
       <div className="px-5 pt-6">
-        {/* photo journal placeholder */}
-        <div className="keepsake-card relative p-5 text-center">
-          <span className="tape" aria-hidden />
-          <Camera size={26} className="mx-auto" style={{ color: `${SIENNA}99` }} />
-          <p className="font-display font-semibold text-[1.25rem] mt-2" style={{ color: INK }}>
-            The photo journal
-          </p>
-          <p className="text-[13px] font-body text-muted-foreground leading-relaxed mt-1.5 max-w-[280px] mx-auto">
-            This page is waiting for the real thing. Once Wobbles is home on{" "}
-            <strong className="text-foreground">{formatDate(WOBBLES.homecoming)}</strong>, swap the
-            sketches for photos — first nap, first walk, first questionable haircut.
-          </p>
-          <p className="text-[10px] font-body font-extrabold uppercase tracking-[0.14em] text-muted-foreground/70 mt-3">
-            Photos coming soon
-          </p>
-        </div>
+        {/* family-shared photo journal */}
+        <PhotoJournal />
 
         <PawDivider />
 

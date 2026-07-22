@@ -7,22 +7,11 @@
 import { useMemo, useState } from "react";
 import { Link } from "wouter";
 import { PageShell, Eyebrow } from "@/components/AppShell";
-import QuickLogSheet, { useLogVersion } from "@/components/QuickLogSheet";
+import QuickLogSheet from "@/components/QuickLogSheet";
 import { TRACKERS, TRACKER_GROUPS, type TrackerEntry } from "@/lib/trackers";
+import { useTrackerFeed, rowToEntry } from "@/hooks/useSyncedData";
 import { ASSETS } from "@/content/wobbles";
 import { ChevronRight, Plus } from "lucide-react";
-
-/** Read latest entry for each tracker straight from localStorage (read-only summary). */
-function readLatest(id: string): TrackerEntry | undefined {
-  try {
-    const raw = localStorage.getItem(`wobbles:tracker:${id}`);
-    if (!raw) return undefined;
-    const arr = JSON.parse(raw) as TrackerEntry[];
-    return arr[0];
-  } catch {
-    return undefined;
-  }
-}
 
 function summarise(e: TrackerEntry | undefined, unit?: string): string {
   if (!e) return "No logs yet";
@@ -40,17 +29,21 @@ function summarise(e: TrackerEntry | undefined, unit?: string): string {
 export default function TrackersHub() {
   const [sheetOpen, setSheetOpen] = useState(false);
   const [sheetTracker, setSheetTracker] = useState<string | null>(null);
-  const logVersion = useLogVersion();
+  const { rows } = useTrackerFeed();
 
-  // Latest summaries, recomputed whenever a quick-log save happens
+  // Latest summaries from the shared family feed (rows are newest-first)
   const latest = useMemo(() => {
+    const firstRow = new Map<string, (typeof rows)[number]>();
+    for (const r of rows) {
+      if (!firstRow.has(r.trackerId)) firstRow.set(r.trackerId, r);
+    }
     const map: Record<string, string> = {};
     for (const t of TRACKERS) {
-      map[t.id] = summarise(readLatest(t.id), t.fields.value?.unit);
+      const row = firstRow.get(t.id);
+      map[t.id] = summarise(row ? rowToEntry(row) : undefined, t.fields.value?.unit);
     }
     return map;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [logVersion]);
+  }, [rows]);
 
   const quickAdd = (id: string | null) => {
     setSheetTracker(id);
@@ -65,7 +58,7 @@ export default function TrackersHub() {
           Wobbles’ Logbook
         </h1>
         <p className="text-[13px] font-body text-muted-foreground mt-2 leading-relaxed max-w-[240px]">
-          Little logs, big patterns. Everything stays on this phone.
+          Little logs, big patterns. Synced live for the whole family.
         </p>
         {/* Peeking Wobbles */}
         <img

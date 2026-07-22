@@ -8,7 +8,7 @@ import { useMemo, useRef, useState } from "react";
 import { PageShell, PageHeader, ProgressRing, Eyebrow } from "@/components/AppShell";
 import { HUNDRED, HUNDRED_TOTAL } from "@/content/hundredThings";
 import { ASSETS } from "@/content/wobbles";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useSharedState } from "@/hooks/useSyncedData";
 import { cn } from "@/lib/utils";
 import { PawPrint, Sparkles } from "lucide-react";
 import { toast } from "sonner";
@@ -28,7 +28,7 @@ interface FlatItem {
 }
 
 export default function HundredThings() {
-  const [learned, setLearned] = useLocalStorage<Record<string, boolean>>("hundred", {});
+  const [learned, setLearned] = useSharedState<Record<string, boolean>>("hundred", {});
   const [filter, setFilter] = useState<string>("all");
   const [highlight, setHighlight] = useState<string | null>(null);
   const itemRefs = useRef<Record<string, HTMLLIElement | null>>({});

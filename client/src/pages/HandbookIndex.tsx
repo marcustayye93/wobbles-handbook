@@ -11,13 +11,13 @@ import { HUNDRED_TOTAL } from "@/content/hundredThings";
 import { CHECKLISTS } from "@/content/checklists";
 import { CHAPTER_COVERS } from "@/content/wobbles";
 import { ChevronRight, Clock, Printer, ListChecks, Plane, Award, Search } from "lucide-react";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useSharedState } from "@/hooks/useSyncedData";
 import { useState } from "react";
 import SearchDialog from "@/components/SearchDialog";
 
-/** Reading progress map: slug -> 0..1, persisted by SectionReader */
+/** Reading progress map: slug -> 0..1, synced for the family (written by SectionReader) */
 export function useReadProgress() {
-  return useLocalStorage<Record<string, number>>("readProgress", {});
+  return useSharedState<Record<string, number>>("readProgress", {});
 }
 
 export default function HandbookIndex() {

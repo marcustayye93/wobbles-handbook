@@ -1,19 +1,19 @@
 /*
  * Redesign v2 — "Keepsake Field Guide" printable checklists.
  * Ink navy active chips, moss ticks, keepsake card container.
- * Pick a list, tick paw-checkboxes (saved on device), reset, or print
+ * Pick a list, tick paw-checkboxes (synced for the family), reset, or print
  * (print stylesheet shows all items with empty boxes).
  */
 import { useState } from "react";
 import { PageShell, PageHeader } from "@/components/AppShell";
 import { CHECKLISTS } from "@/content/checklists";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useSharedState } from "@/hooks/useSyncedData";
 import { cn } from "@/lib/utils";
 import { PawPrint, Printer, RotateCcw } from "lucide-react";
 import { toast } from "sonner";
 
 export default function Checklists() {
-  const [ticks, setTicks] = useLocalStorage<Record<string, boolean>>("checklists", {});
+  const [ticks, setTicks] = useSharedState<Record<string, boolean>>("checklists", {});
   const [activeId, setActiveId] = useState(CHECKLISTS[0].id);
   const active = CHECKLISTS.find((c) => c.id === activeId)!;
 

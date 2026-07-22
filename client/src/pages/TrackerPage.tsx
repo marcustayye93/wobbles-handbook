@@ -6,7 +6,8 @@
 import { useMemo, useState } from "react";
 import { useParams } from "wouter";
 import { PageShell, PageHeader, PawDivider, Eyebrow } from "@/components/AppShell";
-import { getTracker, useTrackerEntries, type TrackerEntry } from "@/lib/trackers";
+import { getTracker } from "@/lib/trackers";
+import { useTrackerEntries, useAddTrackerEntry, useRemoveTrackerEntry } from "@/hooks/useSyncedData";
 import { todayISO, nowHM, friendlyDate } from "@/hooks/useLocalStorage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,7 +26,9 @@ const SIENNA = "#C66A3D";
 export default function TrackerPage() {
   const { id } = useParams<{ id: string }>();
   const meta = getTracker(id);
-  const [entries, setEntries] = useTrackerEntries(id);
+  const { entries, isLoading } = useTrackerEntries(id);
+  const addMutation = useAddTrackerEntry();
+  const removeMutation = useRemoveTrackerEntry();
 
   const [date, setDate] = useState(todayISO());
   const [time, setTime] = useState(nowHM());
@@ -60,15 +63,14 @@ export default function TrackerPage() {
       toast.error(`Enter a ${f.value.label.toLowerCase()}`);
       return;
     }
-    const entry: TrackerEntry = {
-      id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+    addMutation.mutate({
+      trackerId: meta.id,
       date,
       ...(f.time ? { time } : {}),
-      ...(f.value && value !== "" ? { value: Number(value) } : {}),
+      ...(f.value && value !== "" ? { value: String(Number(value)) } : {}),
       ...(f.options ? { option } : {}),
       ...(note.trim() ? { note: note.trim() } : {}),
-    };
-    setEntries((prev) => [entry, ...prev].sort((a, b) => (b.date + (b.time ?? "")).localeCompare(a.date + (a.time ?? ""))));
+    });
     setValue("");
     setNote("");
     setFormOpen(false);
@@ -76,13 +78,18 @@ export default function TrackerPage() {
   };
 
   const remove = (eid: string) => {
-    setEntries((prev) => prev.filter((e) => e.id !== eid));
+    const numId = Number(eid);
+    if (!Number.isInteger(numId) || numId <= 0) {
+      toast("Just a second — that entry is still saving");
+      return;
+    }
+    removeMutation.mutate({ id: numId });
     toast("Entry deleted");
   };
 
   return (
     <PageShell>
-      <PageHeader title={meta.title} subtitle="Saved on this device" back="/trackers" emoji={meta.emoji} />
+      <PageHeader title={meta.title} subtitle="Synced for the whole family" back="/trackers" emoji={meta.emoji} />
 
       <div className="px-5 pt-4">
         <p className="text-[13px] font-body text-muted-foreground leading-relaxed">{meta.intro}</p>
@@ -224,7 +231,11 @@ export default function TrackerPage() {
             ({entries.length} {entries.length === 1 ? "entry" : "entries"})
           </span>
         </h2>
-        {entries.length === 0 ? (
+        {isLoading ? (
+          <div className="keepsake-card p-6 text-center">
+            <p className="text-sm font-body text-muted-foreground animate-pulse">Fetching the family log…</p>
+          </div>
+        ) : entries.length === 0 ? (
           <div className="keepsake-card p-6 text-center">
             <PawPrint size={26} className="mx-auto" style={{ color: `${SIENNA}66` }} />
             <p className="text-sm font-body text-muted-foreground mt-2">Nothing logged yet — tap "Add entry" to start.</p>
@@ -244,6 +255,9 @@ export default function TrackerPage() {
                     {typeof e.value === "number" ? `${e.value} ${meta.fields.value?.unit ?? ""}` : ""}
                   </p>
                   {e.note && <p className="text-[12px] font-body text-muted-foreground leading-relaxed mt-0.5">{e.note}</p>}
+                  {e.createdByName && (
+                    <p className="text-[10px] font-body text-muted-foreground/70 mt-0.5">Logged by {e.createdByName}</p>
+                  )}
                 </div>
                 <button
                   onClick={() => remove(e.id)}

@@ -8,11 +8,9 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { PageShell, Eyebrow } from "@/components/AppShell";
 import QuickLogSheet from "@/components/QuickLogSheet";
-import TodayTimeline from "@/components/TodayTimeline";
+import TodayTimeline, { useDayFeed } from "@/components/TodayTimeline";
 import SearchDialog from "@/components/SearchDialog";
 import { wobblesToday, todaysNudges } from "@/lib/wobblesToday";
-import { useLogVersion } from "@/components/QuickLogSheet";
-import { readDayFeed } from "@/components/TodayTimeline";
 import { todayISO } from "@/hooks/useLocalStorage";
 import { ASSETS, WOBBLES, MILESTONES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
 import { SECTIONS } from "@/content/handbookSections";
@@ -50,8 +48,8 @@ export default function Home() {
   const [sheetTracker, setSheetTracker] = useState<string | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
 
-  const logVersion = useLogVersion();
-  const hasFeedToday = readDayFeed(todayISO()).length > 0 || logVersion < 0; // logVersion keeps this reactive
+  const { feed: todayFeed } = useDayFeed(todayISO());
+  const hasFeedToday = todayFeed.length > 0;
 
   const quickLog = (id: string | null) => {
     setSheetTracker(id);

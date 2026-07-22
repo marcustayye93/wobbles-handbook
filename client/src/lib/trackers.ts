@@ -2,7 +2,7 @@
  * Storybook Picture-Book theme — tracker definitions & shared storage.
  * Each tracker stores an array of entries (newest first) under "wobbles:tracker:<id>".
  */
-import { useLocalStorage } from "@/hooks/useLocalStorage";
+// (storage moved to server — see hooks/useSyncedData.ts)
 
 export interface TrackerEntry {
   id: string; // unique id
@@ -249,7 +249,4 @@ export const TRACKER_GROUPS: { id: TrackerGroup; title: string; blurb: string }[
   { id: "growing", title: "Growing up", blurb: "Skills & experiences" },
 ];
 
-/** Entries for one tracker, newest first. */
-export function useTrackerEntries(id: string) {
-  return useLocalStorage<TrackerEntry[]>(`tracker:${id}`, []);
-}
+// NOTE: useTrackerEntries now lives in hooks/useSyncedData.ts (server-backed).

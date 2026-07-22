@@ -2,37 +2,42 @@
  * Keepsake Field Guide — TodayTimeline.
  * Unified chronological feed merging every tracker's entries for one day
  * into a single dashed-spine timeline: "08:12 🍽️ Breakfast · 120 g".
+ * Now reads from the family-shared server feed instead of localStorage.
  */
 import { useMemo } from "react";
-import { TRACKERS, type TrackerEntry } from "@/lib/trackers";
-import { useLogVersion } from "@/components/QuickLogSheet";
+import { TRACKERS } from "@/lib/trackers";
+import { useTrackerFeed, rowToEntry, type SyncedEntry } from "@/hooks/useSyncedData";
 
 interface FeedItem {
-  entry: TrackerEntry;
+  entry: SyncedEntry;
   trackerId: string;
   emoji: string;
   title: string;
   unit?: string;
 }
 
-/** Read all tracker entries for a given ISO date, newest first. */
-export function readDayFeed(dateISO: string): FeedItem[] {
-  const items: FeedItem[] = [];
-  for (const t of TRACKERS) {
-    try {
-      const raw = localStorage.getItem(`wobbles:tracker:${t.id}`);
-      if (!raw) continue;
-      const arr = JSON.parse(raw) as TrackerEntry[];
-      for (const e of arr) {
-        if (e.date === dateISO) {
-          items.push({ entry: e, trackerId: t.id, emoji: t.emoji, title: t.title, unit: t.fields.value?.unit });
-        }
-      }
-    } catch {
-      /* ignore malformed storage */
+const TRACKER_META = new Map(TRACKERS.map((t) => [t.id, t]));
+
+/** All tracker entries for a given ISO date, newest first (server-backed). */
+export function useDayFeed(dateISO: string): { feed: FeedItem[]; isLoading: boolean } {
+  const { rows, isLoading } = useTrackerFeed();
+  const feed = useMemo(() => {
+    const items: FeedItem[] = [];
+    for (const row of rows) {
+      if (row.date !== dateISO) continue;
+      const t = TRACKER_META.get(row.trackerId);
+      if (!t) continue;
+      items.push({
+        entry: rowToEntry(row),
+        trackerId: t.id,
+        emoji: t.emoji,
+        title: t.title,
+        unit: t.fields.value?.unit,
+      });
     }
-  }
-  return items.sort((a, b) => (b.entry.time ?? "00:00").localeCompare(a.entry.time ?? "00:00"));
+    return items.sort((a, b) => (b.entry.time ?? "00:00").localeCompare(a.entry.time ?? "00:00"));
+  }, [rows, dateISO]);
+  return { feed, isLoading };
 }
 
 function line(item: FeedItem): string {
@@ -45,9 +50,7 @@ function line(item: FeedItem): string {
 }
 
 export default function TodayTimeline({ dateISO }: { dateISO: string }) {
-  const version = useLogVersion();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const feed = useMemo(() => readDayFeed(dateISO), [dateISO, version]);
+  const { feed } = useDayFeed(dateISO);
 
   if (feed.length === 0) return null;
 
@@ -69,6 +72,7 @@ export default function TodayTimeline({ dateISO }: { dateISO: string }) {
               <p className="text-[11px] font-body text-muted-foreground mt-0.5">
                 {item.entry.time ?? "—"} · {item.title}
                 {item.entry.note ? ` — ${item.entry.note}` : ""}
+                {item.entry.createdByName ? ` · ${item.entry.createdByName}` : ""}
               </p>
             </div>
           </li>
