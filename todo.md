@@ -124,4 +124,15 @@
 - [x] Tests: server/placeLog.test.ts (9 tests) — suite 99/99 passing, tsc + production build clean
 - [x] Bonus fixes: duplicate React key warning on Home/Memories milestones (2026-08-21 shared by two milestones); Map.tsx hardened against failed script load
 - [x] Verified: page layout via screenshot; map tiles blank only in the internal screenshot renderer (Forge maps proxy rejects its 127.0.0.1 origin — confirmed via curl that the public preview/published origin gets HTTP 200 + Maps JS)
-- [ ] Checkpoint, push GitHub, deliver
+- [x] Checkpoint e647fd66 (auto-published), pushed GitHub (main @ e647fd6), delivered
+
+# Training + Grooming tabs (user request 2026-07-22)
+- [x] Research: puppy training priority order + start-to-finish Cavoodle grooming workflow, notes saved to /home/ubuntu/TRAINING_GROOMING_RESEARCH.md
+- [x] Illustrations: 12 instructional sketches generated in keepsake gouache style (URLs reserved via generation tool, no manual upload needed)
+- [x] Research training priorities (potty, name, crate, handling, sit, recall, socialisation, bite inhibition, leash, stay, tricks) + full groom order for Cavoodle puppy
+- [x] Generate 12 keepsake gouache instructional illustrations (6 training, 6 grooming) matching app style
+- [x] Training tab page (/training): priority-ordered skill curriculum with jump-to index, illustrated how-to steps, Wobbles-specific timing (pad-first HDB potty, pre-vax carry socialisation), links to /trackers/training
+- [x] Grooming tab page (/grooming): start-to-finish groom walkthrough with jump-to index, illustrated steps, frequency cheatsheet aligned with care rota, tools list, links to /handbook/grooming-masterclass + /trackers/grooming
+- [x] Bottom nav: extend to 8 tabs (Training + Grooming icons) without removing existing tabs; register routes in App.tsx
+- [x] Verify: tsc clean, vitest 113/113 passing (14 new content-structure tests), mobile screenshots of both tabs
+- [ ] Checkpoint (auto-publish) + push to GitHub

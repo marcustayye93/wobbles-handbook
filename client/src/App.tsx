@@ -16,6 +16,8 @@ import SectionReader from "@/pages/SectionReader";
 import HundredThings from "@/pages/HundredThings";
 import Checklists from "@/pages/Checklists";
 import Singapore from "@/pages/Singapore";
+import Training from "@/pages/Training";
+import Grooming from "@/pages/Grooming";
 import TrackersHub from "@/pages/TrackersHub";
 import TrackerPage from "@/pages/TrackerPage";
 import Memories from "@/pages/Memories";
@@ -32,6 +34,8 @@ function Router() {
       <Route path="/handbook/checklists" component={Checklists} />
       <Route path="/handbook/:slug" component={SectionReader} />
       <Route path="/singapore" component={Singapore} />
+      <Route path="/training" component={Training} />
+      <Route path="/grooming" component={Grooming} />
       <Route path="/trackers" component={TrackersHub} />
       <Route path="/trackers/:id" component={TrackerPage} />
       <Route path="/memories" component={Memories} />
