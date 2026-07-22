@@ -53,4 +53,15 @@
 - [x] /api/scheduled/weeklyDigest Express handler with cron auth (sdk.authenticateRequest, isCron check — 403 on any non-cron), idempotent, try/catch JSON error on 500
 - [x] Mount handler in server/_core/index.ts before Vite/static fallthrough (verified live: unauthenticated POST → 403)
 - [x] Vitest tests: digest composition (counts, trend, empty week) + handler auth rejection (server/digest.test.ts — 13 tests; suite 46/46 passing)
-- [ ] Checkpoint + ask user to Publish, then create Heartbeat cron via manus-heartbeat CLI (Sunday schedule) and verify with Run Now/logs
+- [x] Checkpoint 8e46acfb saved, pushed to GitHub (8e46acf), Heartbeat cron created: task_uid n4mYxSTP2fsSNtr2xLryY9, "0 0 9 * * 0" (Sundays 09:00 UTC ≈ 17:00 SGT), next run 2026-07-26
+- [ ] User publishes the project so the Heartbeat callback can reach the production URL (user action — Publish button)
+- [ ] After publish: user verifies via Settings → Schedules → weekly-digest → Run Now that the digest notification arrives (blocked on user publish)
+
+## Photo journal polish
+
+- [x] Month grouping: photos grouped under sticky month headers with photo count + Wobbles age that month (client/src/lib/photoGroups.ts, sticky z-30 headers with paper gradient)
+- [x] Full-screen lightbox (client/src/components/PhotoLightbox.tsx): tap to open, swipe left/right + arrow keys/desktop buttons to navigate, caption/date/age/added-by overlay, close via X / swipe-down / Esc, body scroll lock, reduced-motion-safe entrance
+- [x] Lightbox preserves confirm-before-delete flow; viewer tracked by photo id (not index) so optimistic deletes/reorders can't misalign it
+- [x] Offline/local-cache behaviour and sync indicators untouched (only viewer/grid rendering changed; upload dialog + mutations intact)
+- [x] Tests: photoGroups.test.ts (11 tests) — suite 57/57 passing, tsc clean, production build clean; debug-agent review applied (arrow positioning, viewerId, z-index)
+- [x] Mobile screenshot verification of Memories page (empty state; populated grid/lightbox needs real photos to fully verify) + checkpoint + push to GitHub

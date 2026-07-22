@@ -13,7 +13,9 @@ import {
 } from "@/components/ui/dialog";
 import { todayISO } from "@/lib/dates";
 import { formatDate } from "@/content/wobbles";
-import { Camera, Loader2, Plus, Trash2, X } from "lucide-react";
+import { groupPhotosByMonth } from "@/lib/photoGroups";
+import PhotoLightbox from "@/components/PhotoLightbox";
+import { Camera, Loader2, Plus } from "lucide-react";
 import { toast } from "sonner";
 
 const INK = "#22364D";
@@ -83,8 +85,9 @@ export default function PhotoJournal() {
   const [date, setDate] = useState(todayISO());
   const [phase, setPhase] = useState<"idle" | "compressing" | "uploading">("idle");
   const uploading = phase !== "idle";
-  const [viewer, setViewer] = useState<number | null>(null);
-  const [confirmDelete, setConfirmDelete] = useState(false);
+  // Track the *photo id* (not index) so optimistic deletes / refetch reorders
+  // can't leave the lightbox pointing at the wrong photo.
+  const [viewerId, setViewerId] = useState<number | null>(null);
 
   const pick = (f: File | undefined) => {
     if (!f) return;
@@ -125,10 +128,14 @@ export default function PhotoJournal() {
     }
   };
 
-  const viewerPhoto = useMemo(
-    () => (viewer != null ? (photos ?? []).find((p) => p.id === viewer) : undefined),
-    [viewer, photos],
-  );
+  const groups = useMemo(() => groupPhotosByMonth(photos ?? []), [photos]);
+  // Flat list in display order so the lightbox swipes across month boundaries
+  const flat = useMemo(() => groups.flatMap((g) => g.photos), [groups]);
+  const viewerIndex = useMemo(() => {
+    if (viewerId == null) return null;
+    const i = flat.findIndex((p) => p.id === viewerId);
+    return i >= 0 ? i : null;
+  }, [viewerId, flat]);
 
   return (
     <section>
@@ -175,32 +182,51 @@ export default function PhotoJournal() {
         </button>
       ) : (
         <>
-          {/* polaroid grid */}
-          <div className="mt-3 grid grid-cols-2 gap-3">
-            {(photos ?? []).map((p, i) => (
-              <button
-                key={p.id}
-                onClick={() => setViewer(p.id)}
-                className="keepsake-card p-2 pb-3 text-left press-scale"
-                style={{ transform: `rotate(${i % 2 === 0 ? -1 : 1.2}deg)` }}
+          {/* month-grouped polaroid grid */}
+          {groups.map((g) => (
+            <div key={g.key} className="mt-3">
+              {/* sticky month header */}
+              <div
+                className="sticky top-0 z-30 -mx-1 px-1 py-1.5 flex items-baseline gap-2"
+                style={{ background: "linear-gradient(to bottom, #F8F3EB 78%, transparent)" }}
               >
-                <img
-                  src={p.url}
-                  alt={p.caption ?? "Wobbles photo"}
-                  loading="lazy"
-                  className="w-full aspect-square object-cover rounded-[6px] bg-[#22364D]/5"
-                />
-                <p className="text-[10px] font-body font-extrabold uppercase tracking-[0.1em] mt-2 px-1" style={{ color: SIENNA }}>
-                  {formatDate(p.date)}
-                </p>
-                {p.caption && (
-                  <p className="text-[12px] font-body font-bold leading-snug px-1 mt-0.5 line-clamp-2" style={{ color: INK }}>
-                    {p.caption}
-                  </p>
-                )}
-              </button>
-            ))}
-          </div>
+                <h3 className="font-display font-semibold text-[1.15rem]" style={{ color: INK }}>
+                  {g.label}
+                </h3>
+                <span className="text-[10px] font-body font-extrabold uppercase tracking-[0.1em]" style={{ color: SIENNA }}>
+                  {g.ageLabel}
+                </span>
+                <span className="ml-auto text-[10px] font-body font-bold text-muted-foreground">
+                  {g.photos.length} photo{g.photos.length === 1 ? "" : "s"}
+                </span>
+              </div>
+              <div className="mt-1.5 grid grid-cols-2 gap-3">
+                {g.photos.map((p, i) => (
+                  <button
+                    key={p.id}
+                    onClick={() => setViewerId(p.id)}
+                    className="keepsake-card p-2 pb-3 text-left press-scale"
+                    style={{ transform: `rotate(${i % 2 === 0 ? -1 : 1.2}deg)` }}
+                  >
+                    <img
+                      src={p.url}
+                      alt={p.caption ?? "Wobbles photo"}
+                      loading="lazy"
+                      className="w-full aspect-square object-cover rounded-[6px] bg-[#22364D]/5"
+                    />
+                    <p className="text-[10px] font-body font-extrabold uppercase tracking-[0.1em] mt-2 px-1" style={{ color: SIENNA }}>
+                      {formatDate(p.date)}
+                    </p>
+                    {p.caption && (
+                      <p className="text-[12px] font-body font-bold leading-snug px-1 mt-0.5 line-clamp-2" style={{ color: INK }}>
+                        {p.caption}
+                      </p>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
           <button
             onClick={() => fileRef.current?.click()}
             className="mt-3 w-full h-11 rounded-2xl border-2 border-dashed border-[#C66A3D]/40 text-[#B4512E] font-body font-extrabold text-[13px] flex items-center justify-center gap-1.5 press-scale"
@@ -273,73 +299,17 @@ export default function PhotoJournal() {
         </DialogContent>
       </Dialog>
 
-      {/* viewer dialog */}
-      <Dialog
-        open={viewerPhoto != null}
-        onOpenChange={(o) => {
-          if (!o) {
-            setViewer(null);
-            setConfirmDelete(false);
-          }
+      {/* full-screen swipeable lightbox */}
+      <PhotoLightbox
+        photos={flat}
+        index={viewerIndex}
+        onIndexChange={(i) => setViewerId(flat[i]?.id ?? null)}
+        onClose={() => setViewerId(null)}
+        onDelete={(id) => {
+          setViewerId(null);
+          removeMutation.mutate({ id });
         }}
-      >
-        <DialogContent className="bg-[#FFFDF8] max-w-[380px] rounded-3xl p-3">
-          {viewerPhoto && (
-            <div>
-              <img
-                src={viewerPhoto.url}
-                alt={viewerPhoto.caption ?? "Wobbles photo"}
-                className="w-full max-h-[60vh] object-contain rounded-xl bg-[#22364D]/5"
-              />
-              <div className="px-2 pt-3 pb-1">
-                <p className="text-[10px] font-body font-extrabold uppercase tracking-[0.1em]" style={{ color: SIENNA }}>
-                  {formatDate(viewerPhoto.date)}
-                  {viewerPhoto.createdByName ? ` · added by ${viewerPhoto.createdByName}` : ""}
-                </p>
-                {viewerPhoto.caption && (
-                  <p className="font-body font-bold text-[14px] leading-snug mt-1" style={{ color: INK }}>
-                    {viewerPhoto.caption}
-                  </p>
-                )}
-                <div className="flex justify-end mt-2">
-                  {confirmDelete ? (
-                    <div className="flex items-center gap-2">
-                      <span className="text-[12px] font-body font-bold" style={{ color: INK }}>
-                        Remove from the family album?
-                      </span>
-                      <button
-                        onClick={() => setConfirmDelete(false)}
-                        className="min-h-[44px] flex items-center gap-1 text-[12px] font-body font-extrabold px-3 rounded-xl bg-[#22364D]/8 press-scale"
-                        style={{ color: INK }}
-                      >
-                        <X size={14} /> Keep
-                      </button>
-                      <button
-                        onClick={() => {
-                          const id = viewerPhoto.id;
-                          setConfirmDelete(false);
-                          setViewer(null);
-                          removeMutation.mutate({ id });
-                        }}
-                        className="min-h-[44px] flex items-center gap-1.5 text-[12px] font-body font-extrabold text-[#FFFDF8] px-3 rounded-xl bg-[#B4512E] press-scale"
-                      >
-                        <Trash2 size={14} /> Remove
-                      </button>
-                    </div>
-                  ) : (
-                    <button
-                      onClick={() => setConfirmDelete(true)}
-                      className="min-h-[44px] flex items-center gap-1.5 text-[12px] font-body font-extrabold text-[#B4512E] px-3 rounded-xl bg-[#C66A3D]/10 press-scale"
-                    >
-                      <Trash2 size={14} /> Remove
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
+      />
     </section>
   );
 }
