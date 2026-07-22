@@ -33,7 +33,7 @@ export default function Training() {
 
   return (
     <PageShell>
-      <PageHeader title="Training School" subtitle="The curriculum, in priority order" emoji="🎓" />
+      <PageHeader title="Training School" subtitle="The curriculum, in priority order" emoji="🎓" back="/handbook" />
 
       {/* intro */}
       <div className="px-5 pt-4">

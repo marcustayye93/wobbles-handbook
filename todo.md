@@ -135,4 +135,12 @@
 - [x] Grooming tab page (/grooming): start-to-finish groom walkthrough with jump-to index, illustrated steps, frequency cheatsheet aligned with care rota, tools list, links to /handbook/grooming-masterclass + /trackers/grooming
 - [x] Bottom nav: extend to 8 tabs (Training + Grooming icons) without removing existing tabs; register routes in App.tsx
 - [x] Verify: tsc clean, vitest 113/113 passing (14 new content-structure tests), mobile screenshots of both tabs
-- [ ] Checkpoint (auto-publish) + push to GitHub
+- [x] Checkpoint 72dee063 (auto-published) + pushed to GitHub (main @ 72dee06)
+
+# Nav consolidation + header fix (user request 2026-07-22)
+- [x] Bottom nav: back to 5 tabs (Home, Chapters, Trackers, Map, Memories) — remove Training, Grooming, 100 Things tabs
+- [x] Chapters hub: add prominent entries for Training School, Grooming Salon, and 100 Things at the top of /handbook so they are one tap from the Chapters tab
+- [x] Active-tab logic: /training, /grooming, /handbook/100-things highlight the Chapters tab; back buttons on Training/Grooming return to /handbook
+- [x] Trackers header: fix "Wobbles' Logbook" title clipped by the dog image (constrain image, let title wrap/fit)
+- [x] Verify: tsc + 114/114 tests pass, mobile screenshots of /trackers, /handbook, /training, /
+- [ ] Checkpoint (auto-publish) + push GitHub + deliver

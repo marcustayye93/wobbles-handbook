@@ -10,7 +10,7 @@ import { SECTIONS } from "@/content/handbookSections";
 import { HUNDRED_TOTAL } from "@/content/hundredThings";
 import { CHECKLISTS } from "@/content/checklists";
 import { CHAPTER_COVERS } from "@/content/wobbles";
-import { ChevronRight, Clock, Printer, ListChecks, Plane, Award, Search } from "lucide-react";
+import { ChevronRight, Clock, Printer, ListChecks, Plane, Award, Search, GraduationCap, Scissors } from "lucide-react";
 import { useSharedState } from "@/hooks/useSyncedData";
 import { useState } from "react";
 import SearchDialog from "@/components/SearchDialog";
@@ -120,9 +120,43 @@ export default function HandbookIndex() {
 
         <PawDivider />
 
-        {/* Special pages */}
-        <Eyebrow className="mb-2.5 px-1">Also in the handbook</Eyebrow>
-        <div className="space-y-2.5 pb-4">
+        {/* Guides */}
+        <Eyebrow className="mb-2.5 px-1">Guides</Eyebrow>
+        <div className="space-y-2.5 pb-5">
+          <Link href="/training" className="block sticker-card p-4 press-scale">
+            <div className="flex items-center gap-3.5">
+              <span className="w-11 h-11 rounded-2xl bg-[#22364D]/8 flex items-center justify-center">
+                <GraduationCap size={21} className="text-[#22364D]" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="font-body font-bold text-[14px] leading-snug text-[#22364D]">
+                  Training School
+                </p>
+                <p className="text-[11px] font-body text-muted-foreground mt-0.5">
+                  The 11-skill curriculum, in priority order
+                </p>
+              </div>
+              <ChevronRight size={17} className="text-muted-foreground shrink-0" />
+            </div>
+          </Link>
+
+          <Link href="/grooming" className="block sticker-card p-4 press-scale">
+            <div className="flex items-center gap-3.5">
+              <span className="w-11 h-11 rounded-2xl bg-[#7B8C6A]/15 flex items-center justify-center">
+                <Scissors size={21} className="text-[#5D7048]" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="font-body font-bold text-[14px] leading-snug text-[#22364D]">
+                  Grooming Salon
+                </p>
+                <p className="text-[11px] font-body text-muted-foreground mt-0.5">
+                  The full home groom, start to finish
+                </p>
+              </div>
+              <ChevronRight size={17} className="text-muted-foreground shrink-0" />
+            </div>
+          </Link>
+
           <Link href="/handbook/100-things" className="block sticker-card p-4 press-scale">
             <div className="flex items-center gap-3.5">
               <span className="w-11 h-11 rounded-2xl bg-[#C66A3D]/12 flex items-center justify-center">
@@ -139,7 +173,11 @@ export default function HandbookIndex() {
               <ChevronRight size={17} className="text-muted-foreground shrink-0" />
             </div>
           </Link>
+        </div>
 
+        {/* Special pages */}
+        <Eyebrow className="mb-2.5 px-1">Also in the handbook</Eyebrow>
+        <div className="space-y-2.5 pb-4">
           <Link href="/handbook/checklists" className="block sticker-card p-4 press-scale">
             <div className="flex items-center gap-3.5">
               <span className="w-11 h-11 rounded-2xl bg-[#7B8C6A]/15 flex items-center justify-center">

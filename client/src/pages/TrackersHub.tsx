@@ -58,18 +58,18 @@ export default function TrackersHub() {
           <Eyebrow>Trackers</Eyebrow>
           <SyncIndicator />
         </div>
-        <h1 className="font-display font-semibold text-[2.4rem] leading-[1.02] mt-1.5">
+        <h1 className="relative z-10 font-display font-semibold text-[clamp(1.8rem,9vw,2.4rem)] leading-[1.02] mt-1.5">
           Wobbles’ Logbook
         </h1>
-        <p className="text-[13px] font-body text-muted-foreground mt-2 leading-relaxed max-w-[240px]">
+        <p className="relative z-10 text-[13px] font-body text-muted-foreground mt-2 leading-relaxed max-w-[230px]">
           Little logs, big patterns. Synced live for the whole family.
         </p>
-        {/* Peeking Wobbles */}
+        {/* Peeking Wobbles — sits behind the text and below the title line */}
         <img
           src={ASSETS.v2SpotPeek}
           alt=""
           aria-hidden
-          className="absolute -right-3 bottom-0 w-28 h-28 object-contain object-bottom"
+          className="absolute -right-2 bottom-0 w-[76px] h-[76px] object-contain object-bottom opacity-95"
         />
       </header>
 

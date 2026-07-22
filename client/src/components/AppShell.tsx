@@ -5,24 +5,23 @@
  * Bottom nav: Home / Chapters / Trackers / 100 Things / Memories (navy pill bar).
  */
 import { Link, useLocation } from "wouter";
-import { Home, BookOpen, ClipboardList, Award, Camera, MapPin, ChevronLeft, PawPrint, GraduationCap, Scissors } from "lucide-react";
+import { Home, BookOpen, ClipboardList, Camera, MapPin, ChevronLeft, PawPrint } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const TABS = [
   { href: "/", label: "Home", icon: Home },
   { href: "/handbook", label: "Chapters", icon: BookOpen },
-  { href: "/training", label: "Training", icon: GraduationCap },
-  { href: "/grooming", label: "Grooming", icon: Scissors },
   { href: "/trackers", label: "Trackers", icon: ClipboardList },
-  { href: "/handbook/100-things", label: "100 Things", icon: Award },
   { href: "/map", label: "Map", icon: MapPin },
   { href: "/memories", label: "Memories", icon: Camera },
 ] as const;
 
 function isTabActive(href: string, loc: string) {
   if (href === "/") return loc === "/";
-  if (href === "/handbook/100-things") return loc === "/handbook/100-things";
-  if (href === "/handbook") return loc.startsWith("/handbook") && loc !== "/handbook/100-things";
+  // Chapters is the umbrella for the handbook reader plus the Training,
+  // Grooming and 100 Things guides folded under it.
+  if (href === "/handbook")
+    return loc.startsWith("/handbook") || loc.startsWith("/training") || loc.startsWith("/grooming");
   return loc.startsWith(href);
 }
 
@@ -34,7 +33,7 @@ export function BottomNav() {
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
     >
       <div className="mx-3 mb-2.5 rounded-[26px] bg-[#22364D] shadow-[0_10px_30px_rgba(34,54,77,0.35)]">
-        <div className="grid grid-cols-8 py-2 px-0.5">
+        <div className="grid grid-cols-5 py-2 px-1">
           {TABS.map((t) => {
             const active = isTabActive(t.href, loc);
             const Icon = t.icon;
@@ -47,10 +46,10 @@ export function BottomNav() {
                   active ? "text-[#E8935C]" : "text-[#8FA0B5]",
                 )}
               >
-                <Icon size={17} strokeWidth={active ? 2.4 : 1.9} />
+                <Icon size={19} strokeWidth={active ? 2.4 : 1.9} />
                 <span
                   className={cn(
-                    "text-[7px] leading-none uppercase tracking-[0.04em] whitespace-nowrap",
+                    "text-[8.5px] leading-none uppercase tracking-[0.08em]",
                     active ? "font-extrabold" : "font-semibold",
                   )}
                 >

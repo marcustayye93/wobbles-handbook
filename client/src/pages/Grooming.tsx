@@ -23,7 +23,7 @@ export default function Grooming() {
 
   return (
     <PageShell>
-      <PageHeader title="Grooming Salon" subtitle="The full home groom, start to finish" emoji="✂️" />
+      <PageHeader title="Grooming Salon" subtitle="The full home groom, start to finish" emoji="✂️" back="/handbook" />
 
       {/* intro */}
       <div className="px-5 pt-4">
