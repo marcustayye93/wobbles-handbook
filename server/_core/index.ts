@@ -8,6 +8,7 @@ import { registerStorageProxy } from "./storageProxy";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
+import { weeklyDigestHandler } from "../scheduled";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -44,6 +45,8 @@ async function startServer() {
       createContext,
     })
   );
+  // Heartbeat cron callbacks (must be mounted before the Vite/static fallthrough)
+  app.post("/api/scheduled/weeklyDigest", weeklyDigestHandler);
   // development mode uses Vite, production mode uses static files
   if (process.env.NODE_ENV === "development") {
     await setupVite(app, server);

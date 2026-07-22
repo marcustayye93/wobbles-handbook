@@ -46,3 +46,11 @@
 - [x] Contrast pass (WCAG-checked): small sienna text #C66A3D (3.4:1) darkened to #B4512E (4.6:1) in AppShell label, Home tagline/dt, Singapore timing, About links; Home stage label moss #7B8C6A → #6B7C5A (4.1:1); remaining #C66A3D uses are decorative icons/large text only
 - [x] Sync indicator added to Home header (with Trackers/Checklists/HundredThings)
 - [x] Client-side vitest tests for shared-state merge logic and legacy import guard (client/src/hooks/useSyncedData.test.ts — 14 tests covering diffMaps delta, patch-vs-set routing, legacy import sanitisation/guard, row adapter; plus server/sync.audit.test.ts — 9 router tests; suite 33/33 passing)
+
+## Weekly digest (owner notification, Sundays)
+
+- [x] server/digest.ts: buildWeeklyDigest() — query last-7-day tracker entries + photos, compose summary (weight trend, toilet success rate, meals, training/social/grooming counts, photo count, Wobbles age)
+- [x] /api/scheduled/weeklyDigest Express handler with cron auth (sdk.authenticateRequest, isCron check — 403 on any non-cron), idempotent, try/catch JSON error on 500
+- [x] Mount handler in server/_core/index.ts before Vite/static fallthrough (verified live: unauthenticated POST → 403)
+- [x] Vitest tests: digest composition (counts, trend, empty week) + handler auth rejection (server/digest.test.ts — 13 tests; suite 46/46 passing)
+- [ ] Checkpoint + ask user to Publish, then create Heartbeat cron via manus-heartbeat CLI (Sunday schedule) and verify with Run Now/logs
