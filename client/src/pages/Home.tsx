@@ -11,7 +11,7 @@ import SyncIndicator from "@/components/SyncIndicator";
 import QuickLogSheet from "@/components/QuickLogSheet";
 import TodayTimeline, { useDayFeed } from "@/components/TodayTimeline";
 import SearchDialog from "@/components/SearchDialog";
-import { wobblesToday, todaysNudges } from "@/lib/wobblesToday";
+import { wobblesToday, todaysNudges, todaysBrief } from "@/lib/wobblesToday";
 import { todayISO } from "@/lib/dates";
 import { useTrackerFeed, useSharedState, rowToEntry } from "@/hooks/useSyncedData";
 import { ASSETS, WOBBLES, MILESTONES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
@@ -42,6 +42,7 @@ const QUICK_ACTIONS: { id: string; emoji: string; label: string }[] = [
 export default function Home() {
   const age = wobblesAge();
   const today = wobblesToday();
+  const [brief] = useState(() => todaysBrief());
   const countdown = nextCountdown();
   const nextMilestones = MILESTONES.filter((m) => daysUntil(m.date) >= 0).slice(0, 3);
 
@@ -189,6 +190,51 @@ export default function Home() {
           </Link>
         </div>
 
+        {/* ===== Today's plan (household schedule + care rota + idea) ===== */}
+        <div className="keepsake-card relative p-5 mt-3 fade-up" style={{ animationDelay: "210ms" }}>
+          <span className="absolute -top-3 left-4 bg-[#22364D] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
+            {brief.plan.label}'s plan
+          </span>
+          <p className="mt-1 text-[10px] font-body font-extrabold uppercase tracking-[0.14em] text-[#6B7C5A]">
+            {brief.whoHome}
+            {brief.parkNight && " · 🏞️ park night 7pm"}
+          </p>
+          <p className="text-[12.5px] font-body text-[#5A6B7E] leading-relaxed mt-1">{brief.plan.note}</p>
+
+          {/* Care rota due today */}
+          {brief.care.length > 0 && (
+            <div className="mt-3 space-y-1.5 border-t border-dashed border-[#E5DAC8] pt-3">
+              {brief.care.map((c) => (
+                <Link key={c.id} href={c.link} className="flex items-start gap-2.5 press-scale">
+                  <span className="text-[15px] shrink-0 leading-snug">{c.emoji}</span>
+                  <span className="min-w-0">
+                    <span className="block text-[12.5px] font-body font-bold text-[#22364D] leading-snug">
+                      {c.label}
+                      {c.owner !== "both" && (
+                        <span className="ml-1.5 text-[9px] font-extrabold uppercase tracking-[0.1em] text-[#B4512E]">
+                          {c.owner === "marcus" ? "Marcus" : "Chesa"}
+                        </span>
+                      )}
+                    </span>
+                    <span className="block text-[11px] font-body text-muted-foreground leading-snug">{c.detail}</span>
+                  </span>
+                </Link>
+              ))}
+            </div>
+          )}
+
+          {/* Today's rotating idea */}
+          <div className="mt-3 border-t border-dashed border-[#E5DAC8] pt-3">
+            <p className="text-[9px] font-body font-extrabold uppercase tracking-[0.14em] text-[#B4512E]">
+              Today's idea
+            </p>
+            <p className="mt-1 text-[12.5px] font-body text-[#33475C] leading-snug">
+              <span className="mr-1.5">{brief.activity.emoji}</span>
+              <span className="font-bold text-[#22364D]">{brief.activity.title}.</span> {brief.activity.text}
+            </p>
+          </div>
+        </div>
+
         {/* Nudges */}
         {nudges.length > 0 && (
           <div className="mt-2.5 space-y-2">
@@ -200,6 +246,11 @@ export default function Home() {
               >
                 <span className="text-[16px] shrink-0">{n.emoji}</span>
                 <span className="min-w-0 flex-1 text-[12.5px] font-body font-bold text-[#22364D] leading-snug">
+                  {n.person && (
+                    <span className="mr-1.5 text-[9px] font-extrabold uppercase tracking-[0.1em] text-[#B4512E] align-middle">
+                      {n.person}
+                    </span>
+                  )}
                   {n.text}
                 </span>
                 <ChevronRight size={15} className="text-muted-foreground shrink-0" />

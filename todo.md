@@ -75,4 +75,15 @@
 - [x] Health calendar: align milestones to Singapore AVS standards — vaccine doses, licensing deadline, sterilisation discussion, annual boosters, monthly heartworm + tick/flea preventive recurring entries in milestones/calendar
 - [x] Weekly digest: update toilet stats wording for pad/outside split
 - [x] Tests updated (toilet options, digest stats), suite 58/58 passing, tsc + build clean
-- [x] Mobile screenshots (Home, Toilet tracker, About, Singapore), checkpoint, push to GitHub, deliver
+- [x] Mobile screenshots (Home, Toilet tracker, About, Singapore), checkpoint b64f985e saved (auto-published), delivered
+- [ ] GitHub push blocked: GH_TOKEN expired (401) — retry mirror push to marcustayye93/wobbles-handbook once token refreshes
+
+# Wobbles Today daily engine (user request)
+
+- [x] Audit current wobblesToday.ts: 7 stage variants, text only changed per stage (weeks number aside)
+- [x] Household schedule model: WEEK_PLAN in client/src/content/household.ts (Marcus WFH Mon/Fri + office Tue-Thu; Chesa home most days, maybe-office Tue/Thu; Sunday = Wobbles focus day)
+- [x] Care rota reminders: careTasksFor(date) — bath fortnightly Mondays (anchor 24 Aug), nails + ears every Monday, parasite dose on the 21st, teeth Tue/Thu/Sat; shown in Today's plan card + as nudges
+- [x] Rotating daily activity/enrichment ideas: 4 pools (prep 6, home 10, office 7, weekend 6) picked deterministically by date + day type — different idea every day
+- [x] Per-person nudges: care tasks and data nudges carry Marcus/Chesa owner tags rendered on Home
+- [x] Tests for the daily engine: server/dailyEngine.test.ts (16 tests), suite 74/74 passing, tsc clean
+- [x] Screenshots (mobile Home full-page), checkpoint, deliver

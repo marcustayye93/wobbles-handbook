@@ -1,11 +1,23 @@
 /*
- * Keepsake Field Guide — "Wobbles Today" intelligence.
- * Stage-aware guidance (focus / expect / training) computed from age, plus
- * simple rule-based nudges derived from the family-shared server data
- * (passed in by the caller). No fake AI — every rule is transparent and
- * grounded in the handbook content.
+ * Keepsake Field Guide — "Wobbles Today" daily engine (v2).
+ * Stage-aware guidance (focus / expect / training) computed from age,
+ * PLUS a date-deterministic daily layer: the household weekly schedule
+ * (Marcus WFH Mon/Fri, office Tue–Thu; Chesa home most days), recurring
+ * care-rota reminders (fortnightly Monday baths, weekly nails/ears,
+ * monthly parasite dose on the 21st), a rotating activity idea, and
+ * per-person nudges. Everything is transparent, rule-based and identical
+ * for the whole family on any given date. No fake AI.
  */
 import { WOBBLES, wobblesAge, daysUntil } from "@/content/wobbles";
+import {
+  dayPlanFor,
+  careTasksFor,
+  activityFor,
+  isParkNight,
+  type DayPlan,
+  type CareTask,
+  type ActivityIdea,
+} from "@/content/household";
 import { type TrackerEntry } from "@/lib/trackers";
 
 export interface TodayStage {
@@ -19,9 +31,11 @@ export interface TodayStage {
   linkLabel: string;
 }
 
-export function wobblesToday(): TodayStage {
-  const age = wobblesAge();
-  const toHome = daysUntil(WOBBLES.homecoming);
+/* ---------------- Stage layer (varies with age) ---------------- */
+
+export function wobblesToday(now: Date = new Date()): TodayStage {
+  const age = wobblesAge(now);
+  const toHome = daysUntil(WOBBLES.homecoming, now);
 
   if (!age.born)
     return {
@@ -101,6 +115,36 @@ export function wobblesToday(): TodayStage {
   };
 }
 
+/* ---------------- Daily layer (varies every date) ---------------- */
+
+export interface DailyBrief {
+  plan: DayPlan; // who's home today + the day's texture
+  whoHome: string; // human-readable, e.g. "Marcus WFH · Chesa home"
+  care: CareTask[]; // today's care-rota tasks (bath / nails / parasite / teeth)
+  activity: ActivityIdea; // today's rotating idea
+  parkNight: boolean; // 7pm park socialisation night?
+}
+
+function presenceLabel(p: "home" | "office" | "maybe-office"): string {
+  return p === "home" ? "home" : p === "office" ? "office" : "maybe office";
+}
+
+export function todaysBrief(now: Date = new Date()): DailyBrief {
+  const plan = dayPlanFor(now);
+  const homecomingFuture = daysUntil(WOBBLES.homecoming, now) > 0;
+  const whoHome =
+    plan.dow === 0 || plan.dow === 6
+      ? "Everyone home"
+      : `Marcus ${presenceLabel(plan.marcus)} · Chesa ${presenceLabel(plan.chesa)}`;
+  return {
+    plan,
+    whoHome,
+    care: careTasksFor(now),
+    activity: activityFor(now, homecomingFuture),
+    parkNight: !homecomingFuture && isParkNight(now),
+  };
+}
+
 /* ---------------- Rule-based nudges ---------------- */
 
 export interface Nudge {
@@ -108,59 +152,88 @@ export interface Nudge {
   emoji: string;
   text: string;
   link: string;
+  /** Who the nudge is mainly for; undefined = whole family */
+  person?: "Marcus" | "Chesa";
 }
 
-function daysSince(iso: string | undefined): number | null {
+function daysSince(iso: string | undefined, now: Date = new Date()): number | null {
   if (!iso) return null;
   const then = new Date(iso + "T12:00:00").getTime();
-  const today = new Date().setHours(12, 0, 0, 0);
+  const today = new Date(now).setHours(12, 0, 0, 0);
   return Math.round((today - then) / 86400000);
 }
 
 /**
- * Transparent, deterministic nudges from family-shared server data. Max 2.
+ * Transparent, deterministic nudges from family-shared server data plus the
+ * household schedule. Max 3. Care-rota tasks (bath / nails / parasite dose)
+ * take priority, then data-driven gaps, with owners named so Marcus and
+ * Chesa each see their own jobs.
  * @param entriesByTracker newest-first entries per tracker id (server-backed)
  * @param readProgress shared reading-progress map (slug -> 0..1)
  */
 export function todaysNudges(
   entriesByTracker: (id: string) => TrackerEntry[],
   readProgress: Record<string, number>,
+  now: Date = new Date(),
 ): Nudge[] {
-  const age = wobblesAge();
+  const age = wobblesAge(now);
   const out: Nudge[] = [];
-  if (!age.born || daysUntil(WOBBLES.homecoming) > 0) {
+
+  if (!age.born || daysUntil(WOBBLES.homecoming, now) > 0) {
     // Pre-homecoming: reading nudge only
     const started = Object.entries(readProgress).find(([, v]) => v > 0.05 && v < 0.95);
     if (started)
       out.push({ id: "resume", emoji: "📖", text: "Pick up where you left off in the handbook", link: `/handbook/${started[0]}` });
-    return out.slice(0, 2);
+    return out.slice(0, 3);
   }
 
-  const readEntries = entriesByTracker;
-  const groom = daysSince(readEntries("grooming")[0]?.date);
-  if (groom == null || groom >= 2)
-    out.push({ id: "brush", emoji: "🪮", text: groom == null ? "No brushing logged yet — start the daily ritual" : `Last brush was ${groom} days ago — quick 2-minute session?`, link: "/trackers/grooming" });
+  // 1) Care rota first — they're date-anchored jobs with named owners
+  for (const task of careTasksFor(now)) {
+    if (task.id === "teeth") continue; // teeth shows in the day plan, not as a nudge
+    out.push({
+      id: `care-${task.id}`,
+      emoji: task.emoji,
+      text: task.label + " — " + task.detail.split(".")[0].toLowerCase() + ".",
+      link: task.link,
+      person: task.owner === "marcus" ? "Marcus" : task.owner === "chesa" ? "Chesa" : undefined,
+    });
+  }
 
-  const toilet = daysSince(readEntries("toilet")[0]?.date);
+  // 2) Data-driven gaps from the shared trackers
+  const readEntries = entriesByTracker;
+  const groom = daysSince(readEntries("grooming")[0]?.date, now);
+  if (groom == null || groom >= 2)
+    out.push({
+      id: "brush",
+      emoji: "🪮",
+      text: groom == null ? "No brushing logged yet — start the daily ritual" : `Last brush was ${groom} days ago — quick 2-minute session?`,
+      link: "/trackers/grooming",
+      person: "Chesa",
+    });
+
+  const toilet = daysSince(readEntries("toilet")[0]?.date, now);
   if (age.weeks < 20 && (toilet == null || toilet >= 1))
     out.push({ id: "toilet", emoji: "🚽", text: "No toilet logs today — patterns only appear if you log", link: "/trackers/toilet" });
 
-  const weight = daysSince(readEntries("weight")[0]?.date);
+  const weight = daysSince(readEntries("weight")[0]?.date, now);
   if (age.months < 12 && (weight == null || weight >= 7))
-    out.push({ id: "weigh", emoji: "⚖️", text: weight == null ? "First weigh-in still to come" : "Weekly weigh-in is due", link: "/trackers/weight" });
+    out.push({
+      id: "weigh",
+      emoji: "⚖️",
+      text: weight == null ? "First weigh-in still to come" : "Weekly weigh-in is due",
+      link: "/trackers/weight",
+      person: "Marcus",
+    });
 
   if (age.weeks < 16) {
-    const social = daysSince(readEntries("social")[0]?.date);
+    const social = daysSince(readEntries("social")[0]?.date, now);
     if (social == null || social >= 2)
       out.push({ id: "social", emoji: "🌏", text: "The socialisation window is open — one tiny new experience today (carried around the block counts)", link: "/trackers/social" });
   }
 
-  // Park socialisation rhythm: 7pm every other day, once fully vaccinated (~17wk buffer past the 16wk final dose)
-  if (age.weeks >= 18 && age.months < 12) {
-    const social = daysSince(readEntries("social")[0]?.date);
-    if (social != null && social >= 2)
-      out.push({ id: "park", emoji: "🏞️", text: "Park night is due — 7pm at the park with dogs and people, or drive to the Waterfront dog run", link: "/trackers/social" });
-  }
+  // 3) Park night reminder (7pm every other day, post-full-vaccination)
+  if (age.weeks >= 18 && age.months < 12 && isParkNight(now))
+    out.push({ id: "park", emoji: "🏞️", text: "Park night tonight — 7pm at the park next door with dogs and people (or drive to the Waterfront dog run)", link: "/trackers/social" });
 
-  return out.slice(0, 2);
+  return out.slice(0, 3);
 }
