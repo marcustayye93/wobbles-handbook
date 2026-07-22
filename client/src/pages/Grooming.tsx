@@ -11,7 +11,11 @@ import { PawPrint, ChevronDown, ChevronRight, AlertTriangle, Baby, Clock } from 
 import { cn } from "@/lib/utils";
 
 export default function Grooming() {
-  const [open, setOpen] = useState<string | null>(GROOM_STEPS[0].slug);
+  const [open, setOpen] = useState<string | null>(() => {
+    // deep-link support: /grooming?open=<slug> expands that stage card
+    const q = new URLSearchParams(window.location.search).get("open");
+    return q && GROOM_STEPS.some((s) => s.slug === q) ? q : GROOM_STEPS[0].slug;
+  });
   const [showKit, setShowKit] = useState(false);
 
   const jump = (slug: string) => {
@@ -131,7 +135,7 @@ export default function Grooming() {
                       src={g.img}
                       alt={g.imgAlt ?? g.title}
                       className="w-full aspect-[16/10] object-cover rounded-2xl mt-3.5"
-                      loading="lazy"
+                      loading="eager"
                     />
                   )}
 

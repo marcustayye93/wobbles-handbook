@@ -21,6 +21,10 @@ export interface GroomStep {
 
 /** Illustration assets (uploaded, webdev storage URLs — use as-is) */
 export const GROOM_IMGS = {
+  setup: "/manus-storage/groom-setup_e29c45f6.png",
+  prebath: "/manus-storage/groom-prebath_03dd7958.png",
+  face: "/manus-storage/groom-face_704041f9.png",
+  finish: "/manus-storage/groom-finish_aff9ef3e.png",
   brush: "/manus-storage/groom-brush_1f59d0ef.png",
   bath: "/manus-storage/groom-bath_7e03a827.png",
   dry: "/manus-storage/groom-dry_93ab9809.png",
@@ -37,6 +41,8 @@ export const GROOM_STEPS: GroomStep[] = [
     title: "Set up & settle",
     short: "Tools out, mat down, calm puppy — before anything touches him",
     time: "5 min",
+    img: GROOM_IMGS.setup,
+    imgAlt: "Gouache sketch of grooming tools laid out on a mat while a Cavoodle puppy sits calmly nearby",
     steps: [
       {
         title: "Lay everything out first",
@@ -100,6 +106,8 @@ export const GROOM_STEPS: GroomStep[] = [
     title: "Pre-bath once-over",
     short: "Eyes wiped, body scanned — 2 minutes of vet-grade intel",
     time: "2–3 min",
+    img: GROOM_IMGS.prebath,
+    imgAlt: "Gouache sketch of a person gently wiping a Cavoodle puppy's eye corner with a soft cloth",
     steps: [
       {
         title: "Eye corners",
@@ -282,6 +290,8 @@ export const GROOM_STEPS: GroomStep[] = [
     title: "Face & tidy trim",
     short: "Round-tip scissors, eyes and hygiene only — clips are groomer work",
     time: "5–10 min",
+    img: GROOM_IMGS.face,
+    imgAlt: "Gouache sketch of a person carefully trimming around a Cavoodle puppy's eyes with round-tip scissors",
     steps: [
       {
         title: "Only on a clean, dry, brushed coat",
@@ -314,6 +324,8 @@ export const GROOM_STEPS: GroomStep[] = [
     title: "The victory lap",
     short: "Treat, play, log it — the groom must end on a high",
     time: "2 min",
+    img: GROOM_IMGS.finish,
+    imgAlt: "Gouache sketch of a freshly groomed Cavoodle puppy catching a treat mid-celebration",
     steps: [
       {
         title: "Jackpot finish",

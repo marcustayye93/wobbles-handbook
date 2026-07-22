@@ -143,4 +143,11 @@
 - [x] Active-tab logic: /training, /grooming, /handbook/100-things highlight the Chapters tab; back buttons on Training/Grooming return to /handbook
 - [x] Trackers header: fix "Wobbles' Logbook" title clipped by the dog image (constrain image, let title wrap/fit)
 - [x] Verify: tsc + 114/114 tests pass, mobile screenshots of /trackers, /handbook, /training, /
+- [x] Checkpoint 0103a852 (auto-published) + pushed to GitHub (main @ 0103a85) + delivered
+
+# Illustration repair (user request 2026-07-22)
+- [x] Audit all illustration URLs in training.ts and grooming.ts — HTTP-check each, list broken ones
+- [x] Regenerate every broken illustration in the same soft watercolor keepsake style (match the blow-dry sketch the user liked)
+- [x] Ensure EVERY expandable card (11 training skills + all grooming stages) has a working illustration — generate missing ones too
+- [x] Wire new URLs into content files, verify rendering via screenshots of expanded cards
 - [ ] Checkpoint (auto-publish) + push GitHub + deliver

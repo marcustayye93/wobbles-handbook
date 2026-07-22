@@ -31,11 +31,16 @@ export interface TrainingSkill {
 /** Illustration assets (uploaded, webdev storage URLs — use as-is) */
 export const TRAINING_IMGS = {
   potty: "/manus-storage/train-potty_dc3c2c22.png",
-  name: "/manus-storage/train-name_7d1198cb.png",
-  crate: "/manus-storage/train-crate_08f67f72.png",
-  sit: "/manus-storage/train-sit_e535009c.png",
-  recall: "/manus-storage/train-recall_a5f1c5c1.png",
-  leash: "/manus-storage/train-leash_758a43a8.png",
+  name: "/manus-storage/train-name_1e420efc.png",
+  crate: "/manus-storage/train-crate_ced70d0a.png",
+  sit: "/manus-storage/train-sit_a088dcd6.png",
+  recall: "/manus-storage/train-recall_3df38a28.png",
+  leash: "/manus-storage/train-leash_1a09440a.png",
+  handling: "/manus-storage/train-handling_00e3a4fd.png",
+  social: "/manus-storage/train-social_9d76efed.png",
+  bite: "/manus-storage/train-bite_3cf46d65.png",
+  stay: "/manus-storage/train-stay_b68e27ae.png",
+  tricks: "/manus-storage/train-tricks_d10f4535.png",
 } as const;
 
 export const TRAINING_SKILLS: TrainingSkill[] = [
@@ -167,6 +172,8 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
     startWhen: "Week 1–2 home (8–10 weeks)",
     startWeeks: 8,
     goal: "Being touched anywhere — paws held, ears checked, brush on coat, harness over head — predicts treats, not restraint.",
+    img: TRAINING_IMGS.handling,
+    imgAlt: "Gouache sketch of a Cavoodle puppy relaxing belly-up in a person's lap while they gently hold one paw",
     steps: [
       {
         title: "One minute a day, treats constant",
@@ -269,6 +276,8 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
     startWhen: "Immediately — window closes ~16 Oct 2026",
     startWeeks: 8,
     goal: "By 16 weeks, Wobbles has calmly experienced the sounds, surfaces, people and sights of his world — so adult Wobbles finds nothing scary.",
+    img: TRAINING_IMGS.social,
+    imgAlt: "Gouache sketch of a person carrying a Cavoodle puppy in their arms while it watches a busy Singapore street",
     steps: [
       {
         title: "Carry, don't ground",
@@ -305,6 +314,8 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
     startWhen: "From day 1; peaks during teething (12–24 weeks)",
     startWeeks: 8,
     goal: "Wobbles learns human skin is off-limits, mouths softly if ever, and trades anything in his mouth for a better offer.",
+    img: TRAINING_IMGS.bite,
+    imgAlt: "Gouache sketch of a Cavoodle puppy chewing a rope toy offered by a hand instead of fingers",
     steps: [
       {
         title: "Redirect every nip",
@@ -378,6 +389,8 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
     startWhen: "Weeks 10–16",
     startWeeks: 10,
     goal: "Wobbles can lie down on cue, hold position while life happens, and park himself on a mat while humans eat, work or order coffee.",
+    img: TRAINING_IMGS.stay,
+    imgAlt: "Gouache sketch of a Cavoodle puppy lying calmly on a small mat while a person holds up a gentle stay hand signal",
     steps: [
       {
         title: "Down from a sit",
@@ -413,6 +426,8 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
     startWhen: "Any time after basics (12+ weeks)",
     startWeeks: 12,
     goal: "One party trick a month. Tricks are 'just training' to him — pure bonding, brain-drain, and excellent wet-weather enrichment.",
+    img: TRAINING_IMGS.tricks,
+    imgAlt: "Gouache sketch of a Cavoodle puppy giving a high-five paw to a person's open hand",
     steps: [
       {
         title: "Touch (hand target) first",

@@ -21,7 +21,11 @@ const STATUS_STYLE: Record<string, { label: string; cls: string }> = {
 export default function Training() {
   const age = wobblesAge();
   const ageWeeks = age.born ? age.weeks + age.remDays / 7 : 0;
-  const [open, setOpen] = useState<string | null>(TRAINING_SKILLS[0].slug);
+  const [open, setOpen] = useState<string | null>(() => {
+    // deep-link support: /training?open=<slug> expands that skill card
+    const q = new URLSearchParams(window.location.search).get("open");
+    return q && TRAINING_SKILLS.some((s) => s.slug === q) ? q : TRAINING_SKILLS[0].slug;
+  });
 
   const jump = (slug: string) => {
     setOpen(slug);
@@ -137,7 +141,7 @@ export default function Training() {
                       src={s.img}
                       alt={s.imgAlt ?? s.title}
                       className="w-full aspect-[16/10] object-cover rounded-2xl mt-3.5"
-                      loading="lazy"
+                      loading="eager"
                     />
                   )}
 
