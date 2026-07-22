@@ -4,7 +4,7 @@
  * Today's timeline → Coming up → Start reading. Paper bg, Cormorant serif,
  * ink navy + sienna, restrained keepsake details.
  */
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
 import { PageShell, Eyebrow } from "@/components/AppShell";
 import SyncIndicator from "@/components/SyncIndicator";
@@ -13,13 +13,14 @@ import TodayTimeline, { useDayFeed } from "@/components/TodayTimeline";
 import SearchDialog from "@/components/SearchDialog";
 import { wobblesToday, todaysNudges, todaysBrief } from "@/lib/wobblesToday";
 import HouseholdSettingsSheet from "@/components/HouseholdSettingsSheet";
-import { SETTINGS_KEY, defaultSettings, normalizeSettings } from "@/lib/householdSettings";
+import { SETTINGS_KEY, defaultSettings, normalizeSettings, allRemindersDone } from "@/lib/householdSettings";
 import type { HouseholdSettings } from "@/lib/householdSettings";
+import ReminderCelebration from "@/components/ReminderCelebration";
 import { todayISO } from "@/lib/dates";
 import { useTrackerFeed, useSharedState, rowToEntry } from "@/hooks/useSyncedData";
 import { ASSETS, WOBBLES, MILESTONES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
 import { SECTIONS } from "@/content/handbookSections";
-import { ChevronRight, ArrowRight, PawPrint, CalendarDays, Search, SlidersHorizontal } from "lucide-react";
+import { ChevronRight, ArrowRight, PawPrint, CalendarDays, Search, SlidersHorizontal, Check } from "lucide-react";
 
 /** Countdown keepsake: picks the most relevant upcoming date */
 function nextCountdown(): { days: number; label: string } | null {
@@ -51,7 +52,10 @@ export default function Home() {
   // Nudges from the family-shared server data (same feed the trackers use)
   const { rows } = useTrackerFeed();
   const [readProgress] = useSharedState<Record<string, number>>("readProgress", {});
-  const [rawSettings] = useSharedState<HouseholdSettings>(SETTINGS_KEY, defaultSettings());
+  const [rawSettings, setRawSettings] = useSharedState<HouseholdSettings>(
+    SETTINGS_KEY,
+    defaultSettings(),
+  );
   const settings = useMemo(() => normalizeSettings(rawSettings), [rawSettings]);
   const brief = useMemo(() => todaysBrief(new Date(), settings), [settings]);
   const entriesFor = useMemo(
@@ -70,6 +74,27 @@ export default function Home() {
 
   const { feed: todayFeed } = useDayFeed(todayISO());
   const hasFeedToday = todayFeed.length > 0;
+
+  // Celebration fires only on the toggle that completes the last reminder —
+  // never on page load or when another device already finished the list.
+  const [celebrate, setCelebrate] = useState(false);
+  const celebrateTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const toggleReminder = (id: string) => {
+    const r = settings.reminders[id];
+    if (!r) return;
+    const next: HouseholdSettings = {
+      ...settings,
+      reminders: { ...settings.reminders, [id]: { ...r, done: !r.done } },
+    };
+    const wasAllDone = allRemindersDone(new Date(), settings);
+    setRawSettings(next);
+    if (!wasAllDone && !r.done && allRemindersDone(new Date(), next)) {
+      setCelebrate(true);
+      if (celebrateTimer.current) clearTimeout(celebrateTimer.current);
+      celebrateTimer.current = setTimeout(() => setCelebrate(false), 2600);
+    }
+  };
+  const allDoneToday = brief.reminders.length > 0 && brief.reminders.every((r) => r.done);
 
   const quickLog = (id: string | null) => {
     setSheetTracker(id);
@@ -214,22 +239,52 @@ export default function Home() {
           </p>
           <p className="text-[12.5px] font-body text-[#5A6B7E] leading-relaxed mt-1">{brief.plan.note}</p>
 
-          {/* Family-added one-off reminders for today */}
+          {/* Family-added one-off reminders for today (tap to tick off — synced) */}
           {brief.reminders.length > 0 && (
-            <div className="mt-3 space-y-1.5 border-t border-dashed border-[#E5DAC8] pt-3">
+            <div className="relative mt-3 space-y-1 border-t border-dashed border-[#E5DAC8] pt-3">
+              {celebrate && <ReminderCelebration />}
               {brief.reminders.map((r) => (
-                <div key={r.id} className="flex items-start gap-2.5">
-                  <span className="text-[15px] shrink-0 leading-snug">📌</span>
-                  <span className="min-w-0 text-[12.5px] font-body font-bold text-[#22364D] leading-snug">
+                <button
+                  key={r.id}
+                  type="button"
+                  role="checkbox"
+                  aria-checked={r.done === true}
+                  onClick={() => toggleReminder(r.id)}
+                  className="w-full flex items-start gap-2.5 py-1 text-left press-scale rounded-md"
+                >
+                  <span
+                    aria-hidden
+                    className={`mt-[1px] w-[18px] h-[18px] shrink-0 rounded-[5px] border-[1.5px] flex items-center justify-center transition-colors duration-150 ${
+                      r.done
+                        ? "bg-[#B4512E] border-[#B4512E] text-[#FFFDF8]"
+                        : "bg-[#FFFDF8] border-[#C9BBA4] text-transparent"
+                    }`}
+                  >
+                    <Check size={12} strokeWidth={3} />
+                  </span>
+                  <span
+                    className={`min-w-0 text-[12.5px] font-body font-bold leading-snug transition-colors duration-150 ${
+                      r.done ? "text-muted-foreground line-through decoration-[#C9BBA4]" : "text-[#22364D]"
+                    }`}
+                  >
                     {r.person && (
-                      <span className="mr-1.5 text-[9px] font-extrabold uppercase tracking-[0.1em] text-[#B4512E]">
+                      <span
+                        className={`mr-1.5 text-[9px] font-extrabold uppercase tracking-[0.1em] ${
+                          r.done ? "text-muted-foreground" : "text-[#B4512E]"
+                        }`}
+                      >
                         {r.person === "marcus" ? "Marcus" : "Chesa"}
                       </span>
                     )}
                     {r.text}
                   </span>
-                </div>
+                </button>
               ))}
+              {allDoneToday && (
+                <p className="pt-1 text-[11px] font-body font-extrabold text-[#6B7C5A]">
+                  🎉 All of today's reminders done — good humans.
+                </p>
+              )}
             </div>
           )}
 

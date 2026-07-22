@@ -269,6 +269,24 @@
   }
 }
 
+/* Reminder all-done celebration: pieces rise, drift and fade. Hidden entirely
+   for reduced-motion users — the parent shows a static "All done" line instead. */
+.celebration-piece {
+  display: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .celebration-piece {
+    display: inline-block;
+    opacity: 0;
+    animation: celebrationRise 1900ms var(--ease-out-snappy) both;
+  }
+  @keyframes celebrationRise {
+    0% { opacity: 0; transform: translateY(6px) translateX(0) rotate(0deg) scale(0.95); }
+    12% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-64px) translateX(var(--drift, 0px)) rotate(24deg) scale(1.05); }
+  }
+}
+
 /* Lightbox photo entrance — subtle scale+fade, respects reduced motion */
 @media (prefers-reduced-motion: no-preference) {
   .lightbox-photo-enter {

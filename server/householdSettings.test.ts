@@ -13,6 +13,7 @@ import {
   remindersFor,
   upcomingReminders,
   pastReminders,
+  allRemindersDone,
   type HouseholdSettings,
   type OneOffReminder,
 } from "../client/src/lib/householdSettings";
@@ -123,6 +124,66 @@ describe("reminders", () => {
     expect(up.map((r) => r.id).sort()).toEqual(["r1", "r2", "r3"]);
     expect(up[2].id).toBe("r3"); // later date sorts last
     expect(pastReminders(s, now).map((r) => r.id)).toEqual(["r4"]);
+  });
+});
+
+describe("reminder done state", () => {
+  it("normalizeSettings keeps done=true, coerces anything else to false", () => {
+    const s = normalizeSettings({
+      ...defaultSettings(),
+      reminders: {
+        a: { id: "a", date: "2026-09-10", text: "Vet booster", done: true },
+        b: { id: "b", date: "2026-09-10", text: "Buy pads", done: "yes" },
+        c: { id: "c", date: "2026-09-10", text: "Puppy class" },
+      },
+    } as unknown as HouseholdSettings);
+    expect(s.reminders.a.done).toBe(true);
+    expect(s.reminders.b.done).toBe(false);
+    expect(s.reminders.c.done).toBe(false);
+  });
+
+  it("allRemindersDone is false with no reminders, false when any is unticked, true when all ticked", () => {
+    const day = d("2026-09-10");
+    const none = defaultSettings();
+    expect(allRemindersDone(day, none)).toBe(false);
+
+    const some: HouseholdSettings = {
+      ...defaultSettings(),
+      reminders: {
+        a: reminder({ id: "a", date: "2026-09-10", text: "Vet booster", done: true }),
+        b: reminder({ id: "b", date: "2026-09-10", text: "Buy pads" }),
+      },
+    };
+    expect(allRemindersDone(day, some)).toBe(false);
+
+    const all: HouseholdSettings = {
+      ...defaultSettings(),
+      reminders: {
+        a: reminder({ id: "a", date: "2026-09-10", text: "Vet booster", done: true }),
+        b: reminder({ id: "b", date: "2026-09-10", text: "Buy pads", done: true }),
+        // other-day reminder must not affect today's all-done state
+        c: reminder({ id: "c", date: "2026-09-12", text: "Puppy class" }),
+      },
+    };
+    expect(allRemindersDone(day, all)).toBe(true);
+  });
+
+  it("done reminders are excluded from nudges but still listed in the brief", () => {
+    const now = d("2026-09-11");
+    const isoNow = iso(now);
+    const s: HouseholdSettings = {
+      ...defaultSettings(),
+      reminders: {
+        a: reminder({ id: "a", date: isoNow, text: "Vet booster", done: true }),
+        b: reminder({ id: "b", date: isoNow, text: "Buy pads" }),
+      },
+    };
+    const nudges = todaysNudges(() => [], {}, now, s);
+    const reminderNudges = nudges.filter((n) => n.id.startsWith("reminder-"));
+    expect(reminderNudges.map((n) => n.id)).toEqual(["reminder-b"]);
+    // brief keeps both so the plan card can render checkboxes for each
+    const brief = todaysBrief(now, s);
+    expect(brief.reminders.map((r) => r.id).sort()).toEqual(["a", "b"]);
   });
 });
 

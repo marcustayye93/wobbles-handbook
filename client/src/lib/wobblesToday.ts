@@ -189,8 +189,10 @@ export function todaysNudges(
   const out: Nudge[] = [];
 
   // 0) Family-added one-off reminders for today always come first
+  // (ticked-off ones stay on the plan card, struck through, but leave the nudges)
   if (settings) {
     for (const r of remindersFor(now, settings)) {
+      if (r.done) continue;
       out.push({
         id: `reminder-${r.id}`,
         emoji: "📌",

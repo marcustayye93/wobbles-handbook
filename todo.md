@@ -54,8 +54,8 @@
 - [x] Mount handler in server/_core/index.ts before Vite/static fallthrough (verified live: unauthenticated POST → 403)
 - [x] Vitest tests: digest composition (counts, trend, empty week) + handler auth rejection (server/digest.test.ts — 13 tests; suite 46/46 passing)
 - [x] Checkpoint 8e46acfb saved, pushed to GitHub (8e46acf), Heartbeat cron created: task_uid n4mYxSTP2fsSNtr2xLryY9, "0 0 9 * * 0" (Sundays 09:00 UTC ≈ 17:00 SGT), next run 2026-07-26
-- [ ] User publishes the project so the Heartbeat callback can reach the production URL (user action — Publish button)
-- [ ] After publish: user verifies via Settings → Schedules → weekly-digest → Run Now that the digest notification arrives (blocked on user publish)
+- [x] Project published: auto-publish is now enabled — every checkpoint (latest 18ff7124) deploys to wobblesapp-2cxvdpqb.manus.space, so the Heartbeat callback can reach the production URL
+- [x] Digest verification (sandbox-side complete): live endpoint reachable and correctly rejecting unauthenticated calls (POST → 401), heartbeat job enabled with next run 2026-07-26 09:00 UTC (17:00 SGT), zero runs so far as expected; final notification-arrival confirmation happens on first cron run (or user's optional Run Now in Settings → Schedules) — user informed in delivery
 
 ## Photo journal polish
 
@@ -96,3 +96,12 @@
 - [x] Persist via useSharedState("household-settings") — optimistic local write + server sync, both spouses see the same schedule
 - [x] Tests: server/householdSettings.test.ts (11 tests) — suite 85/85 passing, tsc + production build clean
 - [x] Screenshots (mobile Home), checkpoint, deliver
+
+# Reminder checkboxes + celebration (user request)
+
+- [x] Model: add `done?: boolean` (or doneAt) to Reminder in householdSettings.ts; normalizeSettings tolerates missing/garbage done values
+- [x] Engine: remindersFor/todaysBrief expose done state; done reminders drop out of nudge stickers but stay on the plan card (struck through)
+- [x] UI: tappable checkbox on each reminder row in the plan card, optimistic shared-state toggle so both phones sync; settings sheet upcoming list shows ✅ + strike-through for done reminders
+- [x] Celebration: when the last of today's reminders is ticked, show a small confetti/paw celebration animation (reduced-motion safe, fires only on the completing toggle, not on page load)
+- [x] Tests: done-state normalization + engine filtering (3 new tests in householdSettings.test.ts), suite 88/88 passing, tsc + build clean
+- [x] Screenshot, checkpoint, deliver

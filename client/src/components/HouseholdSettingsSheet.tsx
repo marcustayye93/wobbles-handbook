@@ -225,9 +225,16 @@ export default function HouseholdSettingsSheet({ open, onOpenChange }: Props) {
               <div className="mt-3 space-y-2">
                 {upcoming.map((r) => (
                   <div key={r.id} className="sticker-card px-3.5 py-2.5 flex items-center gap-3">
-                    <span className="text-[15px] shrink-0">📌</span>
+                    <span className="text-[15px] shrink-0">{r.done ? "✅" : "📌"}</span>
                     <span className="min-w-0 flex-1">
-                      <span className="block text-[12.5px] font-body font-bold text-[#22364D] leading-snug">
+                      <span
+                        className={cn(
+                          "block text-[12.5px] font-body font-bold leading-snug",
+                          r.done
+                            ? "text-muted-foreground line-through decoration-[#C9BBA4]"
+                            : "text-[#22364D]",
+                        )}
+                      >
                         {r.person && (
                           <span className="mr-1.5 text-[9px] font-extrabold uppercase tracking-[0.1em] text-[#B4512E]">
                             {r.person === "marcus" ? "Marcus" : "Chesa"}

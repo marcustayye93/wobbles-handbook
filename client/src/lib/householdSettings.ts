@@ -19,6 +19,8 @@ export interface OneOffReminder {
   text: string;
   /** who it's for; undefined = whole family */
   person?: "marcus" | "chesa";
+  /** ticked off on the daily plan card */
+  done?: boolean;
 }
 
 export interface HouseholdSettings {
@@ -74,6 +76,7 @@ export function normalizeSettings(raw: unknown): HouseholdSettings {
           date: (rem as OneOffReminder).date,
           text: (rem as OneOffReminder).text.slice(0, 200),
           person: p === "marcus" || p === "chesa" ? p : undefined,
+          done: (rem as OneOffReminder).done === true,
         };
       }
     }
@@ -126,6 +129,12 @@ export function upcomingReminders(s: HouseholdSettings, now: Date = new Date()):
   return Object.values(s.reminders)
     .filter((r) => r.date >= iso)
     .sort((a, b) => a.date.localeCompare(b.date) || a.text.localeCompare(b.text));
+}
+
+/** True when the date has at least one reminder and every one is ticked. */
+export function allRemindersDone(date: Date, s: HouseholdSettings): boolean {
+  const rs = remindersFor(date, s);
+  return rs.length > 0 && rs.every((r) => r.done === true);
 }
 
 /** Reminders strictly before today (kept visible so nothing silently vanishes). */
