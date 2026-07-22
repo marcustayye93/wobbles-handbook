@@ -10,7 +10,7 @@ import { SECTIONS } from "@/content/handbookSections";
 import { HUNDRED_TOTAL } from "@/content/hundredThings";
 import { CHECKLISTS } from "@/content/checklists";
 import { CHAPTER_COVERS } from "@/content/wobbles";
-import { ChevronRight, Clock, Printer, ListChecks, Plane, Award, Search, GraduationCap, Scissors } from "lucide-react";
+import { ChevronRight, Clock, Printer, ListChecks, Plane, Award, Search, GraduationCap, Scissors, ShoppingCart } from "lucide-react";
 import { useSharedState } from "@/hooks/useSyncedData";
 import { useState } from "react";
 import SearchDialog from "@/components/SearchDialog";
@@ -189,6 +189,23 @@ export default function HandbookIndex() {
                 </p>
                 <p className="text-[11px] font-body text-muted-foreground mt-0.5 flex items-center gap-1">
                   {CHECKLISTS.length} lists · tick on screen or <Printer size={11} /> print
+                </p>
+              </div>
+              <ChevronRight size={17} className="text-muted-foreground shrink-0" />
+            </div>
+          </Link>
+
+          <Link href="/handbook/shopping" className="block sticker-card p-4 press-scale">
+            <div className="flex items-center gap-3.5">
+              <span className="w-11 h-11 rounded-2xl bg-[#C66A3D]/12 flex items-center justify-center">
+                <ShoppingCart size={21} className="text-[#B4512E]" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="font-body font-bold text-[14px] leading-snug text-[#22364D]">
+                  Shopping Countdown
+                </p>
+                <p className="text-[11px] font-body text-muted-foreground mt-0.5">
+                  Week-by-week buying plan to homecoming — big things first
                 </p>
               </div>
               <ChevronRight size={17} className="text-muted-foreground shrink-0" />

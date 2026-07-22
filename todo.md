@@ -172,3 +172,12 @@
 - [x] Research Singapore rules — governing agency is AVS/NParks (not NEA): dogs must be at least 12 weeks old at import into Singapore, so earliest homecoming for DOB 26 Jun 2026 is 18 Sep 2026 (not 6 weeks)
 - [x] Updated WOBBLES.homecoming to 2026-09-18 with the regulation basis documented in code comments and the Singapore chapter
 - [x] Recalculated milestones (vaccines at breeder, import licence, flight day = homecoming day, socialisation window to ~16 Oct) around new homecoming
+
+# Pre-homecoming shopping countdown (user request 2026-07-23)
+- [x] Content model: 9-week purchase schedule (Mon 20 Jul → Fri 18 Sep 2026) in client/src/content/shoppingPlan.ts — 36 items: crate/pen week 1, comfort/gear/admin mid-plan, consumables, food (breeder-confirmed brand) week 8, perishables + landing prep final week
+- [x] Existing checklist shopping items mapped into the sequenced plan with why-this-week buying notes (Puppy Arrival checklist kept as the final-day sweep; separate tick storage, cross-referenced in page footer)
+- [x] Shared progress via useSharedState("shopping") — both phones sync; completion toast when all 36 items done
+- [x] UI: /handbook/shopping page — dashed week timeline, "this week" badge with auto-open + auto-scroll, progress ring hero with days-to-homecoming, catch-up section for slipped items; entry card on Handbook index
+- [x] Home integration: pre-homecoming nudge shows this week's remaining item count (or catch-up count when behind)
+- [x] Tests: server/shoppingPlan.test.ts (13 tests — structure, Monday alignment, week bucketing, overdue logic); tsc clean; suite 127/127 green; mobile screenshots verified
+- [x] Checkpoint (auto-publish) + push GitHub + deliver

@@ -50,6 +50,7 @@ export default function Home() {
   // Nudges from the family-shared server data (same feed the trackers use)
   const { rows } = useTrackerFeed();
   const [readProgress] = useSharedState<Record<string, number>>("readProgress", {});
+  const [shoppingTicks] = useSharedState<Record<string, boolean>>("shopping", {});
   const [rawSettings, setRawSettings] = useSharedState<HouseholdSettings>(
     SETTINGS_KEY,
     defaultSettings(),
@@ -61,8 +62,8 @@ export default function Home() {
     [rows],
   );
   const nudges = useMemo(
-    () => todaysNudges(entriesFor, readProgress, new Date(), settings),
-    [entriesFor, readProgress, settings],
+    () => todaysNudges(entriesFor, readProgress, new Date(), settings, shoppingTicks),
+    [entriesFor, readProgress, settings, shoppingTicks],
   );
 
   const [sheetOpen, setSheetOpen] = useState(false);

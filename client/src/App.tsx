@@ -15,6 +15,7 @@ import HandbookIndex from "@/pages/HandbookIndex";
 import SectionReader from "@/pages/SectionReader";
 import HundredThings from "@/pages/HundredThings";
 import Checklists from "@/pages/Checklists";
+import Shopping from "@/pages/Shopping";
 import Singapore from "@/pages/Singapore";
 import Training from "@/pages/Training";
 import Grooming from "@/pages/Grooming";
@@ -32,6 +33,7 @@ function Router() {
       <Route path="/handbook" component={HandbookIndex} />
       <Route path="/handbook/100-things" component={HundredThings} />
       <Route path="/handbook/checklists" component={Checklists} />
+      <Route path="/handbook/shopping" component={Shopping} />
       <Route path="/handbook/:slug" component={SectionReader} />
       <Route path="/singapore" component={Singapore} />
       <Route path="/training" component={Training} />

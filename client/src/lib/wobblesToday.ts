@@ -25,6 +25,10 @@ import {
   type OneOffReminder,
 } from "@/lib/householdSettings";
 import { type TrackerEntry } from "@/lib/trackers";
+import {
+  currentWeek as currentShoppingWeek,
+  overdueItems as overdueShoppingItems,
+} from "@/content/shoppingPlan";
 
 export interface TodayStage {
   stage: string; // e.g. "Neonatal", "Socialisation window"
@@ -198,6 +202,7 @@ export function todaysNudges(
   readProgress: Record<string, number>,
   now: Date = new Date(),
   settings?: HouseholdSettings,
+  shoppingTicks?: Record<string, boolean>,
 ): Nudge[] {
   const age = wobblesAge(now);
   const out: Nudge[] = [];
@@ -218,7 +223,27 @@ export function todaysNudges(
   }
 
   if (!age.born || daysUntil(WOBBLES.homecoming, now) > 0) {
-    // Pre-homecoming: reading nudge only
+    // Pre-homecoming: shopping-countdown nudge first, then reading
+    // (imported at top as currentShoppingWeek / overdueShoppingItems)
+    if (shoppingTicks) {
+      const week = currentShoppingWeek(now);
+      const left = week.items.filter((it) => !shoppingTicks[it.id]).length;
+      const behind = overdueShoppingItems(shoppingTicks, now).length;
+      if (behind > 0)
+        out.push({
+          id: "shopping-catchup",
+          emoji: "🛒",
+          text: `${behind} shopping item${behind === 1 ? "" : "s"} slipped from earlier weeks — catch up before the list stacks`,
+          link: "/handbook/shopping",
+        });
+      else if (left > 0)
+        out.push({
+          id: "shopping-week",
+          emoji: week.emoji,
+          text: `${week.title}: ${left} item${left === 1 ? "" : "s"} to buy this week on the countdown`,
+          link: "/handbook/shopping",
+        });
+    }
     const started = Object.entries(readProgress).find(([, v]) => v > 0.05 && v < 0.95);
     if (started)
       out.push({ id: "resume", emoji: "📖", text: "Pick up where you left off in the handbook", link: `/handbook/${started[0]}` });
