@@ -18,6 +18,12 @@ import {
   type CareTask,
   type ActivityIdea,
 } from "@/content/household";
+import {
+  dayPlanWithSettings,
+  remindersFor,
+  type HouseholdSettings,
+  type OneOffReminder,
+} from "@/lib/householdSettings";
 import { type TrackerEntry } from "@/lib/trackers";
 
 export interface TodayStage {
@@ -123,25 +129,27 @@ export interface DailyBrief {
   care: CareTask[]; // today's care-rota tasks (bath / nails / parasite / teeth)
   activity: ActivityIdea; // today's rotating idea
   parkNight: boolean; // 7pm park socialisation night?
+  reminders: OneOffReminder[]; // family-added one-off reminders for today
 }
 
 function presenceLabel(p: "home" | "office" | "maybe-office"): string {
   return p === "home" ? "home" : p === "office" ? "office" : "maybe office";
 }
 
-export function todaysBrief(now: Date = new Date()): DailyBrief {
-  const plan = dayPlanFor(now);
+export function todaysBrief(now: Date = new Date(), settings?: HouseholdSettings): DailyBrief {
+  const plan = settings ? dayPlanWithSettings(now, settings) : dayPlanFor(now);
   const homecomingFuture = daysUntil(WOBBLES.homecoming, now) > 0;
-  const whoHome =
-    plan.dow === 0 || plan.dow === 6
-      ? "Everyone home"
-      : `Marcus ${presenceLabel(plan.marcus)} · Chesa ${presenceLabel(plan.chesa)}`;
+  const bothHome = plan.marcus === "home" && plan.chesa === "home";
+  const whoHome = bothHome
+    ? "Everyone home"
+    : `Marcus ${presenceLabel(plan.marcus)} · Chesa ${presenceLabel(plan.chesa)}`;
   return {
     plan,
     whoHome,
     care: careTasksFor(now),
     activity: activityFor(now, homecomingFuture),
     parkNight: !homecomingFuture && isParkNight(now),
+    reminders: settings ? remindersFor(now, settings) : [],
   };
 }
 
@@ -175,16 +183,30 @@ export function todaysNudges(
   entriesByTracker: (id: string) => TrackerEntry[],
   readProgress: Record<string, number>,
   now: Date = new Date(),
+  settings?: HouseholdSettings,
 ): Nudge[] {
   const age = wobblesAge(now);
   const out: Nudge[] = [];
+
+  // 0) Family-added one-off reminders for today always come first
+  if (settings) {
+    for (const r of remindersFor(now, settings)) {
+      out.push({
+        id: `reminder-${r.id}`,
+        emoji: "📌",
+        text: r.text,
+        link: "",
+        person: r.person === "marcus" ? "Marcus" : r.person === "chesa" ? "Chesa" : undefined,
+      });
+    }
+  }
 
   if (!age.born || daysUntil(WOBBLES.homecoming, now) > 0) {
     // Pre-homecoming: reading nudge only
     const started = Object.entries(readProgress).find(([, v]) => v > 0.05 && v < 0.95);
     if (started)
       out.push({ id: "resume", emoji: "📖", text: "Pick up where you left off in the handbook", link: `/handbook/${started[0]}` });
-    return out.slice(0, 3);
+    return out.slice(0, 4);
   }
 
   // 1) Care rota first — they're date-anchored jobs with named owners
@@ -235,5 +257,8 @@ export function todaysNudges(
   if (age.weeks >= 18 && age.months < 12 && isParkNight(now))
     out.push({ id: "park", emoji: "🏞️", text: "Park night tonight — 7pm at the park next door with dogs and people (or drive to the Waterfront dog run)", link: "/trackers/social" });
 
-  return out.slice(0, 3);
+  // Reminders always survive the cap; then up to 3 rule-based nudges
+  const reminders = out.filter((n) => n.id.startsWith("reminder-"));
+  const rest = out.filter((n) => !n.id.startsWith("reminder-"));
+  return [...reminders, ...rest.slice(0, 3)];
 }

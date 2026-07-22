@@ -76,7 +76,7 @@
 - [x] Weekly digest: update toilet stats wording for pad/outside split
 - [x] Tests updated (toilet options, digest stats), suite 58/58 passing, tsc + build clean
 - [x] Mobile screenshots (Home, Toilet tracker, About, Singapore), checkpoint b64f985e saved (auto-published), delivered
-- [ ] GitHub push blocked: GH_TOKEN expired (401) — retry mirror push to marcustayye93/wobbles-handbook once token refreshes
+- [x] GitHub push: token refreshed, pushed to marcustayye93/wobbles-handbook main @ e741ff0 (includes SG personalisation + daily engine)
 
 # Wobbles Today daily engine (user request)
 
@@ -87,3 +87,12 @@
 - [x] Per-person nudges: care tasks and data nudges carry Marcus/Chesa owner tags rendered on Home
 - [x] Tests for the daily engine: server/dailyEngine.test.ts (16 tests), suite 74/74 passing, tsc clean
 - [x] Screenshots (mobile Home full-page), checkpoint, deliver
+
+# Household settings modal (user request)
+
+- [x] Data model: householdSettings in shared_state — per-person weekly presence (Mon–Sun home/office/maybe-office) + one-off reminders {id, date, text, person?} in client/src/lib/householdSettings.ts with normalizeSettings guard
+- [x] Engine: dayPlanWithSettings + todaysBrief/todaysNudges accept settings; one-off reminders surface as 📌 entries in the plan card and as top-priority nudges (survive the 3-nudge cap)
+- [x] Settings modal UI: sliders button on Home header → HouseholdSettingsSheet drawer with tap-to-cycle weekly grid per person, Reset to usual week, reminder add form (text/date/Both-Marcus-Chesa) + upcoming list with delete + collapsed past
+- [x] Persist via useSharedState("household-settings") — optimistic local write + server sync, both spouses see the same schedule
+- [x] Tests: server/householdSettings.test.ts (11 tests) — suite 85/85 passing, tsc + production build clean
+- [x] Screenshots (mobile Home), checkpoint, deliver

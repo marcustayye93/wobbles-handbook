@@ -104,7 +104,7 @@ describe("todaysBrief", () => {
   it("assembles plan, care, activity and park flag for a date", () => {
     const brief = todaysBrief(d("2026-09-21")); // Monday + 21st
     expect(brief.plan.label).toBe("Monday");
-    expect(brief.whoHome).toContain("Marcus home");
+    expect(brief.whoHome).toBe("Everyone home"); // Monday: Marcus WFH + Chesa home
     expect(brief.care.map((c) => c.id)).toEqual(
       expect.arrayContaining(["nails", "ears", "parasite"]),
     );

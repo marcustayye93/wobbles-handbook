@@ -12,11 +12,14 @@ import QuickLogSheet from "@/components/QuickLogSheet";
 import TodayTimeline, { useDayFeed } from "@/components/TodayTimeline";
 import SearchDialog from "@/components/SearchDialog";
 import { wobblesToday, todaysNudges, todaysBrief } from "@/lib/wobblesToday";
+import HouseholdSettingsSheet from "@/components/HouseholdSettingsSheet";
+import { SETTINGS_KEY, defaultSettings, normalizeSettings } from "@/lib/householdSettings";
+import type { HouseholdSettings } from "@/lib/householdSettings";
 import { todayISO } from "@/lib/dates";
 import { useTrackerFeed, useSharedState, rowToEntry } from "@/hooks/useSyncedData";
 import { ASSETS, WOBBLES, MILESTONES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
 import { SECTIONS } from "@/content/handbookSections";
-import { ChevronRight, ArrowRight, PawPrint, CalendarDays, Search } from "lucide-react";
+import { ChevronRight, ArrowRight, PawPrint, CalendarDays, Search, SlidersHorizontal } from "lucide-react";
 
 /** Countdown keepsake: picks the most relevant upcoming date */
 function nextCountdown(): { days: number; label: string } | null {
@@ -42,25 +45,28 @@ const QUICK_ACTIONS: { id: string; emoji: string; label: string }[] = [
 export default function Home() {
   const age = wobblesAge();
   const today = wobblesToday();
-  const [brief] = useState(() => todaysBrief());
   const countdown = nextCountdown();
   const nextMilestones = MILESTONES.filter((m) => daysUntil(m.date) >= 0).slice(0, 3);
 
   // Nudges from the family-shared server data (same feed the trackers use)
   const { rows } = useTrackerFeed();
   const [readProgress] = useSharedState<Record<string, number>>("readProgress", {});
+  const [rawSettings] = useSharedState<HouseholdSettings>(SETTINGS_KEY, defaultSettings());
+  const settings = useMemo(() => normalizeSettings(rawSettings), [rawSettings]);
+  const brief = useMemo(() => todaysBrief(new Date(), settings), [settings]);
   const entriesFor = useMemo(
     () => (id: string) => rows.filter((r) => r.trackerId === id).map(rowToEntry),
     [rows],
   );
   const nudges = useMemo(
-    () => todaysNudges(entriesFor, readProgress),
-    [entriesFor, readProgress],
+    () => todaysNudges(entriesFor, readProgress, new Date(), settings),
+    [entriesFor, readProgress, settings],
   );
 
   const [sheetOpen, setSheetOpen] = useState(false);
   const [sheetTracker, setSheetTracker] = useState<string | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const { feed: todayFeed } = useDayFeed(todayISO());
   const hasFeedToday = todayFeed.length > 0;
@@ -82,6 +88,13 @@ export default function Home() {
             </span>
             <Eyebrow>Wobbles' Handbook</Eyebrow>
             <SyncIndicator className="ml-auto" />
+            <button
+              onClick={() => setSettingsOpen(true)}
+              aria-label="Household settings — schedule and reminders"
+              className="w-11 h-11 rounded-full bg-[#FFFDF8] border border-[#E5DAC8] flex items-center justify-center text-[#22364D] press-scale shadow-sm"
+            >
+              <SlidersHorizontal size={16} />
+            </button>
             <button
               onClick={() => setSearchOpen(true)}
               aria-label="Search the handbook"
@@ -201,6 +214,25 @@ export default function Home() {
           </p>
           <p className="text-[12.5px] font-body text-[#5A6B7E] leading-relaxed mt-1">{brief.plan.note}</p>
 
+          {/* Family-added one-off reminders for today */}
+          {brief.reminders.length > 0 && (
+            <div className="mt-3 space-y-1.5 border-t border-dashed border-[#E5DAC8] pt-3">
+              {brief.reminders.map((r) => (
+                <div key={r.id} className="flex items-start gap-2.5">
+                  <span className="text-[15px] shrink-0 leading-snug">📌</span>
+                  <span className="min-w-0 text-[12.5px] font-body font-bold text-[#22364D] leading-snug">
+                    {r.person && (
+                      <span className="mr-1.5 text-[9px] font-extrabold uppercase tracking-[0.1em] text-[#B4512E]">
+                        {r.person === "marcus" ? "Marcus" : "Chesa"}
+                      </span>
+                    )}
+                    {r.text}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+
           {/* Care rota due today */}
           {brief.care.length > 0 && (
             <div className="mt-3 space-y-1.5 border-t border-dashed border-[#E5DAC8] pt-3">
@@ -235,27 +267,38 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Nudges */}
+        {/* Nudges (reminder nudges have no link — render as plain rows) */}
         {nudges.length > 0 && (
           <div className="mt-2.5 space-y-2">
-            {nudges.map((n) => (
-              <Link
-                key={n.id}
-                href={n.link}
-                className="sticker-card px-4 py-2.5 flex items-center gap-3 press-scale"
-              >
-                <span className="text-[16px] shrink-0">{n.emoji}</span>
-                <span className="min-w-0 flex-1 text-[12.5px] font-body font-bold text-[#22364D] leading-snug">
-                  {n.person && (
-                    <span className="mr-1.5 text-[9px] font-extrabold uppercase tracking-[0.1em] text-[#B4512E] align-middle">
-                      {n.person}
-                    </span>
-                  )}
-                  {n.text}
-                </span>
-                <ChevronRight size={15} className="text-muted-foreground shrink-0" />
-              </Link>
-            ))}
+            {nudges.map((n) => {
+              const inner = (
+                <>
+                  <span className="text-[16px] shrink-0">{n.emoji}</span>
+                  <span className="min-w-0 flex-1 text-[12.5px] font-body font-bold text-[#22364D] leading-snug">
+                    {n.person && (
+                      <span className="mr-1.5 text-[9px] font-extrabold uppercase tracking-[0.1em] text-[#B4512E] align-middle">
+                        {n.person}
+                      </span>
+                    )}
+                    {n.text}
+                  </span>
+                  {n.link && <ChevronRight size={15} className="text-muted-foreground shrink-0" />}
+                </>
+              );
+              return n.link ? (
+                <Link
+                  key={n.id}
+                  href={n.link}
+                  className="sticker-card px-4 py-2.5 flex items-center gap-3 press-scale"
+                >
+                  {inner}
+                </Link>
+              ) : (
+                <div key={n.id} className="sticker-card px-4 py-2.5 flex items-center gap-3">
+                  {inner}
+                </div>
+              );
+            })}
           </div>
         )}
       </section>
@@ -352,9 +395,10 @@ export default function Home() {
         Made with love for {WOBBLES.name} ({WOBBLES.pedigreeName}), born {formatDate(WOBBLES.dob)}.
       </p>
 
-      {/* Quick-log sheet + search */}
+      {/* Quick-log sheet + search + household settings */}
       <QuickLogSheet open={sheetOpen} onOpenChange={setSheetOpen} initialTracker={sheetTracker} />
       <SearchDialog open={searchOpen} onOpenChange={setSearchOpen} />
+      <HouseholdSettingsSheet open={settingsOpen} onOpenChange={setSettingsOpen} />
     </PageShell>
   );
 }
