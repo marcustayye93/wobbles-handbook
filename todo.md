@@ -150,4 +150,11 @@
 - [x] Regenerate every broken illustration in the same soft watercolor keepsake style (match the blow-dry sketch the user liked)
 - [x] Ensure EVERY expandable card (11 training skills + all grooming stages) has a working illustration — generate missing ones too
 - [x] Wire new URLs into content files, verify rendering via screenshots of expanded cards
+- [x] Checkpoint ec7f83fe (auto-published) + pushed to GitHub (main @ ec7f83f) + delivered
+
+# Social-anxiety training module (user request 2026-07-22)
+- [x] Write new "confidence" training skill content — dedicated day-one social-anxiety programme (steps, goal, watch-outs, Wobbles-specific notes)
+- [x] Generate matching watercolor illustration for the new module (train-confidence_7ebd9739.png, verified 1920x1440)
+- [x] Wire the module into TRAINING_SKILLS (priority 8, after Socialisation sprint; priorities 9-12 rebumped; "Confidence building" added to training tracker choices), tsc clean + 114/114 tests
+- [x] Screenshot verify expanded card on /training?open=confidence (illustration renders)
 - [ ] Checkpoint (auto-publish) + push GitHub + deliver

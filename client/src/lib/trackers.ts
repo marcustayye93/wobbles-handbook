@@ -227,6 +227,7 @@ export const TRACKERS: TrackerMeta[] = [
           "Loose-lead walking",
           "Leave it / drop it",
           "Handling & cooperative care",
+          "Confidence building",
           "Settle on mat",
           "Tricks / fun",
         ],

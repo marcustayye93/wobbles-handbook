@@ -38,6 +38,7 @@ export const TRAINING_IMGS = {
   leash: "/manus-storage/train-leash_1a09440a.png",
   handling: "/manus-storage/train-handling_00e3a4fd.png",
   social: "/manus-storage/train-social_9d76efed.png",
+  confidence: "/manus-storage/train-confidence_7ebd9739.png",
   bite: "/manus-storage/train-bite_3cf46d65.png",
   stay: "/manus-storage/train-stay_b68e27ae.png",
   tricks: "/manus-storage/train-tricks_d10f4535.png",
@@ -306,8 +307,59 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
     trackerChoice: "Handling & cooperative care",
   },
   {
-    slug: "bite",
+    slug: "confidence",
     priority: 8,
+    emoji: "\ud83e\udee7",
+    title: "Confidence Club (social anxiety)",
+    short: "A dedicated day-one programme to melt away shyness before it sets",
+    startWhen: "Day 1 home (8 weeks) \u2014 daily 5-minute sessions",
+    startWeeks: 8,
+    goal: "Wobbles learns that new people, sounds and places predict good things \u2014 and that he always has an exit \u2014 so early wariness never hardens into lifelong social anxiety.",
+    img: TRAINING_IMGS.confidence,
+    imgAlt: "Gouache sketch of a shy Cavoodle puppy peeking out from behind a person's legs while the person crouches and tosses a treat toward him",
+    steps: [
+      {
+        title: "Read him before you train him",
+        text: "Learn his worry signals first: tail tucked, ears pinned, crouching, freezing, lip-licking, yawning, refusing treats. A puppy showing these is in survival mode and literally cannot learn \u2014 your only job in that moment is to add distance and let him decompress. Never force him toward what scares him; being pushed 'through it' (flooding) makes fear worse, not better.",
+      },
+      {
+        title: "The 3-day decompression bubble",
+        text: "For his first 72 hours home, the flat IS the world: no visitors, no lift adventures, no meet-the-neighbours. Predictable meals, naps and one calm human nearby build the safety baseline every later session stands on. A puppy who feels safe at home base has somewhere to be brave FROM.",
+      },
+      {
+        title: "Treat-toss greetings \u2014 he always approaches, never the reverse",
+        text: "With every new person (start with one calm friend): they sit or crouch side-on, no eye contact, no reaching, and toss a treat toward Wobbles. He chooses whether to close the gap \u2014 each toss lands slightly closer. Only when HE initiates contact may they offer a chin or chest scratch (never over-the-head pats). His choice is the whole trick: dogs who approach on their own terms come back braver.",
+      },
+      {
+        title: "'Look at that' \u2014 turn scary into a paycheck",
+        text: "At a distance where he's curious-not-worried, let him LOOK at the trigger (a stranger, a skateboard, the lift doors), then mark 'Yes!' and treat the moment he looks. Repeat until seeing the scary thing makes him whip round to you for his pay. That's counter-conditioning: the trigger itself now predicts good things.",
+      },
+      {
+        title: "Work the comfort-zone edge, one metre at a time",
+        text: "Find the invisible line where loose-and-sniffy turns into tense-and-scanning \u2014 then train just INSIDE it. Feed, play, retreat, done. Sessions of 2\u20135 minutes, always ending while he's still comfortable. The zone grows on its own; pushing past it shrinks it. If he stops taking treats, you're already too close \u2014 back up.",
+      },
+      {
+        title: "Give him the steering wheel",
+        text: "On lobby-bench and corridor outings, pause at decision points and let him choose the direction: he looks left, you go left. Puppies who feel like participants instead of passengers gain confidence dramatically faster \u2014 tiny doses of control are the antidote to anxiety.",
+      },
+      {
+        title: "Confidence through the body: wobble work & sniffing games",
+        text: "Fitting for a puppy named Wobbles: cushions, folded towels, a wobbly sofa cushion to climb over, cardboard boxes to explore, treats scattered in a snuffle mat or rolled towel. Conquering small physical puzzles and using his nose are proven general confidence builders \u2014 and perfect rainy-day sessions.",
+      },
+      {
+        title: "Retreat is always allowed \u2014 and always rewarded",
+        text: "If he startles: add distance calmly, scatter a few treats to lower his head and heart rate, and end the outing on an easy win near home. Comforting a scared puppy does NOT reinforce fear \u2014 that's a myth. One overwhelming scare teaches faster than ten good visits, so guard him from being flooded.",
+      },
+    ],
+    wobbles:
+      "Cavaliers lean velcro-soft and poodles lean sensitive \u2014 so a Cavoodle's shyness responds beautifully to this programme but punishes any forcing. Wobbles' syllabus: day 1\u20133 flat-only bubble, week 1 lobby bench with treat-toss strangers at a distance, week 2 void deck 'look at that' sessions, week 3+ one calm visitor at a time into the flat. If wariness ever escalates (growling at all strangers, refusing food outdoors for days), loop in a force-free trainer early \u2014 weeks 8\u201316 are the cheapest time to fix it.",
+    proTip:
+      "Keep a 'brave list' in the Training Log: every session, note ONE thing he handled calmly. On the inevitable wobbly day, the list is your proof that the graph points up \u2014 progress with fearful puppies is measured in weeks, not walks.",
+    trackerChoice: "Confidence building",
+  },
+  {
+    slug: "bite",
+    priority: 9,
     emoji: "🦷",
     title: "Bite inhibition & polite play",
     short: "Teeth on toys, never skin — plus 'drop it' before he's big enough to argue",
@@ -344,7 +396,7 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
   },
   {
     slug: "leash",
-    priority: 9,
+    priority: 10,
     emoji: "🦮",
     title: "Loose-leash walking",
     short: "The J-shaped leash: gear desensitisation now, real walks post-vaccination",
@@ -382,7 +434,7 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
   },
   {
     slug: "stay",
-    priority: 10,
+    priority: 11,
     emoji: "🧘",
     title: "Down, stay & settle on mat",
     short: "The calm-is-a-skill trio for weeks 10–16",
@@ -419,7 +471,7 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
   },
   {
     slug: "tricks",
-    priority: 11,
+    priority: 12,
     emoji: "🎪",
     title: "Fun tricks",
     short: "Touch, paw, spin, roll over — dessert after the vegetables",
