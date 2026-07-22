@@ -80,17 +80,22 @@ export const TRACKERS: TrackerMeta[] = [
     title: "Toilet",
     emoji: "🚽",
     group: "daily",
-    empty: "Wees, poos & accidents",
+    empty: "Pad, outside & accidents",
     intro:
-      "The fastest route to toilet training: log every success and accident for the first 2–3 weeks. Patterns jump out (after meals, after naps, after play) and you'll pre-empt instead of clean up.",
+      "Apartment life at Blk 587 means two legal toilets: the pad at home and the grass outside. Log every wee and poo — pad or outside — plus any accidents, for the first 2–3 weeks. Patterns jump out (after meals, after naps, after play) and you'll pre-empt instead of clean up.",
     fields: {
       time: true,
-      options: { label: "What happened", choices: ["Wee outside ✅", "Poo outside ✅", "Wee accident", "Poo accident"] },
+      options: {
+        label: "What happened",
+        choices: ["Wee on pad ✅", "Wee outside ✅", "Poo on pad ✅", "Poo outside ✅", "Wee accident", "Poo accident"],
+      },
       note: true,
     },
     tips: [
+      "Pad AND outside both count as wins — reward within 2 seconds of finishing, at the spot, from your pocket.",
+      "The 7:15am walk is the anchor: carry him straight from the crate to the lift to the grass — no floor time in between, or the wee happens in the lift lobby.",
+      "Keep the pad in ONE fixed spot (service yard or bathroom works well in an HDB flat) — moving it resets his map.",
       "A young puppy needs a toilet break roughly every 30–60 minutes when awake, plus after every meal, nap and play session.",
-      "Reward within 2 seconds of finishing, at the spot — a treat from your pocket, not from the kitchen.",
       "Accidents are YOUR data, not his fault. Clean with enzymatic cleaner; never punish.",
     ],
   },

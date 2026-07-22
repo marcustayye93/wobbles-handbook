@@ -6,13 +6,14 @@
  */
 import { PageShell, PageHeader, PawDivider } from "@/components/AppShell";
 import { ASSETS, WOBBLES, MILESTONES, wobblesAge, formatDate, daysUntil } from "@/content/wobbles";
-import { Star, Hand, Syringe, Home, Plane, Users, Scissors, Cake, Heart } from "lucide-react";
+import { Star, Hand, Syringe, Home, Plane, Users, Scissors, Cake, Heart, Shield, BadgeCheck, Trees } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const MICONS: Record<string, LucideIcon> = {
   star: Star, hand: Hand, syringe: Syringe, home: Home, plane: Plane,
   users: Users, scissors: Scissors, cake: Cake,
+  shield: Shield, "badge-check": BadgeCheck, trees: Trees,
 };
 
 const FACTS: { label: string; value: string }[] = [

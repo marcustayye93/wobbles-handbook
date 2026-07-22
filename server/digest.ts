@@ -61,7 +61,7 @@ export interface WeeklyDigest {
   stats: {
     totalEntries: number;
     weight: { latest?: number; delta?: number; count: number };
-    toilet: { successes: number; accidents: number; count: number };
+    toilet: { successes: number; accidents: number; count: number; onPad: number; outside: number };
     meals: number;
     training: number;
     social: number;
@@ -101,9 +101,13 @@ export function composeDigest(
       ? Math.round((latestWeight - baseline) * 100) / 100
       : undefined;
 
-  /* Toilet: successes vs accidents (options contain ✅ for successes) */
+  /* Toilet: successes vs accidents (options contain ✅ for successes).
+   * Apartment split: pad and outside both count as success; report the mix. */
   const toilet = by("toilet");
-  const successes = toilet.filter((r) => (r.option ?? "").includes("✅")).length;
+  const successRows = toilet.filter((r) => (r.option ?? "").includes("✅"));
+  const successes = successRows.length;
+  const onPad = successRows.filter((r) => (r.option ?? "").toLowerCase().includes("pad")).length;
+  const outside = successes - onPad;
   const accidents = toilet.length - successes;
 
   const meals = by("feeding").length;
@@ -137,7 +141,15 @@ export function composeDigest(
     }
     if (toilet.length > 0) {
       const rate = Math.round((successes / toilet.length) * 100);
-      lines.push(`🚽 Toilet: ${successes}/${toilet.length} outside (${rate}% success, ${accidents} accident${accidents === 1 ? "" : "s"})`);
+      const mix =
+        onPad > 0 && outside > 0
+          ? ` — ${outside} outside, ${onPad} on pad`
+          : onPad > 0
+            ? " — all on pad"
+            : successes > 0
+              ? " — all outside"
+              : "";
+      lines.push(`🚽 Toilet: ${successes}/${toilet.length} in the right spot (${rate}% success, ${accidents} accident${accidents === 1 ? "" : "s"})${mix}`);
     }
     if (meals > 0) lines.push(`🍽️ Feeding: ${meals} meal${meals === 1 ? "" : "s"} logged`);
     if (training > 0) lines.push(`🎓 Training: ${training} session${training === 1 ? "" : "s"}`);
@@ -157,7 +169,7 @@ export function composeDigest(
     stats: {
       totalEntries: week.length,
       weight: { latest: latestWeight, delta, count: weightInWeek.length },
-      toilet: { successes, accidents, count: toilet.length },
+      toilet: { successes, accidents, count: toilet.length, onPad, outside },
       meals,
       training,
       social,

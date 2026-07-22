@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import PhotoJournal from "@/components/PhotoJournal";
 import {
   Star, Hand, Syringe, Home as HomeIcon, Plane, Users, Scissors, Cake, PawPrint,
+  Shield, BadgeCheck, Trees,
 } from "lucide-react";
 
 const INK = "#22364D";
@@ -27,6 +28,9 @@ const ICONS: Record<string, React.ComponentType<{ size?: number; className?: str
   users: Users,
   scissors: Scissors,
   cake: Cake,
+  shield: Shield,
+  "badge-check": BadgeCheck,
+  trees: Trees,
 };
 
 interface First {

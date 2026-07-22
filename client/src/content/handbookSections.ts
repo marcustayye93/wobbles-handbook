@@ -37,7 +37,7 @@ export const SECTIONS: Section[] = [
         items: [
           {
             title: "Toilet spot first",
-            text: "Before he even enters the house, carry him to his designated toilet spot. If he goes, quiet praise and a tiny treat. This is his very first lesson.",
+            text: "Before he even enters the flat, show him his two legal toilets: carry him to the grass downstairs first, then straight to the pad in its permanent spot at home. If he goes at either, quiet praise and a tiny treat. This is his very first lesson.",
           },
           {
             title: "Show him his den",
@@ -67,18 +67,18 @@ export const SECTIONS: Section[] = [
         type: "table",
         headers: ["Time", "What happens"],
         rows: [
-          ["Morning", "Wake → toilet → breakfast → toilet → short play → nap"],
-          ["Midday", "Toilet → lunch (3 meals/day under ~14–18 weeks) → toilet → play → long nap"],
-          ["Afternoon", "Toilet → gentle exploring or handling practice → nap"],
+          ["7:15–7:30 am", "Morning toilet walk — just after sunrise, coolest part of the day. Carry him from the crate to the lift to the grass (no lobby floor time), wee/poo, praise, home. Then breakfast → pad break → short play → nap"],
+          ["Midday", "Pad break → lunch (3 meals/day under ~14–18 weeks) → pad break → play → long nap"],
+          ["Afternoon", "Pad break → gentle exploring or handling practice → nap. Skip pavement outings 10am–5pm — Singapore pavement gets paw-burning hot"],
           ["~5 pm", "Dinner — roughly 4 hours before bedtime so he can empty out"],
-          ["Evening", "Play/energy burn 1–2 hours before bed, then a full hour of calm wind-down"],
-          ["Bedtime", "Final toilet trip immediately before lights out"],
+          ["After 7 pm", "Sunset walk — short evening stroll once it cools. Every other day this becomes the 7pm park session (carried until fully vaccinated)"],
+          ["Bedtime", "Final pad trip immediately before lights out"],
         ],
       },
       {
         type: "warn",
         title: "No public walks yet",
-        text: "Until roughly 2 weeks after his final puppy vaccination (~16–18 weeks), Wobbles must not walk where unvaccinated dogs may have been. Carry him outside instead — being carried around the neighbourhood is brilliant socialisation with zero parvo risk.",
+        text: "Until roughly 2 weeks after his final puppy vaccination (~late October 2026), Wobbles must not walk where unvaccinated dogs may have been — that includes void decks, lift lobbies and the park. Carry him outside instead: being carried around Woodlands, to the shops, past the playground is brilliant socialisation with zero parvo risk. The 7:15am toilet walk works pre-vaccination too — carry him to one clean patch of grass, same spot every time.",
       },
       { type: "h", text: "Surviving the first night" },
       {
@@ -177,7 +177,7 @@ export const SECTIONS: Section[] = [
       {
         type: "tip",
         title: "Your one job before 16 October",
-        text: "The socialisation window is the single highest-leverage project of Wobbles' entire life. Aim for daily, brief, positive exposures: people of all kinds, surfaces, sounds, handling, car rides — and since he's moving to Singapore at ~12–14 weeks, add lifts, traffic noise, and busy city sounds. Positive, brief, and puppy-chooses. Never flood him.",
+        text: "The socialisation window is the single highest-leverage project of Wobbles' entire life. Aim for daily, brief, positive exposures: people of all kinds, surfaces, sounds, handling, car rides — and since home is an HDB flat in Woodlands, prioritise lifts, void decks, corridor noise, traffic and the MRT rumble. Once fully vaccinated (~late Oct), the 7pm every-other-day park sessions take over: the small park next to the block for the walkable nights, and Woodlands Waterfront Park's dog run (a short drive away, open 24/7 with sea views) when you want off-leash play with other dogs. Positive, brief, and puppy-chooses. Never flood him.",
       },
     ],
   },
@@ -622,6 +622,11 @@ export const SECTIONS: Section[] = [
         type: "warn",
         title: "Queensland special: paralysis ticks",
         text: "Until the move, remember Moreton Bay is paralysis-tick country (Ixodes holocyclus) — deadly to dogs. Wobbles needs a vet-recommended tick preventative from homecoming, plus daily fingertip tick checks (ears, face, neck, between toes) after any grass or bush time. Early signs: wobbly back legs, voice change, vomiting. It's an emergency.",
+      },
+      {
+        type: "tip",
+        title: "The monthly preventive habit — for life",
+        text: "One combined monthly preventive (a chew like NexGard Spectra or Simparica Trio, or a spot-on drip like Revolution Plus) covers ticks, fleas AND heartworm in a single dose — and it starts at homecoming (21 Aug 2026, logged in his calendar). In Singapore this never pauses: heartworm mosquitoes and tropical ticks are active all 12 months, so pick a memorable date (the 21st) and re-dose every month, forever. Log each dose in the Health tracker.",
       },
     ],
   },

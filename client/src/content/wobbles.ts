@@ -98,11 +98,25 @@ export const MILESTONES: Milestone[] = [
     icon: "home",
   },
   {
+    date: "2026-08-21",
+    label: "Start monthly parasite preventive (8 weeks)",
+    detail:
+      "Singapore is year-round heartworm, tick and flea territory. Ask the vet to start a monthly combined preventive (NexGard Spectra / Simparica Trio chew, or a spot-on) once weight allows — then repeat on the 21st of every month.",
+    icon: "shield",
+  },
+  {
     date: "2026-09-04",
     label: "Second vaccination window opens (10 weeks)",
     detail:
-      "Second C3 booster is typically given at 10–12 weeks. Book this with your vet soon after homecoming.",
+      "Second C3/C5 booster is typically given at 10–12 weeks in Singapore (C5 adds leptospirosis — ask your vet). Book this soon after homecoming; the vet will also confirm the microchip.",
     icon: "syringe",
+  },
+  {
+    date: "2026-09-11",
+    label: "AVS dog licence — course + PALS application",
+    detail:
+      "Every dog in Singapore must be licensed. Complete the free online Pet Ownership Course (go.gov.sg/petownershipcourse), then apply on PALS (pals.avs.gov.sg) with the microchip number and vaccination records. Cavoodles are HDB-approved; one dog per flat.",
+    icon: "badge-check",
   },
   {
     date: "2026-09-18",
@@ -115,7 +129,14 @@ export const MILESTONES: Milestone[] = [
     date: "2026-10-02",
     label: "Third vaccination window opens (14 weeks)",
     detail:
-      "Final puppy C3 booster is typically given at 14–16 weeks. Full protection arrives about two weeks after the final dose.",
+      "Final puppy C3/C5 booster — Singapore guidelines want the last dose at 16 weeks or older. Full protection arrives about two weeks after the final dose.",
+    icon: "syringe",
+  },
+  {
+    date: "2026-10-16",
+    label: "Final puppy vaccine due (16 weeks)",
+    detail:
+      "The last puppy dose must land at ≥16 weeks under Singapore guidelines. Deworming cadence also shifts now: monthly until 6 months, then every 3 months.",
     icon: "syringe",
   },
   {
@@ -126,16 +147,24 @@ export const MILESTONES: Milestone[] = [
     icon: "users",
   },
   {
-    date: "2026-12-26",
-    label: "6 months — coat change may begin",
+    date: "2026-10-30",
+    label: "Fully vaccinated — parks and dog runs open up",
     detail:
-      "Between 6 and 12 months the soft puppy coat transitions to the adult fleece coat. This is peak matting season — daily line brushing.",
+      "About 1–2 weeks after the final dose, ground time in public parks is safe. The 7pm park socialisation sessions can move onto the grass — and the Woodlands Waterfront dog run is now on the menu (licensed + vaccinated dogs only).",
+    icon: "trees",
+  },
+  {
+    date: "2026-12-26",
+    label: "6 months — sterilisation chat + coat change",
+    detail:
+      "Discuss sterilisation timing with the vet (it also drops the AVS licence fee to ~S$15/yr or S$35 lifetime). Meanwhile the soft puppy coat starts transitioning to the adult fleece coat — peak matting season, daily line brushing.",
     icon: "scissors",
   },
   {
     date: "2027-06-26",
-    label: "First birthday",
-    detail: "Wobbles turns one! Adult coat should be fully in, near his adult weight of about 8 kg.",
+    label: "First birthday + first adult booster (52 weeks)",
+    detail:
+      "Wobbles turns one! Singapore guidelines call for the first adult core booster at 52 weeks — then annually. Adult coat should be fully in, near his adult weight of about 8 kg.",
     icon: "cake",
   },
 ];

@@ -49,8 +49,8 @@ export function wobblesToday(): TodayStage {
     return {
       stage: "Socialisation window — early",
       title: "The Window Is Open",
-      text: `At ${age.weeks} weeks, every calm new sight, sound and surface is building his adult brain. One tiny new experience a day.`,
-      focus: "One new experience today — carried is fine pre-vaccination",
+      text: `At ${age.weeks} weeks, every calm new sight, sound and surface is building his adult brain. One tiny new experience a day — carried around Woodlands is perfect pre-vaccination.`,
+      focus: "7:15am toilet walk (carry to the grass), pad practice at home, one carried new experience",
       expect: "Needle teeth, short naps every 45–90 min, toilet every 30–60 min awake",
       training: "Name response + 2-minute sit sessions before meals",
       link: "/trackers/social",
@@ -60,8 +60,8 @@ export function wobblesToday(): TodayStage {
     return {
       stage: "Socialisation window — closing",
       title: "Last Weeks of the Window",
-      text: `${age.weeks} weeks — the socialisation window closes around 16 weeks. Prioritise variety: people, surfaces, sounds, gentle handling.`,
-      focus: "Tick a new socialisation category this week",
+      text: `${age.weeks} weeks — the socialisation window closes around 16 weeks. Prioritise variety: people, surfaces, sounds, gentle handling. Keep the 7:15am and evening walk rhythm; the 7pm park sessions stay carried/lap-based until he's fully vaccinated.`,
+      focus: "Tick a new socialisation category this week; keep the walk routine steady",
       expect: "More confidence, testing boundaries, teething begins",
       training: "Recall games in the hallway; keep sessions under 5 minutes",
       link: "/trackers/social",
@@ -71,10 +71,10 @@ export function wobblesToday(): TodayStage {
     return {
       stage: "Junior — pre coat change",
       title: "Adolescent Brain, Baby Coat",
-      text: `${age.months} months old — keep training sessions short and keep brushing daily so the brush stays a friend before the coat change hits.`,
-      focus: "Daily 2-minute brush ritual with treats",
+      text: `${age.months} months old — keep training sessions short and keep brushing daily so the brush stays a friend before the coat change hits. Once fully vaccinated (~late Oct), the 7pm park sessions move onto the grass — and the Woodlands Waterfront dog run opens up.`,
+      focus: "Daily 2-minute brush ritual with treats; 7:15am + evening walks on schedule",
       expect: "Adult teeth arriving, more stamina, selective hearing",
-      training: "Loose-lead walking and 'leave it'",
+      training: "Loose-lead walking and 'leave it' — practise on the way to the park",
       link: "/handbook/grooming-psychology",
       linkLabel: "See guidance",
     };
@@ -152,7 +152,14 @@ export function todaysNudges(
   if (age.weeks < 16) {
     const social = daysSince(readEntries("social")[0]?.date);
     if (social == null || social >= 2)
-      out.push({ id: "social", emoji: "🌏", text: "The socialisation window is open — one tiny new experience today", link: "/trackers/social" });
+      out.push({ id: "social", emoji: "🌏", text: "The socialisation window is open — one tiny new experience today (carried around the block counts)", link: "/trackers/social" });
+  }
+
+  // Park socialisation rhythm: 7pm every other day, once fully vaccinated (~17wk buffer past the 16wk final dose)
+  if (age.weeks >= 18 && age.months < 12) {
+    const social = daysSince(readEntries("social")[0]?.date);
+    if (social != null && social >= 2)
+      out.push({ id: "park", emoji: "🏞️", text: "Park night is due — 7pm at the park with dogs and people, or drive to the Waterfront dog run", link: "/trackers/social" });
   }
 
   return out.slice(0, 2);

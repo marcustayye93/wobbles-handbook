@@ -65,3 +65,14 @@
 - [x] Offline/local-cache behaviour and sync indicators untouched (only viewer/grid rendering changed; upload dialog + mutations intact)
 - [x] Tests: photoGroups.test.ts (11 tests) — suite 57/57 passing, tsc clean, production build clean; debug-agent review applied (arrow positioning, viewerId, z-index)
 - [x] Mobile screenshot verification of Memories page (empty state; populated grid/lightbox needs real photos to fully verify) + checkpoint + push to GitHub
+
+## Singapore personalisation (Blk 587 Woodlands Drive 16, 730587)
+
+- [x] Research: AVS/Singapore vaccine protocol, licensing (2024 Rules, Pet Ownership Course, PALS), parasite prevention norms (monthly chews/spot-ons), Woodlands parks & dog runs — saved to /home/ubuntu/SG_PERSONALISATION_RESEARCH.md
+- [x] Toilet tracker: replace generic options with apartment-first set — wee on pad / wee outside / poo on pad / poo outside (+ accident indoors); keep old data rendering compatible; update success-rate logic (digest + UI) to count pad AND outside as success
+- [x] Routine: encode daily rhythm — 7:15–7:30am toilet walk (sunrise ~7am), evening walk after sunset (~7pm), park socialisation 7pm every other day; surface on Home (Wobbles Today / nudges) once he's fully vaccinated + settled-in gating
+- [x] Location content: nearby small park (walkable) vs bigger parks needing car (e.g. dog runs); Woodlands context in handbook content
+- [x] Health calendar: align milestones to Singapore AVS standards — vaccine doses, licensing deadline, sterilisation discussion, annual boosters, monthly heartworm + tick/flea preventive recurring entries in milestones/calendar
+- [x] Weekly digest: update toilet stats wording for pad/outside split
+- [x] Tests updated (toilet options, digest stats), suite 58/58 passing, tsc + build clean
+- [x] Mobile screenshots (Home, Toilet tracker, About, Singapore), checkpoint, push to GitHub, deliver

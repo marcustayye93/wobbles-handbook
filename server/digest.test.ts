@@ -47,16 +47,26 @@ describe("composeDigest", () => {
     expect(d.content).toContain("🍽️ Feeding: 2 meals");
   });
 
-  it("computes toilet success rate from ✅ options", () => {
+  it("computes toilet success rate from ✅ options with pad/outside split", () => {
     const rows = [
       row({ trackerId: "toilet", date: "2026-07-15", option: "Wee outside ✅" }),
-      row({ trackerId: "toilet", date: "2026-07-15", option: "Poo outside ✅" }),
+      row({ trackerId: "toilet", date: "2026-07-15", option: "Poo on pad ✅" }),
       row({ trackerId: "toilet", date: "2026-07-16", option: "Wee accident" }),
-      row({ trackerId: "toilet", date: "2026-07-17", option: "Wee outside ✅" }),
+      row({ trackerId: "toilet", date: "2026-07-17", option: "Wee on pad ✅" }),
     ];
     const d = composeDigest(rows, [], WINDOW);
-    expect(d.stats.toilet).toEqual({ successes: 3, accidents: 1, count: 4 });
-    expect(d.content).toContain("3/4 outside (75% success, 1 accident)");
+    expect(d.stats.toilet).toEqual({ successes: 3, accidents: 1, count: 4, onPad: 2, outside: 1 });
+    expect(d.content).toContain("3/4 in the right spot (75% success, 1 accident) — 1 outside, 2 on pad");
+  });
+
+  it("remains compatible with legacy outside-only toilet options", () => {
+    const rows = [
+      row({ trackerId: "toilet", date: "2026-07-15", option: "Wee outside ✅" }),
+      row({ trackerId: "toilet", date: "2026-07-16", option: "Poo outside ✅" }),
+    ];
+    const d = composeDigest(rows, [], WINDOW);
+    expect(d.stats.toilet).toEqual({ successes: 2, accidents: 0, count: 2, onPad: 0, outside: 2 });
+    expect(d.content).toContain("— all outside");
   });
 
   it("reports weight gain across the week (first vs last weigh-in)", () => {
