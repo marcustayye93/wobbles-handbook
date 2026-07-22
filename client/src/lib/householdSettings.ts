@@ -121,7 +121,13 @@ export function remindersFor(date: Date, s: HouseholdSettings): OneOffReminder[]
     .sort((a, b) => (a.person ?? "").localeCompare(b.person ?? "") || a.text.localeCompare(b.text));
 }
 
-/** Reminders today or later, soonest first (for the settings list). */
+/**
+ * Reminders today or later, soonest first (for the settings list).
+ * Auto-archive: once a reminder's date has passed, it drops out of this list
+ * regardless of done state — completed ones land in `pastReminders` with their
+ * tick preserved. Today's done reminders stay here (still un-tickable from the
+ * plan card until midnight), rendered struck-through by the UI.
+ */
 export function upcomingReminders(s: HouseholdSettings, now: Date = new Date()): OneOffReminder[] {
   const iso = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(
     now.getDate(),
@@ -137,12 +143,16 @@ export function allRemindersDone(date: Date, s: HouseholdSettings): boolean {
   return rs.length > 0 && rs.every((r) => r.done === true);
 }
 
-/** Reminders strictly before today (kept visible so nothing silently vanishes). */
+/**
+ * Reminders strictly before today — the auto-archive. Done state is preserved
+ * so the collapsed "Past reminders" list can show what was completed (✅,
+ * struck-through) versus missed (📌). Nothing silently vanishes.
+ */
 export function pastReminders(s: HouseholdSettings, now: Date = new Date()): OneOffReminder[] {
   const iso = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(
     now.getDate(),
   ).padStart(2, "0")}`;
   return Object.values(s.reminders)
     .filter((r) => r.date < iso)
-    .sort((a, b) => b.date.localeCompare(a.date));
+    .sort((a, b) => b.date.localeCompare(a.date) || a.text.localeCompare(b.text));
 }

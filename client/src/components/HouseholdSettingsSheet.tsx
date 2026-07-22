@@ -106,6 +106,7 @@ export default function HouseholdSettingsSheet({ open, onOpenChange }: Props) {
 
   const upcoming = upcomingReminders(settings);
   const past = pastReminders(settings);
+  const pastDone = past.filter((r) => r.done).length;
   const custom = scheduleIsCustom(settings);
 
   return (
@@ -263,16 +264,33 @@ export default function HouseholdSettingsSheet({ open, onOpenChange }: Props) {
               </p>
             )}
 
-            {/* Past, quietly */}
+            {/* Past, quietly — the auto-archive. Done reminders sweep here after
+                their day with the tick preserved (✅ struck-through vs 📌 missed). */}
             {past.length > 0 && (
               <details className="mt-3">
                 <summary className="text-[10.5px] font-body font-extrabold uppercase tracking-wide text-muted-foreground cursor-pointer">
-                  Past reminders ({past.length})
+                  Past reminders ({past.length}
+                  {pastDone > 0 ? ` · ${pastDone} done` : ""})
                 </summary>
                 <div className="mt-2 space-y-1.5">
                   {past.map((r) => (
-                    <div key={r.id} className="flex items-center gap-2.5 px-1 opacity-70">
-                      <span className="min-w-0 flex-1 text-[11.5px] font-body text-[#33475C] leading-snug truncate">
+                    <div key={r.id} className="flex items-center gap-2.5 px-1 opacity-80">
+                      <span className="text-[12px] shrink-0" aria-hidden>
+                        {r.done ? "✅" : "📌"}
+                      </span>
+                      <span
+                        className={cn(
+                          "min-w-0 flex-1 text-[11.5px] font-body leading-snug truncate",
+                          r.done
+                            ? "text-muted-foreground line-through decoration-[#C9BBA4]"
+                            : "text-[#33475C]",
+                        )}
+                      >
+                        {r.person && (
+                          <span className="mr-1 text-[8.5px] font-extrabold uppercase tracking-[0.1em] text-[#B4512E] no-underline">
+                            {r.person === "marcus" ? "Marcus" : "Chesa"}
+                          </span>
+                        )}
                         {formatDate(r.date)} — {r.text}
                       </span>
                       <button

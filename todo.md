@@ -105,3 +105,11 @@
 - [x] Celebration: when the last of today's reminders is ticked, show a small confetti/paw celebration animation (reduced-motion safe, fires only on the completing toggle, not on page load)
 - [x] Tests: done-state normalization + engine filtering (3 new tests in householdSettings.test.ts), suite 88/88 passing, tsc + build clean
 - [x] Screenshot, checkpoint, deliver
+
+# Auto-archive done reminders (user request)
+
+- [x] Engine: split rule — a done reminder is archived (moves to past list) once its date is before today; today's done reminders stay in upcoming/plan card (still tickable) but render struck-through. Undone past reminders keep flowing to past as before.
+- [x] Past list rendering: preserve and show done state (✅ vs 📌, strike-through on done text) so archived history is honest; person tag + done count in the collapsed summary
+- [x] Settings sheet: upcoming list stays tidy automatically; past collapsed section gains done markers; no manual archive button needed
+- [x] Tests: archive split logic (done today stays upcoming, done yesterday goes past with done preserved, undone yesterday goes past + normalize round-trip), suite 90/90 passing, tsc + build clean
+- [ ] Screenshot, checkpoint, push GitHub, deliver

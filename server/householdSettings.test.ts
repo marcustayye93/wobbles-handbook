@@ -168,6 +168,43 @@ describe("reminder done state", () => {
     expect(allRemindersDone(day, all)).toBe(true);
   });
 
+  it("auto-archive: done yesterday sweeps to past with tick preserved; done today stays upcoming", () => {
+    const now = d("2026-09-11");
+    const s: HouseholdSettings = {
+      ...defaultSettings(),
+      reminders: {
+        doneYesterday: reminder({ id: "doneYesterday", date: "2026-09-10", text: "Vet booster", done: true }),
+        missedYesterday: reminder({ id: "missedYesterday", date: "2026-09-10", text: "Buy pads" }),
+        doneToday: reminder({ id: "doneToday", date: "2026-09-11", text: "Groomer 3pm", done: true }),
+        future: reminder({ id: "future", date: "2026-09-14", text: "Puppy class" }),
+      },
+    };
+    // Upcoming stays tidy: no past entries regardless of done state; today's
+    // done reminder remains (rendered struck-through) alongside future ones.
+    const up = upcomingReminders(s, now);
+    expect(up.map((r) => r.id)).toEqual(["doneToday", "future"]);
+    expect(up[0].done).toBe(true);
+    // Past archive keeps both, done flag intact, newest date first then by text.
+    const past = pastReminders(s, now);
+    expect(past.map((r) => r.id)).toEqual(["missedYesterday", "doneYesterday"]);
+    expect(past.find((r) => r.id === "doneYesterday")?.done).toBe(true);
+    // hand-built fixture has no done flag; normalizeSettings would coerce to false
+    expect(past.find((r) => r.id === "missedYesterday")?.done).not.toBe(true);
+  });
+
+  it("auto-archive keeps done state through normalizeSettings round-trip", () => {
+    const now = d("2026-09-11");
+    const raw = {
+      ...defaultSettings(),
+      reminders: {
+        a: { id: "a", date: "2026-09-09", text: "Old done one", done: true },
+      },
+    };
+    const past = pastReminders(normalizeSettings(raw as unknown as HouseholdSettings), now);
+    expect(past).toHaveLength(1);
+    expect(past[0].done).toBe(true);
+  });
+
   it("done reminders are excluded from nudges but still listed in the brief", () => {
     const now = d("2026-09-11");
     const isoNow = iso(now);
