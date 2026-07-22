@@ -10,8 +10,10 @@ import { SECTIONS } from "@/content/handbookSections";
 import { HUNDRED_TOTAL } from "@/content/hundredThings";
 import { CHECKLISTS } from "@/content/checklists";
 import { CHAPTER_COVERS } from "@/content/wobbles";
-import { ChevronRight, Clock, Printer, ListChecks, Plane, Award } from "lucide-react";
+import { ChevronRight, Clock, Printer, ListChecks, Plane, Award, Search } from "lucide-react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useState } from "react";
+import SearchDialog from "@/components/SearchDialog";
 
 /** Reading progress map: slug -> 0..1, persisted by SectionReader */
 export function useReadProgress() {
@@ -20,18 +22,32 @@ export function useReadProgress() {
 
 export default function HandbookIndex() {
   const [progress] = useReadProgress();
+  const [searchOpen, setSearchOpen] = useState(false);
 
   return (
     <PageShell>
       <header className="px-5 pt-9 pb-1">
-        <Eyebrow>The Handbook</Eyebrow>
-        <h1 className="font-display font-semibold text-[2.4rem] leading-[1.02] mt-1.5">
-          Chapters
-        </h1>
+        <div className="flex items-start justify-between">
+          <div>
+            <Eyebrow>The Handbook</Eyebrow>
+            <h1 className="font-display font-semibold text-[2.4rem] leading-[1.02] mt-1.5">
+              Chapters
+            </h1>
+          </div>
+          <button
+            onClick={() => setSearchOpen(true)}
+            aria-label="Search the handbook"
+            className="mt-1 w-9 h-9 rounded-full bg-[#FFFDF8] border border-[#E5DAC8] flex items-center justify-center text-[#22364D] press-scale shadow-sm"
+          >
+            <Search size={16} />
+          </button>
+        </div>
         <p className="text-[13px] font-body text-muted-foreground mt-2 leading-relaxed">
           Expert care, written for one very good Cavoodle.
         </p>
       </header>
+
+      <SearchDialog open={searchOpen} onOpenChange={setSearchOpen} />
 
       <div className="px-4 pt-4">
         {/* Chapter covers */}

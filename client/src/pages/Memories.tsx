@@ -3,8 +3,11 @@
  * Full-bleed gouache cover, serif title, milestone timeline from MILESTONES,
  * and a taped placeholder card for the future photo journal.
  */
+import { useMemo } from "react";
 import { PageShell, Eyebrow, PawDivider } from "@/components/AppShell";
 import { ASSETS, MILESTONES, WOBBLES, daysUntil, formatDate, wobblesAge } from "@/content/wobbles";
+import { TRACKERS, type TrackerEntry } from "@/lib/trackers";
+import { useLogVersion } from "@/components/QuickLogSheet";
 import { cn } from "@/lib/utils";
 import {
   Star, Hand, Syringe, Home as HomeIcon, Plane, Users, Scissors, Cake, Camera, PawPrint,
@@ -25,8 +28,49 @@ const ICONS: Record<string, React.ComponentType<{ size?: number; className?: str
   cake: Cake,
 };
 
+interface First {
+  trackerId: string;
+  emoji: string;
+  title: string;
+  date: string;
+  summary: string;
+}
+
+/** First-ever entry for each tracker — logged data becomes keepsakes. */
+function readFirsts(): First[] {
+  const out: First[] = [];
+  for (const t of TRACKERS) {
+    try {
+      const raw = localStorage.getItem(`wobbles:tracker:${t.id}`);
+      if (!raw) continue;
+      const arr = JSON.parse(raw) as TrackerEntry[];
+      if (arr.length === 0) continue;
+      const first = [...arr].sort((a, b) =>
+        (a.date + (a.time ?? "")).localeCompare(b.date + (b.time ?? "")),
+      )[0];
+      const bits: string[] = [];
+      if (first.option) bits.push(first.option);
+      if (first.value != null) bits.push(`${first.value}${t.fields.value?.unit ? ` ${t.fields.value.unit}` : ""}`);
+      if (first.note) bits.push(first.note);
+      out.push({
+        trackerId: t.id,
+        emoji: t.emoji,
+        title: `First ${t.title.toLowerCase()} logged`,
+        date: first.date,
+        summary: bits.join(" · ") || "The very first entry",
+      });
+    } catch {
+      /* ignore */
+    }
+  }
+  return out.sort((a, b) => a.date.localeCompare(b.date));
+}
+
 export default function Memories() {
   const age = wobblesAge();
+  const logVersion = useLogVersion();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const firsts = useMemo(readFirsts, [logVersion]);
 
   return (
     <PageShell>
@@ -70,6 +114,30 @@ export default function Memories() {
         </div>
 
         <PawDivider />
+
+        {/* logged firsts — real data becoming keepsakes */}
+        {firsts.length > 0 && (
+          <>
+            <Eyebrow>Logged firsts</Eyebrow>
+            <div className="mt-3 space-y-2 mb-6">
+              {firsts.map((f) => (
+                <div key={f.trackerId} className="sticker-card px-4 py-3 flex items-center gap-3">
+                  <span className="w-9 h-9 rounded-full bg-[#22364D]/6 flex items-center justify-center text-[16px] shrink-0">
+                    {f.emoji}
+                  </span>
+                  <div className="min-w-0">
+                    <p className="font-body font-bold text-[13px] leading-snug" style={{ color: INK }}>
+                      {f.title}
+                    </p>
+                    <p className="text-[11px] font-body text-muted-foreground truncate mt-0.5">
+                      {formatDate(f.date)} · {f.summary}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
 
         {/* milestone timeline */}
         <Eyebrow>The story so far — and next</Eyebrow>

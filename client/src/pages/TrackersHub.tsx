@@ -5,9 +5,9 @@
  * navy quick-log FAB opening a bottom-sheet drawer of all trackers.
  */
 import { useMemo, useState } from "react";
-import { Link, useLocation } from "wouter";
+import { Link } from "wouter";
 import { PageShell, Eyebrow } from "@/components/AppShell";
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
+import QuickLogSheet, { useLogVersion } from "@/components/QuickLogSheet";
 import { TRACKERS, TRACKER_GROUPS, type TrackerEntry } from "@/lib/trackers";
 import { ASSETS } from "@/content/wobbles";
 import { ChevronRight, Plus } from "lucide-react";
@@ -38,17 +38,24 @@ function summarise(e: TrackerEntry | undefined, unit?: string): string {
 }
 
 export default function TrackersHub() {
-  const [, navigate] = useLocation();
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [sheetTracker, setSheetTracker] = useState<string | null>(null);
+  const logVersion = useLogVersion();
 
-  // Latest summaries, computed once per mount
+  // Latest summaries, recomputed whenever a quick-log save happens
   const latest = useMemo(() => {
     const map: Record<string, string> = {};
     for (const t of TRACKERS) {
       map[t.id] = summarise(readLatest(t.id), t.fields.value?.unit);
     }
     return map;
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [logVersion]);
+
+  const quickAdd = (id: string | null) => {
+    setSheetTracker(id);
+    setSheetOpen(true);
+  };
 
   return (
     <PageShell>
@@ -80,24 +87,32 @@ export default function TrackersHub() {
               </div>
               <div className="keepsake-card overflow-hidden divide-y divide-border/50">
                 {members.map((t) => (
-                  <Link
-                    key={t.id}
-                    href={`/trackers/${t.id}`}
-                    className="flex items-center gap-3.5 px-4 py-3.5 press-scale bg-transparent"
-                  >
-                    <span className="w-10 h-10 rounded-2xl bg-[#22364D]/6 flex items-center justify-center text-lg shrink-0">
-                      {t.emoji}
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block font-body font-bold text-[14px] leading-snug text-[#22364D]">
-                        {t.title}
+                  <div key={t.id} className="flex items-center gap-2 pr-3">
+                    <Link
+                      href={`/trackers/${t.id}`}
+                      className="flex items-center gap-3.5 pl-4 py-3.5 press-scale bg-transparent min-w-0 flex-1"
+                    >
+                      <span className="w-10 h-10 rounded-2xl bg-[#22364D]/6 flex items-center justify-center text-lg shrink-0">
+                        {t.emoji}
                       </span>
-                      <span className="block text-[11px] font-body text-muted-foreground truncate mt-0.5">
-                        {latest[t.id]}
+                      <span className="min-w-0 flex-1">
+                        <span className="block font-body font-bold text-[14px] leading-snug text-[#22364D]">
+                          {t.title}
+                        </span>
+                        <span className="block text-[11px] font-body text-muted-foreground truncate mt-0.5">
+                          {latest[t.id]}
+                        </span>
                       </span>
-                    </span>
-                    <ChevronRight size={16} className="text-muted-foreground shrink-0" />
-                  </Link>
+                      <ChevronRight size={16} className="text-muted-foreground shrink-0" />
+                    </Link>
+                    <button
+                      onClick={() => quickAdd(t.id)}
+                      aria-label={`Quick log ${t.title}`}
+                      className="w-8 h-8 rounded-full bg-[#C66A3D]/10 text-[#B4512E] flex items-center justify-center shrink-0 press-scale"
+                    >
+                      <Plus size={16} />
+                    </button>
+                  </div>
                 ))}
               </div>
             </section>
@@ -107,40 +122,15 @@ export default function TrackersHub() {
 
       {/* Quick-log FAB */}
       <button
-        onClick={() => setSheetOpen(true)}
+        onClick={() => quickAdd(null)}
         aria-label="Quick log"
         className="fixed bottom-24 right-5 z-40 w-14 h-14 rounded-full bg-[#22364D] text-[#FFFDF8] flex items-center justify-center shadow-[0_10px_28px_rgba(34,54,77,0.4)] press-scale"
       >
         <Plus size={26} />
       </button>
 
-      {/* Quick-log bottom sheet */}
-      <Drawer open={sheetOpen} onOpenChange={setSheetOpen}>
-        <DrawerContent className="bg-[#FFFDF8]">
-          <DrawerHeader className="pb-1">
-            <DrawerTitle className="font-display text-[1.5rem] text-[#22364D]">
-              What are we logging?
-            </DrawerTitle>
-          </DrawerHeader>
-          <div className="grid grid-cols-4 gap-2.5 px-4 pb-8 pt-2">
-            {TRACKERS.map((t) => (
-              <button
-                key={t.id}
-                onClick={() => {
-                  setSheetOpen(false);
-                  navigate(`/trackers/${t.id}?add=1`);
-                }}
-                className="flex flex-col items-center gap-1.5 py-3 rounded-2xl bg-[#F8F3EB] border border-border/60 press-scale"
-              >
-                <span className="text-xl">{t.emoji}</span>
-                <span className="text-[9px] font-body font-extrabold uppercase tracking-wide text-[#22364D] text-center leading-tight px-1">
-                  {t.title}
-                </span>
-              </button>
-            ))}
-          </div>
-        </DrawerContent>
-      </Drawer>
+      {/* Quick-log bottom sheet (shared component — grid + inline mini-form) */}
+      <QuickLogSheet open={sheetOpen} onOpenChange={setSheetOpen} initialTracker={sheetTracker} />
     </PageShell>
   );
 }

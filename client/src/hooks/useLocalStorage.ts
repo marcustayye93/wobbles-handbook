@@ -1,5 +1,5 @@
 /* Shared localStorage state hook — all app data persists on-device under "wobbles:" keys */
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export function useLocalStorage<T>(key: string, initial: T) {
   const fullKey = `wobbles:${key}`;
@@ -11,6 +11,27 @@ export function useLocalStorage<T>(key: string, initial: T) {
       return initial;
     }
   });
+
+  // Re-read when a quick-log save (or another tab) writes this key externally
+  useEffect(() => {
+    const reread = () => {
+      try {
+        const raw = localStorage.getItem(fullKey);
+        if (raw != null) setValue(JSON.parse(raw) as T);
+      } catch {
+        /* ignore malformed storage */
+      }
+    };
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === fullKey) reread();
+    };
+    window.addEventListener("wobbles:log", reread);
+    window.addEventListener("storage", onStorage);
+    return () => {
+      window.removeEventListener("wobbles:log", reread);
+      window.removeEventListener("storage", onStorage);
+    };
+  }, [fullKey]);
 
   const set = useCallback(
     (next: T | ((prev: T) => T)) => {

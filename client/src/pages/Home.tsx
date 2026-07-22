@@ -1,61 +1,22 @@
 /*
- * Redesign v2 — "Keepsake Field Guide" Home cover, matching the approved mockup:
- * Paper bg, W badge + eyebrow wordmark, huge Cormorant serif title, sienna caps
- * tagline, taped countdown keepsake card, full-bleed gouache hero of Wobbles,
- * "Right Now" ivory card with spot illustration + navy CTA pill.
+ * Redesign v2.1 — "Keepsake Field Guide" Home, action-first (UX audit):
+ * Cover → Wobbles Today (stage intelligence + nudges) → Quick Actions →
+ * Today's timeline → Coming up → Start reading. Paper bg, Cormorant serif,
+ * ink navy + sienna, restrained keepsake details.
  */
+import { useState } from "react";
 import { Link } from "wouter";
 import { PageShell, Eyebrow } from "@/components/AppShell";
+import QuickLogSheet from "@/components/QuickLogSheet";
+import TodayTimeline from "@/components/TodayTimeline";
+import SearchDialog from "@/components/SearchDialog";
+import { wobblesToday, todaysNudges } from "@/lib/wobblesToday";
+import { useLogVersion } from "@/components/QuickLogSheet";
+import { readDayFeed } from "@/components/TodayTimeline";
+import { todayISO } from "@/hooks/useLocalStorage";
 import { ASSETS, WOBBLES, MILESTONES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
 import { SECTIONS } from "@/content/handbookSections";
-import { ChevronRight, ArrowRight, PawPrint, CalendarDays } from "lucide-react";
-
-/** Age-driven "right now" guidance */
-function currentGuidance(): { title: string; text: string; link: string; linkLabel: string } {
-  const age = wobblesAge();
-  const toHome = daysUntil(WOBBLES.homecoming);
-  if (!age.born)
-    return {
-      title: "Counting Down to Wobbles",
-      text: "He hasn't been born yet — use this time to read the handbook and prepare the house.",
-      link: "/handbook/checklists",
-      linkLabel: "Arrival checklist",
-    };
-  if (toHome > 0)
-    return {
-      title: "Settle In, Little One",
-      text: `Wobbles is ${age.weeks} weeks old, growing up with his litter at The Doghouse QLD. Perfect time to puppy-proof, shop the kit list and read the first-day guide.`,
-      link: "/handbook/first-day",
-      linkLabel: "See guidance",
-    };
-  if (age.weeks < 16)
-    return {
-      title: "The Window Is Open",
-      text: `At ${age.weeks} weeks, every calm new sight, sound and surface is building his adult brain. One tiny new experience a day.`,
-      link: "/trackers/social",
-      linkLabel: "Log an experience",
-    };
-  if (age.months < 6)
-    return {
-      title: "Adolescent Brain, Baby Coat",
-      text: `${age.months} months old — keep training sessions short and keep brushing daily so the brush stays a friend before the coat change hits.`,
-      link: "/handbook/grooming-psychology",
-      linkLabel: "See guidance",
-    };
-  if (age.months < 12)
-    return {
-      title: "Coat Change Season",
-      text: "Between 6–12 months the adult fleece coat comes in and matting peaks. Daily line brushing, shorter cuts, and patience.",
-      link: "/handbook/coat-science",
-      linkLabel: "See guidance",
-    };
-  return {
-    title: "All Grown Up (Mostly)",
-    text: "Keep the routines: brush most days, groom every 4–6 weeks, and log health notes in the trackers.",
-    link: "/trackers",
-    linkLabel: "Open trackers",
-  };
-}
+import { ChevronRight, ArrowRight, PawPrint, CalendarDays, Search } from "lucide-react";
 
 /** Countdown keepsake: picks the most relevant upcoming date */
 function nextCountdown(): { days: number; label: string } | null {
@@ -68,23 +29,53 @@ function nextCountdown(): { days: number; label: string } | null {
   return null;
 }
 
+/** Quick-action chips shown on Home (subset of trackers, one-tap logging) */
+const QUICK_ACTIONS: { id: string; emoji: string; label: string }[] = [
+  { id: "feeding", emoji: "🍽️", label: "Meal" },
+  { id: "toilet", emoji: "🚽", label: "Toilet" },
+  { id: "grooming", emoji: "✂️", label: "Groom" },
+  { id: "training", emoji: "🎓", label: "Train" },
+  { id: "social", emoji: "🌏", label: "Social" },
+  { id: "weight", emoji: "⚖️", label: "Weigh" },
+];
+
 export default function Home() {
   const age = wobblesAge();
-  const guide = currentGuidance();
+  const today = wobblesToday();
   const countdown = nextCountdown();
   const nextMilestones = MILESTONES.filter((m) => daysUntil(m.date) >= 0).slice(0, 3);
+  const nudges = todaysNudges();
+
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const [sheetTracker, setSheetTracker] = useState<string | null>(null);
+  const [searchOpen, setSearchOpen] = useState(false);
+
+  const logVersion = useLogVersion();
+  const hasFeedToday = readDayFeed(todayISO()).length > 0 || logVersion < 0; // logVersion keeps this reactive
+
+  const quickLog = (id: string | null) => {
+    setSheetTracker(id);
+    setSheetOpen(true);
+  };
 
   return (
     <PageShell className="pb-28">
       {/* ===== Cover ===== */}
       <section className="relative overflow-hidden">
         <div className="relative px-5 pt-9">
-          {/* Wordmark */}
+          {/* Wordmark + search */}
           <div className="flex items-center gap-2 fade-up">
             <span className="w-7 h-7 rounded-md border-[1.5px] border-[#C66A3D] text-[#C66A3D] font-display font-bold text-sm flex items-center justify-center">
               W
             </span>
             <Eyebrow>Wobbles' Handbook</Eyebrow>
+            <button
+              onClick={() => setSearchOpen(true)}
+              aria-label="Search the handbook"
+              className="ml-auto w-9 h-9 rounded-full bg-[#FFFDF8] border border-[#E5DAC8] flex items-center justify-center text-[#22364D] press-scale shadow-sm"
+            >
+              <Search size={16} />
+            </button>
           </div>
 
           {/* Title + taped countdown */}
@@ -134,7 +125,6 @@ export default function Home() {
             alt="Gouache illustration of Wobbles the red-parti Cavoodle puppy on a navy blanket"
             className="w-full aspect-[4/5] object-cover"
           />
-          {/* soft fade into paper at the bottom */}
           <div
             className="absolute inset-x-0 bottom-0 h-16"
             style={{ background: "linear-gradient(to bottom, transparent, #F8F3EB)" }}
@@ -147,32 +137,97 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== Right Now card (overlapping hero) ===== */}
+      {/* ===== Wobbles Today card (overlapping hero) ===== */}
       <section className="relative z-10 px-4 -mt-10">
         <div className="keepsake-card relative p-5 fade-up" style={{ animationDelay: "180ms" }}>
-          <span className="tape" aria-hidden />
           <span className="absolute -top-3 left-4 bg-[#B4512E] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
-            Right now
+            Wobbles today
           </span>
           <div className="flex items-start gap-3 mt-1">
             <div className="min-w-0 flex-1">
-              <h2 className="font-display font-semibold text-[1.65rem] leading-tight text-[#22364D]">
-                {guide.title}
+              <p className="text-[10px] font-body font-extrabold uppercase tracking-[0.14em] text-[#7B8C6A]">
+                {today.stage}
+              </p>
+              <h2 className="font-display font-semibold text-[1.65rem] leading-tight text-[#22364D] mt-0.5">
+                {today.title}
               </h2>
-              <p className="text-[13px] font-body text-[#5A6B7E] leading-relaxed mt-1.5">{guide.text}</p>
-              <Link href={guide.link} className="btn-ink mt-4 inline-flex">
-                {guide.linkLabel} <ArrowRight size={15} />
-              </Link>
+              <p className="text-[13px] font-body text-[#5A6B7E] leading-relaxed mt-1.5">{today.text}</p>
             </div>
-            <img
-              src={ASSETS.v2SpotBed}
-              alt=""
-              className="w-20 h-20 object-contain shrink-0 mt-1"
-              aria-hidden
-            />
+            <img src={ASSETS.v2SpotBed} alt="" className="w-20 h-20 object-contain shrink-0 mt-1" aria-hidden />
           </div>
+
+          {/* stage details */}
+          <dl className="mt-3.5 space-y-2 border-t border-dashed border-[#E5DAC8] pt-3.5">
+            {[
+              ["Today's focus", today.focus],
+              ["Expect", today.expect],
+              ["Training", today.training],
+            ].map(([k, v]) => (
+              <div key={k} className="flex gap-2.5 items-baseline">
+                <dt className="shrink-0 w-[86px] text-[9px] font-body font-extrabold uppercase tracking-[0.12em] text-[#C66A3D]">
+                  {k}
+                </dt>
+                <dd className="text-[12.5px] font-body text-[#33475C] leading-snug">{v}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <Link href={today.link} className="btn-ink mt-4 inline-flex">
+            {today.linkLabel} <ArrowRight size={15} />
+          </Link>
+        </div>
+
+        {/* Nudges */}
+        {nudges.length > 0 && (
+          <div className="mt-2.5 space-y-2">
+            {nudges.map((n) => (
+              <Link
+                key={n.id}
+                href={n.link}
+                className="sticker-card px-4 py-2.5 flex items-center gap-3 press-scale"
+              >
+                <span className="text-[16px] shrink-0">{n.emoji}</span>
+                <span className="min-w-0 flex-1 text-[12.5px] font-body font-bold text-[#22364D] leading-snug">
+                  {n.text}
+                </span>
+                <ChevronRight size={15} className="text-muted-foreground shrink-0" />
+              </Link>
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* ===== Quick actions ===== */}
+      <section className="px-5 mt-7">
+        <Eyebrow className="mb-2.5">Quick log</Eyebrow>
+        <div className="grid grid-cols-6 gap-1.5">
+          {QUICK_ACTIONS.map((a) => (
+            <button
+              key={a.id}
+              onClick={() => quickLog(a.id)}
+              className="flex flex-col items-center gap-1 py-2.5 rounded-2xl bg-[#FFFDF8] border border-[#E5DAC8] press-scale"
+            >
+              <span className="text-[17px]">{a.emoji}</span>
+              <span className="text-[8.5px] font-body font-extrabold uppercase tracking-wide text-[#22364D]">
+                {a.label}
+              </span>
+            </button>
+          ))}
         </div>
       </section>
+
+      {/* ===== Today's timeline ===== */}
+      {hasFeedToday && (
+        <section className="px-4 mt-7">
+          <div className="flex items-baseline justify-between px-1 mb-2.5">
+            <Eyebrow>Today so far</Eyebrow>
+            <Link href="/trackers" className="text-[11px] font-body font-extrabold text-[#B4512E]">
+              All trackers →
+            </Link>
+          </div>
+          <TodayTimeline dateISO={todayISO()} />
+        </section>
+      )}
 
       {/* ===== Coming up ===== */}
       {nextMilestones.length > 0 && (
@@ -233,6 +288,10 @@ export default function Home() {
       <p className="px-5 mt-9 text-center text-[11px] font-body text-muted-foreground leading-relaxed">
         Made with love for {WOBBLES.name} ({WOBBLES.pedigreeName}), born {formatDate(WOBBLES.dob)}.
       </p>
+
+      {/* Quick-log sheet + search */}
+      <QuickLogSheet open={sheetOpen} onOpenChange={setSheetOpen} initialTracker={sheetTracker} />
+      <SearchDialog open={searchOpen} onOpenChange={setSearchOpen} />
     </PageShell>
   );
 }
