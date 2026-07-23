@@ -161,6 +161,15 @@
   input[type="radio"]:not(:disabled) {
     @apply cursor-pointer;
   }
+
+  /* iOS Safari auto-zooms the page when a focused field's font-size is <16px,
+     and that zoomed state makes position:fixed elements (bottom nav) float
+     mid-page while scrolling. Keep all form fields at >=16px to prevent it. */
+  input,
+  textarea,
+  select {
+    font-size: max(16px, 1em);
+  }
 }
 
 @layer components {

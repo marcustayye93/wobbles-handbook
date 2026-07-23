@@ -12,6 +12,7 @@ import QuickLogSheet from "@/components/QuickLogSheet";
 import TodayTimeline, { useDayFeed } from "@/components/TodayTimeline";
 import SearchDialog from "@/components/SearchDialog";
 import { wobblesToday, todaysNudges, todaysBrief } from "@/lib/wobblesToday";
+import { dailyFact } from "@/lib/dailyFact";
 import HouseholdSettingsSheet from "@/components/HouseholdSettingsSheet";
 import { SETTINGS_KEY, defaultSettings, normalizeSettings, allRemindersDone } from "@/lib/householdSettings";
 import type { HouseholdSettings } from "@/lib/householdSettings";
@@ -45,6 +46,7 @@ export default function Home() {
   const age = wobblesAge();
   const today = wobblesToday();
   const countdown = nextCountdown();
+  const fact = useMemo(() => dailyFact(), []);
   const nextMilestones = MILESTONES.filter((m) => daysUntil(m.date) >= 0).slice(0, 3);
 
   // Nudges from the family-shared server data (same feed the trackers use)
@@ -319,6 +321,23 @@ export default function Home() {
               <span className="font-bold text-[#22364D]">{brief.activity.title}.</span> {brief.activity.text}
             </p>
           </div>
+
+          {/* Rotating 100 Things field note — new fact every other day */}
+          <Link
+            href="/handbook/100-things"
+            className="block mt-3 border-t border-dashed border-[#E5DAC8] pt-3 press-scale"
+          >
+            <p className="text-[9px] font-body font-extrabold uppercase tracking-[0.14em] text-[#7B8C6A]">
+              💯 Field note · #{fact.n} of 100
+            </p>
+            <p className="mt-1 text-[12.5px] font-body text-[#33475C] leading-snug">
+              <span className="mr-1.5">{fact.catEmoji}</span>
+              <span className="font-bold text-[#22364D]">{fact.catTitle}.</span> {fact.text}
+            </p>
+            <p className="mt-1 text-[10px] font-body font-bold text-[#B4512E]">
+              New note every other day · tick it off →
+            </p>
+          </Link>
         </div>
 
         {/* Nudges (reminder nudges have no link — render as plain rows) */}

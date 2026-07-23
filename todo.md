@@ -205,3 +205,7 @@
 - [x] Re-upload optimised images to primary app storage + re-link 45 refs in 3 content files (tsc clean, 127/127 tests, screenshots verified)
 - [x] Package new public zip (14.1MB, 44 files named by key) + wrote re-linking prompt with verification loop (/home/ubuntu/prompt-for-other-manus-optimised-images.md)
 - [x] Test photo loading: baseline on clone recorded (403s + 6.2MB raw file confirmed); original app verified fast (<0.25s/image); final clone re-test to run after other account applies the prompt and republishes
+
+# Bug fix + feature (user report 2026-07-23 #2)
+- [x] Fix bottom nav bar floating up mid-page while scrolling on iOS (removed transform centering on fixed nav in shared BottomNav — applies to all tabs; viewport meta user-scalable=no; 16px min form-field fonts to stop iOS focus auto-zoom)
+- [x] Add randomised "100 Things" fact card to Wobbles Today section on Home (date-seeded lib/dailyFact.ts, 2-day rotation, scattered order visiting all 100, links to 100 Things page; 5 new tests, suite 132/132 green, screenshots verified)

@@ -29,7 +29,10 @@ export function BottomNav() {
   const [loc] = useLocation();
   return (
     <nav
-      className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md z-50 print:hidden"
+      // NOTE: never use transform-based centering (left-1/2 -translate-x-1/2) on a
+      // position:fixed element — iOS Safari mispaints it mid-page during momentum
+      // scroll / URL-bar collapse. inset-x-0 + mx-auto keeps it pinned reliably.
+      className="fixed bottom-0 inset-x-0 mx-auto w-full max-w-md z-50 print:hidden"
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
     >
       <div className="mx-3 mb-2.5 rounded-[26px] bg-[#22364D] shadow-[0_10px_30px_rgba(34,54,77,0.35)]">
