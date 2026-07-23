@@ -181,3 +181,20 @@
 - [x] Home integration: pre-homecoming nudge shows this week's remaining item count (or catch-up count when behind)
 - [x] Tests: server/shoppingPlan.test.ts (13 tests — structure, Monday alignment, week bucketing, overdue logic); tsc clean; suite 127/127 green; mobile screenshots verified
 - [x] Checkpoint (auto-publish) + push GitHub + deliver
+
+# Audit of other account's published clone (user request 2026-07-23)
+- [x] Browsed https://wobbleapp-br7rmbvj.manus.space page by page — verdict: from-scratch static brochure app, NOT a clone of the repo (top nav, emoji-only, placeholder pages, our routes 404)
+- [x] Compared against original: missing all interactive features (trackers, quick log, shopping countdown, memories, search, OAuth/shared sync), all illustrations, 8-chapter handbook, Singapore chapter; minor profile fact errors
+- [x] Consolidated into one corrective prompt with verification gates (127 tests, route checklist, screenshot proof) instructing a discard-and-true-clone
+- [x] Delivered audit report + corrective prompt to user
+
+# Asset transfer to other account (user request 2026-07-23)
+- [x] Enumerated 44 /manus-storage/ keys in code; all matched to local originals in webdev-static-assets
+- [x] Zipped all 44 illustrations named exactly by storage key (278 MB)
+- [x] Uploaded zip to public CDN URL (verified HTTP 200, no auth) so the other Manus fetches it directly
+- [x] Wrote follow-up prompt: curl+unzip, upload under identical keys, zero code changes, 44-key verification loop, no placeholder substitution
+- [x] Delivered zip + prompt to user
+
+# Re-audit of republished clone (user request 2026-07-23)
+- [x] Verify routes, illustrations, login gate, and residual old-build pages on wobbleapp-br7rmbvj.manus.space (all routes serve our app with cache-buster; stale CDN cache on a few plain URLs)
+- [x] Report verification results + any remaining fixes to user (delivered /home/ubuntu/wobbles-clone-reaudit-report.md)
