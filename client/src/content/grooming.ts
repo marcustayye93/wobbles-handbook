@@ -21,16 +21,16 @@ export interface GroomStep {
 
 /** Illustration assets (uploaded, webdev storage URLs — use as-is) */
 export const GROOM_IMGS = {
-  setup: "/manus-storage/groom-setup_e29c45f6.png",
-  prebath: "/manus-storage/groom-prebath_03dd7958.png",
-  face: "/manus-storage/groom-face_704041f9.png",
-  finish: "/manus-storage/groom-finish_aff9ef3e.png",
-  brush: "/manus-storage/groom-brush_1f59d0ef.png",
-  bath: "/manus-storage/groom-bath_7e03a827.png",
-  dry: "/manus-storage/groom-dry_93ab9809.png",
-  ears: "/manus-storage/groom-ears_10a595ae.png",
-  nails: "/manus-storage/groom-nails_42ac407a.png",
-  teeth: "/manus-storage/groom-teeth_4f76a1ca.png",
+  setup: "/manus-storage/groom-setup_e29c45f6_6f01de85.png",
+  prebath: "/manus-storage/groom-prebath_03dd7958_a9106865.png",
+  face: "/manus-storage/groom-face_704041f9_03a7956a.png",
+  finish: "/manus-storage/groom-finish_aff9ef3e_19d92349.png",
+  brush: "/manus-storage/groom-brush_1f59d0ef_6f9b5b54.png",
+  bath: "/manus-storage/groom-bath_7e03a827_da854c3e.png",
+  dry: "/manus-storage/groom-dry_93ab9809_3ad682ee.png",
+  ears: "/manus-storage/groom-ears_10a595ae_397ac6db.png",
+  nails: "/manus-storage/groom-nails_42ac407a_ad15c627.png",
+  teeth: "/manus-storage/groom-teeth_4f76a1ca_0339c9e9.png",
 } as const;
 
 export const GROOM_STEPS: GroomStep[] = [

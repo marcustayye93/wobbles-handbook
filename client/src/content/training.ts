@@ -30,18 +30,18 @@ export interface TrainingSkill {
 
 /** Illustration assets (uploaded, webdev storage URLs — use as-is) */
 export const TRAINING_IMGS = {
-  potty: "/manus-storage/train-potty_dc3c2c22.png",
-  name: "/manus-storage/train-name_1e420efc.png",
-  crate: "/manus-storage/train-crate_ced70d0a.png",
-  sit: "/manus-storage/train-sit_a088dcd6.png",
-  recall: "/manus-storage/train-recall_3df38a28.png",
-  leash: "/manus-storage/train-leash_1a09440a.png",
-  handling: "/manus-storage/train-handling_00e3a4fd.png",
-  social: "/manus-storage/train-social_9d76efed.png",
-  confidence: "/manus-storage/train-confidence_7ebd9739.png",
-  bite: "/manus-storage/train-bite_3cf46d65.png",
-  stay: "/manus-storage/train-stay_b68e27ae.png",
-  tricks: "/manus-storage/train-tricks_d10f4535.png",
+  potty: "/manus-storage/train-potty_dc3c2c22_a5182309.png",
+  name: "/manus-storage/train-name_1e420efc_fea79e6e.png",
+  crate: "/manus-storage/train-crate_ced70d0a_64ae81c4.png",
+  sit: "/manus-storage/train-sit_a088dcd6_9f07ee0a.png",
+  recall: "/manus-storage/train-recall_3df38a28_9170e96b.png",
+  leash: "/manus-storage/train-leash_1a09440a_795785f6.png",
+  handling: "/manus-storage/train-handling_00e3a4fd_36233371.png",
+  social: "/manus-storage/train-social_9d76efed_9a7a47c1.png",
+  confidence: "/manus-storage/train-confidence_7ebd9739_7c91d844.png",
+  bite: "/manus-storage/train-bite_3cf46d65_f1072e1c.png",
+  stay: "/manus-storage/train-stay_b68e27ae_849a5eb4.png",
+  tricks: "/manus-storage/train-tricks_d10f4535_cd71cf41.png",
 } as const;
 
 export const TRAINING_SKILLS: TrainingSkill[] = [

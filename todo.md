@@ -198,3 +198,10 @@
 # Re-audit of republished clone (user request 2026-07-23)
 - [x] Verify routes, illustrations, login gate, and residual old-build pages on wobbleapp-br7rmbvj.manus.space (all routes serve our app with cache-buster; stale CDN cache on a few plain URLs)
 - [x] Report verification results + any remaining fixes to user (delivered /home/ubuntu/wobbles-clone-reaudit-report.md)
+
+# Image weight optimisation (user report 2026-07-23: photos hang on loading)
+- [x] Diagnose: measure file sizes + load times of illustrations on clone and original (clone serves raw 6MB PNGs; most clone keys 403 broken; each proxied request adds 2-11s presign latency)
+- [x] Resize/compress all 44 illustrations to web-optimised versions (277.9MB -> 14.1MB total; 900px cards / 1200px heroes, pngquant 50-80, quality visually verified)
+- [x] Re-upload optimised images to primary app storage + re-link 45 refs in 3 content files (tsc clean, 127/127 tests, screenshots verified)
+- [ ] Package new public zip + write re-linking prompt for the other Manus account
+- [ ] Test photo loading on clone link after other account replaces images

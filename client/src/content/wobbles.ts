@@ -5,35 +5,35 @@
  */
 
 export const ASSETS = {
-  icon: "/manus-storage/wobbles-icon_1c51767c.png",
-  adultRendering: "/manus-storage/wobbles-adult_b7c22044.png",
-  heroGrooming: "/manus-storage/hero-grooming_fbd52402.png",
-  heroSingapore: "/manus-storage/hero-singapore_c2d583c0.png",
-  heroFirstDay: "/manus-storage/hero-firstday_4e0b74c1.png",
+  icon: "/manus-storage/wobbles-icon_1c51767c_351b9cb9.png",
+  adultRendering: "/manus-storage/wobbles-adult_b7c22044_a8a45e9a.png",
+  heroGrooming: "/manus-storage/hero-grooming_fbd52402_17a10aa2.png",
+  heroSingapore: "/manus-storage/hero-singapore_c2d583c0_cdfc13a0.png",
+  heroFirstDay: "/manus-storage/hero-firstday_4e0b74c1_cee4a38a.png",
   // 2D cartoon sketch placeholders until better photos arrive (user request)
-  photoFace: "/manus-storage/wobbles-cartoon-face_f9d46ad9.png",
-  photoNewborn: "/manus-storage/wobbles-cartoon-newborn_4c708746.png",
+  photoFace: "/manus-storage/wobbles-cartoon-face_f9d46ad9_924ffdb4.png",
+  photoNewborn: "/manus-storage/wobbles-cartoon-newborn_4c708746_0960ae3c.png",
   // v2 redesign — gouache illustration set (ChatGPT mockup template)
-  v2Hero: "/manus-storage/v2-hero-wobbles_e23eb8ad.png",
-  v2SpotBed: "/manus-storage/v2-spot-bed_74206722.png",
-  v2SpotPeek: "/manus-storage/v2-spot-peek_a9eefd94.png",
-  v2SpotHighfive: "/manus-storage/v2-spot-highfive_74c8f74f.png",
-  v2ChMemories: "/manus-storage/v2-ch-memories_a04daa45.png",
+  v2Hero: "/manus-storage/v2-hero-wobbles_e23eb8ad_c0be2832.png",
+  v2SpotBed: "/manus-storage/v2-spot-bed_74206722_8d9adfb8.png",
+  v2SpotPeek: "/manus-storage/v2-spot-peek_a9eefd94_7c866ee6.png",
+  v2SpotHighfive: "/manus-storage/v2-spot-highfive_74c8f74f_58e0efe2.png",
+  v2ChMemories: "/manus-storage/v2-ch-memories_a04daa45_088ccc60.png",
 } as const;
 
 /** v2 chapter cover illustrations, keyed by section slug */
 export const CHAPTER_COVERS: Record<string, string> = {
-  "coat-science": "/manus-storage/v2-ch-coat_dcb610ff.png",
-  "first-day": "/manus-storage/v2-ch-firstday_851e68f2.png",
-  parenting: "/manus-storage/v2-ch-parenting_9b8a716b.png",
-  "grooming-masterclass": "/manus-storage/v2-ch-grooming_dda950a4.png",
-  "grooming-psychology": "/manus-storage/v2-ch-psychology_29168ebf.png",
-  "haircut-styles": "/manus-storage/v2-ch-haircuts_23679ac6.png",
-  "daily-hacks": "/manus-storage/v2-ch-dailylife_aa465916.png",
-  products: "/manus-storage/v2-ch-kit_e2598265.png",
-  "internet-hacks": "/manus-storage/v2-ch-internet_9d28d351.png",
-  singapore: "/manus-storage/v2-ch-singapore_d7a4fe63.png",
-  memories: "/manus-storage/v2-ch-memories_a04daa45.png",
+  "coat-science": "/manus-storage/v2-ch-coat_dcb610ff_882b139f.png",
+  "first-day": "/manus-storage/v2-ch-firstday_851e68f2_99b07e02.png",
+  parenting: "/manus-storage/v2-ch-parenting_9b8a716b_86fe68cc.png",
+  "grooming-masterclass": "/manus-storage/v2-ch-grooming_dda950a4_32b8bac4.png",
+  "grooming-psychology": "/manus-storage/v2-ch-psychology_29168ebf_b68e4446.png",
+  "haircut-styles": "/manus-storage/v2-ch-haircuts_23679ac6_c734dd8b.png",
+  "daily-hacks": "/manus-storage/v2-ch-dailylife_aa465916_78d1c1b8.png",
+  products: "/manus-storage/v2-ch-kit_e2598265_6f632973.png",
+  "internet-hacks": "/manus-storage/v2-ch-internet_9d28d351_9c82f74f.png",
+  singapore: "/manus-storage/v2-ch-singapore_d7a4fe63_a34340e6.png",
+  memories: "/manus-storage/v2-ch-memories_a04daa45_088ccc60.png",
 };
 
 export const WOBBLES = {
