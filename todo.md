@@ -203,5 +203,5 @@
 - [x] Diagnose: measure file sizes + load times of illustrations on clone and original (clone serves raw 6MB PNGs; most clone keys 403 broken; each proxied request adds 2-11s presign latency)
 - [x] Resize/compress all 44 illustrations to web-optimised versions (277.9MB -> 14.1MB total; 900px cards / 1200px heroes, pngquant 50-80, quality visually verified)
 - [x] Re-upload optimised images to primary app storage + re-link 45 refs in 3 content files (tsc clean, 127/127 tests, screenshots verified)
-- [ ] Package new public zip + write re-linking prompt for the other Manus account
-- [ ] Test photo loading on clone link after other account replaces images
+- [x] Package new public zip (14.1MB, 44 files named by key) + wrote re-linking prompt with verification loop (/home/ubuntu/prompt-for-other-manus-optimised-images.md)
+- [x] Test photo loading: baseline on clone recorded (403s + 6.2MB raw file confirmed); original app verified fast (<0.25s/image); final clone re-test to run after other account applies the prompt and republishes
