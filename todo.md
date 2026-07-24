@@ -225,7 +225,7 @@
 - [x] Login gate: chat only for authenticated users (Manus OAuth already required)
 - [x] Vet-safety guardrail in system prompt (recommend vet for medical emergencies)
 - [x] Tests: vitest for chat procedures + typecheck; visual verification at mobile viewport
-- [ ] Checkpoint/publish + push to GitHub, deliver to user (checkpoint ff78f360 saved; GitHub push pending)
+- [x] Checkpoint/publish + push to GitHub, deliver to user (checkpoint ff78f360, GitHub main @ a74e835)
 
 ## Phase 8 — Ask Wobbles: AI chat with persistent memory
 - [x] Schema: ai_conversations, ai_messages, ai_memory tables (migration 0001 applied)
@@ -237,3 +237,16 @@
 - [x] Home entry points: sparkle header button + "Ask Wobbles anything" card
 - [x] Vitest: server/ai.test.ts 14 tests (title, prompt, distill parsing, dedupe) — suite 146/146 green
 - [x] Mobile screenshots verified (/ask empty state + composer, Home entries)
+
+# Intelligent feeding & toilet insights — trend engine (user request 2026-07-24)
+
+- [x] Review tracker data model + feeding/toilet entry shapes and UI
+- [x] Insights engine (client/src/lib/insights.ts): toilet morning anchor (circular mean of timed morning wees), success rate + direction of travel, accident hotspot clustering, meal→toilet gap correlation
+- [x] Feeding insights: meal-time regularity (steady/drifting per meal), appetite trend + drop alerts vs baseline, missed-meal detection, daily rhythm
+- [x] Predictions: nextToiletWindow() — morning anchor window + post-meal window from median gap, each with actionable recommendation (never stale summaries)
+- [x] Surface insights in feeding + toilet tracker pages (TrackerInsights component: "What the data says" cards with tones good/watch/action + evidence)
+- [x] Predictive nudges wired into Wobbles Today (⏰ toilet-window nudge from insights engine, top of data-driven nudges)
+- [x] Vitest specs: server/insights.test.ts 22 tests (circular mean midnight wrap, anchors, clusters, gaps, appetite drop, predictions, pending copy) — suite 168/168 green, tsc clean
+- [x] Visual verification (mobile: toilet, feeding, Home) + pending-copy grammar fixes
+- [x] "Trends pending" placeholder when data is insufficient — per-insight statistical minimums (5 timed morning wees/3 days, 8 logs/3 days for success rate, 5 meal→toilet pairs, 6 timed meals, 3-day baselines), each showing exactly how many more logs unlock it
+- [ ] Checkpoint/publish + push to GitHub, deliver

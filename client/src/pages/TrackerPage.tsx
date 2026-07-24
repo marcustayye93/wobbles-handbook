@@ -19,6 +19,7 @@ import {
   ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip as ChartTooltip, CartesianGrid,
 } from "recharts";
 import NotFound from "@/pages/NotFound";
+import TrackerInsights from "@/components/TrackerInsights";
 
 const INK = "#22364D";
 const SIENNA = "#C66A3D";
@@ -222,6 +223,11 @@ export default function TrackerPage() {
               </ResponsiveContainer>
             </div>
           </div>
+        )}
+
+        {/* intelligence — feeding & toilet only */}
+        {(meta.id === "feeding" || meta.id === "toilet") && !isLoading && (
+          <TrackerInsights trackerId={meta.id} entries={entries} />
         )}
 
         {/* entries */}

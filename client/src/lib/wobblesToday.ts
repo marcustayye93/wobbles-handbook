@@ -25,6 +25,7 @@ import {
   type OneOffReminder,
 } from "@/lib/householdSettings";
 import { type TrackerEntry } from "@/lib/trackers";
+import { nextToiletWindow } from "@/lib/insights";
 import {
   currentWeek as currentShoppingWeek,
   overdueItems as overdueShoppingItems,
@@ -264,6 +265,17 @@ export function todaysNudges(
 
   // 2) Data-driven gaps from the shared trackers
   const readEntries = entriesByTracker;
+
+  // 2a) Predictive toilet window — the insights engine's next likely need,
+  // unlocked once the morning anchor or the meal→toilet gap has enough data.
+  const prediction = nextToiletWindow(readEntries("toilet"), readEntries("feeding"), now);
+  if (prediction)
+    out.push({
+      id: "toilet-window",
+      emoji: "\u23F0",
+      text: `${prediction.label} \u2014 ${prediction.detail}`,
+      link: "/trackers/toilet",
+    });
   const groom = daysSince(readEntries("grooming")[0]?.date, now);
   if (groom == null || groom >= 2)
     out.push({
