@@ -216,16 +216,16 @@
 
 # AI chat assistant (user request 2026-07-24)
 
-- [ ] Review webdev-llm-integration skill + existing AIChatBox component
-- [ ] DB schema: chat conversations + messages tables (household-shared) + ai_memory table (the separate "memory file" of distilled Wobbles facts)
-- [ ] Backend: tRPC procedures for ask/history with Wobbles context system prompt (age, breed, SG, stage)
-- [ ] Memory distillation: after each exchange, LLM extracts durable Wobbles facts into the memory store; memory injected into future system prompts
-- [ ] Memory view UI: page/section where the family can see and delete remembered facts
-- [ ] Frontend: Ask page with chat UI, streaming/loading states, suggested questions, nav entry
-- [ ] Login gate: chat only for authenticated users (Manus OAuth already required)
-- [ ] Vet-safety guardrail in system prompt (recommend vet for medical emergencies)
-- [ ] Tests: vitest for chat procedures + typecheck; visual verification at mobile viewport
-- [ ] Checkpoint/publish + push to GitHub, deliver to user
+- [x] Review webdev-llm-integration skill + existing AIChatBox component
+- [x] DB schema: chat conversations + messages tables (household-shared) + ai_memory table (the separate "memory file" of distilled Wobbles facts)
+- [x] Backend: tRPC procedures for ask/history with Wobbles context system prompt (age, breed, SG, stage)
+- [x] Memory distillation: after each exchange, LLM extracts durable Wobbles facts into the memory store; memory injected into future system prompts
+- [x] Memory view UI: page/section where the family can see and delete remembered facts
+- [x] Frontend: Ask page with chat UI, streaming/loading states, suggested questions, nav entry
+- [x] Login gate: chat only for authenticated users (Manus OAuth already required)
+- [x] Vet-safety guardrail in system prompt (recommend vet for medical emergencies)
+- [x] Tests: vitest for chat procedures + typecheck; visual verification at mobile viewport
+- [ ] Checkpoint/publish + push to GitHub, deliver to user (checkpoint ff78f360 saved; GitHub push pending)
 
 ## Phase 8 — Ask Wobbles: AI chat with persistent memory
 - [x] Schema: ai_conversations, ai_messages, ai_memory tables (migration 0001 applied)
