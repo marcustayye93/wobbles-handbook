@@ -8,6 +8,13 @@
       "when": 1784721409370,
       "tag": "0000_furry_serpent_society",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1784875395363,
+      "tag": "0001_spooky_living_tribunal",
+      "breakpoints": true
     }
   ]
 }

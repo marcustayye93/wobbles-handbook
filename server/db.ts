@@ -1,6 +1,9 @@
-import { desc, eq } from "drizzle-orm";
+import { and, asc, desc, eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import {
+  aiConversations,
+  aiMemory,
+  aiMessages,
   InsertPhoto,
   InsertTrackerEntry,
   InsertUser,
@@ -240,4 +243,132 @@ export async function deletePhoto(id: number) {
   const db = await getDb();
   requireDb(db);
   await db.delete(photos).where(eq(photos.id, id));
+}
+
+/* ---- Ask Wobbles AI: conversations, messages, memory ---- */
+
+export async function createAiConversation(
+  title: string,
+  createdBy?: number,
+  createdByName?: string | null,
+): Promise<number> {
+  const db = await getDb();
+  requireDb(db);
+  const [result] = await db
+    .insert(aiConversations)
+    .values({ title, createdBy, createdByName: createdByName ?? null });
+  return result.insertId;
+}
+
+export async function listAiConversations(limit = 100) {
+  const db = await getDb();
+  requireDb(db);
+  return db
+    .select()
+    .from(aiConversations)
+    .orderBy(desc(aiConversations.updatedAt), desc(aiConversations.id))
+    .limit(limit);
+}
+
+export async function getAiConversation(id: number) {
+  const db = await getDb();
+  requireDb(db);
+  const rows = await db.select().from(aiConversations).where(eq(aiConversations.id, id)).limit(1);
+  return rows[0];
+}
+
+export async function touchAiConversation(id: number) {
+  const db = await getDb();
+  requireDb(db);
+  await db
+    .update(aiConversations)
+    .set({ updatedAt: new Date() })
+    .where(eq(aiConversations.id, id));
+}
+
+export async function deleteAiConversation(id: number) {
+  const db = await getDb();
+  requireDb(db);
+  await db.delete(aiMessages).where(eq(aiMessages.conversationId, id));
+  await db.delete(aiConversations).where(eq(aiConversations.id, id));
+}
+
+export async function addAiMessage(msg: {
+  conversationId: number;
+  role: "user" | "assistant";
+  content: string;
+  authorName?: string | null;
+}): Promise<number> {
+  const db = await getDb();
+  requireDb(db);
+  const [result] = await db
+    .insert(aiMessages)
+    .values({ ...msg, authorName: msg.authorName ?? null });
+  return result.insertId;
+}
+
+export async function listAiMessages(conversationId: number, limit = 500) {
+  const db = await getDb();
+  requireDb(db);
+  return db
+    .select()
+    .from(aiMessages)
+    .where(eq(aiMessages.conversationId, conversationId))
+    .orderBy(asc(aiMessages.id))
+    .limit(limit);
+}
+
+/** Last message per conversation for history previews (single query per convo list is fine at family scale). */
+export async function lastAiMessagePreview(conversationId: number) {
+  const db = await getDb();
+  requireDb(db);
+  const rows = await db
+    .select()
+    .from(aiMessages)
+    .where(eq(aiMessages.conversationId, conversationId))
+    .orderBy(desc(aiMessages.id))
+    .limit(1);
+  return rows[0];
+}
+
+export async function listActiveAiMemory() {
+  const db = await getDb();
+  requireDb(db);
+  return db
+    .select()
+    .from(aiMemory)
+    .where(eq(aiMemory.active, 1))
+    .orderBy(desc(aiMemory.id));
+}
+
+export async function countActiveAiMemory(): Promise<number> {
+  const db = await getDb();
+  requireDb(db);
+  const rows = await db
+    .select({ n: sql<number>`count(*)` })
+    .from(aiMemory)
+    .where(eq(aiMemory.active, 1));
+  return Number(rows[0]?.n ?? 0);
+}
+
+export async function addAiMemoryFacts(
+  facts: { fact: string; category: string; sourceConversationId?: number | null }[],
+) {
+  if (facts.length === 0) return;
+  const db = await getDb();
+  requireDb(db);
+  await db.insert(aiMemory).values(
+    facts.map((f) => ({
+      fact: f.fact,
+      category: f.category,
+      sourceConversationId: f.sourceConversationId ?? null,
+    })),
+  );
+}
+
+/** Soft-delete: the family can make the assistant "forget" a fact. */
+export async function forgetAiMemoryFact(id: number) {
+  const db = await getDb();
+  requireDb(db);
+  await db.update(aiMemory).set({ active: 0 }).where(and(eq(aiMemory.id, id), eq(aiMemory.active, 1)));
 }

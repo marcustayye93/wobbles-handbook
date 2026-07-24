@@ -3,6 +3,12 @@ import { z } from "zod";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { protectedProcedure, publicProcedure, router } from "./_core/trpc";
+import {
+  conversationTitle,
+  distillMemory,
+  generateAssistantReply,
+  type ChatTurn,
+} from "./aiChat";
 import * as db from "./db";
 import { storagePut } from "./storage";
 
@@ -168,6 +174,127 @@ export const appRouter = router({
       .input(z.object({ id: z.number().int().positive() }))
       .mutation(async ({ input }) => {
         await db.deletePhoto(input.id);
+        return { success: true } as const;
+      }),
+  }),
+
+  /**
+   * Ask Wobbles — the family AI assistant.
+   * Every conversation is persisted (ai_conversations + ai_messages), and a
+   * separate memory store (ai_memory) accumulates durable facts about
+   * Wobbles distilled from each exchange, so the assistant learns him.
+   */
+  ai: router({
+    /** Send a message; creates a conversation on first message. */
+    send: protectedProcedure
+      .input(
+        z.object({
+          conversationId: z.number().int().positive().optional(),
+          message: z.string().min(1).max(4000),
+        }),
+      )
+      .mutation(async ({ ctx, input }) => {
+        const text = input.message.trim();
+        if (!text) throw new Error("Message is empty");
+
+        // 1) Find or create the conversation
+        let conversationId = input.conversationId;
+        if (conversationId) {
+          const convo = await db.getAiConversation(conversationId);
+          if (!convo) throw new Error("Conversation not found");
+        } else {
+          conversationId = await db.createAiConversation(
+            conversationTitle(text),
+            ctx.user.id,
+            ctx.user.name ?? null,
+          );
+        }
+
+        // 2) Persist the family's message immediately (never lost, even if the LLM fails)
+        await db.addAiMessage({
+          conversationId,
+          role: "user",
+          content: text,
+          authorName: ctx.user.name ?? null,
+        });
+
+        // 3) Build the reply from history + the memory book
+        const [rows, memory] = await Promise.all([
+          db.listAiMessages(conversationId),
+          db.listActiveAiMemory(),
+        ]);
+        const history: ChatTurn[] = rows.map((m) => ({
+          role: m.role as "user" | "assistant",
+          content: m.content,
+        }));
+        const reply = await generateAssistantReply(history, memory);
+
+        // 4) Persist the assistant's reply
+        const replyId = await db.addAiMessage({
+          conversationId,
+          role: "assistant",
+          content: reply,
+          authorName: null,
+        });
+        await db.touchAiConversation(conversationId);
+
+        // 5) Distill new memory facts from this exchange (best-effort — a
+        //    distillation failure must never fail the chat itself)
+        let learned: { fact: string; category: string }[] = [];
+        try {
+          const memoryCount = await db.countActiveAiMemory();
+          if (memoryCount < 200) {
+            learned = await distillMemory(text, reply, memory);
+            if (learned.length > 0) {
+              await db.addAiMemoryFacts(
+                learned.map((f) => ({ ...f, sourceConversationId: conversationId })),
+              );
+            }
+          }
+        } catch (err) {
+          console.warn("[AskWobbles] memory step failed:", err);
+          learned = [];
+        }
+
+        return { conversationId, replyId, reply, learned } as const;
+      }),
+
+    /** Conversation history (family-shared), newest first, with previews. */
+    conversations: protectedProcedure.query(async () => {
+      const convos = await db.listAiConversations();
+      return Promise.all(
+        convos.map(async (c) => {
+          const last = await db.lastAiMessagePreview(c.id);
+          return {
+            ...c,
+            preview: last ? last.content.slice(0, 120) : "",
+            lastRole: last?.role ?? null,
+          };
+        }),
+      );
+    }),
+
+    /** Full transcript of one conversation, oldest first. */
+    messages: protectedProcedure
+      .input(z.object({ conversationId: z.number().int().positive() }))
+      .query(({ input }) => db.listAiMessages(input.conversationId)),
+
+    /** Delete a conversation and its messages (memory facts survive). */
+    deleteConversation: protectedProcedure
+      .input(z.object({ conversationId: z.number().int().positive() }))
+      .mutation(async ({ input }) => {
+        await db.deleteAiConversation(input.conversationId);
+        return { success: true } as const;
+      }),
+
+    /** "What I've learned about Wobbles" — the active memory book. */
+    memory: protectedProcedure.query(() => db.listActiveAiMemory()),
+
+    /** Forget one memory fact (soft delete, auditable). */
+    forgetMemory: protectedProcedure
+      .input(z.object({ id: z.number().int().positive() }))
+      .mutation(async ({ input }) => {
+        await db.forgetAiMemoryFact(input.id);
         return { success: true } as const;
       }),
   }),

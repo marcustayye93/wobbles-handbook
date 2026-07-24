@@ -23,6 +23,7 @@ import TrackersHub from "@/pages/TrackersHub";
 import TrackerPage from "@/pages/TrackerPage";
 import Memories from "@/pages/Memories";
 import ParkMap from "@/pages/ParkMap";
+import Ask from "@/pages/Ask";
 import NotFound from "@/pages/NotFound";
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -42,6 +43,7 @@ function Router() {
       <Route path="/trackers/:id" component={TrackerPage} />
       <Route path="/memories" component={Memories} />
       <Route path="/map" component={ParkMap} />
+      <Route path="/ask" component={Ask} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>

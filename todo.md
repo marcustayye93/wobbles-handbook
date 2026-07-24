@@ -209,3 +209,31 @@
 # Bug fix + feature (user report 2026-07-23 #2)
 - [x] Fix bottom nav bar floating up mid-page while scrolling on iOS (removed transform centering on fixed nav in shared BottomNav — applies to all tabs; viewport meta user-scalable=no; 16px min form-field fonts to stop iOS focus auto-zoom)
 - [x] Add randomised "100 Things" fact card to Wobbles Today section on Home (date-seeded lib/dailyFact.ts, 2-day rotation, scattered order visiting all 100, links to 100 Things page; 5 new tests, suite 132/132 green, screenshots verified)
+
+# Launch prompt for other account (user request 2026-07-23 #3)
+- [x] Gather latest state: commit 023c009 on main (GitHub pushed), zip URL verified HTTP 200 (14.1MB, 44 files matching code key stems)
+- [x] Write launch prompt (pull 023c009, upload 44 optimised images, re-link 3 content files, 4-gate verification, publish + report) — /home/ubuntu/prompt-for-other-manus-launch-v2.md
+
+# AI chat assistant (user request 2026-07-24)
+
+- [ ] Review webdev-llm-integration skill + existing AIChatBox component
+- [ ] DB schema: chat conversations + messages tables (household-shared) + ai_memory table (the separate "memory file" of distilled Wobbles facts)
+- [ ] Backend: tRPC procedures for ask/history with Wobbles context system prompt (age, breed, SG, stage)
+- [ ] Memory distillation: after each exchange, LLM extracts durable Wobbles facts into the memory store; memory injected into future system prompts
+- [ ] Memory view UI: page/section where the family can see and delete remembered facts
+- [ ] Frontend: Ask page with chat UI, streaming/loading states, suggested questions, nav entry
+- [ ] Login gate: chat only for authenticated users (Manus OAuth already required)
+- [ ] Vet-safety guardrail in system prompt (recommend vet for medical emergencies)
+- [ ] Tests: vitest for chat procedures + typecheck; visual verification at mobile viewport
+- [ ] Checkpoint/publish + push to GitHub, deliver to user
+
+## Phase 8 — Ask Wobbles: AI chat with persistent memory
+- [x] Schema: ai_conversations, ai_messages, ai_memory tables (migration 0001 applied)
+- [x] DB helpers in server/db.ts (conversations, messages, memory CRUD)
+- [x] server/aiChat.ts: Wobbles profile/stage context, system prompt with memory book, structured-JSON memory distillation (max 5 facts/turn, dedupe, 200-fact cap)
+- [x] tRPC ai router: send, conversations, messages, deleteConversation, memory, forgetMemory (all protected)
+- [x] Every conversation saved server-side in separate tables — family-shared, resumable, deletable
+- [x] Ask page (/ask): chat thread, starter prompts, History sheet, Memory book sheet with forget
+- [x] Home entry points: sparkle header button + "Ask Wobbles anything" card
+- [x] Vitest: server/ai.test.ts 14 tests (title, prompt, distill parsing, dedupe) — suite 146/146 green
+- [x] Mobile screenshots verified (/ask empty state + composer, Home entries)

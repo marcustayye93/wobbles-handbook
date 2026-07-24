@@ -87,3 +87,58 @@ export const photos = mysqlTable("photos", {
 
 export type PhotoRow = typeof photos.$inferSelect;
 export type InsertPhoto = typeof photos.$inferInsert;
+
+/* ============================================================
+ * Ask Wobbles AI — persistent chat + distilled memory.
+ * Conversations/messages keep the full family chat history;
+ * aiMemory is the dedicated "memory file": durable facts about
+ * Wobbles distilled from conversations and injected into future
+ * system prompts so the assistant learns him over time.
+ * ============================================================ */
+
+/** One row per chat conversation (household-shared, like everything else). */
+export const aiConversations = mysqlTable("ai_conversations", {
+  id: int("id").autoincrement().primaryKey(),
+  /** Short title derived from the first user message */
+  title: varchar("title", { length: 200 }).notNull(),
+  createdBy: int("createdBy"),
+  createdByName: varchar("createdByName", { length: 120 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type AiConversationRow = typeof aiConversations.$inferSelect;
+
+/** Every message in every conversation is persisted here. */
+export const aiMessages = mysqlTable("ai_messages", {
+  id: int("id").autoincrement().primaryKey(),
+  conversationId: int("conversationId").notNull(),
+  role: mysqlEnum("role", ["user", "assistant"]).notNull(),
+  content: text("content").notNull(),
+  /** Which family member sent it (for user messages) */
+  authorName: varchar("authorName", { length: 120 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type AiMessageRow = typeof aiMessages.$inferSelect;
+
+/**
+ * Wobbles' memory book — durable facts the AI has learned about
+ * Wobbles from family conversations (weights, quirks, what worked
+ * in training, health notes). Active facts are injected into the
+ * system prompt of every future conversation.
+ */
+export const aiMemory = mysqlTable("ai_memory", {
+  id: int("id").autoincrement().primaryKey(),
+  /** A single durable fact, e.g. "Wobbles weighed 2.1kg on 3 Oct 2026" */
+  fact: text("fact").notNull(),
+  /** health | training | food | behaviour | routine | grooming | other */
+  category: varchar("category", { length: 32 }).default("other").notNull(),
+  /** Conversation the fact was learned from (nullable if added manually) */
+  sourceConversationId: int("sourceConversationId"),
+  /** Soft delete: 1 = injected into prompts, 0 = forgotten by the family */
+  active: int("active").default(1).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type AiMemoryRow = typeof aiMemory.$inferSelect;

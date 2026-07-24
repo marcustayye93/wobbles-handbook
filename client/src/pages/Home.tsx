@@ -21,7 +21,7 @@ import { todayISO } from "@/lib/dates";
 import { useTrackerFeed, useSharedState, rowToEntry } from "@/hooks/useSyncedData";
 import { ASSETS, WOBBLES, MILESTONES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
 import { SECTIONS } from "@/content/handbookSections";
-import { ChevronRight, ArrowRight, PawPrint, CalendarDays, Search, SlidersHorizontal, Check } from "lucide-react";
+import { ChevronRight, ArrowRight, PawPrint, CalendarDays, Search, SlidersHorizontal, Check, Sparkles } from "lucide-react";
 
 /** Countdown keepsake: picks the most relevant upcoming date */
 function nextCountdown(): { days: number; label: string } | null {
@@ -128,6 +128,13 @@ export default function Home() {
             >
               <Search size={16} />
             </button>
+            <Link
+              href="/ask"
+              aria-label="Ask Wobbles — the family AI assistant"
+              className="w-11 h-11 rounded-full bg-[#22364D] flex items-center justify-center text-[#E8935C] press-scale shadow-sm"
+            >
+              <Sparkles size={16} />
+            </Link>
           </div>
 
           {/* Title + taped countdown */}
@@ -393,6 +400,26 @@ export default function Home() {
             </button>
           ))}
         </div>
+      </section>
+
+      {/* ===== Ask Wobbles (AI assistant) ===== */}
+      <section className="px-4 mt-7">
+        <Link href="/ask" className="block sticker-card px-4 py-3.5 press-scale">
+          <div className="flex items-center gap-3">
+            <span className="shrink-0 w-10 h-10 rounded-full bg-[#22364D] flex items-center justify-center">
+              <Sparkles size={17} className="text-[#E8935C]" />
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block font-body font-bold text-[14px] leading-snug text-[#22364D]">
+                Ask Wobbles anything
+              </span>
+              <span className="block text-[11px] font-body text-muted-foreground leading-snug mt-0.5">
+                An assistant that knows his age and stage — and remembers what you tell it.
+              </span>
+            </span>
+            <ChevronRight size={16} className="text-muted-foreground shrink-0" />
+          </div>
+        </Link>
       </section>
 
       {/* ===== Today's timeline ===== */}
