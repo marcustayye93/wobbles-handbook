@@ -22,9 +22,19 @@ interface Props {
   onOpenChange: (open: boolean) => void;
   /** jump straight to a tracker's form (from Home quick actions) */
   initialTracker?: string | null;
+  /** pre-select an option chip (e.g. the trick's training skill) */
+  initialOption?: string;
+  /** pre-fill the note field (e.g. "Sit practice") */
+  initialNote?: string;
 }
 
-export default function QuickLogSheet({ open, onOpenChange, initialTracker }: Props) {
+export default function QuickLogSheet({
+  open,
+  onOpenChange,
+  initialTracker,
+  initialOption,
+  initialNote,
+}: Props) {
   const addMutation = useAddTrackerEntry();
   const [trackerId, setTrackerId] = useState<string | null>(null);
   const [date, setDate] = useState(todayISO());
@@ -37,14 +47,19 @@ export default function QuickLogSheet({ open, onOpenChange, initialTracker }: Pr
   useEffect(() => {
     if (open) {
       const id = initialTracker ?? null;
+      const choices = id ? (getTracker(id)?.fields.options?.choices ?? []) : [];
       setTrackerId(id);
       setDate(todayISO());
       setTime(nowHM());
       setValue("");
-      setOption(id ? (getTracker(id)?.fields.options?.choices[0] ?? "") : "");
-      setNote("");
+      setOption(
+        initialOption && choices.includes(initialOption)
+          ? initialOption
+          : (choices[0] ?? ""),
+      );
+      setNote(initialNote ?? "");
     }
-  }, [open, initialTracker]);
+  }, [open, initialTracker, initialOption, initialNote]);
 
   const meta = trackerId ? getTracker(trackerId) : undefined;
   const f = meta?.fields;

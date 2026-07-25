@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import ScrollToTop from "@/components/ScrollToTop";
 import AuthGate from "@/components/AuthGate";
 import OfflineBanner from "@/components/OfflineBanner";
 import { ThemeProvider } from "@/contexts/ThemeContext";
@@ -32,7 +33,9 @@ import NotFound from "@/pages/NotFound";
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
-    <Switch>
+    <>
+      <ScrollToTop />
+      <Switch>
       <Route path="/" component={Home} />
       <Route path="/about" component={About} />
       <Route path="/handbook" component={HandbookIndex} />
@@ -54,7 +57,8 @@ function Router() {
       <Route path="/ask" component={Ask} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
-    </Switch>
+      </Switch>
+    </>
   );
 }
 

@@ -354,3 +354,11 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 - [x] Add video fields for all tricks in client/src/content/tricks.ts
 - [x] Run pnpm test + tsc, verify a few trick pages in browser
 - [x] Checkpoint (auto-publish) + git push github main + deliver
+
+# Phase 19 — One-tap trick logging + scroll-to-top audit (user request 2026-07-26)
+
+- [x] TrickDetail "Log a practice session": open QuickLogSheet on training tracker pre-filled with the trick's name (one-tap log)
+- [x] Audit scroll position on route changes across the app (trick pages open mid-scroll)
+- [x] Global fix: scroll to top on every route navigation (preserve back/forward feel where sensible)
+- [x] Tests + tsc clean, verify in browser (trick page opens at top, prefilled log works)
+- [ ] Checkpoint (auto-publish) + GitHub push + deliver
