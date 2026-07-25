@@ -323,8 +323,34 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 
 # Phase 16 — Optimise trick illustrations (user report 2026-07-26: Journey trick cards load too slowly)
 
-- [ ] Optimise 12 trick-*.png (~6MB each) to small web-ready files (resize to display size, compress)
-- [ ] Package optimised set as zip + upload for the other Manus account
-- [ ] Replace trick image references in this project with optimised uploads; verify Journey/Training pages
-- [ ] Checkpoint (auto-publish) + GitHub push
-- [ ] Write update prompt for the other Manus account and deliver
+- [x] Optimise 12 trick-*.png (~6MB each, 2176x1632) to web-ready WebP 640x480 q82 (30–48KB each; 73.4MB → 0.45MB)
+- [x] Package optimised set as zip + upload for the other Manus account (wobbles-trick-illustrations-optimized.zip, 440KB, CDN link delivered)
+- [x] Replace trick image references in client/src/content/tricks.ts with optimised uploads; verified /journey renders all 12 webp images
+- [x] Checkpoint e4756196 (auto-publish) + GitHub push (main at e475619)
+- [x] Write update prompt for the other Manus account and deliver
+
+# Phase 17 — "Sit" trick video (user request 2026-07-26: video instead of photo, same art style, review first)
+
+- [x] Locate the original trick-sit illustration as style/first-frame reference (webdev-static-assets/trick-sit.png used as first keyframe)
+- [x] Read video-generator skill and generate an 8s gouache-style video of the Sit trick (lure arc → sit → treat reward; 16:9 720p, soft ambience, 1.8MB, style verified via extracted frames)
+- [x] Deliver the video to the user for review (NOT wired into app until approved)
+
+# Phase 18 — Wire Sit trick video into app (user approved 2026-07-26: below "How to train it", muted, lightweight loopable mp4, slot for all tricks)
+
+- [x] Process trick-sit-video.mp4: strip audio, compress to lightweight web mp4 (h264, faststart), verify loop-friendly
+- [x] Upload via manus-upload-file --webdev and get storage URL
+- [x] Add optional `video` field to trick content model (tricks.ts) with sit video URL
+- [x] Trick detail UI: render muted autoplay loop playsinline video below the "How to train it" section (poster = existing illustration), same slot works for all future trick videos
+- [x] Tests updated if content schema tests exist; suite green + tsc clean
+- [x] Verify on /journey sit detail, checkpoint (auto-publish), GitHub push, deliver
+
+# Phase 18b — Demo videos for ALL tricks (user request 2026-07-26)
+
+- [x] Sit: video generated, processed to muted loop, uploaded (/manus-storage/trick-sit-loop_bc0e1fa2.mp4), wired into tricks.ts + TrickDetail video slot
+- [x] Write accurate motion prompts for the 11 remaining tricks (down, recall, stay, touch, leaveit, dropit, paw, spin, rollover + last 2) matching each trick's step content
+- [x] Generate gouache-style demo videos for the 11 remaining tricks (reference = each trick's illustration)
+- [x] Process all videos into lightweight muted loops (ffmpeg -an, crf26, 960x540, faststart)
+- [x] Upload all loops via manus-upload-file --webdev, record storage paths
+- [x] Add video fields for all tricks in client/src/content/tricks.ts
+- [x] Run pnpm test + tsc, verify a few trick pages in browser
+- [x] Checkpoint (auto-publish) + git push github main + deliver

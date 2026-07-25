@@ -182,6 +182,26 @@ export default function TrickDetail() {
         </div>
       </section>
 
+      {/* ===== Watch it in action ===== */}
+      {trick.video && (
+        <section className="px-4 mt-4">
+          <Eyebrow className="px-1 mb-2.5">Watch it in action</Eyebrow>
+          <div className="keepsake-card overflow-hidden">
+            <video
+              src={trick.video}
+              poster={trick.image}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-label={`Looping demo of Wobbles practising "${trick.name}"`}
+              className="w-full aspect-video object-cover"
+            />
+          </div>
+        </section>
+      )}
+
       {/* ===== Pro tip ===== */}
       <section className="px-4 mt-4">
         <div className="keepsake-card relative p-4 pl-11">

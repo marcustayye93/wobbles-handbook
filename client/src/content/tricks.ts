@@ -17,6 +17,8 @@ export interface Trick {
   emoji: string;
   level: TrickLevel;
   image: string;
+  /** Optional muted looping demo clip (lightweight mp4), shown below the steps */
+  video?: string;
   tagline: string;
   why: string;
   /** Training Log `option` values that count toward this trick */
@@ -38,6 +40,7 @@ export const TRICKS: Trick[] = [
     emoji: "🪑",
     level: "foundation",
     image: "/manus-storage/trick-sit_a79cad14.webp",
+    video: "/manus-storage/trick-sit-loop_bc0e1fa2.mp4",
     tagline: "The polite default position",
     why: "Sit is Wobbles' first 'please'. Once it's solid, he can offer it instead of jumping, mugging for food, or bolting out doors — it becomes his way of asking nicely for everything.",
     matchOptions: ["Sit / down"],
@@ -70,6 +73,7 @@ export const TRICKS: Trick[] = [
     emoji: "⬇️",
     level: "foundation",
     image: "/manus-storage/trick-down_5c118aef.webp",
+    video: "/manus-storage/trick-down-loop_50d849f2.mp4",
     tagline: "Settle into a calm lie-down",
     why: "Down is the gateway to calm. A puppy who can hold a down can wait at cafés, relax during dinner, and switch off when the household is busy.",
     matchOptions: ["Sit / down"],
@@ -102,6 +106,7 @@ export const TRICKS: Trick[] = [
     emoji: "📣",
     level: "foundation",
     image: "/manus-storage/trick-recall_43152dab.webp",
+    video: "/manus-storage/trick-recall-loop_652e6964.mp4",
     tagline: "The cue that can save his life",
     why: "A rock-solid recall is the single most important thing Wobbles will ever learn — it's what lets him have off-lead freedom safely, and it can genuinely save his life near roads.",
     matchOptions: ["Recall ('come')"],
@@ -134,6 +139,7 @@ export const TRICKS: Trick[] = [
     emoji: "✋",
     level: "core",
     image: "/manus-storage/trick-stay_2e0cb0df.webp",
+    video: "/manus-storage/trick-stay-loop_3d5b9cbd.mp4",
     tagline: "Patience in position",
     why: "Stay teaches impulse control — the puppy skill that transfers to everything: waiting at doors, staying calm at kerbs, and posing beautifully for photos.",
     matchOptions: [],
@@ -166,6 +172,7 @@ export const TRICKS: Trick[] = [
     emoji: "👆",
     level: "core",
     image: "/manus-storage/trick-touch_b5f6d32a.webp",
+    video: "/manus-storage/trick-touch-loop_64750549.mp4",
     tagline: "Nose-to-hand target",
     why: "Touch is the Swiss army knife of tricks: it repositions him without grabbing, redirects him from trouble, builds recall, and becomes the foundation for spin, heel and fancy tricks later.",
     matchOptions: [],
@@ -198,6 +205,7 @@ export const TRICKS: Trick[] = [
     emoji: "🚫",
     level: "core",
     image: "/manus-storage/trick-leaveit_54e5f9f7.webp",
+    video: "/manus-storage/trick-leaveit-loop_23a8fd64.mp4",
     tagline: "Self-control around temptation",
     why: "Singapore footpaths are full of chicken bones and mystery snacks. 'Leave it' is the cue that keeps dropped medication, toxic food and gross finds out of his mouth.",
     matchOptions: ["Leave it / drop it"],
@@ -230,6 +238,7 @@ export const TRICKS: Trick[] = [
     emoji: "🎾",
     level: "core",
     image: "/manus-storage/trick-dropit_2f056717.webp",
+    video: "/manus-storage/trick-dropit-loop_fa9bb162.mp4",
     tagline: "Give things up happily",
     why: "Puppies grab everything. A cheerful 'drop it' means no chasing him around the flat for a sock, and no resource guarding — he learns giving things up is a trade, not a loss.",
     matchOptions: ["Leave it / drop it"],
@@ -262,6 +271,7 @@ export const TRICKS: Trick[] = [
     emoji: "🐾",
     level: "party",
     image: "/manus-storage/trick-paw_1affa1ae.webp",
+    video: "/manus-storage/trick-paw-loop_1d76455b.mp4",
     tagline: "The classic crowd-pleaser",
     why: "Beyond the cuteness, paw builds handling tolerance — a puppy who happily offers his paw makes nail trims, paw wipes after walks, and vet exams far easier.",
     matchOptions: ["Handling & cooperative care"],
@@ -294,6 +304,7 @@ export const TRICKS: Trick[] = [
     emoji: "🌀",
     level: "party",
     image: "/manus-storage/trick-spin_d800a946.webp",
+    video: "/manus-storage/trick-spin-loop_d06cf495.mp4",
     tagline: "A happy twirl on cue",
     why: "Spin is pure joy and great body awareness for a growing puppy — it stretches his spine, builds rear-end coordination, and looks adorable before dinner.",
     matchOptions: ["Tricks / fun"],
@@ -326,6 +337,7 @@ export const TRICKS: Trick[] = [
     emoji: "🔄",
     level: "party",
     image: "/manus-storage/trick-rollover_1ffc82ec.webp",
+    video: "/manus-storage/trick-rollover-loop_9bdaadd2.mp4",
     tagline: "The full tumble",
     why: "Roll over builds trust — a puppy who happily flips onto his back near you is a confident puppy. It also makes belly checks and grooming much easier.",
     matchOptions: ["Tricks / fun"],
@@ -358,6 +370,7 @@ export const TRICKS: Trick[] = [
     emoji: "🛏️",
     level: "core",
     image: "/manus-storage/trick-mat_e0c83a05.webp",
+    video: "/manus-storage/trick-mat-loop_ede5224d.mp4",
     tagline: "His portable off-switch",
     why: "'Go to your mat' gives Wobbles a job when the doorbell rings, guests arrive, or you're eating. The mat travels — cafés, friends' homes, the vet waiting room — and calm comes with it.",
     matchOptions: ["Settle on mat"],
@@ -390,6 +403,7 @@ export const TRICKS: Trick[] = [
     emoji: "🚶",
     level: "core",
     image: "/manus-storage/trick-heel_896f9455.webp",
+    video: "/manus-storage/trick-heel-loop_3a15eb95.mp4",
     tagline: "Walks that are a pleasure",
     why: "A Cavoodle who walks on a loose lead gets more walks, more adventures and more freedom — pulling is the number one reason dogs get walked less. Start before bad habits start.",
     matchOptions: ["Loose-lead walking"],
