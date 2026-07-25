@@ -249,4 +249,18 @@
 - [x] Vitest specs: server/insights.test.ts 22 tests (circular mean midnight wrap, anchors, clusters, gaps, appetite drop, predictions, pending copy) — suite 168/168 green, tsc clean
 - [x] Visual verification (mobile: toilet, feeding, Home) + pending-copy grammar fixes
 - [x] "Trends pending" placeholder when data is insufficient — per-insight statistical minimums (5 timed morning wees/3 days, 8 logs/3 days for success rate, 5 meal→toilet pairs, 6 timed meals, 3-day baselines), each showing exactly how many more logs unlock it
-- [ ] Checkpoint/publish + push to GitHub, deliver
+- [x] Checkpoint/publish + push to GitHub, deliver (checkpoint 97e2f3d5 auto-published, GitHub main @ 97e2f3d)
+
+# Phase 10 — Teardown improvements (user-approved 2026-07-25)
+NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entries + useSyncedData, checkpoint afb36adc) — inventory notes were stale. Real work is the Home redesign + P1 features.
+
+- [x] New log types: walk, sleep, shower/bath as first-class trackers (schema already generic — added TRACKERS defs + options + tips)
+- [x] Alone-time tracker: duration + reaction (calm/whined/barked/distressed) + note
+- [x] Home redesign: one-tap care row at very top (Walk, Meal, Toilet, Sleep, Shower) — single tap logs instantly with undo toast; long-press opens detail sheet; today-count badges
+- [x] Home redesign: "Due today" section near top (daily plan card: rota + tips + field note) with tick-off
+- [x] Home slimming: removed "Start reading" promos + old quick-actions grid; single Chapters doorway card; Wobbles Today kept compact below the action zone
+- [x] Growth band overlay on weight chart: toy-Cavoodle expected min/max corridor by age (lib/growthBand.ts) + on-track/below/above verdict card with grace margin
+- [x] Floating paw FAB on all pages (PageShell) opening QuickLogSheet; hidden on Home (care row covers it) and hideNav pages
+- [x] Insights/timeline handle new log types gracefully (generic tracker feed; insights remain feeding/toilet-gated)
+- [x] Tests for new trackers, growth band math, care-row logging (growthBand.test.ts 19, careRow.test.ts 7); suite 194/194 green + tsc clean
+- [ ] Mobile screenshots, checkpoint (auto-publish), GitHub push, deliver

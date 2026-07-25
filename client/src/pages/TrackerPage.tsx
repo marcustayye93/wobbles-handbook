@@ -16,10 +16,11 @@ import { cn } from "@/lib/utils";
 import { Plus, Trash2, PawPrint, Lightbulb } from "lucide-react";
 import { toast } from "sonner";
 import {
-  ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip as ChartTooltip, CartesianGrid,
+  ResponsiveContainer, ComposedChart, Line, Area, XAxis, YAxis, Tooltip as ChartTooltip, CartesianGrid,
 } from "recharts";
 import NotFound from "@/pages/NotFound";
 import TrackerInsights from "@/components/TrackerInsights";
+import { bandSeriesFor, growthVerdict } from "@/lib/growthBand";
 
 const INK = "#22364D";
 const SIENNA = "#C66A3D";
@@ -41,13 +42,16 @@ export default function TrackerPage() {
     () => new URLSearchParams(window.location.search).get("add") === "1",
   );
 
+  const isWeight = id === "weight";
   const chartData = useMemo(() => {
     if (!meta?.chart) return [];
+    if (isWeight) return bandSeriesFor(entries);
     return [...entries]
       .filter((e) => typeof e.value === "number")
       .sort((a, b) => (a.date + (a.time ?? "")).localeCompare(b.date + (b.time ?? "")))
       .map((e) => ({ label: e.date.slice(5).split("-").reverse().join("/"), value: e.value }));
-  }, [entries, meta]);
+  }, [entries, meta, isWeight]);
+  const verdict = useMemo(() => (isWeight ? growthVerdict(entries) : null), [entries, isWeight]);
 
   if (!meta) return <NotFound />;
   const f = meta.fields;
@@ -191,13 +195,13 @@ export default function TrackerPage() {
           </div>
         )}
 
-        {/* chart */}
+        {/* chart (weight gets the expected toy-Cavoodle growth corridor) */}
         {meta.chart && chartData.length >= 2 && (
           <div className="keepsake-card p-4 mt-4">
             <Eyebrow>{meta.chart.label} over time</Eyebrow>
             <div className="h-44 -ml-3 mt-2">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={chartData} margin={{ top: 8, right: 8, bottom: 0, left: -8 }}>
+                <ComposedChart data={chartData} margin={{ top: 8, right: 8, bottom: 0, left: -8 }}>
                   <CartesianGrid strokeDasharray="4 4" stroke="rgba(34,54,77,0.12)" />
                   <XAxis dataKey="label" tick={{ fontSize: 10, fontFamily: "Nunito Sans" }} stroke="rgba(34,54,77,0.45)" />
                   <YAxis tick={{ fontSize: 10, fontFamily: "Nunito Sans" }} stroke="rgba(34,54,77,0.45)" width={34} />
@@ -209,8 +213,19 @@ export default function TrackerPage() {
                       fontSize: 12,
                       fontFamily: "Nunito Sans",
                     }}
-                    formatter={(v: number | string) => [`${v} ${meta.chart!.unit}`, meta.chart!.label]}
+                    formatter={(v: number | string, name: string) => {
+                      if (name === "bandMax") return [`${v} kg`, "Band high"];
+                      if (name === "bandMin") return [`${v} kg`, "Band low"];
+                      return [`${v} ${meta.chart!.unit}`, meta.chart!.label];
+                    }}
                   />
+                  {isWeight && (
+                    <>
+                      {/* shaded expected corridor: max area painted, min area erases below */}
+                      <Area type="monotone" dataKey="bandMax" stroke="none" fill="rgba(107,124,90,0.18)" fillOpacity={1} activeDot={false} />
+                      <Area type="monotone" dataKey="bandMin" stroke="none" fill="#FFFDF8" fillOpacity={1} activeDot={false} />
+                    </>
+                  )}
                   <Line
                     type="monotone"
                     dataKey="value"
@@ -219,8 +234,36 @@ export default function TrackerPage() {
                     dot={{ r: 3.5, fill: SIENNA }}
                     activeDot={{ r: 5 }}
                   />
-                </LineChart>
+                </ComposedChart>
               </ResponsiveContainer>
+            </div>
+            {isWeight && (
+              <p className="mt-1.5 text-[10px] font-body font-bold text-[#6B7C5A]">
+                Green band = expected range for a toy Cavoodle his age (5–8 kg adult).
+              </p>
+            )}
+          </div>
+        )}
+
+        {/* growth verdict — weight only */}
+        {verdict && (
+          <div
+            className={cn(
+              "sticker-card px-4 py-3 mt-2.5 flex items-start gap-3",
+              verdict.status === "on-track" ? "border-[#6B7C5A]/40" : "border-[#B4512E]/40",
+            )}
+          >
+            <span className="text-[18px] shrink-0 mt-0.5">
+              {verdict.status === "on-track" ? "✅" : verdict.status === "below" ? "📉" : "📈"}
+            </span>
+            <div className="min-w-0">
+              <p
+                className="text-[10px] font-body font-extrabold uppercase tracking-[0.12em]"
+                style={{ color: verdict.status === "on-track" ? "#6B7C5A" : "#B4512E" }}
+              >
+                {verdict.status === "on-track" ? "On track" : verdict.status === "below" ? "Running light" : "Running heavy"}
+              </p>
+              <p className="text-[12.5px] font-body text-[#33475C] leading-snug mt-0.5">{verdict.text}</p>
             </div>
           </div>
         )}

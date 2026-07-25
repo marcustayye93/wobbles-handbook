@@ -100,6 +100,88 @@ export const TRACKERS: TrackerMeta[] = [
     ],
   },
   {
+    id: "walk",
+    title: "Walks",
+    emoji: "🐾",
+    group: "daily",
+    empty: "Strolls & sniffaris",
+    intro:
+      "Puppy rule of thumb: ~5 minutes of structured walking per month of age, up to twice a day — but sniffing time is free. Log each walk so the 7:15am and evening outings actually happen, whoever is home.",
+    fields: {
+      time: true,
+      options: { label: "Walk", choices: ["Morning walk", "Evening walk", "Sniffari / potter", "Park visit", "Carry outing (pre-vax)"] },
+      value: { label: "Duration", unit: "min", min: 1, max: 120, step: 1 },
+      note: true,
+    },
+    chart: { label: "Walk length", unit: "min" },
+    tips: [
+      "Under-exercise makes a bitey gremlin; over-exercise stresses growing joints. Short and frequent wins for a puppy.",
+      "In Singapore heat, walk before 9am or after 6pm and check the pavement with the back of your hand — 5 seconds too hot for you is too hot for paws.",
+      "A 10-minute sniffari tires a puppy more than a 30-minute march. Let the nose lead.",
+    ],
+  },
+  {
+    id: "sleep",
+    title: "Sleep",
+    emoji: "😴",
+    group: "daily",
+    empty: "Naps & nights",
+    intro:
+      "Puppies need 18–20 hours of sleep a day, and most bitey/zoomie chaos is really an overtired puppy. Log naps and night sleep to protect the rhythm — and to spot when the crate routine is working.",
+    fields: {
+      time: true,
+      options: { label: "Sleep", choices: ["Nap (crate)", "Nap (free)", "Night — slept through", "Night — woke once", "Night — rough night"] },
+      value: { label: "Roughly how long", unit: "min", min: 10, max: 720, step: 10 },
+      note: true,
+    },
+    tips: [
+      "An 8–12 week puppy should nap roughly every hour of awake time. Enforce naps before the gremlins arrive.",
+      "Same crate, same spot, same wind-down: a licky mat or chew 10 minutes before nap time flips the off switch.",
+      "Night waking usually means a genuine toilet need at this age — boring, dim, business-only trips keep 3am from becoming playtime.",
+    ],
+  },
+  {
+    id: "shower",
+    title: "Bath & Shower",
+    emoji: "🛁",
+    group: "daily",
+    empty: "Baths, rinses & paw washes",
+    intro:
+      "Full bath every 2–4 weeks with dog shampoo; in between, plain-water rinses and paw washes after muddy or rainy walks are plenty. Log them so the fortnightly bath reminder stays honest.",
+    fields: {
+      time: true,
+      options: { label: "What", choices: ["Full bath + blow dry", "Quick rinse (water only)", "Paw wash after walk", "Face / bum tidy-up"] },
+      note: true,
+    },
+    tips: [
+      "Always brush before the bath and blow-dry fully after — a damp Cavoodle coat mats into felt.",
+      "Lukewarm water, cotton ball in each ear, and treats smeared on the wall turn bath time into a party.",
+      "Over-bathing strips the coat's oils — if he's smelly within a week of a bath, check ears and teeth before reaching for shampoo.",
+    ],
+  },
+  {
+    id: "alone",
+    title: "Alone Time",
+    emoji: "🏠",
+    group: "growing",
+    empty: "Separation practice",
+    intro:
+      "Cavoodles are velcro dogs — separation comfort is trained, not assumed. Build alone time in tiny steps from day one: seconds, then minutes, then a coffee run. Log every rep and how he coped, and the graph becomes your confidence meter.",
+    fields: {
+      time: true,
+      options: { label: "How did he cope?", choices: ["Calm the whole time 😌", "Whined a little", "Barked / cried", "Distressed — cut it short"] },
+      value: { label: "Time alone", unit: "min", min: 1, max: 480, step: 1 },
+      note: true,
+    },
+    chart: { label: "Minutes alone", unit: "min" },
+    tips: [
+      "Progress by success, not by schedule: only stretch the duration after two easy reps at the current one.",
+      "Leave after exercise + toilet, with a frozen Kong, no dramatic goodbyes or hellos.",
+      "If he's distressed, shrink way back — 30 calm seconds beats 10 panicked minutes and undoes nothing.",
+      "Practise fake departures (keys, shoes, door) at random times so leaving cues stop predicting abandonment.",
+    ],
+  },
+  {
     id: "stool",
     title: "Poo Quality",
     emoji: "💩",

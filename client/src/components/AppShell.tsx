@@ -7,6 +7,7 @@
 import { Link, useLocation } from "wouter";
 import { Home, BookOpen, ClipboardList, Camera, MapPin, ChevronLeft, PawPrint } from "lucide-react";
 import { cn } from "@/lib/utils";
+import PawFab from "@/components/PawFab";
 
 const TABS = [
   { href: "/", label: "Home", icon: Home },
@@ -71,14 +72,18 @@ export function PageShell({
   children,
   className,
   hideNav,
+  hideFab,
 }: {
   children: React.ReactNode;
   className?: string;
   hideNav?: boolean;
+  /** Home has the one-tap care row, so it opts out of the floating paw. */
+  hideFab?: boolean;
 }) {
   return (
     <div className="phone-shell paper-grain">
       <main className={cn(hideNav ? "pb-6" : "safe-bottom", className)}>{children}</main>
+      {!hideNav && !hideFab && <PawFab />}
       {!hideNav && <BottomNav />}
     </div>
   );

@@ -1,8 +1,9 @@
 /*
- * Redesign v2.1 — "Keepsake Field Guide" Home, action-first (UX audit):
- * Cover → Wobbles Today (stage intelligence + nudges) → Quick Actions →
- * Today's timeline → Coming up → Start reading. Paper bg, Cormorant serif,
- * ink navy + sienna, restrained keepsake details.
+ * Redesign v2.2 — "Keepsake Field Guide" Home, logging-first (teardown):
+ * Compact cover → One-tap care row (Walk/Meal/Toilet/Sleep/Shower) →
+ * Due today (rota + reminders) → Wobbles Today → Today's timeline →
+ * Coming up. Reading content lives in the Chapters tab. Paper bg,
+ * Cormorant serif, ink navy + sienna, restrained keepsake details.
  */
 import { useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
@@ -10,6 +11,7 @@ import { PageShell, Eyebrow } from "@/components/AppShell";
 import SyncIndicator from "@/components/SyncIndicator";
 import QuickLogSheet from "@/components/QuickLogSheet";
 import TodayTimeline, { useDayFeed } from "@/components/TodayTimeline";
+import CareRow from "@/components/CareRow";
 import SearchDialog from "@/components/SearchDialog";
 import { wobblesToday, todaysNudges, todaysBrief } from "@/lib/wobblesToday";
 import { dailyFact } from "@/lib/dailyFact";
@@ -20,7 +22,6 @@ import ReminderCelebration from "@/components/ReminderCelebration";
 import { todayISO } from "@/lib/dates";
 import { useTrackerFeed, useSharedState, rowToEntry } from "@/hooks/useSyncedData";
 import { ASSETS, WOBBLES, MILESTONES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
-import { SECTIONS } from "@/content/handbookSections";
 import { ChevronRight, ArrowRight, PawPrint, CalendarDays, Search, SlidersHorizontal, Check, Sparkles } from "lucide-react";
 
 /** Countdown keepsake: picks the most relevant upcoming date */
@@ -31,16 +32,6 @@ function nextCountdown(): { days: number; label: string } | null {
   if (next) return { days: daysUntil(next.date), label: next.label.toLowerCase() };
   return null;
 }
-
-/** Quick-action chips shown on Home (subset of trackers, one-tap logging) */
-const QUICK_ACTIONS: { id: string; emoji: string; label: string }[] = [
-  { id: "feeding", emoji: "🍽️", label: "Meal" },
-  { id: "toilet", emoji: "🚽", label: "Toilet" },
-  { id: "grooming", emoji: "✂️", label: "Groom" },
-  { id: "training", emoji: "🎓", label: "Train" },
-  { id: "social", emoji: "🌏", label: "Social" },
-  { id: "weight", emoji: "⚖️", label: "Weigh" },
-];
 
 export default function Home() {
   const age = wobblesAge();
@@ -103,7 +94,7 @@ export default function Home() {
   };
 
   return (
-    <PageShell className="pb-28">
+    <PageShell className="pb-28" hideFab>
       {/* ===== Cover ===== */}
       <section className="relative overflow-hidden">
         <div className="relative px-5 pt-9">
@@ -196,50 +187,26 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== Wobbles Today card (overlapping hero) ===== */}
+      {/* ===== One-tap care row (the most-used loggers, always first) ===== */}
       <section className="relative z-10 px-4 -mt-10">
-        <div className="keepsake-card relative p-5 fade-up" style={{ animationDelay: "180ms" }}>
-          <span className="absolute -top-3 left-4 bg-[#B4512E] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
-            Wobbles today
-          </span>
-          <div className="flex items-start gap-3 mt-1">
-            <div className="min-w-0 flex-1">
-              <p className="text-[10px] font-body font-extrabold uppercase tracking-[0.14em] text-[#6B7C5A]">
-                {today.stage}
-              </p>
-              <h2 className="font-display font-semibold text-[1.65rem] leading-tight text-[#22364D] mt-0.5">
-                {today.title}
-              </h2>
-              <p className="text-[13px] font-body text-[#5A6B7E] leading-relaxed mt-1.5">{today.text}</p>
-            </div>
-            <img src={ASSETS.v2SpotBed} alt="" className="w-20 h-20 object-contain shrink-0 mt-1" aria-hidden />
-          </div>
-
-          {/* stage details */}
-          <dl className="mt-3.5 space-y-2 border-t border-dashed border-[#E5DAC8] pt-3.5">
-            {[
-              ["Today's focus", today.focus],
-              ["Expect", today.expect],
-              ["Training", today.training],
-            ].map(([k, v]) => (
-              <div key={k} className="flex gap-2.5 items-baseline">
-                <dt className="shrink-0 w-[86px] text-[9px] font-body font-extrabold uppercase tracking-[0.12em] text-[#B4512E]">
-                  {k}
-                </dt>
-                <dd className="text-[12.5px] font-body text-[#33475C] leading-snug">{v}</dd>
-              </div>
-            ))}
-          </dl>
-
-          <Link href={today.link} className="btn-ink mt-4 inline-flex">
-            {today.linkLabel} <ArrowRight size={15} />
-          </Link>
-        </div>
-
-        {/* ===== Today's plan (household schedule + care rota + idea) ===== */}
-        <div className="keepsake-card relative p-5 mt-3 fade-up" style={{ animationDelay: "210ms" }}>
+        <div className="keepsake-card relative p-3.5 fade-up" style={{ animationDelay: "170ms" }}>
           <span className="absolute -top-3 left-4 bg-[#22364D] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
-            {brief.plan.label}'s plan
+            One-tap log
+          </span>
+          <div className="mt-1.5">
+            <CareRow onDetails={(id) => quickLog(id)} />
+          </div>
+          <p className="mt-2 text-[10px] font-body font-semibold text-muted-foreground text-center">
+            Tap to log it now · hold for details · synced to both phones
+          </p>
+        </div>
+      </section>
+
+      {/* ===== Due today (plan + reminders + care rota) — second priority ===== */}
+      <section className="relative z-10 px-4 mt-3">
+        <div className="keepsake-card relative p-5 fade-up" style={{ animationDelay: "200ms" }}>
+          <span className="absolute -top-3 left-4 bg-[#B4512E] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
+            Due today · {brief.plan.label}
           </span>
           <p className="mt-1 text-[10px] font-body font-extrabold uppercase tracking-[0.14em] text-[#6B7C5A]">
             {brief.whoHome}
@@ -383,22 +350,44 @@ export default function Home() {
         )}
       </section>
 
-      {/* ===== Quick actions ===== */}
-      <section className="px-5 mt-7">
-        <Eyebrow className="mb-2.5">Quick log</Eyebrow>
-        <div className="grid grid-cols-6 gap-1.5">
-          {QUICK_ACTIONS.map((a) => (
-            <button
-              key={a.id}
-              onClick={() => quickLog(a.id)}
-              className="flex flex-col items-center gap-1 py-2.5 rounded-2xl bg-[#FFFDF8] border border-[#E5DAC8] press-scale"
-            >
-              <span className="text-[17px]">{a.emoji}</span>
-              <span className="text-[8.5px] font-body font-extrabold uppercase tracking-wide text-[#22364D]">
-                {a.label}
-              </span>
-            </button>
-          ))}
+      {/* ===== Wobbles Today (stage intelligence) ===== */}
+      <section className="relative z-10 px-4 mt-6">
+        <div className="keepsake-card relative p-5 fade-up" style={{ animationDelay: "230ms" }}>
+          <span className="absolute -top-3 left-4 bg-[#22364D] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
+            Wobbles today
+          </span>
+          <div className="flex items-start gap-3 mt-1">
+            <div className="min-w-0 flex-1">
+              <p className="text-[10px] font-body font-extrabold uppercase tracking-[0.14em] text-[#6B7C5A]">
+                {today.stage}
+              </p>
+              <h2 className="font-display font-semibold text-[1.65rem] leading-tight text-[#22364D] mt-0.5">
+                {today.title}
+              </h2>
+              <p className="text-[13px] font-body text-[#5A6B7E] leading-relaxed mt-1.5">{today.text}</p>
+            </div>
+            <img src={ASSETS.v2SpotBed} alt="" className="w-20 h-20 object-contain shrink-0 mt-1" aria-hidden />
+          </div>
+
+          {/* stage details */}
+          <dl className="mt-3.5 space-y-2 border-t border-dashed border-[#E5DAC8] pt-3.5">
+            {[
+              ["Today's focus", today.focus],
+              ["Expect", today.expect],
+              ["Training", today.training],
+            ].map(([k, v]) => (
+              <div key={k} className="flex gap-2.5 items-baseline">
+                <dt className="shrink-0 w-[86px] text-[9px] font-body font-extrabold uppercase tracking-[0.12em] text-[#B4512E]">
+                  {k}
+                </dt>
+                <dd className="text-[12.5px] font-body text-[#33475C] leading-snug">{v}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <Link href={today.link} className="btn-ink mt-4 inline-flex">
+            {today.linkLabel} <ArrowRight size={15} />
+          </Link>
         </div>
       </section>
 
@@ -460,34 +449,24 @@ export default function Home() {
         </section>
       )}
 
-      {/* ===== Start reading ===== */}
-      <section className="px-5 mt-8">
-        <div className="flex items-baseline justify-between mb-3">
-          <Eyebrow>Start reading</Eyebrow>
-          <Link href="/handbook" className="text-[11px] font-body font-extrabold text-[#B4512E]">
-            All chapters →
-          </Link>
-        </div>
-        <div className="space-y-2.5">
-          {SECTIONS.slice(0, 4).map((s, i) => (
-            <Link
-              key={s.slug}
-              href={`/handbook/${s.slug}`}
-              className="sticker-card px-4 py-3.5 flex items-center gap-3 press-scale"
-            >
-              <span className="w-8 h-8 rounded-full bg-[#22364D]/6 flex items-center justify-center font-display font-bold text-sm text-[#C66A3D]">
-                {i + 1}
+      {/* ===== The handbook lives in Chapters — one quiet doorway ===== */}
+      <section className="px-4 mt-8">
+        <Link href="/handbook" className="block sticker-card px-4 py-3.5 press-scale">
+          <div className="flex items-center gap-3">
+            <span className="shrink-0 w-10 h-10 rounded-full bg-[#22364D]/6 flex items-center justify-center text-[17px]">
+              📖
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block font-body font-bold text-[14px] leading-snug text-[#22364D]">
+                The handbook — all chapters
               </span>
-              <span className="min-w-0 flex-1">
-                <span className="block font-body font-bold text-[14px] leading-snug text-[#22364D]">
-                  {s.title}
-                </span>
-                <span className="block text-[11px] font-body text-muted-foreground truncate">{s.tagline}</span>
+              <span className="block text-[11px] font-body text-muted-foreground leading-snug mt-0.5">
+                Guides, tips and the 100 Things list, tucked away for when you need them.
               </span>
-              <ChevronRight size={16} className="text-muted-foreground shrink-0" />
-            </Link>
-          ))}
-        </div>
+            </span>
+            <ChevronRight size={16} className="text-muted-foreground shrink-0" />
+          </div>
+        </Link>
       </section>
 
       {/* Footer note */}
