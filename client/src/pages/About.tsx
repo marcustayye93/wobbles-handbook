@@ -4,11 +4,137 @@
  * Baby-book page: photos, verified profile facts, mum & dad, breeder story,
  * milestone timeline, and the AI rendering of adult Wobbles.
  */
+import { useState } from "react";
 import { PageShell, PageHeader, PawDivider } from "@/components/AppShell";
 import { ASSETS, WOBBLES, MILESTONES, wobblesAge, formatDate, daysUntil } from "@/content/wobbles";
-import { Star, Hand, Syringe, Home, Plane, Users, Scissors, Cake, Heart, Shield, BadgeCheck, Trees, Stethoscope } from "lucide-react";
+import { Star, Hand, Syringe, Home, Plane, Users, Scissors, Cake, Heart, Shield, BadgeCheck, Trees, Stethoscope, Archive, FileDown, FileSpreadsheet, Loader2 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { trpc } from "@/lib/trpc";
+import { toast } from "sonner";
+
+/* ---- U2: client-side download helpers ---- */
+
+function triggerDownload(filename: string, mime: string, content: string) {
+  const blob = new Blob([content], { type: mime });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+/** RFC 4180-safe CSV field (mirrors server/exportData.ts csvField). */
+export function csvField(value: string | null | undefined): string {
+  const s = value == null ? "" : String(value);
+  if (/[",\n\r]/.test(s)) return `"${s.replace(/"/g, '""')}"`;
+  return s;
+}
+
+interface CsvEntry {
+  trackerId: string;
+  date: string;
+  time: string | null;
+  option: string | null;
+  value: string | null;
+  note: string | null;
+  createdByName: string | null;
+}
+
+export function entriesToCsv(entries: CsvEntry[]): string {
+  const header = "tracker,date,time,option,value,note,logged_by";
+  const lines = entries.map((e) =>
+    [
+      csvField(e.trackerId),
+      csvField(e.date),
+      csvField(e.time),
+      csvField(e.option),
+      csvField(e.value),
+      csvField(e.note),
+      csvField(e.createdByName),
+    ].join(","),
+  );
+  return [header, ...lines].join("\n") + "\n";
+}
+
+function DataBackupSection() {
+  const utils = trpc.useUtils();
+  const [busy, setBusy] = useState<"json" | "csv" | null>(null);
+  const today = new Date().toISOString().slice(0, 10);
+
+  const downloadJson = async () => {
+    setBusy("json");
+    try {
+      const snap = await utils.exportData.snapshot.fetch();
+      triggerDownload(
+        `wobbles-handbook-export-${today}.json`,
+        "application/json",
+        JSON.stringify(snap, null, 2),
+      );
+      toast.success("Everything exported — keep it somewhere safe.");
+    } catch {
+      toast.error("Export failed — check your connection and try again.");
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  const downloadCsv = async () => {
+    setBusy("csv");
+    try {
+      const snap = await utils.exportData.snapshot.fetch();
+      triggerDownload(
+        `wobbles-tracker-log-${today}.csv`,
+        "text/csv",
+        entriesToCsv(snap.trackerEntries as unknown as CsvEntry[]),
+      );
+      toast.success("Tracker log downloaded as a spreadsheet.");
+    } catch {
+      toast.error("Export failed — check your connection and try again.");
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  return (
+    <div className="px-5 mt-5">
+      <div className="keepsake-card p-4">
+        <h2 className="font-display font-semibold text-[1.3rem] text-[#22364D] flex items-center gap-2">
+          <Archive size={17} className="text-[#C66A3D]" /> Data & backup
+        </h2>
+        <p className="text-[12px] text-muted-foreground leading-relaxed mt-1.5">
+          Years of Wobbles' story live in this app — his logs, photos, lists and memories.
+          Take a copy anytime; it's all yours.
+        </p>
+        <div className="grid grid-cols-1 gap-2 mt-3.5">
+          <button
+            onClick={downloadJson}
+            disabled={busy !== null}
+            className="btn-ink w-full justify-center disabled:opacity-60"
+          >
+            {busy === "json" ? <Loader2 size={15} className="animate-spin" /> : <FileDown size={15} />}
+            Download everything (JSON)
+          </button>
+          <button
+            onClick={downloadCsv}
+            disabled={busy !== null}
+            className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border-[1.5px] border-[#22364D]/25 bg-[#FFFDF8] text-[#22364D] text-[13px] font-body font-extrabold press-scale disabled:opacity-60"
+          >
+            {busy === "csv" ? <Loader2 size={15} className="animate-spin" /> : <FileSpreadsheet size={15} />}
+            Download tracker log (CSV)
+          </button>
+        </div>
+        <p className="text-[11px] text-muted-foreground leading-relaxed mt-3 italic">
+          A full backup is also saved automatically to the app's cloud storage on the 1st of
+          every month — you'll get a note when it's done.
+        </p>
+      </div>
+    </div>
+  );
+}
 
 const MICONS: Record<string, LucideIcon> = {
   star: Star, hand: Hand, syringe: Syringe, home: Home, plane: Plane,
@@ -124,6 +250,9 @@ export default function About() {
           </a>
         </div>
       </div>
+
+      {/* U2: data export & backup */}
+      <DataBackupSection />
 
       <div className="px-5">
         <PawDivider />

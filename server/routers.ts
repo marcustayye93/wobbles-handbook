@@ -12,6 +12,7 @@ import {
 } from "./aiChat";
 import * as db from "./db";
 import { storagePut } from "./storage";
+import { buildSnapshot } from "./exportData";
 
 /**
  * Wobbles' Handbook — household-shared API.
@@ -298,6 +299,14 @@ export const appRouter = router({
         await db.forgetAiMemoryFact(input.id);
         return { success: true } as const;
       }),
+  }),
+
+  /**
+   * U2 — Data export. One family-gated query returning the complete
+   * household dataset; the client turns it into JSON/CSV downloads.
+   */
+  exportData: router({
+    snapshot: familyProcedure.query(() => buildSnapshot()),
   }),
 });
 
