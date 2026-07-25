@@ -12,6 +12,7 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import Home from "@/pages/Home";
 import About from "@/pages/About";
 import HandbookIndex from "@/pages/HandbookIndex";
+import CaretakerGuide from "@/pages/CaretakerGuide";
 import SectionReader from "@/pages/SectionReader";
 import HundredThings from "@/pages/HundredThings";
 import Checklists from "@/pages/Checklists";
@@ -35,6 +36,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/about" component={About} />
       <Route path="/handbook" component={HandbookIndex} />
+      <Route path="/handbook/caretaker" component={CaretakerGuide} />
       <Route path="/handbook/100-things" component={HundredThings} />
       <Route path="/handbook/checklists" component={Checklists} />
       <Route path="/handbook/shopping" component={Shopping} />

@@ -10,7 +10,8 @@ import { SECTIONS } from "@/content/handbookSections";
 import { HUNDRED_TOTAL } from "@/content/hundredThings";
 import { CHECKLISTS } from "@/content/checklists";
 import { CHAPTER_COVERS } from "@/content/wobbles";
-import { ChevronRight, Clock, Printer, ListChecks, Plane, Award, Search, GraduationCap, Scissors, ShoppingCart } from "lucide-react";
+import { ChevronRight, Clock, Printer, ListChecks, Plane, Award, Search, GraduationCap, Scissors, ShoppingCart, HeartHandshake } from "lucide-react";
+import { tbcCount } from "@/content/caretakerGuide";
 import { useSharedState } from "@/hooks/useSyncedData";
 import { useState } from "react";
 import SearchDialog from "@/components/SearchDialog";
@@ -50,6 +51,35 @@ export default function HandbookIndex() {
       <SearchDialog open={searchOpen} onOpenChange={setSearchOpen} />
 
       <div className="px-4 pt-4">
+        {/* Caretaker's Guide — first entry, the handover template */}
+        <div className="pb-4">
+          <Link href="/handbook/caretaker" className="block press-scale fade-up">
+            <div className="keepsake-card relative p-4.5">
+              <span className="absolute -top-3 left-4 bg-[#B4512E] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
+                Start here when we travel
+              </span>
+              <div className="flex items-center gap-3.5 mt-1">
+                <span className="w-12 h-12 rounded-2xl bg-[#B4512E]/12 flex items-center justify-center shrink-0">
+                  <HeartHandshake size={24} className="text-[#B4512E]" />
+                </span>
+                <div className="min-w-0 flex-1">
+                  <h2 className="font-display font-semibold text-[1.35rem] leading-tight text-[#22364D]">
+                    A Caretaker's Guide to Wobbles
+                  </h2>
+                  <p className="text-[11px] font-body text-muted-foreground mt-1 leading-relaxed">
+                    The full handover for friends dog-sitting Wobbles — duties, routine,
+                    feeding, contacts and the kit we pass over.
+                    {tbcCount() > 0 && (
+                      <span className="font-bold text-[#8A6D1F]"> {tbcCount()} details to be confirmed.</span>
+                    )}
+                  </p>
+                </div>
+                <ChevronRight size={17} className="text-muted-foreground shrink-0" />
+              </div>
+            </div>
+          </Link>
+        </div>
+
         {/* Chapter covers */}
         <div className="space-y-4 pb-2">
           {SECTIONS.map((s, i) => {

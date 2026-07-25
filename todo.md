@@ -305,3 +305,11 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 - [x] Guarantee cloud persistence: all logs/photos remain in Manus cloud DB + S3 (no device-only storage); Wobbles AI retains full retrieval of trackers, memories, photos under the family session
 - [x] Tests updated for new auth model: family.test.ts (9 new), household + sync.audit rewritten for header identity — suite 215/215 green, tsc clean
 - [x] Visual verification: picker renders on fresh device, Marcus/Caretaker switching works with toast, one-tap Toilet log stamped "Caretaker" in timeline (test row cleaned up); checkpoint (auto-publish), GitHub push, deliver
+
+# Phase 14 — Caretaker's Guide under Guides (user request 2026-07-26)
+
+- [x] Content model: caretaker handover guide (client/src/content/caretakerGuide.ts) — duties (safety, water, food, 1+ daily walk), what we hand over (IATA crate, pee pad, food + water bowls, his kibble), Wobbles profile, daily routine, feeding amounts, toilet habits, emergency contacts/vet, house rules; 24 unknowns marked "To be confirmed"
+- [x] Page: /handbook/caretaker — keepsake-styled structured guide with TBC badges, printable-friendly sections (11 sections)
+- [x] Guides hub: Caretaker's Guide as the FIRST entry at top of /handbook ("Start here when we travel" card with live TBC count)
+- [x] Tests for content structure (caretakerGuide.content.test.ts, 6 tests); suite 221/221 green + tsc clean
+- [x] Screenshots + live browser verification, checkpoint (auto-publish), GitHub push, deliver
