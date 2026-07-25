@@ -83,3 +83,21 @@ Photos upload pattern (mirrored): base64 max 7.5M str, decode check 5MB, safeNam
 
 ## U3 COMPLETE (2026-07-26)
 All 254 tests pass (16 new in server/medical.test.ts). Health page verified at /health?profile=Marcus (390x844 full-page): Medicine cabinet, Paper trail, Symptom log empty states all render correctly between "Vet visits & doses" and "Growth curve". [Auth] "Missing session cookie" log line is expected (public site, familyProcedure uses profile header not session). Next: mark U3 todo items [x], checkpoint, then U4 (year-scale views: rollups + On This Day + Year in Review on Growth/Journal pages — re-read blueprint U4 section in docs/lifetime-blueprint.md).
+
+## U4 reference facts (verified 2026-07-26)
+Data hooks (client/src/hooks/useSyncedData.ts): `useTrackerFeed()` → `{rows: TrackerRow[]}` newest-first (trpc.trackers.list, limit 2000); `rowToEntry(row)` → SyncedEntry {id:string, date, time?, value?:number, option?, note?, createdByName?}; `useTrackerEntries(trackerId)` → {entries, isLoading}. TrackerRow: {id:number, trackerId, date:"YYYY-MM-DD", time|null, option|null, value:string|null, note|null, createdBy|null, createdByName|null, createdAt:Date}.
+
+Photos: trpc.photos.list.useQuery(undefined) → PhotoRow[] {id, fileKey, url, caption|null, date:"YYYY-MM-DD", placeId|null, createdByName, createdAt}. photoGroups.ts has GroupablePhoto {id, date}, PhotoMonthGroup {key "2026-07", label "July 2026", ageLabel, photos[]}, monthAgeLabel(dates), groupPhotosByMonth presumably.
+
+TrackersHub.tsx structure: header (Eyebrow Trackers + SyncIndicator, title "Wobbles' Logbook"), then TRACKER_GROUPS sections of keepsake-card rows, FAB, QuickLogSheet. Plan: add segmented control `Recent | Months` under header; Months mode replaces group sections with per-month rollup cards computed from `rows`.
+
+U4 plan (blueprint): (1) TrackersHub Recent|Months toggle — per-month cards newest-first: entry counts per tracker group, avg weight, walks count, toilet success %; (2) Home "On This Day" card — matches MM-DD from previous years in photos+tracker rows, hidden if none (zero cost until 2027); (3) Growth "Year in review" card → route /growth/year/:year in App.tsx, client-side annual report: age bracket, weight start→end, totals (walks, meals, toilet success %, training, groom, tricks, photos), milestones that year, photo strip. Pure helpers in client/src/lib/yearScale.ts + tests in server/yearScale.test.ts (vitest includes client tests — photoGroups.test.ts lives in client/src/lib/). Toilet success: toilet tracker options — need to check option values ("Success"/"Accident"? check trackers.ts toilet options). Weight tracker id "weight" value kg. Walks tracker id "walks"? check trackers.ts ids.
+
+## U4 — Year-scale views: COMPLETE (2026-07-26, verified)
+- `client/src/lib/yearScale.ts` — pure helpers: buildMonthRollups, findOnThisDay, buildYearReport, yearsWithData, monthKeyLabel, isToiletSuccess (✅ marker). Interfaces RollupEntry/PhotoLike.
+- TrackersHub: Recent|Months segmented toggle; Months = keepsake month rollup cards. Verified in 390px screenshot.
+- Home: `<OnThisDay />` card above "Coming up" — null until a past-year MM-DD match exists (correctly absent now).
+- Growth: "Year in review" cards (yearsWithData-driven) → `/growth/year/:year` → new `client/src/pages/YearReview.tsx` (weight journey, totals grid, milestones that year, photo strip). Route registered in App.tsx.
+- Tests: server/yearScale.test.ts (16 specs). Full suite 270 passed / 21 files. tsc clean.
+- Screenshots verified: /trackers (toggle), /growth, /growth/year/2026 (2 photos + Born/ENS milestones), / (home unregressed).
+- NEXT: mark U4 todo [x], checkpoint, then U5 lifetime milestone generator (client/src/content/lifetimeMilestones.ts per blueprint: generateLifetimeMilestones(16y) — birthdays 26 Jun yearly, boosters from 2027, PALS renewal Sep from 2027, dental Jan from 2028, senior bloodwork Jun+Dec from 2034, stage-threshold star entries; consumers Growth timeline (past + next 8), Home countdown/coming-up, Health (health-icon items)).

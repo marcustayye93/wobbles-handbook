@@ -12,6 +12,7 @@ import SyncIndicator from "@/components/SyncIndicator";
 import QuickLogSheet from "@/components/QuickLogSheet";
 import TodayTimeline, { useDayFeed } from "@/components/TodayTimeline";
 import CareRow from "@/components/CareRow";
+import OnThisDay from "@/components/OnThisDay";
 import SearchDialog from "@/components/SearchDialog";
 import { wobblesToday, todaysNudges, todaysBrief } from "@/lib/wobblesToday";
 import HouseholdSettingsSheet from "@/components/HouseholdSettingsSheet";
@@ -401,6 +402,9 @@ export default function Home() {
           <TodayTimeline dateISO={todayISO()} />
         </section>
       )}
+
+      {/* ===== On this day (U4) — renders only when history exists ===== */}
+      <OnThisDay />
 
       {/* ===== Coming up ===== */}
       {nextMilestones.length > 0 && (

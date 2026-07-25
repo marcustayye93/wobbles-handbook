@@ -369,7 +369,7 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 - [x] U1 Life-stage engine: extend wobblesToday past puppyhood (adolescent/young adult/mature/senior/geriatric), stage-aware nudges, stage content
 - [x] U2 Data export & backup: one-tap full JSON/CSV export in About/settings area, monthly scheduled export digest notification
 - [x] U3 Medical vault: documents (S3 uploads) + medications/preventives schedules + symptom log — extension of Health page
-- [ ] U4 Year-scale views: month/year timeline zoom in Logs, On This Day on Home/Memories, annual report generator
+- [x] U4 Year-scale views: month/year timeline zoom in Logs, On This Day on Home/Memories, annual report generator
 - [ ] U5 Lifetime milestone generator: recurring boosters/licence/birthday milestones beyond first year (extends Growth/Home coming-up)
 - [ ] U6 Memories albums & search: year chapters, caption/date search (extends Memories)
 - [ ] U7 Senior & QoL content: senior handbook chapters + quality-of-life tracker (extends Guides + Health)
@@ -386,9 +386,9 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 - [x] U3: medical_records + medications tables, medicalRouter, db helpers
 - [x] U3: Health page — Medicine cabinet, Paper trail, Symptom log sections
 - [x] U3: symptom tracker definition
-- [ ] U4: TrackersHub Recent|Months rollup toggle
-- [ ] U4: Home "On This Day" card
-- [ ] U4: Growth "Year in review" card + /growth/year/:year report page
+- [x] U4: TrackersHub Recent|Months rollup toggle
+- [x] U4: Home "On This Day" card
+- [x] U4: Growth "Year in review" card + /growth/year/:year report page
 - [ ] U5: lifetimeMilestones generator + allMilestones(); wire Growth, Home, Health
 - [ ] U6: Memories year chapters, search, filter chips
 - [ ] U7: golden-years + twilight-care full content, QoL check-in card on Health, qol tracker, senior QoL nudge

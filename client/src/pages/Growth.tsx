@@ -21,7 +21,9 @@ import {
 } from "recharts";
 import { PageShell, PageHeader, Eyebrow } from "@/components/AppShell";
 import QuickLogSheet from "@/components/QuickLogSheet";
-import { useTrackerEntries } from "@/hooks/useSyncedData";
+import { useTrackerEntries, useTrackerFeed } from "@/hooks/useSyncedData";
+import { trpc } from "@/lib/trpc";
+import { yearsWithData } from "@/lib/yearScale";
 import { growthCurveSeries, growthVerdict, ageWeeksOn } from "@/lib/growthBand";
 import { WOBBLES, MILESTONES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
 import { cn } from "@/lib/utils";
@@ -59,7 +61,19 @@ const MILESTONE_ICONS: Record<string, React.ComponentType<{ size?: number; class
 
 export default function Growth() {
   const { entries: weighIns } = useTrackerEntries("weight");
+  const { rows: allRows } = useTrackerFeed();
+  const { data: photos } = trpc.photos.list.useQuery(undefined, { staleTime: 5 * 60_000 });
   const [sheetOpen, setSheetOpen] = useState(false);
+
+  // U4 — years that have any logged data drive the Year-in-review cards
+  const years = useMemo(
+    () =>
+      yearsWithData(
+        allRows,
+        (photos ?? []).map((p) => ({ id: p.id, date: p.date, url: p.url, caption: p.caption })),
+      ),
+    [allRows, photos],
+  );
 
   const curve = useMemo(
     () => growthCurveSeries(weighIns.map((e) => ({ date: e.date, value: e.value }))),
@@ -314,6 +328,35 @@ export default function Growth() {
           {past.length} done · {upcoming.length} ahead · {age.born ? `week ${Math.floor(ageWeeksNow)}` : "counting down"}
         </p>
       </section>
+
+      {/* ===== Year in review (U4) ===== */}
+      {years.length > 0 && (
+        <section className="px-4 mt-7">
+          <Eyebrow className="px-1 mb-2.5">Year in review</Eyebrow>
+          <div className="space-y-2.5">
+            {years.map((y) => (
+              <Link
+                key={y}
+                href={`/growth/year/${y}`}
+                className="sticker-card px-4 py-3.5 flex items-center gap-3.5 press-scale"
+              >
+                <span className="w-10 h-10 rounded-2xl bg-[#22364D]/6 flex items-center justify-center font-display font-bold text-[15px] text-[#C66A3D] shrink-0">
+                  {String(y).slice(2)}
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block font-body font-bold text-[14px] leading-snug text-[#22364D]">
+                    {y} — the story of the year
+                  </span>
+                  <span className="block text-[11px] font-body text-muted-foreground mt-0.5">
+                    Weight journey, totals, milestones & photos
+                  </span>
+                </span>
+                <ChevronRight size={16} className="text-muted-foreground shrink-0" />
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       <QuickLogSheet open={sheetOpen} onOpenChange={setSheetOpen} initialTracker="weight" />
     </PageShell>
