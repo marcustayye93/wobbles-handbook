@@ -231,6 +231,39 @@ export const TRACKERS: TrackerMeta[] = [
     ],
   },
   {
+    id: "symptom",
+    title: "Symptom Log",
+    emoji: "🩺",
+    group: "health",
+    empty: "Anything off? Note it here",
+    intro:
+      "A dated symptom diary is the single most useful thing you can bring to a vet visit. Log anything unusual the moment you notice it — what it was, when it started, how bad it seemed. Patterns across days tell the vet far more than memory can, at every age from puppyhood to his senior years.",
+    fields: {
+      time: true,
+      options: {
+        label: "Symptom",
+        choices: [
+          "Vomiting",
+          "Diarrhoea",
+          "Limping",
+          "Scratching / itching",
+          "Appetite change",
+          "Lethargy",
+          "Coughing / sneezing",
+          "Eye or ear issue",
+          "Skin / lump",
+          "Other",
+        ],
+      },
+      note: true,
+    },
+    tips: [
+      "Note severity and duration in the note — \"vomited twice, ate dinner fine after\" beats \"was sick\".",
+      "Same-day vet: repeated vomiting, watery diarrhoea over 24h, any blood, collapse, laboured breathing, or refusing two meals in a row.",
+      "Photos help — snap the rash, lump or limp on video and add it to Memories with the same date.",
+    ],
+  },
+  {
     id: "social",
     title: "Socialisation",
     emoji: "🌏",

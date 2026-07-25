@@ -142,3 +142,69 @@ export const aiMemory = mysqlTable("ai_memory", {
 });
 
 export type AiMemoryRow = typeof aiMemory.$inferSelect;
+
+/* ============================================================
+ * U3 — Medical vault (household-shared, like everything else).
+ * medicalRecords: vet paperwork filed as documents in S3.
+ * medications: recurring meds/preventives with next-due maths
+ * computed client-side from lastGivenDate + frequencyDays.
+ * ============================================================ */
+
+/** One row per filed document (vaccine cert, vet report, licence, ...). Bytes live in S3. */
+export const medicalRecords = mysqlTable("medical_records", {
+  id: int("id").autoincrement().primaryKey(),
+  title: varchar("title", { length: 160 }).notNull(),
+  category: mysqlEnum("category", [
+    "vaccine-cert",
+    "vet-report",
+    "lab-result",
+    "insurance",
+    "licence",
+    "prescription",
+    "receipt",
+    "other",
+  ])
+    .default("other")
+    .notNull(),
+  /** ISO date YYYY-MM-DD the document is "about" (visit date, issue date) */
+  recordDate: varchar("recordDate", { length: 10 }).notNull(),
+  fileKey: varchar("fileKey", { length: 256 }).notNull(),
+  url: varchar("url", { length: 512 }).notNull(),
+  mimeType: varchar("mimeType", { length: 80 }),
+  sizeBytes: int("sizeBytes"),
+  note: text("note"),
+  createdBy: int("createdBy"),
+  createdByName: varchar("createdByName", { length: 120 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type MedicalRecordRow = typeof medicalRecords.$inferSelect;
+export type InsertMedicalRecord = typeof medicalRecords.$inferInsert;
+
+/** One row per medication / preventive on a repeating schedule. */
+export const medications = mysqlTable("medications", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 120 }).notNull(),
+  kind: mysqlEnum("kind", ["parasite", "heartworm", "prescription", "supplement", "other"])
+    .default("other")
+    .notNull(),
+  /** Free-text dose, e.g. "1 chew (2–4 kg)" */
+  dose: varchar("dose", { length: 120 }),
+  /** Repeat interval in days (30 = monthly, 1 = daily) */
+  frequencyDays: int("frequencyDays").default(30).notNull(),
+  /** ISO date the schedule starts */
+  startDate: varchar("startDate", { length: 10 }).notNull(),
+  /** Optional ISO date the course ends (null = ongoing) */
+  endDate: varchar("endDate", { length: 10 }),
+  /** ISO date of the most recent dose ("Given today" updates this) */
+  lastGivenDate: varchar("lastGivenDate", { length: 10 }),
+  /** 1 = active in the cabinet, 0 = archived */
+  active: int("active").default(1).notNull(),
+  note: text("note"),
+  createdBy: int("createdBy"),
+  createdByName: varchar("createdByName", { length: 120 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type MedicationRow = typeof medications.$inferSelect;
+export type InsertMedication = typeof medications.$inferInsert;

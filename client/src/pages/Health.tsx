@@ -10,6 +10,7 @@ import { useMemo, useState } from "react";
 import { Link } from "wouter";
 import { PageShell, PageHeader, Eyebrow } from "@/components/AppShell";
 import QuickLogSheet from "@/components/QuickLogSheet";
+import { MedicineCabinet, PaperTrail, SymptomLog } from "@/components/MedicalVault";
 import { useTrackerEntries } from "@/hooks/useSyncedData";
 import { careTasksFor, type CareTask } from "@/content/household";
 import { WOBBLES, MILESTONES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
@@ -124,6 +125,11 @@ export default function Health() {
   );
 
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [sheetTracker, setSheetTracker] = useState<string>("vaccines");
+  const openSheet = (tracker: string) => {
+    setSheetTracker(tracker);
+    setSheetOpen(true);
+  };
 
   const todayISOstr = isoOf(now);
 
@@ -316,12 +322,17 @@ export default function Health() {
         )}
         <button
           type="button"
-          onClick={() => setSheetOpen(true)}
+          onClick={() => openSheet("vaccines")}
           className="btn-ink mt-3 inline-flex items-center gap-1.5"
         >
           <Plus size={15} /> Log a vet event
         </button>
       </section>
+
+      {/* ===== Medical vault (U3) ===== */}
+      <MedicineCabinet />
+      <PaperTrail />
+      <SymptomLog onLog={() => openSheet("symptom")} />
 
       {/* ===== Weight verdict summary ===== */}
       <section className="px-4 mt-7">
@@ -408,7 +419,7 @@ export default function Health() {
         Rota: baths every other Monday, nails & ears Mondays, teeth Tue/Thu/Sat, parasite dose the 24th.
       </p>
 
-      <QuickLogSheet open={sheetOpen} onOpenChange={setSheetOpen} initialTracker="vaccines" />
+      <QuickLogSheet open={sheetOpen} onOpenChange={setSheetOpen} initialTracker={sheetTracker} />
     </PageShell>
   );
 }

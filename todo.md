@@ -367,8 +367,8 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 
 - [x] Write full design blueprint for all 7 upgrades (grouped into existing pages, no new bottom-nav tabs)
 - [x] U1 Life-stage engine: extend wobblesToday past puppyhood (adolescent/young adult/mature/senior/geriatric), stage-aware nudges, stage content
-- [ ] U2 Data export & backup: one-tap full JSON/CSV export in About/settings area, monthly scheduled export digest notification
-- [ ] U3 Medical vault: documents (S3 uploads) + medications/preventives schedules + symptom log — extension of Health page
+- [x] U2 Data export & backup: one-tap full JSON/CSV export in About/settings area, monthly scheduled export digest notification
+- [x] U3 Medical vault: documents (S3 uploads) + medications/preventives schedules + symptom log — extension of Health page
 - [ ] U4 Year-scale views: month/year timeline zoom in Logs, On This Day on Home/Memories, annual report generator
 - [ ] U5 Lifetime milestone generator: recurring boosters/licence/birthday milestones beyond first year (extends Growth/Home coming-up)
 - [ ] U6 Memories albums & search: year chapters, caption/date search (extends Memories)
@@ -381,11 +381,11 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 - [x] Write docs/lifetime-blueprint.md design spec
 - [x] U1: extend stage engine (adolescent/young adult/prime/senior/twilight) + stage-aware nudges
 - [x] U1: five life-stage handbook chapters with stage badges in Guides index
-- [ ] U2: exportData router (JSON snapshot) + About "Data & backup" section (JSON + CSV downloads)
-- [ ] U2: /api/scheduled/monthlyBackup handler + heartbeat cron
-- [ ] U3: medical_records + medications tables, medicalRouter, db helpers
-- [ ] U3: Health page — Medicine cabinet, Paper trail, Symptom log sections
-- [ ] U3: symptom tracker definition
+- [x] U2: exportData router (JSON snapshot) + About "Data & backup" section (JSON + CSV downloads)
+- [x] U2: /api/scheduled/monthlyBackup handler + heartbeat cron (task_uid 62RBnrZnwtrYACy3ccq5ny, next run 2026-08-01T01:00Z)
+- [x] U3: medical_records + medications tables, medicalRouter, db helpers
+- [x] U3: Health page — Medicine cabinet, Paper trail, Symptom log sections
+- [x] U3: symptom tracker definition
 - [ ] U4: TrackersHub Recent|Months rollup toggle
 - [ ] U4: Home "On This Day" card
 - [ ] U4: Growth "Year in review" card + /growth/year/:year report page

@@ -13,6 +13,7 @@ import {
 import * as db from "./db";
 import { storagePut } from "./storage";
 import { buildSnapshot } from "./exportData";
+import { medicalRouter } from "./medical";
 
 /**
  * Wobbles' Handbook — household-shared API.
@@ -308,6 +309,9 @@ export const appRouter = router({
   exportData: router({
     snapshot: familyProcedure.query(() => buildSnapshot()),
   }),
+
+  /** U3 — Medical vault: filed vet paperwork + the medicine cabinet. */
+  medical: medicalRouter,
 });
 
 export type AppRouter = typeof appRouter;
