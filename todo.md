@@ -316,7 +316,15 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 
 # Phase 15 — Handover prompt for other Manus account (user request 2026-07-26)
 
-- [ ] Sync GitHub main to latest code (verify working tree clean, push any diff)
-- [ ] Gather project facts: repo URL, stack/features, env/secrets needed, DB schema + seed needs, static assets, test commands
-- [ ] Write full handover prompt (markdown) so another Manus account can clone, set up, verify, and publish the app
-- [ ] Deliver the prompt to the user
+- [x] Sync GitHub main to latest code (todo.md committed + pushed, main at 1b96879, tree clean)
+- [x] Gather project facts: repo URL, stack/features, env/secrets needed, DB schema + seed needs, static assets (56 /manus-storage refs), heartbeat cron, test commands
+- [x] Write full handover prompt (/home/ubuntu/handover-prompt-wobbles-handbook.md) so another Manus account can clone, set up, verify, and publish the app
+- [x] Deliver the prompt to the user
+
+# Phase 16 — Optimise trick illustrations (user report 2026-07-26: Journey trick cards load too slowly)
+
+- [ ] Optimise 12 trick-*.png (~6MB each) to small web-ready files (resize to display size, compress)
+- [ ] Package optimised set as zip + upload for the other Manus account
+- [ ] Replace trick image references in this project with optimised uploads; verify Journey/Training pages
+- [ ] Checkpoint (auto-publish) + GitHub push
+- [ ] Write update prompt for the other Manus account and deliver
