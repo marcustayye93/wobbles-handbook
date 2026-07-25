@@ -41,25 +41,19 @@ vi.mock("./storage", () => ({
 import { appRouter } from "./routers";
 import * as db from "./db";
 
-type AuthenticatedUser = NonNullable<TrpcContext["user"]>;
-
-function createCtx(name = "Family Member", id = 1): TrpcContext {
-  const user: AuthenticatedUser = {
-    id,
-    openId: `user-${id}`,
-    email: "family@example.com",
-    name,
-    loginMethod: "manus",
-    role: "user",
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    lastSignedIn: new Date(),
-  };
+/**
+ * No-login era: identity comes from the `x-wobbles-profile` header.
+ * Default (no header) resolves to the neutral Family fallback (id 9000).
+ */
+function createCtx(profile?: string): TrpcContext {
   return {
-    user,
-    req: { protocol: "https", headers: {} } as TrpcContext["req"],
+    user: null,
+    req: {
+      protocol: "https",
+      headers: profile ? { "x-wobbles-profile": profile } : {},
+    } as unknown as TrpcContext["req"],
     res: { clearCookie: () => undefined } as unknown as TrpcContext["res"],
-  };
+  } as TrpcContext;
 }
 
 beforeEach(() => {
@@ -74,7 +68,7 @@ describe("sharedState.patch (conflict-safe merge)", () => {
       entries: { "b:2": true },
       deletes: ["a:1"],
     });
-    expect(db.patchSharedState).toHaveBeenCalledWith("checklists", { "b:2": true }, ["a:1"], 1);
+    expect(db.patchSharedState).toHaveBeenCalledWith("checklists", { "b:2": true }, ["a:1"], 9000);
     expect(result.success).toBe(true);
     // Merge keeps the other spouse's untouched tick, applies add + delete.
     expect(result.value).toEqual({ "a:0": true, "b:2": true });
@@ -83,7 +77,7 @@ describe("sharedState.patch (conflict-safe merge)", () => {
   it("defaults to empty entries/deletes so a no-op patch is safe", async () => {
     const caller = appRouter.createCaller(createCtx());
     const result = await caller.sharedState.patch({ key: "hundredThings" });
-    expect(db.patchSharedState).toHaveBeenCalledWith("hundredThings", {}, [], 1);
+    expect(db.patchSharedState).toHaveBeenCalledWith("hundredThings", {}, [], 9000);
     expect(result.success).toBe(true);
   });
 
@@ -109,7 +103,7 @@ describe("sharedState.all (audit key hidden)", () => {
 
 describe("trackers.importLegacy (audit trail)", () => {
   it("records an audit entry with importer identity and count", async () => {
-    const caller = appRouter.createCaller(createCtx("Marcus", 2));
+    const caller = appRouter.createCaller(createCtx("Marcus"));
     const result = await caller.trackers.importLegacy({
       entries: [
         { trackerId: "feeding", date: "2026-07-20", option: "Dinner" },
@@ -118,7 +112,7 @@ describe("trackers.importLegacy (audit trail)", () => {
     });
     expect(result).toEqual({ imported: 2, skipped: false });
     expect(db.appendImportAuditLog).toHaveBeenCalledWith(
-      expect.objectContaining({ by: 2, byName: "Marcus", count: 2 }),
+      expect.objectContaining({ by: 9001, byName: "Marcus", count: 2 }),
     );
   });
 

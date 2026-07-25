@@ -1,33 +1,24 @@
 /*
- * AuthGate — wraps the whole app. Family members must sign in (Manus OAuth)
- * before seeing any household data, since everything is now synced/shared.
- *
- * States:
- *  - loading: soft keepsake splash (no flash of the login screen)
- *  - logged out: keepsake welcome page with a single sign-in button
- *  - logged in: renders children + fires the one-time legacy import
+ * ProfileGate (formerly AuthGate) — no login required. The app is private by
+ * URL only (user-confirmed). On first open, each device picks who's holding
+ * the phone — Marcus, Chesa, or Caretaker (for friends dog-sitting) — and the
+ * choice is remembered forever on that device. All data still lives in the
+ * Manus cloud (database + S3), synced across devices and fully readable by
+ * the Wobbles AI; only the identity label is stored locally.
  */
-import { useEffect, useRef } from "react";
-import { useAuth } from "@/_core/hooks/useAuth";
-import { startLogin } from "@/const";
+import { useEffect, useRef, useState } from "react";
 import { useLegacyImport } from "@/hooks/useSyncedData";
+import { PROFILES, PROFILE_EMOJI, useProfile, type Profile } from "@/hooks/useProfile";
 import { ASSETS, WOBBLES } from "@/content/wobbles";
-import { PawPrint, Users } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
-function Splash() {
-  return (
-    <div className="phone-shell paper-grain min-h-screen flex flex-col items-center justify-center gap-4">
-      <span className="w-12 h-12 rounded-2xl border-2 border-[#C66A3D] text-[#C66A3D] font-display font-bold text-xl flex items-center justify-center animate-pulse">
-        W
-      </span>
-      <p className="text-[11px] font-body font-extrabold uppercase tracking-[0.2em] text-[#22364D]/60">
-        Opening the handbook…
-      </p>
-    </div>
-  );
-}
+const PROFILE_TAGLINE: Record<Profile, string> = {
+  Marcus: "Wobbles' dad",
+  Chesa: "Wobbles' mum",
+  Caretaker: "Friends looking after Wobbles",
+};
 
-function Welcome() {
+function ProfilePicker({ onPick }: { onPick: (p: Profile) => void }) {
   return (
     <div className="phone-shell paper-grain min-h-screen flex flex-col">
       {/* hero */}
@@ -35,7 +26,7 @@ function Welcome() {
         <img
           src={ASSETS.v2Hero}
           alt="Gouache illustration of Wobbles the Cavoodle puppy"
-          className="w-full aspect-[4/5] object-cover"
+          className="w-full aspect-[4/5] max-h-[46vh] object-cover object-top"
         />
         <div
           className="absolute inset-x-0 bottom-0 h-24"
@@ -53,59 +44,62 @@ function Welcome() {
             Wobbles' Handbook
           </span>
         </div>
-        <h1 className="font-display font-semibold text-[2.7rem] leading-[1] text-[#22364D] mt-3">
-          The family
+        <h1 className="font-display font-semibold text-[2.5rem] leading-[1] text-[#22364D] mt-3">
+          Who's holding
           <br />
-          journal
+          the phone?
         </h1>
-        <p className="text-[13.5px] font-body text-[#5A6B7E] leading-relaxed mt-3 max-w-[300px]">
-          Every log, tick and memory about {WOBBLES.name} now syncs between
-          everyone in the family. Sign in once on each phone and you'll both
-          always see the same story.
+        <p className="text-[13px] font-body text-[#5A6B7E] leading-relaxed mt-2.5 max-w-[300px]">
+          Pick once — this device will remember. Everything you log about{" "}
+          {WOBBLES.name} syncs to the shared family journal.
         </p>
 
-        <div className="mt-5 space-y-2">
-          <div className="sticker-card px-4 py-2.5 flex items-center gap-3">
-            <PawPrint size={15} className="text-[#C66A3D] shrink-0" />
-            <span className="text-[12px] font-body font-bold text-[#22364D]">
-              Trackers, checklists &amp; reading progress — shared live
-            </span>
-          </div>
-          <div className="sticker-card px-4 py-2.5 flex items-center gap-3">
-            <Users size={15} className="text-[#C66A3D] shrink-0" />
-            <span className="text-[12px] font-body font-bold text-[#22364D]">
-              Anything this phone already logged moves over automatically
-            </span>
-          </div>
+        <div className="mt-5 space-y-2.5">
+          {PROFILES.map((p) => (
+            <button
+              key={p}
+              onClick={() => onPick(p)}
+              className="sticker-card w-full px-4 py-3.5 flex items-center gap-3.5 press-scale text-left"
+            >
+              <span className="text-[24px] shrink-0">{PROFILE_EMOJI[p]}</span>
+              <span className="min-w-0 flex-1">
+                <span className="block font-body font-bold text-[15px] leading-snug text-[#22364D]">
+                  {p}
+                </span>
+                <span className="block text-[11px] font-body text-muted-foreground">
+                  {PROFILE_TAGLINE[p]}
+                </span>
+              </span>
+              <ChevronRight size={16} className="text-muted-foreground shrink-0" />
+            </button>
+          ))}
         </div>
 
-        <button
-          onClick={() => startLogin()}
-          className="btn-ink w-full h-13 rounded-2xl mt-6 py-4 font-body font-extrabold text-[15px] press-scale"
-        >
-          Sign in to open the handbook
-        </button>
-        <p className="text-[10.5px] font-body text-muted-foreground text-center mt-3 pb-8 leading-relaxed">
-          Private family app — sign in with the same Manus account you use here.
+        <p className="text-[10.5px] font-body text-muted-foreground text-center mt-auto pt-4 pb-8 leading-relaxed">
+          No password needed — keep the app link within the family.
+          <br />
+          You can switch who's logging anytime from Home.
         </p>
       </div>
     </div>
   );
 }
 
-export default function AuthGate({ children }: { children: React.ReactNode }) {
-  const { loading, isAuthenticated } = useAuth();
+export default function ProfileGate({ children }: { children: React.ReactNode }) {
+  const { profile, setProfile } = useProfile();
   const runImport = useLegacyImport();
   const ran = useRef(false);
+  // Avoid a hydration flash: read synchronously on first render.
+  const [ready] = useState(true);
 
   useEffect(() => {
-    if (isAuthenticated && !ran.current) {
+    if (profile && !ran.current) {
       ran.current = true;
       void runImport();
     }
-  }, [isAuthenticated, runImport]);
+  }, [profile, runImport]);
 
-  if (loading) return <Splash />;
-  if (!isAuthenticated) return <Welcome />;
+  if (!ready) return null;
+  if (!profile) return <ProfilePicker onPick={setProfile} />;
   return <>{children}</>;
 }

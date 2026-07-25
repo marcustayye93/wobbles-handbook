@@ -11,7 +11,7 @@ import { PageShell, PageHeader, Eyebrow } from "@/components/AppShell";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Streamdown } from "streamdown";
 import { trpc } from "@/lib/trpc";
-import { useAuth } from "@/_core/hooks/useAuth";
+import { useProfile } from "@/hooks/useProfile";
 import { toast } from "sonner";
 import {
   Sparkles,
@@ -52,7 +52,7 @@ interface LocalMsg {
 }
 
 export default function Ask() {
-  const { user } = useAuth();
+  const { profile } = useProfile();
   const utils = trpc.useUtils();
 
   const [conversationId, setConversationId] = useState<number | null>(null);
@@ -119,7 +119,7 @@ export default function Ask() {
     if (!message || busy) return;
     setDraft("");
     setOptimistic([
-      { id: `tmp-${Date.now()}`, role: "user", content: message, authorName: user?.name ?? null, pending: true },
+      { id: `tmp-${Date.now()}`, role: "user", content: message, authorName: profile ?? null, pending: true },
     ]);
     send.mutate({ conversationId: conversationId ?? undefined, message });
   };

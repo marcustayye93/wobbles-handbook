@@ -2,7 +2,8 @@ import { COOKIE_NAME } from "@shared/const";
 import { z } from "zod";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { protectedProcedure, publicProcedure, router } from "./_core/trpc";
+import { publicProcedure, router } from "./_core/trpc";
+import { familyProcedure } from "./family";
 import {
   conversationTitle,
   distillMemory,
@@ -47,20 +48,20 @@ export const appRouter = router({
      * Optional pagination guard so the payload stays bounded as the
      * journal grows over the years (client currently reads the default).
      */
-    list: protectedProcedure
+    list: familyProcedure
       .input(z.object({ limit: z.number().int().min(1).max(5000).optional() }).optional())
       .query(({ input }) => db.listTrackerEntries(input?.limit ?? 2000)),
 
-    add: protectedProcedure.input(trackerEntryInput).mutation(async ({ ctx, input }) => {
+    add: familyProcedure.input(trackerEntryInput).mutation(async ({ ctx, input }) => {
       const id = await db.addTrackerEntry({
         ...input,
-        createdBy: ctx.user.id,
-        createdByName: ctx.user.name ?? undefined,
+        createdBy: ctx.member.id,
+        createdByName: ctx.member.name,
       });
       return { id } as const;
     }),
 
-    remove: protectedProcedure
+    remove: familyProcedure
       .input(z.object({ id: z.number().int().positive() }))
       .mutation(async ({ input }) => {
         await db.deleteTrackerEntry(input.id);
@@ -72,7 +73,7 @@ export const appRouter = router({
      * Only runs when the household has no server entries yet, so a
      * second device cannot duplicate the first device's import.
      */
-    importLegacy: protectedProcedure
+    importLegacy: familyProcedure
       .input(z.object({ entries: z.array(trackerEntryInput).max(2000) }))
       .mutation(async ({ ctx, input }) => {
         const alreadyHasData = await db.hasAnyTrackerEntries();
@@ -80,15 +81,15 @@ export const appRouter = router({
         await db.addTrackerEntriesBulk(
           input.entries.map(e => ({
             ...e,
-            createdBy: ctx.user.id,
-            createdByName: ctx.user.name ?? undefined,
+            createdBy: ctx.member.id,
+            createdByName: ctx.member.name,
           })),
         );
         // Audit trail: record who imported what, when (kept in shared_state).
         await db.appendImportAuditLog({
           at: new Date().toISOString(),
-          by: ctx.user.id,
-          byName: ctx.user.name ?? null,
+          by: ctx.member.id,
+          byName: ctx.member.name,
           count: input.entries.length,
         });
         return { imported: input.entries.length, skipped: false } as const;
@@ -97,7 +98,7 @@ export const appRouter = router({
 
   sharedState: router({
     /** All shared key/value state (checklists, 100-things, reading progress, SG steps). */
-    all: protectedProcedure.query(async () => {
+    all: familyProcedure.query(async () => {
       const rows = await db.getAllSharedState();
       const map: Record<string, unknown> = {};
       for (const row of rows) {
@@ -107,10 +108,10 @@ export const appRouter = router({
       return map;
     }),
 
-    set: protectedProcedure
+    set: familyProcedure
       .input(z.object({ key: z.string().min(1).max(128), value: z.unknown() }))
       .mutation(async ({ ctx, input }) => {
-        await db.setSharedState(input.key, input.value ?? null, ctx.user.id);
+        await db.setSharedState(input.key, input.value ?? null, ctx.member.id);
         return { success: true } as const;
       }),
 
@@ -120,7 +121,7 @@ export const appRouter = router({
      * server-side so two phones editing at once can't wipe each other's
      * ticks the way a whole-map `set` could.
      */
-    patch: protectedProcedure
+    patch: familyProcedure
       .input(
         z.object({
           key: z.string().min(1).max(128),
@@ -129,16 +130,16 @@ export const appRouter = router({
         }),
       )
       .mutation(async ({ ctx, input }) => {
-        const merged = await db.patchSharedState(input.key, input.entries, input.deletes, ctx.user.id);
+        const merged = await db.patchSharedState(input.key, input.entries, input.deletes, ctx.member.id);
         return { success: true, value: merged } as const;
       }),
   }),
 
   photos: router({
-    list: protectedProcedure.query(() => db.listPhotos()),
+    list: familyProcedure.query(() => db.listPhotos()),
 
     /** Upload a photo as base64 (client compresses first). */
-    upload: protectedProcedure
+    upload: familyProcedure
       .input(
         z.object({
           fileName: z.string().min(1).max(180),
@@ -164,13 +165,13 @@ export const appRouter = router({
           caption: input.caption,
           date: input.date,
           placeId: input.placeId,
-          createdBy: ctx.user.id,
-          createdByName: ctx.user.name ?? undefined,
+          createdBy: ctx.member.id,
+          createdByName: ctx.member.name,
         });
         return { id, url } as const;
       }),
 
-    remove: protectedProcedure
+    remove: familyProcedure
       .input(z.object({ id: z.number().int().positive() }))
       .mutation(async ({ input }) => {
         await db.deletePhoto(input.id);
@@ -186,7 +187,7 @@ export const appRouter = router({
    */
   ai: router({
     /** Send a message; creates a conversation on first message. */
-    send: protectedProcedure
+    send: familyProcedure
       .input(
         z.object({
           conversationId: z.number().int().positive().optional(),
@@ -205,8 +206,8 @@ export const appRouter = router({
         } else {
           conversationId = await db.createAiConversation(
             conversationTitle(text),
-            ctx.user.id,
-            ctx.user.name ?? null,
+            ctx.member.id,
+            ctx.member.name,
           );
         }
 
@@ -215,7 +216,7 @@ export const appRouter = router({
           conversationId,
           role: "user",
           content: text,
-          authorName: ctx.user.name ?? null,
+          authorName: ctx.member.name,
         });
 
         // 3) Build the reply from history + the memory book
@@ -260,7 +261,7 @@ export const appRouter = router({
       }),
 
     /** Conversation history (family-shared), newest first, with previews. */
-    conversations: protectedProcedure.query(async () => {
+    conversations: familyProcedure.query(async () => {
       const convos = await db.listAiConversations();
       return Promise.all(
         convos.map(async (c) => {
@@ -275,12 +276,12 @@ export const appRouter = router({
     }),
 
     /** Full transcript of one conversation, oldest first. */
-    messages: protectedProcedure
+    messages: familyProcedure
       .input(z.object({ conversationId: z.number().int().positive() }))
       .query(({ input }) => db.listAiMessages(input.conversationId)),
 
     /** Delete a conversation and its messages (memory facts survive). */
-    deleteConversation: protectedProcedure
+    deleteConversation: familyProcedure
       .input(z.object({ conversationId: z.number().int().positive() }))
       .mutation(async ({ input }) => {
         await db.deleteAiConversation(input.conversationId);
@@ -288,10 +289,10 @@ export const appRouter = router({
       }),
 
     /** "What I've learned about Wobbles" — the active memory book. */
-    memory: protectedProcedure.query(() => db.listActiveAiMemory()),
+    memory: familyProcedure.query(() => db.listActiveAiMemory()),
 
     /** Forget one memory fact (soft delete, auditable). */
-    forgetMemory: protectedProcedure
+    forgetMemory: familyProcedure
       .input(z.object({ id: z.number().int().positive() }))
       .mutation(async ({ input }) => {
         await db.forgetAiMemoryFact(input.id);

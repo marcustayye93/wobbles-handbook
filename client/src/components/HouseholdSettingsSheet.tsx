@@ -9,6 +9,7 @@
  */
 import { useState } from "react";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
+import { PROFILES, PROFILE_EMOJI, useProfile } from "@/hooks/useProfile";
 import { Input } from "@/components/ui/input";
 import { useSharedState } from "@/hooks/useSyncedData";
 import {
@@ -56,6 +57,7 @@ interface Props {
 }
 
 export default function HouseholdSettingsSheet({ open, onOpenChange }: Props) {
+  const { profile, setProfile } = useProfile();
   const [raw, setRaw] = useSharedState<HouseholdSettings>(SETTINGS_KEY, defaultSettings());
   const settings = normalizeSettings(raw);
 
@@ -122,6 +124,43 @@ export default function HouseholdSettingsSheet({ open, onOpenChange }: Props) {
         </DrawerHeader>
 
         <div className="overflow-y-auto px-4 pb-10 space-y-6">
+          {/* ===== Who's logging on this phone (device profile) ===== */}
+          <section>
+            <h3 className="text-[10px] font-body font-extrabold uppercase tracking-[0.16em] text-[#B4512E] mb-2">
+              Who's logging on this phone
+            </h3>
+            <p className="text-[11.5px] font-body text-muted-foreground leading-snug mb-2.5">
+              Just for attribution — this device remembers who's holding it, and new logs, photos and
+              chats are stamped with that name. No password, ever.
+            </p>
+            <div className="grid grid-cols-3 gap-2">
+              {PROFILES.map((p) => {
+                const active = profile === p;
+                return (
+                  <button
+                    key={p}
+                    onClick={() => {
+                      setProfile(p);
+                      toast.success(`This phone now logs as ${p}`);
+                    }}
+                    aria-pressed={active}
+                    className={cn(
+                      "flex flex-col items-center gap-1 py-3 rounded-2xl border press-scale transition-colors",
+                      active
+                        ? "bg-[#22364D] border-[#22364D] text-[#F8F3EB]"
+                        : "bg-white border-[#E5DAC8] text-[#22364D]",
+                    )}
+                  >
+                    <span className="text-[20px]">{PROFILE_EMOJI[p]}</span>
+                    <span className="text-[10.5px] font-body font-extrabold uppercase tracking-wide">
+                      {p}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+
           {/* ===== Weekly schedule ===== */}
           <section>
             <div className="flex items-center justify-between mb-2">

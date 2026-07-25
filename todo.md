@@ -292,4 +292,16 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 - [x] Shopping plan: final week extended to 24 Sep; HOMECOMING_ISO + copy updated
 - [x] Updated affected copy: Wobbles Today stages, Health tab schedule, Singapore chapter, Guides, trackers, AI-chat profile, Jet Pets naming corrected everywhere
 - [x] Tests updated (shoppingPlan, dailyEngine anchors) + suite 206/206 green + tsc clean; mobile screenshots (Home, Health, Growth, Singapore, Shopping)
-- [ ] Checkpoint (auto-publish), GitHub push, deliver summary of what moved
+- [x] Checkpoint 3ffc061f (auto-published), GitHub push (main @ 3ffc061), delivered summary of what moved
+
+# Phase 13 — Remove Manus login requirement (user request 2026-07-25 #4)
+
+- [x] Audit auth usage: protectedProcedure sites, ctx.user/createdBy attribution, useAuth in UI, login gates (Ask page, sync layer)
+- [x] Design passwordless access (user-confirmed: NO PIN/password): one-time device-remembered profile picker with THREE profiles — Marcus / Chesa / Caretaker (for friends dog-sitting while they're overseas); URL privacy is the only gate
+- [x] Backend: convert protected procedures to family procedures (no OAuth requirement); profile name passed from client via x-wobbles-profile header for attribution (Marcus→9001, Chesa→9002, Caretaker→9003, fallback 9000 "Family"); data stays in existing tables
+- [x] Frontend: first-open profile picker (ProfileGate) stored persistently (localStorage wobbles-profile); removed startLogin/useAuth gates and login redirects; profile switcher in Household settings sheet ("Who's logging on this phone")
+- [x] Attribution: entries/photos/chat tagged by selected profile instead of OAuth user id (existing data ids preserved; verified live — Caretaker log stamped createdBy 9003 / "Caretaker")
+- [x] Ask/AI chat + memory work under family session (Ask.tsx uses useProfile; ai router on familyProcedure)
+- [x] Guarantee cloud persistence: all logs/photos remain in Manus cloud DB + S3 (no device-only storage); Wobbles AI retains full retrieval of trackers, memories, photos under the family session
+- [x] Tests updated for new auth model: family.test.ts (9 new), household + sync.audit rewritten for header identity — suite 215/215 green, tsc clean
+- [x] Visual verification: picker renders on fresh device, Marcus/Caretaker switching works with toast, one-tap Toilet log stamped "Caretaker" in timeline (test row cleaned up); checkpoint (auto-publish), GitHub push, deliver
