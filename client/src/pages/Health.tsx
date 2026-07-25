@@ -11,6 +11,7 @@ import { Link } from "wouter";
 import { PageShell, PageHeader, Eyebrow } from "@/components/AppShell";
 import QuickLogSheet from "@/components/QuickLogSheet";
 import { MedicineCabinet, PaperTrail, SymptomLog } from "@/components/MedicalVault";
+import QoLCheckIn from "@/components/QoLCheckIn";
 import { useTrackerEntries } from "@/hooks/useSyncedData";
 import { careTasksFor, type CareTask } from "@/content/household";
 import { WOBBLES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
@@ -338,6 +339,9 @@ export default function Health() {
       <MedicineCabinet />
       <PaperTrail />
       <SymptomLog onLog={() => openSheet("symptom")} />
+
+      {/* ===== Quality of life check-in (U7) ===== */}
+      <QoLCheckIn />
 
       {/* ===== Weight verdict summary ===== */}
       <section className="px-4 mt-7">

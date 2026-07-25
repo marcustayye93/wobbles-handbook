@@ -264,6 +264,25 @@ export const TRACKERS: TrackerMeta[] = [
     ],
   },
   {
+    id: "qol",
+    title: "Quality of Life",
+    emoji: "💗",
+    group: "health",
+    empty: "Monthly HHHHHMM check-ins",
+    intro:
+      "The HHHHHMM quality-of-life check-in — Hurt, Hunger, Hydration, Hygiene, Happiness, Mobility, More good days than bad — scored 0–5 each, 35 total. Built for the senior years, worth starting early: monthly scores build the baseline that makes real change unmissable. Use the guided check-in on the Health page; totals land here as a trend.",
+    fields: {
+      value: { label: "Total score", unit: "/35", min: 0, max: 35, step: 1 },
+      note: true,
+    },
+    chart: { label: "QoL score", unit: "/35" },
+    tips: [
+      "Above 28 — comfortable and thriving. 21–28 — watch closely and mention the low dimensions at the next vet visit. Below 21 — book a vet conversation soon.",
+      "Score honestly, not hopefully — the scale only works if a hard month is allowed to look like one.",
+      "The trend line matters more than any single check-in. One low score is a data point; three sliding months are a conversation.",
+    ],
+  },
+  {
     id: "social",
     title: "Socialisation",
     emoji: "🌏",
