@@ -132,9 +132,9 @@ describe("todaysNudges with person tags", () => {
     expect(todaysNudges(noEntries, {}, d("2026-10-18")).length).toBeLessThanOrEqual(3);
   });
 
-  it("still returns only the reading nudge pre-homecoming", () => {
+  it("never emits the retired reading nudge, even with partial read progress", () => {
     const nudges = todaysNudges(noEntries, { "first-day": 0.5 }, d("2026-08-01"));
-    expect(nudges.map((n) => n.id)).toEqual(["resume"]);
+    expect(nudges.find((n) => n.id === "resume")).toBeUndefined();
   });
 });
 

@@ -14,7 +14,6 @@ import TodayTimeline, { useDayFeed } from "@/components/TodayTimeline";
 import CareRow from "@/components/CareRow";
 import SearchDialog from "@/components/SearchDialog";
 import { wobblesToday, todaysNudges, todaysBrief } from "@/lib/wobblesToday";
-import { dailyFact } from "@/lib/dailyFact";
 import HouseholdSettingsSheet from "@/components/HouseholdSettingsSheet";
 import { SETTINGS_KEY, defaultSettings, normalizeSettings, allRemindersDone } from "@/lib/householdSettings";
 import type { HouseholdSettings } from "@/lib/householdSettings";
@@ -37,7 +36,6 @@ export default function Home() {
   const age = wobblesAge();
   const today = wobblesToday();
   const countdown = nextCountdown();
-  const fact = useMemo(() => dailyFact(), []);
   const nextMilestones = MILESTONES.filter((m) => daysUntil(m.date) >= 0).slice(0, 3);
 
   // Nudges from the family-shared server data (same feed the trackers use)
@@ -285,32 +283,12 @@ export default function Home() {
             </div>
           )}
 
-          {/* Today's rotating idea */}
-          <div className="mt-3 border-t border-dashed border-[#E5DAC8] pt-3">
-            <p className="text-[9px] font-body font-extrabold uppercase tracking-[0.14em] text-[#B4512E]">
-              Today's idea
-            </p>
-            <p className="mt-1 text-[12.5px] font-body text-[#33475C] leading-snug">
-              <span className="mr-1.5">{brief.activity.emoji}</span>
-              <span className="font-bold text-[#22364D]">{brief.activity.title}.</span> {brief.activity.text}
-            </p>
-          </div>
-
-          {/* Rotating 100 Things field note — new fact every other day */}
+          {/* Full health & care plan lives in the Health tab */}
           <Link
-            href="/handbook/100-things"
-            className="block mt-3 border-t border-dashed border-[#E5DAC8] pt-3 press-scale"
+            href="/health"
+            className="mt-3 border-t border-dashed border-[#E5DAC8] pt-3 flex items-center gap-1.5 text-[11px] font-body font-extrabold text-[#B4512E] press-scale"
           >
-            <p className="text-[9px] font-body font-extrabold uppercase tracking-[0.14em] text-[#7B8C6A]">
-              💯 Field note · #{fact.n} of 100
-            </p>
-            <p className="mt-1 text-[12.5px] font-body text-[#33475C] leading-snug">
-              <span className="mr-1.5">{fact.catEmoji}</span>
-              <span className="font-bold text-[#22364D]">{fact.catTitle}.</span> {fact.text}
-            </p>
-            <p className="mt-1 text-[10px] font-body font-bold text-[#B4512E]">
-              New note every other day · tick it off →
-            </p>
+            Full care plan & health record <ChevronRight size={13} className="shrink-0" />
           </Link>
         </div>
 

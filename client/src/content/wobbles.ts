@@ -44,7 +44,7 @@ export const WOBBLES = {
   dob: "2026-06-26",
   sex: "Male",
   size: "Toy",
-  expectedAdultWeight: "≈ 8 kg",
+  expectedAdultWeight: "≈ 6 kg",
   coat: "Fleece",
   colour: "Red parti (Blenheim) — rich red patches on white",
   price: "A$5,500",
@@ -179,7 +179,7 @@ export const MILESTONES: Milestone[] = [
     date: "2027-06-26",
     label: "First birthday + first adult booster (52 weeks)",
     detail:
-      "Wobbles turns one! Singapore guidelines call for the first adult core booster at 52 weeks — then annually. Adult coat should be fully in, near his adult weight of about 8 kg.",
+      "Wobbles turns one! Singapore guidelines call for the first adult core booster at 52 weeks — then annually. Adult coat should be fully in, near his adult weight of about 6 kg.",
     icon: "cake",
   },
 ];

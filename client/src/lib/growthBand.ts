@@ -1,8 +1,8 @@
 /*
  * Growth band — expected weight range (kg) by age for a toy Cavoodle
- * trending toward a 5–8 kg adult (Wobbles is predicted ≈8 kg, so likely the
- * upper half of the band). Points compiled from toy Cavoodle / toy-poodle-cross
- * growth charts; interpolated linearly between anchors.
+ * expected to peak at ≈6 kg as an adult (family estimate for Wobbles).
+ * Points compiled from toy Cavoodle / toy-poodle-cross growth charts and
+ * scaled to a 6 kg adult; interpolated linearly between anchors.
  *
  * Pure functions only — unit-tested in server/growthBand.test.ts.
  */
@@ -14,17 +14,17 @@ export interface BandPoint {
   max: number; // kg
 }
 
-/** Expected weight band (kg) by age in weeks for a 5–8 kg-adult toy Cavoodle. */
+/** Expected weight band (kg) by age in weeks for a ≈6 kg-adult toy Cavoodle. */
 export const GROWTH_BAND: BandPoint[] = [
-  { weeks: 8, min: 1.0, max: 2.0 },
-  { weeks: 12, min: 1.6, max: 3.0 },
-  { weeks: 16, min: 2.2, max: 4.0 },
-  { weeks: 20, min: 2.8, max: 4.9 },
-  { weeks: 26, min: 3.5, max: 6.0 },
-  { weeks: 34, min: 4.2, max: 7.0 },
-  { weeks: 42, min: 4.6, max: 7.6 },
-  { weeks: 52, min: 5.0, max: 8.0 },
-  { weeks: 60, min: 5.0, max: 8.0 },
+  { weeks: 8, min: 0.9, max: 1.6 },
+  { weeks: 12, min: 1.4, max: 2.4 },
+  { weeks: 16, min: 1.9, max: 3.2 },
+  { weeks: 20, min: 2.4, max: 3.9 },
+  { weeks: 26, min: 3.0, max: 4.7 },
+  { weeks: 34, min: 3.7, max: 5.4 },
+  { weeks: 42, min: 4.1, max: 5.8 },
+  { weeks: 52, min: 4.4, max: 6.2 },
+  { weeks: 60, min: 4.5, max: 6.3 },
 ];
 
 /** Linear interpolation of the band at an exact age in weeks (clamped at ends). */
@@ -49,6 +49,12 @@ export function ageWeeksOn(dateISO: string, dob: string = WOBBLES.dob): number {
   const born = new Date(dob + "T00:00:00");
   const on = new Date(dateISO + "T00:00:00");
   return Math.max(0, (on.getTime() - born.getTime()) / (7 * 24 * 3600 * 1000));
+}
+
+/** Expected (midline) weight at an age in weeks — the single blue "yardstick" curve. */
+export function expectedWeightAt(weeks: number): number {
+  const b = expectedBandAt(weeks);
+  return (b.min + b.max) / 2;
 }
 
 export type GrowthStatus = "on-track" | "above" | "below";
@@ -90,7 +96,7 @@ export function growthVerdict(
   const bandLabel = `${band.min.toFixed(1)}–${band.max.toFixed(1)} kg`;
   const text =
     status === "on-track"
-      ? `${kg.toFixed(2)} kg sits inside the expected ${bandLabel} for his age — on track for a toy Cavoodle heading to ≈8 kg.`
+      ? `${kg.toFixed(2)} kg sits inside the expected ${bandLabel} for his age — on track for a toy Cavoodle heading to ≈6 kg.`
       : status === "below"
         ? `${kg.toFixed(2)} kg is under the expected ${bandLabel} for his age. One light reading isn't a panic — but if the next weigh-in is also low, mention it to the vet.`
         : `${kg.toFixed(2)} kg is above the expected ${bandLabel} for his age. Recount daily calories including training treats, and check body condition (ribs easy to feel).`;
@@ -118,4 +124,47 @@ export function bandSeriesFor(
         bandMax: Number(band.max.toFixed(2)),
       };
     });
+}
+
+export interface GrowthCurvePoint {
+  weeks: number;
+  label: string; // "8w", "12w" …
+  expected: number; // blue yardstick midline (kg)
+  bandMin: number;
+  bandMax: number;
+  actual?: number; // orange line — Wobbles' real weigh-in mapped to this week
+}
+
+/**
+ * Full-life chart series for the Growth tab: weekly steps from 8w to 60w with
+ * the blue expected midline + band, and actual weigh-ins snapped onto their
+ * (rounded) week so the orange line overlays the same x-axis.
+ */
+export function growthCurveSeries(
+  entries: { date: string; value?: number }[],
+  dob: string = WOBBLES.dob,
+): GrowthCurvePoint[] {
+  // Latest weigh-in per rounded week wins (most recent reading is truth).
+  const actualByWeek = new Map<number, number>();
+  [...entries]
+    .filter((e) => typeof e.value === "number" && (e.value as number) > 0)
+    .sort((a, b) => a.date.localeCompare(b.date))
+    .forEach((e) => {
+      const w = Math.round(ageWeeksOn(e.date, dob));
+      actualByWeek.set(Math.min(Math.max(w, 8), 60), e.value as number);
+    });
+
+  const pts: GrowthCurvePoint[] = [];
+  for (let w = 8; w <= 60; w += 2) {
+    const band = expectedBandAt(w);
+    pts.push({
+      weeks: w,
+      label: `${w}w`,
+      expected: Number(((band.min + band.max) / 2).toFixed(2)),
+      bandMin: Number(band.min.toFixed(2)),
+      bandMax: Number(band.max.toFixed(2)),
+      actual: actualByWeek.get(w) ?? actualByWeek.get(w + 1),
+    });
+  }
+  return pts;
 }

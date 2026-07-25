@@ -196,11 +196,11 @@ function daysSince(iso: string | undefined, now: Date = new Date()): number | nu
  * take priority, then data-driven gaps, with owners named so Marcus and
  * Chesa each see their own jobs.
  * @param entriesByTracker newest-first entries per tracker id (server-backed)
- * @param readProgress shared reading-progress map (slug -> 0..1)
+ * @param _readProgress kept for call-site compatibility (reading nudge retired)
  */
 export function todaysNudges(
   entriesByTracker: (id: string) => TrackerEntry[],
-  readProgress: Record<string, number>,
+  _readProgress: Record<string, number>,
   now: Date = new Date(),
   settings?: HouseholdSettings,
   shoppingTicks?: Record<string, boolean>,
@@ -245,9 +245,6 @@ export function todaysNudges(
           link: "/handbook/shopping",
         });
     }
-    const started = Object.entries(readProgress).find(([, v]) => v > 0.05 && v < 0.95);
-    if (started)
-      out.push({ id: "resume", emoji: "📖", text: "Pick up where you left off in the handbook", link: `/handbook/${started[0]}` });
     return out.slice(0, 4);
   }
 

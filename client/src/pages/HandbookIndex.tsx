@@ -31,7 +31,7 @@ export default function HandbookIndex() {
           <div>
             <Eyebrow>The Handbook</Eyebrow>
             <h1 className="font-display font-semibold text-[2.4rem] leading-[1.02] mt-1.5">
-              Chapters
+              Guides
             </h1>
           </div>
           <button
@@ -120,8 +120,8 @@ export default function HandbookIndex() {
 
         <PawDivider />
 
-        {/* Guides */}
-        <Eyebrow className="mb-2.5 px-1">Guides</Eyebrow>
+        {/* Skill guides */}
+        <Eyebrow className="mb-2.5 px-1">Skill guides</Eyebrow>
         <div className="space-y-2.5 pb-5">
           <Link href="/training" className="block sticker-card p-4 press-scale">
             <div className="flex items-center gap-3.5">

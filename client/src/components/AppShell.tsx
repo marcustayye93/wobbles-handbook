@@ -2,19 +2,31 @@
  * Redesign v2 — "Keepsake Field Guide" app shell.
  * Paper #F8F3EB bg w/ grain, ivory cards, Ink Navy #22364D nav bar + CTAs,
  * Burnt Sienna #C66A3D active/eyebrow accents, Cormorant Garamond display.
- * Bottom nav: Home / Chapters / Trackers / 100 Things / Memories (navy pill bar).
+ * Bottom nav: Home / Growth / Health / Journey / Trackers / Memories / Guides (navy pill bar).
  */
 import { Link, useLocation } from "wouter";
-import { Home, BookOpen, ClipboardList, Camera, MapPin, ChevronLeft, PawPrint } from "lucide-react";
+import {
+  Home,
+  BookOpen,
+  ClipboardList,
+  Camera,
+  TrendingUp,
+  HeartPulse,
+  Footprints,
+  ChevronLeft,
+  PawPrint,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import PawFab from "@/components/PawFab";
 
 const TABS = [
   { href: "/", label: "Home", icon: Home },
-  { href: "/handbook", label: "Chapters", icon: BookOpen },
-  { href: "/trackers", label: "Trackers", icon: ClipboardList },
-  { href: "/map", label: "Map", icon: MapPin },
-  { href: "/memories", label: "Memories", icon: Camera },
+  { href: "/growth", label: "Growth", icon: TrendingUp },
+  { href: "/health", label: "Health", icon: HeartPulse },
+  { href: "/journey", label: "Journey", icon: Footprints },
+  { href: "/trackers", label: "Logs", icon: ClipboardList },
+  { href: "/memories", label: "Photos", icon: Camera },
+  { href: "/handbook", label: "Guides", icon: BookOpen },
 ] as const;
 
 function isTabActive(href: string, loc: string) {
@@ -37,7 +49,7 @@ export function BottomNav() {
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
     >
       <div className="mx-3 mb-2.5 rounded-[26px] bg-[#22364D] shadow-[0_10px_30px_rgba(34,54,77,0.35)]">
-        <div className="grid grid-cols-5 py-2 px-1">
+        <div className="grid grid-cols-7 py-2 px-0.5">
           {TABS.map((t) => {
             const active = isTabActive(t.href, loc);
             const Icon = t.icon;
@@ -50,10 +62,10 @@ export function BottomNav() {
                   active ? "text-[#E8935C]" : "text-[#8FA0B5]",
                 )}
               >
-                <Icon size={19} strokeWidth={active ? 2.4 : 1.9} />
+                <Icon size={18} strokeWidth={active ? 2.4 : 1.9} />
                 <span
                   className={cn(
-                    "text-[8.5px] leading-none uppercase tracking-[0.08em]",
+                    "text-[7.5px] leading-none uppercase tracking-[0.04em]",
                     active ? "font-extrabold" : "font-semibold",
                   )}
                 >

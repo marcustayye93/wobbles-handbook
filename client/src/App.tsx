@@ -22,7 +22,10 @@ import Grooming from "@/pages/Grooming";
 import TrackersHub from "@/pages/TrackersHub";
 import TrackerPage from "@/pages/TrackerPage";
 import Memories from "@/pages/Memories";
-import ParkMap from "@/pages/ParkMap";
+import Growth from "@/pages/Growth";
+import Health from "@/pages/Health";
+import Journey from "@/pages/Journey";
+import TrickDetail from "@/pages/TrickDetail";
 import Ask from "@/pages/Ask";
 import NotFound from "@/pages/NotFound";
 function Router() {
@@ -42,7 +45,10 @@ function Router() {
       <Route path="/trackers" component={TrackersHub} />
       <Route path="/trackers/:id" component={TrackerPage} />
       <Route path="/memories" component={Memories} />
-      <Route path="/map" component={ParkMap} />
+      <Route path="/growth" component={Growth} />
+      <Route path="/health" component={Health} />
+      <Route path="/journey" component={Journey} />
+      <Route path="/journey/tricks/:id" component={TrickDetail} />
       <Route path="/ask" component={Ask} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />

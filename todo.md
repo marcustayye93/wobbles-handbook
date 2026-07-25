@@ -263,4 +263,21 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 - [x] Floating paw FAB on all pages (PageShell) opening QuickLogSheet; hidden on Home (care row covers it) and hideNav pages
 - [x] Insights/timeline handle new log types gracefully (generic tracker feed; insights remain feeding/toilet-gated)
 - [x] Tests for new trackers, growth band math, care-row logging (growthBand.test.ts 19, careRow.test.ts 7); suite 194/194 green + tsc clean
+- [x] Mobile screenshots, checkpoint 779c8aee (auto-published), GitHub push (main @ 779c8ae), delivered
+
+# Phase 11 — Nav restructure: Growth/Health/Journey tabs, remove Map (user request 2026-07-25 #2)
+
+- [x] Remove Map feature entirely: page, route, nav entry, placeLog router/tests/db helpers
+- [x] Rename "Chapters" tab to "Guides" (label + any headings referencing Chapters)
+- [x] Bottom nav restructure: Home · Growth · Health · Journey · Trackers · Memories · Guides (7 compact items)
+- [x] Recalibrate growth band to 6 kg adult peak (update lib/growthBand.ts + WOBBLES predicted weight + tests)
+- [x] Growth tab: blue expected-weight curve + orange actual weigh-in line on one chart, weight verdict, age/milestone timeline (orange line + legend hidden until first weigh-in exists — per user note)
+- [x] Health tab: vet visits + vaccine log + parasite schedule + medical records in one place; full due-today AND due-this-week reminders with tick-off
+- [x] Home slimming: shorten due-today strip (link to Health for full view); remove field note, today's idea, "pick up where you left off" resume nudge
+- [x] Trick library content: 12 tricks with step-by-step training instructions (client/src/content/tricks.ts)
+- [x] Generate gouache-style trick illustrations (Wobbles likeness), size-optimised, uploaded via manus-upload-file --webdev (12 images, /manus-storage/trick-*.png)
+- [x] Journey tab: trick grid → trick detail pages (illustration + instructions + times-practiced counter + tap-to-log practice)
+- [x] Practice counters count matching existing Training Log entries + new practice logs (synced via tracker_entries; option exact match + note keyword match)
+- [x] Journey tab: broader journey section (socialisation sprint card + milestone road timeline)
+- [x] Update tests (placeLog removed, growthBand updated, tricks.content.test.ts 13 new tests); suite 206/206 green + tsc clean
 - [ ] Mobile screenshots, checkpoint (auto-publish), GitHub push, deliver

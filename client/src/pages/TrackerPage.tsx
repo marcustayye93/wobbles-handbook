@@ -239,7 +239,7 @@ export default function TrackerPage() {
             </div>
             {isWeight && (
               <p className="mt-1.5 text-[10px] font-body font-bold text-[#6B7C5A]">
-                Green band = expected range for a toy Cavoodle his age (5–8 kg adult).
+                Green band = expected range for a toy Cavoodle his age (≈6 kg adult).
               </p>
             )}
           </div>

@@ -43,7 +43,7 @@ export const TRACKERS: TrackerMeta[] = [
     group: "health",
     empty: "Weekly weigh-ins",
     intro:
-      "Weigh weekly as a puppy (hold him on bathroom scales, subtract yourself), then monthly as an adult. Toy Cavoodles typically land at 5–8 kg full-grown; Wobbles is predicted ≈8 kg.",
+      "Weigh weekly as a puppy (hold him on bathroom scales, subtract yourself), then monthly as an adult. Toy Cavoodles typically land around 4–7 kg full-grown; Wobbles is expected to peak at ≈6 kg.",
     fields: {
       value: { label: "Weight", unit: "kg", min: 0.2, max: 20, step: 0.05 },
       note: true,
