@@ -373,7 +373,7 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 - [x] U5 Lifetime milestone generator: recurring boosters/licence/birthday milestones beyond first year (extends Growth/Home coming-up)
 - [x] U6 Memories albums & search: year chapters, caption/date search (extends Memories)
 - [x] U7 Senior & QoL content: senior handbook chapters + quality-of-life tracker (extends Guides + Health)
-- [ ] Audit: vitest suite green, tsc clean, browser verification of all 7 upgrades
+- [x] Audit: vitest suite green (316), tsc clean, browser verification of all 7 upgrades, full-page screenshots of all 7 tabs, DB test data cleaned (test QoL entry + test photo removed; user's real photo/AI data preserved)
 - [ ] Final checkpoint (auto-publish) + GitHub push + delivery
 
 ## Phase 20 — Lifetime upgrades (U1–U7)
@@ -392,5 +392,5 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 - [x] U5: lifetimeMilestones generator + allMilestones(); wire Growth, Home, Health, Journey, YearReview (About/Memories intentionally kept on first-year MILESTONES — narrative "story so far" context); 15 new tests in server/lifetimeMilestones.test.ts (285 total)
 - [x] U6: Memories year chapters, search, filter chips — photoGroups.ts year-chapter grouping + yearStageLabel + photoMatches/filterPhotos/photoYears; PhotoJournal debounced search bar, year chips, no-results card, sticky year+month headers; place chips skipped (Map feature removed, 0 photos have placeId); 17 new tests (302 total)
 - [x] U7: golden-years + twilight-care full content, QoL check-in card on Health, qol tracker, senior QoL nudge — qol.ts HHHHHMM library (7 dimensions, 0–5 anchors, 35 max, bands: >28 comfortable / 21–28 watch / <21 vet), QoLCheckIn.tsx guided slider card on Health with live band + toast + last-check-in line, qol tracker meta (/35 chart), verified end-to-end in browser (test row cleaned from DB); 14 new tests (316 total)
-- [ ] Phase 20 audit: tests green, tsc clean, screenshots, todo reconciled
+- [x] Phase 20 audit: tests green, tsc clean, screenshots, todo reconciled
 - [ ] Phase 20 checkpoint + GitHub push
