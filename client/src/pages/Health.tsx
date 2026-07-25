@@ -2,7 +2,7 @@
  * Health tab — Wobbles' complete medical picture in one place.
  * Due today (full care rota) → Due this week (7-day rota preview) →
  * Vaccine schedule (milestone dates vs today + logged doses) →
- * Parasite preventive (next 18th) → Vet visit log (vaccines tracker) →
+ * Parasite preventive (next 24th) → Vet visit log (vaccines tracker) →
  * Weight verdict summary (links to Growth) → Recent poo quality.
  * Home keeps only the short strip; this page is the full record.
  */
@@ -36,10 +36,10 @@ function isoOf(d: Date): string {
   return `${y}-${m}-${day}`;
 }
 
-/** Next monthly parasite dose — the 18th of this month, or next month if passed. */
+/** Next monthly parasite dose — the 24th of this month, or next month if passed. */
 export function nextParasiteDose(now: Date): Date {
-  const d = new Date(now.getFullYear(), now.getMonth(), 18);
-  if (now.getDate() > 18) return new Date(now.getFullYear(), now.getMonth() + 1, 18);
+  const d = new Date(now.getFullYear(), now.getMonth(), 24);
+  if (now.getDate() > 24) return new Date(now.getFullYear(), now.getMonth() + 1, 24);
   return d;
 }
 
@@ -208,8 +208,8 @@ export default function Health() {
               {parasiteLogged
                 ? `Last dose logged ${formatDate(parasiteLogged.date)} (${parasiteLogged.option}).`
                 : homecomingFuture
-                  ? "Starts at the first Singapore vet visit — then the 18th of every month, forever."
-                  : "No dose logged yet — the rota expects one every 18th of the month."}
+                  ? "Starts at the first Singapore vet visit — then the 24th of every month, forever."
+                  : "No dose logged yet — the rota expects one every 24th of the month."}
             </p>
           </div>
           <p className="shrink-0 text-center">
@@ -405,7 +405,7 @@ export default function Health() {
       {/* Footer note */}
       <p className="px-5 mt-9 text-center text-[11px] font-body text-muted-foreground leading-relaxed flex items-center justify-center gap-1.5">
         <CalendarDays size={12} className="inline" />
-        Rota: baths every other Monday, nails & ears Mondays, teeth Tue/Thu/Sat, parasite dose the 18th.
+        Rota: baths every other Monday, nails & ears Mondays, teeth Tue/Thu/Sat, parasite dose the 24th.
       </p>
 
       <QuickLogSheet open={sheetOpen} onOpenChange={setSheetOpen} initialTracker="vaccines" />

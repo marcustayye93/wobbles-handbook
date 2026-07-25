@@ -28,10 +28,10 @@ describe("weekly household schedule", () => {
 });
 
 describe("care rota", () => {
-  it("puts bath on alternate Mondays anchored to 2026-09-21", () => {
-    expect(careTasksFor(d("2026-09-21")).map((t) => t.id)).toContain("bath");
-    expect(careTasksFor(d("2026-09-28")).map((t) => t.id)).not.toContain("bath");
-    expect(careTasksFor(d("2026-10-05")).map((t) => t.id)).toContain("bath");
+  it("puts bath on alternate Mondays anchored to 2026-09-28", () => {
+    expect(careTasksFor(d("2026-09-28")).map((t) => t.id)).toContain("bath");
+    expect(careTasksFor(d("2026-10-05")).map((t) => t.id)).not.toContain("bath");
+    expect(careTasksFor(d("2026-10-12")).map((t) => t.id)).toContain("bath");
   });
 
   it("always includes nails + ears on Mondays, never on other days", () => {
@@ -40,10 +40,10 @@ describe("care rota", () => {
     expect(careTasksFor(d("2026-09-02")).map((t) => t.id)).not.toContain("nails");
   });
 
-  it("fires the parasite dose on the 18th of any month", () => {
-    expect(careTasksFor(d("2026-09-18")).map((t) => t.id)).toContain("parasite");
-    expect(careTasksFor(d("2026-10-18")).map((t) => t.id)).toContain("parasite");
-    expect(careTasksFor(d("2026-09-17")).map((t) => t.id)).not.toContain("parasite");
+  it("fires the parasite dose on the 24th of any month (homecoming-day anchor)", () => {
+    expect(careTasksFor(d("2026-10-24")).map((t) => t.id)).toContain("parasite");
+    expect(careTasksFor(d("2026-11-24")).map((t) => t.id)).toContain("parasite");
+    expect(careTasksFor(d("2026-10-18")).map((t) => t.id)).not.toContain("parasite");
   });
 
   it("schedules teeth on Tue/Thu/Sat", () => {
@@ -92,17 +92,17 @@ describe("rotating activity ideas", () => {
 });
 
 describe("park night rhythm", () => {
-  it("alternates days anchored to 2026-09-19", () => {
-    expect(isParkNight(d("2026-09-19"))).toBe(true);
-    expect(isParkNight(d("2026-09-20"))).toBe(false);
-    expect(isParkNight(d("2026-09-21"))).toBe(true);
-    expect(isParkNight(d("2026-09-17"))).toBe(false); // before anchor
+  it("alternates days anchored to 2026-09-25", () => {
+    expect(isParkNight(d("2026-09-25"))).toBe(true);
+    expect(isParkNight(d("2026-09-26"))).toBe(false);
+    expect(isParkNight(d("2026-09-27"))).toBe(true);
+    expect(isParkNight(d("2026-09-23"))).toBe(false); // before anchor
   });
 });
 
 describe("todaysBrief", () => {
   it("assembles plan, care, activity and park flag for a date", () => {
-    const brief = todaysBrief(d("2027-01-18")); // Monday + 18th
+    const brief = todaysBrief(d("2027-05-24")); // Monday + 24th
     expect(brief.plan.label).toBe("Monday");
     expect(brief.whoHome).toBe("Everyone home"); // Monday: Marcus WFH + Chesa home
     expect(brief.care.map((c) => c.id)).toEqual(
@@ -121,7 +121,7 @@ describe("todaysNudges with person tags", () => {
   const noEntries = () => [] as never[];
 
   it("prioritises care-rota nudges with owners on Mondays post-homecoming", () => {
-    const nudges = todaysNudges(noEntries, {}, d("2026-09-21")); // bath Monday
+    const nudges = todaysNudges(noEntries, {}, d("2026-09-28")); // bath Monday
     expect(nudges.length).toBeGreaterThan(0);
     expect(nudges[0].id).toContain("care-");
     const nails = nudges.find((n) => n.id === "care-nails");
@@ -129,7 +129,7 @@ describe("todaysNudges with person tags", () => {
   });
 
   it("caps at three nudges", () => {
-    expect(todaysNudges(noEntries, {}, d("2026-10-18")).length).toBeLessThanOrEqual(3);
+    expect(todaysNudges(noEntries, {}, d("2026-10-24")).length).toBeLessThanOrEqual(3);
   });
 
   it("never emits the retired reading nudge, even with partial read progress", () => {

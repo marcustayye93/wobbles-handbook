@@ -208,7 +208,7 @@ export const TRACKERS: TrackerMeta[] = [
     group: "health",
     empty: "Shots, worming & vet visits",
     intro:
-      "Australian puppies typically get C3 vaccines at ~6–8, 10–12 and 14–16 weeks, then annual boosters. Because Wobbles stays at the breeder until 12 weeks, his first two shots happen in Australia before export — log everything here, since AVS wants the full history for the Singapore paperwork.",
+      "Wobbles' breeder's vet uses Protech C3, booked with the rest of his litter: 11 Aug, 25 Aug and 8 Sep 2026 — all three shots done in Australia before export, so he's fully protected ~22 Sep, a day or two before the flight. Log everything here, since AVS wants the full history for the Singapore paperwork.",
     fields: {
       options: {
         label: "Event",
@@ -227,7 +227,7 @@ export const TRACKERS: TrackerMeta[] = [
     tips: [
       "Keep every vaccination certificate — AVS in Singapore wants the full history with the microchip number on each record.",
       "Puppy worming: typically every 2 weeks till 12 weeks, monthly till 6 months, then per vet advice.",
-      "Book the 16-week shot the day you get him — that's the one that clears him for full public outings.",
+      "His C3 course finished at 10.5 weeks (8 Sep) — ask the SG vet at the first visit about a 16-week booster, which many vets recommend when the last dose was before 16 weeks.",
     ],
   },
   {

@@ -87,7 +87,7 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
       },
     ],
     wobbles:
-      "Pre-vaccination (until ~30 Oct 2026), pads are the safe default in the flat — HDB grass is parvo-risky ground. The 7:15am lift-to-park routine takes over once the vet clears him; the pad can stay as a rainy-day backup, which most Singapore dog owners keep for monsoon season.",
+      "Good news: his full Protech C3 course finishes on 8 Sep, so he lands (~24 Sep) already vaccinated — grass outings can start once the SG vet gives the nod at the first check-up. Until then, pads in the flat are the default; afterwards the pad stays as a rainy-day backup, which most Singapore dog owners keep for monsoon season.",
     proTip:
       "Track every wee and poo in the Toilet tracker for the first fortnight. The pattern that emerges IS his schedule — you'll start pre-empting him instead of reacting.",
     trackerChoice: "Name response", // potty logs live in the toilet tracker; nearest training log choice not used

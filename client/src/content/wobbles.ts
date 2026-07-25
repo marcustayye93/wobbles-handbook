@@ -60,14 +60,17 @@ export const WOBBLES = {
       "https://rightpaw.com.au/l/the-doghouse-qld-theodore-cavoodles/296a0927-5317-4f69-a9ef-de2a28b688d4",
   },
   /**
-   * Homecoming = arrival day in Singapore. Driver: AVS (NParks) requires dogs
-   * to be at least 12 weeks old at export from Australia, and Singapore farms/
-   * breeders release only after the second vaccination (~10–12 weeks). Legal
-   * minimum SALE age under AVS breeding conditions is 9 weeks — but the export
-   * rule makes 12 weeks (18 Sep 2026) the earliest realistic homecoming.
-   * (Commonly misremembered as an "NEA 6-weeks-at-the-farm" rule — it's AVS.)
+   * Homecoming = arrival day in Singapore. Confirmed by the breeder (Jul 2026):
+   * Wobbles follows his litter's vaccine bookings — Protech C3 on 11 Aug,
+   * 25 Aug and 8 Sep — making him fly-ready around 22 Sep (full protection
+   * ~2 weeks after dose 3), a day or two before the flight. Jet Pets manages
+   * the BNE → SIN move on 23/24 Sep; he departs 23 Sep and lands 24 Sep at
+   * 12 weeks 6 days — comfortably past the AVS 12-week export minimum.
    */
-  homecoming: "2026-09-18",
+  homecoming: "2026-09-24",
+  flightDeparture: "2026-09-23",
+  transport: "Jet Pets (BNE → SIN, 23/24 Sep 2026)",
+  vaccineBrand: "Protech C3",
 } as const;
 
 export interface Milestone {
@@ -92,10 +95,17 @@ export const MILESTONES: Milestone[] = [
     icon: "hand",
   },
   {
-    date: "2026-08-07",
-    label: "First vaccination + vet check (~6 weeks)",
+    date: "2026-08-11",
+    label: "Vaccine 1 of 3 — Protech C3 at the breeder (6½ weeks)",
     detail:
-      "First C3 core vaccination (distemper, hepatitis, parvovirus), microchip and vet health check with the breeder.",
+      "Confirmed by the breeder: first Protech C3 core vaccination (distemper, hepatitis, parvovirus) plus microchip and vet health check, booked with the rest of the litter at her vet in Queensland.",
+    icon: "syringe",
+  },
+  {
+    date: "2026-08-25",
+    label: "Vaccine 2 of 3 — Protech C3 booster (8½ weeks)",
+    detail:
+      "Second Protech C3 dose at the breeder's vet, two weeks after the first, on the litter's shared schedule. Verify the record lands in his puppy pack — Singapore's import inspection and his AVS licence both need it.",
     icon: "syringe",
   },
   {
@@ -106,67 +116,67 @@ export const MILESTONES: Milestone[] = [
     icon: "badge-check",
   },
   {
-    date: "2026-09-04",
-    label: "Second vaccination at the breeder (10 weeks)",
+    date: "2026-09-08",
+    label: "Vaccine 3 of 3 — final breeder Protech C3 (10½ weeks)",
     detail:
-      "The second C3 booster is given at the farm in Queensland around 10 weeks, before export. Verify the record lands in his puppy pack — Singapore's import inspection and his AVS licence both need it.",
+      "Third and final Protech C3 dose before export, again two weeks on. Full protection builds over the following two weeks — landing on ~22 Sep, which is exactly what makes him fly-ready a day or two before the flight, as the breeder planned.",
     icon: "syringe",
   },
   {
-    date: "2026-09-04",
+    date: "2026-09-10",
     label: "Pre-homecoming admin sprint (humans only)",
     detail:
-      "Two weeks out: finish the free AVS Pet Ownership Course, get his PALS dog licence number, confirm the AVS import permit and Jetpets flight, puppy-proof the flat and finish the kit list. Everything ready before he lands.",
+      "Two weeks out: finish the free AVS Pet Ownership Course, get his PALS dog licence number, confirm the AVS import permit and the Jet Pets booking, puppy-proof the flat and finish the kit list. Everything ready before he lands.",
     icon: "badge-check",
   },
   {
-    date: "2026-09-18",
-    label: "Homecoming day — lands in Singapore (12 weeks)",
+    date: "2026-09-22",
+    label: "Fly-ready — full vaccine protection (12½ weeks)",
     detail:
-      "The big day! At exactly 12 weeks — the earliest AVS export age — Wobbles flies BNE → SIN, clears Changi's CAPQ inspection (no quarantine) and comes home to Woodlands with his mum-scented blanket and puppy pack.",
+      "Two weeks after the third Protech dose, immunity is fully on board and the Jet Pets accredited vet does the final fit-to-fly checks — a day or two before the scheduled flight, exactly as the breeder timed it.",
+    icon: "badge-check",
+  },
+  {
+    date: "2026-09-23",
+    label: "Flight day — Jet Pets BNE → SIN",
+    detail:
+      "A Jet Pets handler collects Wobbles at 12 weeks 5 days for the Brisbane → Singapore leg — transit lounge, climate-controlled hold, no sedation. Puppy pack and mum-scented blanket travel with him.",
+    icon: "plane",
+  },
+  {
+    date: "2026-09-24",
+    label: "Homecoming day — lands in Singapore (nearly 13 weeks)",
+    detail:
+      "The big day! Wobbles clears Changi's CAPQ inspection (no quarantine) and comes home to Woodlands — fully vaccinated (three Protech C3 doses done in Australia), microchipped and past the AVS 12-week export minimum.",
     icon: "home",
   },
   {
-    date: "2026-09-18",
-    label: "Start monthly parasite preventive (12 weeks)",
+    date: "2026-09-24",
+    label: "Start monthly parasite preventive",
     detail:
-      "Singapore is year-round heartworm, tick and flea territory. Ask the vet to start a monthly combined preventive (NexGard Spectra / Simparica Trio chew, or a spot-on) at the first Singapore vet visit — then repeat on the 18th of every month, forever.",
+      "Singapore is year-round heartworm, tick and flea territory. Ask the vet to start a monthly combined preventive (NexGard Spectra / Simparica Trio chew, or a spot-on) at the first Singapore vet visit — then repeat on the 24th of every month, forever.",
     icon: "shield",
   },
   {
-    date: "2026-09-21",
-    label: "First Singapore vet visit + licence wrap-up",
+    date: "2026-09-28",
+    label: "First Singapore vet visit + parks sign-off",
     detail:
-      "Within his first days home: register with a Woodlands vet, confirm the microchip and vaccination records, start parasite prevention, and finalise the AVS dog licence on PALS. Cavoodles are HDB-approved; one dog per flat.",
+      "Within his first days home: register with a Woodlands vet, confirm the microchip and all three Protech records, start parasite prevention, and finalise the AVS dog licence on PALS. With full protection since 22 Sep, the vet can green-light ground time in parks from this visit — much earlier than a typical import.",
     icon: "stethoscope",
   },
   {
-    date: "2026-10-02",
-    label: "Third vaccination window opens (14 weeks)",
-    detail:
-      "Final puppy C3/C5 booster — Singapore guidelines want the last dose at 16 weeks or older. Full protection arrives about two weeks after the final dose.",
-    icon: "syringe",
-  },
-  {
     date: "2026-10-16",
-    label: "Final puppy vaccine due (16 weeks)",
+    label: "16-week booster check with the SG vet (ask)",
     detail:
-      "The last puppy dose must land at ≥16 weeks under Singapore guidelines. Deworming cadence also shifts now: monthly until 6 months, then every 3 months.",
+      "His third dose landed at 10½ weeks — earlier than the 16-week final dose Singapore guidelines prefer, because maternal antibodies can blunt earlier shots. Ask the vet whether he wants one extra C3 at ~16 weeks for belt-and-braces cover. Deworming cadence also shifts now: monthly until 6 months, then every 3 months.",
     icon: "syringe",
   },
   {
     date: "2026-10-16",
     label: "Socialisation window closes (~16 weeks)",
     detail:
-      "The critical socialisation period runs to roughly 16 weeks — and Wobbles lands with only ~4 weeks of it left. His first month home IS the socialisation sprint: front-load the Confidence Club and carried outings from day 4.",
+      "The critical socialisation period runs to roughly 16 weeks — and Wobbles lands with only ~3 weeks of it left. His first weeks home ARE the socialisation sprint: front-load the Confidence Club and outings from day 4 — and with vaccines already complete, he can work on the ground once the vet signs off.",
     icon: "users",
-  },
-  {
-    date: "2026-10-30",
-    label: "Fully vaccinated — parks and dog runs open up",
-    detail:
-      "About 1–2 weeks after the final dose, ground time in public parks is safe. The 7pm park socialisation sessions can move onto the grass — and the Woodlands Waterfront dog run is now on the menu (licensed + vaccinated dogs only).",
-    icon: "trees",
   },
   {
     date: "2026-12-26",

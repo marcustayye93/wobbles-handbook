@@ -1,6 +1,6 @@
 /*
  * Redesign v2 — "Keepsake Field Guide" Shopping Countdown page.
- * Week-by-week purchase plan to homecoming (18 Sep 2026): countdown hero with
+ * Week-by-week purchase plan to homecoming (24 Sep 2026): countdown hero with
  * ProgressRing, "this week" spotlight card, catch-up (overdue) section, and a
  * dashed-spine timeline of all weeks. Ticks live in the family-shared
  * "shopping" map so both phones stay in sync.

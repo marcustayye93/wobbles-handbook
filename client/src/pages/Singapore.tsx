@@ -24,9 +24,9 @@ const ICONS: Record<string, LucideIcon> = {
 };
 
 export default function Singapore() {
-  // Homecoming day IS fly day: AVS requires puppies to be ≥12 weeks old at import,
-  // so Wobbles flies BNE → SIN on 18 Sep 2026, the day he turns 12 weeks.
-  const toFlight = daysUntil("2026-09-18");
+  // Breeder-confirmed plan: his Protech C3 course finishes 8 Sep, full protection
+  // ~22 Sep, and he flies BNE → SIN with Jet Pets on 23 Sep (landing 24 Sep, 12w6d).
+  const toFlight = daysUntil("2026-09-23");
 
   // group steps by phase, preserving order
   const phases: { phase: string; steps: typeof SG_STEPS }[] = [];
@@ -51,13 +51,14 @@ export default function Singapore() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#22364D]/70 via-transparent to-transparent" aria-hidden />
           {toFlight > 0 && (
             <span className="absolute bottom-3 left-3 bg-[#FFFDF8]/92 backdrop-blur px-3 py-1.5 rounded-full text-xs font-extrabold text-[#22364D]">
-              ✈️ Flies home in {toFlight} days (18 Sep 2026)
+              ✈️ Flies home in {toFlight} days (23 Sep 2026)
             </span>
           )}
         </div>
         <p className="text-sm text-muted-foreground leading-relaxed mt-4">
           The family moves to Singapore in <strong className="text-foreground">September 2026</strong>, with
-          Wobbles flying via <strong className="text-foreground">Jetpets</strong>. Great news: because
+          Wobbles flying on <strong className="text-foreground">23 September</strong> via{" "}
+          <strong className="text-foreground">Jet Pets</strong>. Great news: because
           Australia is rabies-free, this is one of the easiest international pet moves in the world —
           <strong className="text-foreground"> no rabies shots, no quarantine</strong>, roughly 2–3 weeks of
           paperwork done right.
@@ -86,7 +87,7 @@ export default function Singapore() {
       <div className="px-5">
         <h2 className="font-display font-semibold text-[1.45rem] text-[#22364D] mb-1">The plan, step by step</h2>
         <p className="text-xs text-muted-foreground mb-4">
-          Jetpets handles most of this — but here's the whole journey so nothing surprises you.
+          Jet Pets handles most of this — but here's the whole journey so nothing surprises you.
         </p>
         <div className="space-y-5 pb-2">
           {phases.map((ph, pi) => (

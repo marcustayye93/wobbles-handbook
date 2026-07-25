@@ -1,8 +1,8 @@
 /*
  * Pre-homecoming shopping countdown — week-by-week purchase plan.
  *
- * Sequences everything the flat needs before Wobbles lands on 18 Sep 2026
- * (12 weeks, earliest AVS export age). Ordering logic:
+ * Sequences everything the flat needs before Wobbles lands on 24 Sep 2026
+ * (flies with Jet Pets on 23 Sep at 12w5d — past the AVS 12-week minimum). Ordering logic:
  *   - Big, slow-to-ship, needs-practice items first (IATA crate, pen, setup)
  *   - Admin with lead times mid-plan (insurance quotes, vet shortlist, PALS)
  *   - Consumables and food later (freshness + breeder confirms exact brand
@@ -32,11 +32,11 @@ export interface ShoppingWeek {
   items: ShoppingItem[];
 }
 
-export const HOMECOMING_ISO = "2026-09-18";
+export const HOMECOMING_ISO = "2026-09-24";
 
 /**
  * Weeks run Monday–Sunday. Week 1 starts Mon 20 Jul 2026 (the plan's launch
- * week) and the final stretch ends on homecoming Friday 18 Sep 2026.
+ * week) and the final stretch ends on homecoming Thursday 24 Sep 2026.
  */
 export const SHOPPING_WEEKS: ShoppingWeek[] = [
   {
@@ -50,7 +50,7 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
       {
         id: "crate-iata",
         label: "IATA flight crate (size for ~8 kg adult, breathable, clip-lock)",
-        why: "The single most time-critical buy: Jetpets needs the crate weeks early so Wobbles' meals can be fed in it at the farm — crate love takes weeks to build.",
+        why: "The single most time-critical buy: Jet Pets needs the crate weeks early so Wobbles' meals can be fed in it at the farm — crate love takes weeks to build.",
         emoji: "✈️",
       },
       {
@@ -162,7 +162,7 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
       },
       {
         id: "vet-shortlist",
-        label: "Choose the Woodlands vet + pre-register, book the first visit (~21 Sep)",
+        label: "Choose the Woodlands vet + pre-register, book the first visit (~28 Sep)",
         why: "Good clinics book out; the first check should happen within days of landing.",
         emoji: "🩺",
       },
@@ -267,7 +267,7 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
       {
         id: "import-licence",
         label: "Apply for the AVS import licence (valid 30 days — timing matters)",
-        why: "It's only valid 30 days, so applying this week covers the 18 Sep flight with margin.",
+        why: "It's only valid 30 days, so applying this week covers the 23 Sep flight with margin.",
         emoji: "🛂",
       },
     ],
@@ -299,7 +299,7 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
       },
       {
         id: "flight-confirm",
-        label: "Confirm Jetpets flight details + crate handover logistics",
+        label: "Confirm Jet Pets flight details + crate handover logistics",
         why: "Final flight confirmation usually lands ~1 week out; chase it if quiet.",
         emoji: "🛫",
       },
@@ -308,9 +308,9 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
   {
     id: "w9",
     start: "2026-09-14",
-    end: "2026-09-18",
+    end: "2026-09-24",
     title: "Final stretch — perishables & landing prep",
-    theme: "The last-minute fresh stuff, then set the stage. He lands Friday.",
+    theme: "The last-minute fresh stuff, then set the stage. He flies Wednesday 23rd and lands Thursday 24th.",
     emoji: "🏁",
     items: [
       {

@@ -4,7 +4,7 @@
  * PLUS a date-deterministic daily layer: the household weekly schedule
  * (Marcus WFH Mon/Fri, office Tue–Thu; Chesa home most days), recurring
  * care-rota reminders (fortnightly Monday baths, weekly nails/ears,
- * monthly parasite dose on the 18th), a rotating activity idea, and
+ * monthly parasite dose on the 24th), a rotating activity idea, and
  * per-person nudges. Everything is transparent, rule-based and identical
  * for the whole family on any given date. No fake AI.
  */
@@ -74,9 +74,9 @@ export function wobblesToday(now: Date = new Date()): TodayStage {
     return {
       stage: "With the breeder — export prep (8–12 weeks)",
       title: "Growing Up at the Farm",
-      text: `${age.weeks} weeks old and still at The Doghouse QLD — AVS won't let him fly before 12 weeks, so he's banking litter manners, farm socialisation and his second vaccination there. ${toHome} days until he lands: nail the admin sprint (AVS import permit, PALS licence, Jetpets booking) and finish the flat.`,
-      focus: "Admin sprint: import permit, PALS licence, Jetpets confirmation, kit list done",
-      expect: "The breeder handles his 2nd vax and enrichment — ask for photo updates and the vaccination record",
+      text: `${age.weeks} weeks old and still at The Doghouse QLD — AVS won't let him fly before 12 weeks, so he's banking litter manners, farm socialisation and his Protech C3 vaccine course there (11 Aug, 25 Aug, 8 Sep). ${toHome} days until he lands on 24 Sep: nail the admin sprint (AVS import permit, PALS licence, Jet Pets confirmation) and finish the flat.`,
+      focus: "Admin sprint: import permit, PALS licence, Jet Pets confirmation, kit list done",
+      expect: "The breeder handles all three Protech C3 doses and enrichment — ask for photo updates and the vaccination record",
       training: "Train yourselves: agree the house rules, cue words and the first-72-hours plan",
       link: "/singapore",
       linkLabel: "Road to Singapore",
@@ -98,7 +98,7 @@ export function wobblesToday(now: Date = new Date()): TodayStage {
     return {
       stage: "Socialisation sprint — window closing",
       title: "Four Weeks to Make Count",
-      text: `${age.weeks} weeks — he arrived at 12 weeks and the socialisation window closes around 16, so this month IS the sprint. Front-load the Confidence Club and the 100 Things list: people, surfaces, sounds, gentle handling. Carried/lap-based outings until he's fully vaccinated.`,
+      text: `${age.weeks} weeks — he arrived at nearly 13 weeks and the socialisation window closes around 16, so these first weeks ARE the sprint. Front-load the Confidence Club and the 100 Things list: people, surfaces, sounds, gentle handling. His Protech C3 course finished in Australia, so once the Singapore vet gives the nod at the first visit, grass is on the menu.`,
       focus: "One or two new socialisation ticks a day; 7:15am walk + 7pm park (carried) rhythm",
       expect: "Growing confidence, testing boundaries, teething begins",
       training: "Day-1 skills all start now: name, sit, crate love, recall games — under 5 minutes a session",
@@ -110,7 +110,7 @@ export function wobblesToday(now: Date = new Date()): TodayStage {
     return {
       stage: "Junior — pre coat change",
       title: "Adolescent Brain, Baby Coat",
-      text: `${age.months} months old — keep training sessions short and keep brushing daily so the brush stays a friend before the coat change hits. Once fully vaccinated (~late Oct), the 7pm park sessions move onto the grass — and the Woodlands Waterfront dog run opens up.`,
+      text: `${age.months} months old — keep training sessions short and keep brushing daily so the brush stays a friend before the coat change hits. His vaccine course wrapped in Australia, so with the Singapore vet's sign-off the 7pm park sessions run on the grass — and the Woodlands Waterfront dog run is open for business.`,
       focus: "Daily 2-minute brush ritual with treats; 7:15am + evening walks on schedule",
       expect: "Adult teeth arriving, more stamina, selective hearing",
       training: "Loose-lead walking and 'leave it' — practise on the way to the park",

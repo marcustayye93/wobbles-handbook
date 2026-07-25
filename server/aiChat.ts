@@ -25,7 +25,7 @@ export const WOBBLES_PROFILE = {
   colour: "red parti (Blenheim) \u2014 rich red patches on white, fleece coat",
   sex: "male",
   dob: "2026-06-26",
-  homecoming: "2026-09-18",
+  homecoming: "2026-09-24",
   expectedAdultWeight: "about 8 kg",
   breeder:
     "The Doghouse QLD (Charmaine), Moreton Bay region, Queensland \u2014 RightPaw-verified, raises litters with Puppy Culture + Early Neurological Stimulation",
@@ -34,7 +34,9 @@ export const WOBBLES_PROFILE = {
   family:
     "Marcus (WFH Mon + Fri, office Tue\u2013Thu) and Chesa (home most days, sometimes office Tue/Thu). Monday is grooming day; Sunday is the Wobbles focus day.",
   relocation:
-    "Flying from Brisbane to Singapore with Jetpets around 18 Sep 2026 (AVS requires 12 weeks minimum age at export; Singapore is AVS Category A/B-exempt for Australia but needs import permit, PALS dog licence, and microchip/vaccination paperwork).",
+    "Flying from Brisbane to Singapore with Jet Pets on 23 Sep 2026, landing/homecoming 24 Sep (AVS requires 12 weeks minimum age at export — he flies at 12w5d). Needs import permit, PALS dog licence, and microchip/vaccination paperwork.",
+  vaccinations:
+    "Protech C3 course at the breeder's vet with the rest of his litter: dose 1 on 11 Aug 2026, dose 2 on 25 Aug, dose 3 on 8 Sep — fully protected ~22 Sep, a day or two before the flight, as the breeder planned. Ask the SG vet at the first visit (~28 Sep) about a 16-week booster since dose 3 was at 10.5 weeks.",
 } as const;
 
 /* ---------------- Age + stage (server-side, deterministic) ---------------- */
@@ -75,7 +77,7 @@ export function currentStage(now: Date = new Date()): string {
   if (toHome > 0) {
     if (age.weeks < 8)
       return `${age.weeks} weeks old, still with his litter at the breeder in Queensland (${toHome} days until he arrives in Singapore). The breeder handles ENS/enrichment; the family is puppy-proofing and shopping.`;
-    return `${age.weeks} weeks old, still at the breeder in Queensland for export prep (${toHome} days until homecoming on 18 Sep 2026). Admin sprint: AVS import permit, PALS licence, Jetpets booking.`;
+    return `${age.weeks} weeks old, still at the breeder in Queensland for export prep (${toHome} days until homecoming on 24 Sep 2026; Protech C3 shots 11 Aug / 25 Aug / 8 Sep). Admin sprint: AVS import permit, PALS licence, Jet Pets flight 23 Sep.`;
   }
   const daysHome = -toHome;
   if (age.weeks < 16) {

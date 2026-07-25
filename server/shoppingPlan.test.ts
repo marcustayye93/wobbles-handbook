@@ -19,7 +19,7 @@ import {
 const d = (iso: string) => new Date(iso + "T12:00:00");
 
 describe("shopping plan structure", () => {
-  it("has 9 weeks covering 20 Jul → 18 Sep 2026 with no gaps", () => {
+  it("has 9 weeks covering 20 Jul → 24 Sep 2026 with no gaps", () => {
     expect(SHOPPING_WEEKS).toHaveLength(9);
     expect(SHOPPING_WEEKS[0].start).toBe("2026-07-20");
     expect(SHOPPING_WEEKS[SHOPPING_WEEKS.length - 1].end).toBe(HOMECOMING_ISO);
@@ -37,10 +37,10 @@ describe("shopping plan structure", () => {
     }
   });
 
-  it("final week ends on homecoming Friday 18 Sep 2026", () => {
+  it("final week ends on homecoming Thursday 24 Sep 2026", () => {
     const last = SHOPPING_WEEKS[SHOPPING_WEEKS.length - 1];
-    expect(last.end).toBe("2026-09-18");
-    expect(d(last.end).getDay()).toBe(5); // Friday
+    expect(last.end).toBe("2026-09-24");
+    expect(d(last.end).getDay()).toBe(4); // Thursday — he flies Wed 23rd, lands Thu 24th
   });
 
   it("item ids are unique across the whole plan", () => {

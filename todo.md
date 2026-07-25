@@ -280,4 +280,16 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 - [x] Practice counters count matching existing Training Log entries + new practice logs (synced via tracker_entries; option exact match + note keyword match)
 - [x] Journey tab: broader journey section (socialisation sprint card + milestone road timeline)
 - [x] Update tests (placeLog removed, growthBand updated, tricks.content.test.ts 13 new tests); suite 206/206 green + tsc clean
-- [ ] Mobile screenshots, checkpoint (auto-publish), GitHub push, deliver
+- [x] Mobile screenshots (Growth, Health, Journey, TrickDetail, Home), checkpoint afd164ee (auto-published), GitHub push (main @ afd164e), delivered
+
+# Phase 12 — Breeder vaccine schedule + Jet Pets flight (user info 2026-07-25 #3)
+
+- [x] Audit all date-dependent sources: WOBBLES.homecoming, MILESTONES, wobblesToday stages, care rota anchors, shopping plan weeks, Health tab schedule, Growth timeline, handbook/Singapore content, tests
+- [x] Verify AVS 12-week import rule still satisfied by 23/24 Sep flight (Wobbles will be 12w6d at export — yes)
+- [x] Vaccines: C3 (Protech) #1 on 11 Aug 2026, #2 on 25 Aug, #3 on 8 Sep — replaced estimated vaccine milestones/copy everywhere (brand named, all three at the breeder's vet; fly-ready ~22 Sep noted)
+- [x] Flight/homecoming: WOBBLES.homecoming → 2026-09-24 (Jet Pets managed, flies Wed 23, lands Thu 24 Sep); countdowns, fly-ready copy, homecoming milestone text updated
+- [x] Re-anchored post-homecoming care rota (bath Mondays from 28 Sep, parasite dose the 24th, park nights from 25 Sep) + socialisation window + first SG vet visit (~28 Sep) + licence deadline
+- [x] Shopping plan: final week extended to 24 Sep; HOMECOMING_ISO + copy updated
+- [x] Updated affected copy: Wobbles Today stages, Health tab schedule, Singapore chapter, Guides, trackers, AI-chat profile, Jet Pets naming corrected everywhere
+- [x] Tests updated (shoppingPlan, dailyEngine anchors) + suite 206/206 green + tsc clean; mobile screenshots (Home, Health, Growth, Singapore, Shopping)
+- [ ] Checkpoint (auto-publish), GitHub push, deliver summary of what moved

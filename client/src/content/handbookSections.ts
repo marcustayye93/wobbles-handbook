@@ -12,13 +12,13 @@ export const SECTIONS: Section[] = [
     slug: "first-day",
     title: "The First Day & Night",
     emoji: "🏡",
-    tagline: "Homecoming is 18 September 2026 — here's exactly how to nail it",
+    tagline: "Homecoming is 24 September 2026 — here's exactly how to nail it",
     readMins: 8,
     hero: ASSETS.heroFirstDay,
     blocks: [
       {
         type: "p",
-        text: "Wobbles comes home at 12 weeks old on Friday 18 September 2026 — Singapore's AVS rules mean puppies can only be imported from 12 weeks of age, so he spends his first three months with his litter at The Doghouse QLD. He'll arrive with his puppy pack: a blanket carrying his mum's scent, his puppy passport, microchip and vaccination records (two shots done in Australia). The first 48 hours set the tone for everything — but they don't have to be perfect, just calm. Remember he's also just flown 7+ hours from Brisbane, so day one is about rest, not introductions.",
+        text: "Wobbles comes home at nearly 13 weeks old on Thursday 24 September 2026, flying with Jet Pets on the 23rd — Singapore's AVS rules mean puppies can only be imported from 12 weeks of age, so he spends his first three months with his litter at The Doghouse QLD. He'll arrive with his puppy pack: a blanket carrying his mum's scent, his puppy passport, microchip and vaccination records (all three Protech C3 shots done in Australia). The first 48 hours set the tone for everything — but they don't have to be perfect, just calm. Remember he's also just flown 7+ hours from Brisbane, so day one is about rest, not introductions.",
       },
       { type: "h", text: "Before he arrives" },
       {
@@ -78,7 +78,7 @@ export const SECTIONS: Section[] = [
       {
         type: "warn",
         title: "No public walks yet",
-        text: "Until roughly 2 weeks after his final puppy vaccination (~late October 2026), Wobbles must not walk where unvaccinated dogs may have been — that includes void decks, lift lobbies and the park. Carry him outside instead: being carried around Woodlands, to the shops, past the playground is brilliant socialisation with zero parvo risk. The 7:15am toilet walk works pre-vaccination too — carry him to one clean patch of grass, same spot every time.",
+        text: "His Protech C3 course finishes on 8 Sep in Australia, so he lands fully protected (immunity ~22 Sep, two weeks after dose 3). Still, hold off on public ground until the first SG vet visit (~28 Sep) confirms he's clear — and ask the vet about a 16-week booster, since his third dose was given at 10.5 weeks. Until then, carry him outside: being carried around Woodlands, to the shops, past the playground is brilliant socialisation with zero parvo risk. The 7:15am toilet walk works too — carry him to one clean patch of grass, same spot every time.",
       },
       { type: "h", text: "Surviving the first night" },
       {
@@ -177,7 +177,7 @@ export const SECTIONS: Section[] = [
       {
         type: "tip",
         title: "Your one job before 16 October",
-        text: "The socialisation window is the single highest-leverage project of Wobbles' entire life. Aim for daily, brief, positive exposures: people of all kinds, surfaces, sounds, handling, car rides — and since home is an HDB flat in Woodlands, prioritise lifts, void decks, corridor noise, traffic and the MRT rumble. Once fully vaccinated (~late Oct), the 7pm every-other-day park sessions take over: the small park next to the block for the walkable nights, and Woodlands Waterfront Park's dog run (a short drive away, open 24/7 with sea views) when you want off-leash play with other dogs. Positive, brief, and puppy-chooses. Never flood him.",
+        text: "The socialisation window is the single highest-leverage project of Wobbles' entire life. Aim for daily, brief, positive exposures: people of all kinds, surfaces, sounds, handling, car rides — and since home is an HDB flat in Woodlands, prioritise lifts, void decks, corridor noise, traffic and the MRT rumble. Once the SG vet signs off at the first visit (~28 Sep — his Protech C3 course finished back on 8 Sep), the 7pm every-other-day park sessions take over: the small park next to the block for the walkable nights, and Woodlands Waterfront Park's dog run (a short drive away, open 24/7 with sea views) when you want off-leash play with other dogs. Positive, brief, and puppy-chooses. Never flood him.",
       },
     ],
   },
@@ -626,7 +626,7 @@ export const SECTIONS: Section[] = [
       {
         type: "tip",
         title: "The monthly preventive habit — for life",
-        text: "One combined monthly preventive (a chew like NexGard Spectra or Simparica Trio, or a spot-on drip like Revolution Plus) covers ticks, fleas AND heartworm in a single dose — and it starts at homecoming (18 Sep 2026, logged in his calendar). In Singapore this never pauses: heartworm mosquitoes and tropical ticks are active all 12 months, so pick a memorable date (the 18th) and re-dose every month, forever. Log each dose in the Health tracker.",
+        text: "One combined monthly preventive (a chew like NexGard Spectra or Simparica Trio, or a spot-on drip like Revolution Plus) covers ticks, fleas AND heartworm in a single dose — and it starts at homecoming (24 Sep 2026, logged in his calendar). In Singapore this never pauses: heartworm mosquitoes and tropical ticks are active all 12 months, so pick a memorable date (the 24th) and re-dose every month, forever. Log each dose in the Health tracker.",
       },
     ],
   },
