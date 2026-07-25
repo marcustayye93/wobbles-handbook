@@ -6,7 +6,8 @@
  */
 import { Link } from "wouter";
 import { PageShell, Eyebrow, PawDivider, ProgressRing } from "@/components/AppShell";
-import { SECTIONS } from "@/content/handbookSections";
+import { PUPPY_SECTIONS, LIFETIME_SECTIONS } from "@/content/handbookSections";
+import { wobblesAge } from "@/content/wobbles";
 import { HUNDRED_TOTAL } from "@/content/hundredThings";
 import { CHECKLISTS } from "@/content/checklists";
 import { CHAPTER_COVERS } from "@/content/wobbles";
@@ -82,7 +83,7 @@ export default function HandbookIndex() {
 
         {/* Chapter covers */}
         <div className="space-y-4 pb-2">
-          {SECTIONS.map((s, i) => {
+          {PUPPY_SECTIONS.map((s, i) => {
             const cover = CHAPTER_COVERS[s.slug];
             const pct = progress[s.slug] ?? 0;
             return (
@@ -149,6 +150,53 @@ export default function HandbookIndex() {
         </div>
 
         <PawDivider />
+
+        {/* Growing with Wobbles — lifetime chapters (U1) */}
+        <Eyebrow className="mb-1 px-1">Growing with Wobbles</Eyebrow>
+        <p className="px-1 text-[11px] font-body text-muted-foreground leading-relaxed mb-2.5">
+          Chapters for the years ahead — written now, unlocking as he grows.
+        </p>
+        <div className="space-y-2.5 pb-5">
+          {LIFETIME_SECTIONS.map((s) => {
+            const months = wobblesAge().months;
+            const isNow =
+              s.unlockMonths != null &&
+              months >= s.unlockMonths &&
+              (LIFETIME_SECTIONS.find((n) => (n.unlockMonths ?? 0) > s.unlockMonths!)?.unlockMonths ?? Infinity) > months;
+            const pct = progress[s.slug] ?? 0;
+            return (
+              <Link key={s.slug} href={`/handbook/${s.slug}`} className="block sticker-card p-4 press-scale">
+                <div className="flex items-center gap-3.5">
+                  <span className="w-11 h-11 rounded-2xl bg-[#22364D]/6 flex items-center justify-center text-[20px] shrink-0">
+                    {s.emoji}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-body font-bold text-[14px] leading-snug text-[#22364D] flex items-center gap-1.5">
+                      <span className="truncate">{s.title}</span>
+                      {isNow && (
+                        <span className="shrink-0 bg-[#B4512E] text-[#FFFDF8] text-[8px] font-body font-extrabold uppercase tracking-[0.12em] px-1.5 py-0.5 rounded-full">
+                          Now
+                        </span>
+                      )}
+                    </p>
+                    <p className="text-[11px] font-body text-muted-foreground mt-0.5 flex items-center gap-1.5">
+                      <span className="font-extrabold text-[#8A6D1F]">{s.stage}</span>
+                      <span className="opacity-60">·</span>
+                      <Clock size={10} className="shrink-0" /> {s.readMins} min
+                      {pct > 0 && (
+                        <>
+                          <span className="opacity-60">·</span>
+                          <span>{Math.round(pct * 100)}% read</span>
+                        </>
+                      )}
+                    </p>
+                  </div>
+                  <ChevronRight size={17} className="text-muted-foreground shrink-0" />
+                </div>
+              </Link>
+            );
+          })}
+        </div>
 
         {/* Skill guides */}
         <Eyebrow className="mb-2.5 px-1">Skill guides</Eyebrow>

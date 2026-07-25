@@ -5,8 +5,10 @@
  */
 import type { Section } from "./types";
 import { ASSETS } from "./wobbles";
+import { LIFETIME_SECTIONS } from "./lifetimeSections";
 
-export const SECTIONS: Section[] = [
+/** Chapters for the puppy year (written for now). */
+export const PUPPY_SECTIONS: Section[] = [
   // ─────────────────────────────────────────────────────────── 1. First Day
   {
     slug: "first-day",
@@ -754,6 +756,11 @@ export const SECTIONS: Section[] = [
     ],
   },
 ];
+
+/** All chapters: the puppy year plus the "Growing with Wobbles" lifetime chapters. */
+export const SECTIONS: Section[] = [...PUPPY_SECTIONS, ...LIFETIME_SECTIONS];
+
+export { LIFETIME_SECTIONS };
 
 export function getSection(slug: string): Section | undefined {
   return SECTIONS.find((s) => s.slug === slug);

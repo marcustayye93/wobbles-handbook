@@ -361,4 +361,36 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 - [x] Audit scroll position on route changes across the app (trick pages open mid-scroll)
 - [x] Global fix: scroll to top on every route navigation (preserve back/forward feel where sensible)
 - [x] Tests + tsc clean, verify in browser (trick page opens at top, prefilled log works)
-- [ ] Checkpoint (auto-publish) + GitHub push + deliver
+- [x] Checkpoint (auto-publish) + GitHub push + deliver
+
+# Phase 20 — Lifetime upgrades: all 7 roadmap features (user request 2026-07-26)
+
+- [x] Write full design blueprint for all 7 upgrades (grouped into existing pages, no new bottom-nav tabs)
+- [x] U1 Life-stage engine: extend wobblesToday past puppyhood (adolescent/young adult/mature/senior/geriatric), stage-aware nudges, stage content
+- [ ] U2 Data export & backup: one-tap full JSON/CSV export in About/settings area, monthly scheduled export digest notification
+- [ ] U3 Medical vault: documents (S3 uploads) + medications/preventives schedules + symptom log — extension of Health page
+- [ ] U4 Year-scale views: month/year timeline zoom in Logs, On This Day on Home/Memories, annual report generator
+- [ ] U5 Lifetime milestone generator: recurring boosters/licence/birthday milestones beyond first year (extends Growth/Home coming-up)
+- [ ] U6 Memories albums & search: year chapters, caption/date search (extends Memories)
+- [ ] U7 Senior & QoL content: senior handbook chapters + quality-of-life tracker (extends Guides + Health)
+- [ ] Audit: vitest suite green, tsc clean, browser verification of all 7 upgrades
+- [ ] Final checkpoint (auto-publish) + GitHub push + delivery
+
+## Phase 20 — Lifetime upgrades (U1–U7)
+
+- [x] Write docs/lifetime-blueprint.md design spec
+- [x] U1: extend stage engine (adolescent/young adult/prime/senior/twilight) + stage-aware nudges
+- [x] U1: five life-stage handbook chapters with stage badges in Guides index
+- [ ] U2: exportData router (JSON snapshot) + About "Data & backup" section (JSON + CSV downloads)
+- [ ] U2: /api/scheduled/monthlyBackup handler + heartbeat cron
+- [ ] U3: medical_records + medications tables, medicalRouter, db helpers
+- [ ] U3: Health page — Medicine cabinet, Paper trail, Symptom log sections
+- [ ] U3: symptom tracker definition
+- [ ] U4: TrackersHub Recent|Months rollup toggle
+- [ ] U4: Home "On This Day" card
+- [ ] U4: Growth "Year in review" card + /growth/year/:year report page
+- [ ] U5: lifetimeMilestones generator + allMilestones(); wire Growth, Home, Health
+- [ ] U6: Memories year chapters, search, filter chips
+- [ ] U7: golden-years + twilight-care full content, QoL check-in card on Health, qol tracker, senior QoL nudge
+- [ ] Phase 20 audit: tests green, tsc clean, screenshots, todo reconciled
+- [ ] Phase 20 checkpoint + GitHub push
