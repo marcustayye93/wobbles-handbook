@@ -11,7 +11,8 @@ import { PageShell, PageHeader, Eyebrow, PawDivider } from "@/components/AppShel
 import QuickLogSheet from "@/components/QuickLogSheet";
 import { useTrackerEntries } from "@/hooks/useSyncedData";
 import { TRICKS, practiceCount, type Trick, type TrickLevel } from "@/content/tricks";
-import { WOBBLES, MILESTONES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
+import { WOBBLES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
+import { allMilestones } from "@/content/lifetimeMilestones";
 import { cn } from "@/lib/utils";
 import {
   GraduationCap,
@@ -102,8 +103,9 @@ export default function Journey() {
   const socialDaysLeft = daysUntil(socialCloseISO);
   const homecomingDays = daysUntil(WOBBLES.homecoming);
 
-  const upcoming = MILESTONES.filter((m) => daysUntil(m.date) >= 0);
-  const past = MILESTONES.filter((m) => daysUntil(m.date) < 0);
+  const lifetime = useMemo(() => allMilestones(), []);
+  const upcoming = lifetime.filter((m) => daysUntil(m.date) >= 0).slice(0, 6);
+  const past = lifetime.filter((m) => daysUntil(m.date) < 0);
 
   return (
     <PageShell className="pb-28">

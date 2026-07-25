@@ -13,7 +13,8 @@ import QuickLogSheet from "@/components/QuickLogSheet";
 import { MedicineCabinet, PaperTrail, SymptomLog } from "@/components/MedicalVault";
 import { useTrackerEntries } from "@/hooks/useSyncedData";
 import { careTasksFor, type CareTask } from "@/content/household";
-import { WOBBLES, MILESTONES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
+import { WOBBLES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
+import { allMilestones } from "@/content/lifetimeMilestones";
 import { growthVerdict } from "@/lib/growthBand";
 import { cn } from "@/lib/utils";
 import {
@@ -45,9 +46,13 @@ export function nextParasiteDose(now: Date): Date {
 }
 
 /** The health-relevant milestone schedule (vaccines, vet, parasite, sterilisation). */
-const HEALTH_ICONS = ["syringe", "shield", "stethoscope", "scissors", "cake"];
-function healthMilestones() {
-  return MILESTONES.filter((m) => HEALTH_ICONS.includes(m.icon));
+const HEALTH_ICONS = ["syringe", "shield", "stethoscope", "scissors"];
+function healthMilestones(now: Date = new Date()) {
+  // Lifetime health schedule (U5): keep it compact — the last 5 done + next 5 due.
+  const health = allMilestones().filter((m) => HEALTH_ICONS.includes(m.icon));
+  const past = health.filter((m) => daysUntil(m.date, now) < 0);
+  const upcoming = health.filter((m) => daysUntil(m.date, now) >= 0);
+  return [...past.slice(-5), ...upcoming.slice(0, 5)];
 }
 
 function CareTaskRow({ task }: { task: CareTask }) {
@@ -100,7 +105,7 @@ export default function Health() {
     return days;
   }, [now]);
 
-  const schedule = useMemo(() => healthMilestones(), []);
+  const schedule = useMemo(() => healthMilestones(now), [now]);
   const parasiteNext = useMemo(() => nextParasiteDose(now), [now]);
   const parasiteLogged = useMemo(
     () =>

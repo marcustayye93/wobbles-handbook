@@ -9,7 +9,8 @@ import { PageShell, Eyebrow } from "@/components/AppShell";
 import { trpc } from "@/lib/trpc";
 import { useTrackerFeed } from "@/hooks/useSyncedData";
 import { buildYearReport, monthKeyLabel } from "@/lib/yearScale";
-import { WOBBLES, MILESTONES, daysUntil, formatDate } from "@/content/wobbles";
+import { WOBBLES, daysUntil, formatDate } from "@/content/wobbles";
+import { allMilestones } from "@/content/lifetimeMilestones";
 import { ArrowLeft, PawPrint, Scale } from "lucide-react";
 
 const STAT_DEFS: { key: keyof ReturnType<typeof buildYearReport>["totals"]; emoji: string; label: string }[] = [
@@ -40,7 +41,7 @@ export default function YearReview() {
 
   const yearMilestones = useMemo(
     () =>
-      MILESTONES.filter((m) => m.date.startsWith(`${year}-`) && daysUntil(m.date) < 0).sort(
+      allMilestones().filter((m) => m.date.startsWith(`${year}-`) && daysUntil(m.date) < 0).sort(
         (a, b) => a.date.localeCompare(b.date),
       ),
     [year],

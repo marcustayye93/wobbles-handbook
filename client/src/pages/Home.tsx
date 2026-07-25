@@ -21,14 +21,15 @@ import type { HouseholdSettings } from "@/lib/householdSettings";
 import ReminderCelebration from "@/components/ReminderCelebration";
 import { todayISO } from "@/lib/dates";
 import { useTrackerFeed, useSharedState, rowToEntry } from "@/hooks/useSyncedData";
-import { ASSETS, WOBBLES, MILESTONES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
+import { ASSETS, WOBBLES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
+import { allMilestones } from "@/content/lifetimeMilestones";
 import { ChevronRight, ArrowRight, PawPrint, CalendarDays, Search, SlidersHorizontal, Check, Sparkles } from "lucide-react";
 
 /** Countdown keepsake: picks the most relevant upcoming date */
 function nextCountdown(): { days: number; label: string } | null {
   const toHome = daysUntil(WOBBLES.homecoming);
   if (toHome > 0) return { days: toHome, label: "days until homecoming" };
-  const next = MILESTONES.filter((m) => daysUntil(m.date) > 0)[0];
+  const next = allMilestones().filter((m) => daysUntil(m.date) > 0)[0];
   if (next) return { days: daysUntil(next.date), label: next.label.toLowerCase() };
   return null;
 }
@@ -37,7 +38,10 @@ export default function Home() {
   const age = wobblesAge();
   const today = wobblesToday();
   const countdown = nextCountdown();
-  const nextMilestones = MILESTONES.filter((m) => daysUntil(m.date) >= 0).slice(0, 3);
+  const nextMilestones = useMemo(
+    () => allMilestones().filter((m) => daysUntil(m.date) >= 0).slice(0, 3),
+    [],
+  );
 
   // Nudges from the family-shared server data (same feed the trackers use)
   const { rows } = useTrackerFeed();

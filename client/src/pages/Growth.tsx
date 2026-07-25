@@ -25,7 +25,8 @@ import { useTrackerEntries, useTrackerFeed } from "@/hooks/useSyncedData";
 import { trpc } from "@/lib/trpc";
 import { yearsWithData } from "@/lib/yearScale";
 import { growthCurveSeries, growthVerdict, ageWeeksOn } from "@/lib/growthBand";
-import { WOBBLES, MILESTONES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
+import { WOBBLES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
+import { allMilestones } from "@/content/lifetimeMilestones";
 import { cn } from "@/lib/utils";
 import {
   Scale,
@@ -91,9 +92,9 @@ export default function Growth() {
     .filter((e) => typeof e.value === "number" && e.value > 0)
     .sort((a, b) => b.date.localeCompare(a.date))[0];
 
-  // Timeline: split into past and upcoming relative to today
-  const sorted = [...MILESTONES].sort((a, b) => a.date.localeCompare(b.date));
-  const upcoming = sorted.filter((m) => daysUntil(m.date) >= 0);
+  // Timeline: full lifetime map (U5) — everything past + the next 8 upcoming
+  const sorted = useMemo(() => allMilestones(), []);
+  const upcoming = sorted.filter((m) => daysUntil(m.date) >= 0).slice(0, 8);
   const past = sorted.filter((m) => daysUntil(m.date) < 0);
 
   return (
@@ -273,7 +274,7 @@ export default function Growth() {
             aria-hidden
           />
           <div className="space-y-3">
-            {sorted.map((m) => {
+            {[...past, ...upcoming].map((m) => {
               const days = daysUntil(m.date);
               const isPast = days < 0;
               const isNext = upcoming[0]?.date === m.date && upcoming[0]?.label === m.label;
@@ -325,7 +326,9 @@ export default function Growth() {
         </div>
 
         <p className="mt-4 text-center text-[10.5px] font-body text-muted-foreground">
-          {past.length} done · {upcoming.length} ahead · {age.born ? `week ${Math.floor(ageWeeksNow)}` : "counting down"}
+          {past.length} done · next {upcoming.length} shown ·{" "}
+          {Math.max(0, sorted.length - past.length - upcoming.length)} more mapped — his whole life,
+          through {sorted[sorted.length - 1]?.date.slice(0, 4)}
         </p>
       </section>
 
