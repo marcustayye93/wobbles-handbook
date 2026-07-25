@@ -313,3 +313,10 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 - [x] Guides hub: Caretaker's Guide as the FIRST entry at top of /handbook ("Start here when we travel" card with live TBC count)
 - [x] Tests for content structure (caretakerGuide.content.test.ts, 6 tests); suite 221/221 green + tsc clean
 - [x] Screenshots + live browser verification, checkpoint (auto-publish), GitHub push, deliver
+
+# Phase 15 — Handover prompt for other Manus account (user request 2026-07-26)
+
+- [ ] Sync GitHub main to latest code (verify working tree clean, push any diff)
+- [ ] Gather project facts: repo URL, stack/features, env/secrets needed, DB schema + seed needs, static assets, test commands
+- [ ] Write full handover prompt (markdown) so another Manus account can clone, set up, verify, and publish the app
+- [ ] Deliver the prompt to the user
