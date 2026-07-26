@@ -12,6 +12,7 @@ import { wobblesAge } from "@/content/wobbles";
 import { PawPrint, ChevronDown, ChevronRight, Lightbulb, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { anchoredToggle } from "@/hooks/useAnchoredToggle";
+import Collapse from "@/components/Collapse";
 
 const STATUS_STYLE: Record<string, { label: string; cls: string }> = {
   now: { label: "Start now", cls: "bg-[#6B7C5A] text-[#F8F3EB]" },
@@ -143,7 +144,7 @@ export default function Training() {
               </button>
 
               {/* expanded body */}
-              {isOpen && (
+              <Collapse open={isOpen}>
                 <div className="px-4 pb-4 border-t border-dashed border-[#E5DAC8]">
                   {s.img && (
                     <img
@@ -202,7 +203,7 @@ export default function Training() {
                     Log a session <ChevronRight size={15} />
                   </Link>
                 </div>
-              )}
+              </Collapse>
             </div>
           );
         })}

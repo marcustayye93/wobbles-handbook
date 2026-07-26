@@ -460,3 +460,8 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 ## Bug: grooming page jumps on card expand/collapse
 - [x] Fix page shift/misalignment when opening/closing stage cards on /grooming (anchoredToggle helper keeps tapped card visually in place; also applied to /training skill cards and the QoL check-in card)
 - [x] Verify + checkpoint + GitHub push + delivery (tsc clean, 339 tests green)
+
+## Feature: smooth accordion height transition
+- [x] Build reusable ~200ms animated Collapse component (height + opacity, ease-out, prefers-reduced-motion aware)
+- [x] Wire into Grooming stage cards + kit checklist, Training skill cards, and QoL check-in card; anchoredToggle now pins the tapped card for the full transition duration
+- [x] Verify (tsc clean, 339 tests green, mobile screenshots incl. deep-link ?open=bath) + checkpoint + GitHub push + delivery

@@ -20,6 +20,7 @@ import {
 } from "@/lib/qol";
 import { cn } from "@/lib/utils";
 import { anchoredToggle } from "@/hooks/useAnchoredToggle";
+import Collapse from "@/components/Collapse";
 import { HeartPulse, ChevronDown, ChevronUp } from "lucide-react";
 
 const BAND_COLORS: Record<string, string> = {
@@ -133,7 +134,7 @@ export default function QoLCheckIn() {
           )}
         </button>
 
-        {open && (
+        <Collapse open={open}>
           <div className="mt-5 border-t border-dashed border-[#E5DAC8] pt-4">
             <div className="space-y-4">
               {QOL_DIMENSIONS.map((d, i) => (
@@ -212,7 +213,7 @@ export default function QoLCheckIn() {
               {saving ? "Saving…" : `Save check-in — ${total}/${QOL_MAX}`}
             </button>
           </div>
-        )}
+        </Collapse>
       </div>
     </section>
   );

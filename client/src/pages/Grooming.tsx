@@ -30,6 +30,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { anchoredToggle } from "@/hooks/useAnchoredToggle";
+import Collapse from "@/components/Collapse";
 
 export default function Grooming() {
   const [open, setOpen] = useState<string | null>(() => {
@@ -145,7 +146,7 @@ export default function Grooming() {
             </span>
             <ChevronDown size={16} className={cn("text-muted-foreground transition-transform duration-200", showKit && "rotate-180")} />
           </button>
-          {showKit && (
+          <Collapse open={showKit}>
             <ul className="px-4 pb-3.5 space-y-2 border-t border-dashed border-[#E5DAC8] pt-3">
               {GROOM_KIT.map((k, i) => (
                 <li key={i} className="flex gap-2.5 items-baseline">
@@ -157,7 +158,7 @@ export default function Grooming() {
                 </li>
               ))}
             </ul>
-          )}
+          </Collapse>
         </div>
       </div>
 
@@ -196,7 +197,7 @@ export default function Grooming() {
                 />
               </button>
 
-              {isOpen && (
+              <Collapse open={isOpen}>
                 <div className="px-4 pb-4 border-t border-dashed border-[#E5DAC8]">
                   {g.img && (
                     <img
@@ -249,7 +250,7 @@ export default function Grooming() {
                     </div>
                   )}
                 </div>
-              )}
+              </Collapse>
             </div>
           );
         })}
