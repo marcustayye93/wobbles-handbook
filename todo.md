@@ -394,3 +394,10 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 - [x] U7: golden-years + twilight-care full content, QoL check-in card on Health, qol tracker, senior QoL nudge — qol.ts HHHHHMM library (7 dimensions, 0–5 anchors, 35 max, bands: >28 comfortable / 21–28 watch / <21 vet), QoLCheckIn.tsx guided slider card on Health with live band + toast + last-check-in line, qol tracker meta (/35 chart), verified end-to-end in browser (test row cleaned from DB); 14 new tests (316 total)
 - [x] Phase 20 audit: tests green, tsc clean, screenshots, todo reconciled
 - [x] Phase 20 checkpoint + GitHub push
+
+## Bugfix — production console errors (user report 26 Jul)
+
+- [x] Fix: "No procedure found on path medical.records.list" on published /health — diagnosed as stale server instance during rolling deploy (medical router confirmed present in current build: dist/index.js contains medicalRouter; no such errors in prod logs since 25 Jul 19:08Z boot); added retry (2x) + graceful "Try again" error cards to MedicineCabinet and PaperTrail so transient blips never surface raw console errors
+- [x] Fix: "No procedure found on path medical.meds.list" on published /health — same root cause + same resilience fix
+- [x] Verify QoL check-in stores a date and it is displayed — yes: each check-in saves a local YYYY-MM-DD date (+ server createdAt timestamp); card shows "Last check-in {date} — N/35" and /trackers/qol plots by date
+- [x] Checkpoint (auto-publish) + confirm fix on production

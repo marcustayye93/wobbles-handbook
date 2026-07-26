@@ -277,7 +277,12 @@ function AddMedSheet({
 export function MedicineCabinet() {
   const [now] = useState(() => new Date());
   const todayStr = toISO(now);
-  const { data: meds, isLoading } = trpc.medical.meds.list.useQuery();
+  const {
+    data: meds,
+    isLoading,
+    isError: medsError,
+    refetch: refetchMeds,
+  } = trpc.medical.meds.list.useQuery(undefined, { retry: 2, retryDelay: 1500 });
   const utils = trpc.useUtils();
   const [addOpen, setAddOpen] = useState(false);
 
@@ -333,6 +338,19 @@ export function MedicineCabinet() {
       </div>
       {isLoading ? (
         <p className="px-1 text-[12px] font-body text-muted-foreground">Opening the cabinet…</p>
+      ) : medsError ? (
+        <div className="sticker-card px-4 py-3.5 text-center">
+          <p className="text-[12px] font-body text-[#5A6B7E] leading-relaxed">
+            Couldn't reach the cabinet just now — usually a brief connection blip.
+          </p>
+          <button
+            type="button"
+            onClick={() => refetchMeds()}
+            className="mt-2 text-[11px] font-body font-extrabold text-[#B4512E]"
+          >
+            Try again
+          </button>
+        </div>
       ) : sorted.length > 0 ? (
         <div className="space-y-2">
           {sorted.map((m) => {
@@ -587,7 +605,12 @@ function UploadDocSheet({
 }
 
 export function PaperTrail() {
-  const { data: records, isLoading } = trpc.medical.records.list.useQuery();
+  const {
+    data: records,
+    isLoading,
+    isError: recordsError,
+    refetch: refetchRecords,
+  } = trpc.medical.records.list.useQuery(undefined, { retry: 2, retryDelay: 1500 });
   const utils = trpc.useUtils();
   const [uploadOpen, setUploadOpen] = useState(false);
   const [showAll, setShowAll] = useState(false);
@@ -620,6 +643,19 @@ export function PaperTrail() {
       </div>
       {isLoading ? (
         <p className="px-1 text-[12px] font-body text-muted-foreground">Opening the folder…</p>
+      ) : recordsError ? (
+        <div className="sticker-card px-4 py-3.5 text-center">
+          <p className="text-[12px] font-body text-[#5A6B7E] leading-relaxed">
+            Couldn't open the folder just now — usually a brief connection blip.
+          </p>
+          <button
+            type="button"
+            onClick={() => refetchRecords()}
+            className="mt-2 text-[11px] font-body font-extrabold text-[#B4512E]"
+          >
+            Try again
+          </button>
+        </div>
       ) : sorted.length > 0 ? (
         <>
           <div className="space-y-2">
