@@ -415,3 +415,9 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 - [x] Update all old-slug references (wobblesToday nudge, HandbookIndex card, checklists, products tier table)
 - [x] Fix collapse-scroll alignment: collapsing an expanded card/tab scrolls viewport back to the collapsed header (Grooming stages, Training skills, Shopping weeks, QoL check-in; TrackerInsights pending list is short with header in view — left as-is)
 - [x] Tests + tsc clean (316/316 green; fixed birthday-nudge cap regression by pinning it with reminders) + screenshots verified (/grooming, /handbook, /handbook/shopping, retired-slug redirect) + checkpoint + GitHub push + delivery
+
+## Shopping update — purchased haul (26 Jul)
+- [ ] Map user's purchased items (harness, leash, collar, dental kit, KONG brush, slow feeders, LickiMats, snuffle mat, KONG toys x4, tugs/chews) to shoppingPlan items and mark bought
+- [ ] Add purchased items missing from the plan as bought entries (e.g., KONG Squid, teething stick, rabbit-skin chew, mop toy, Beeztees tug)
+- [ ] Ensure Shopping page surfaces remaining items in priority order (what to buy next)
+- [ ] Tests + checkpoint + delivery with remaining-priority summary

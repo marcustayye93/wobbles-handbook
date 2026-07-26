@@ -117,19 +117,26 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
     items: [
       {
         id: "harness",
-        label: "Y-front puppy harness (size XS/S — he'll be ~2 kg at 12 weeks)",
-        why: "Exchanges take a week; a Y-front protects a toy-breed windpipe better than a collar-led walk.",
+        label: "Blue padded Y-front harness — Ruffwear Front Range style, reflective trim ✔ bought",
+        why: "Check fit as he grows — the Front Range XXS fits ~2 kg at 12 weeks; keep the receipt in case he sizes up fast.",
         emoji: "🎽",
       },
       {
         id: "collar-tag",
-        label: "Lightweight collar + engraved ID tag (SG phone number)",
-        why: "Engraving takes days. AVS also requires the licence disc once PALS is done.",
+        label: "Ruffwear Front Range collar (blue) ✔ bought",
+        why: "Bought — the matching engraved ID tag is its own item below.",
         emoji: "🏷️",
       },
       {
+        id: "id-tag",
+        label: "Engraved ID tag (SG phone number) + AVS licence disc once PALS is done",
+        why: "Engraving takes days, and AVS requires the licence disc on the collar. The collar is home — the tag is the missing half.",
+        emoji: "🪪",
+      },
+      {
         id: "lead",
-        label: "Lightweight 1.8 m lead (no retractables for puppies)",
+        label: "TUG retractable tape leash ✔ bought — plus a fixed 1.8 m training lead",
+        why: "The retractable is for relaxed sniffy walks later; puppy lessons and roadside walks still want a short fixed lead for control.",
         emoji: "🪢",
       },
       {
@@ -189,6 +196,18 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
         emoji: "🥣",
       },
       {
+        id: "slow-feeder",
+        label: "Slow feeder + lick mats — Trixie spiral mat + LickiMat UFO ✔ bought",
+        why: "Slows gulpy meals and turns bath/grooming time into licking time — the UFO suction-cups to the shower wall.",
+        emoji: "🍥",
+      },
+      {
+        id: "dental-kit",
+        label: "Dental kit — TropiClean Fresh Breath gel + TripleFlex toothbrush ✔ bought",
+        why: "Teeth brushing starts as gum massage from week one home; daily by the time adult teeth land (~6 months).",
+        emoji: "🦷",
+      },
+      {
         id: "grooming-tools",
         label: "Slicker brush + metal comb + puppy shampoo & conditioner",
         why: "Brush-tolerance training starts day one; fleece coats mat fast without a proper comb.",
@@ -218,20 +237,26 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
     items: [
       {
         id: "chew-toys",
-        label: "Chew + teething toys ×6 (varied textures) + rotate box",
-        why: "Teething peaks 12–24 weeks — exactly his first months home. More legal chews = fewer chewed cables.",
-        emoji: "🦷",
+        label: "Chew & tug arsenal ✔ bought — KONG Squid, KONG Teething Stick, Beeztees tug, mop toy, fleece rope tug",
+        why: "Teething peaks 12–24 weeks — rotate two or three at a time so the box stays novel.",
+        emoji: "🧸",
       },
       {
         id: "kong-lickmat",
-        label: "Two puppy Kongs + a lick mat",
+        label: "KONG Puppy + KONG Classic (small) ✔ bought",
         why: "Frozen Kongs power crate training and grooming-table patience from day one.",
         emoji: "🍦",
       },
       {
         id: "puzzle",
-        label: "One beginner puzzle feeder / snuffle mat",
+        label: "Snuffle mat ✔ bought",
         emoji: "🧩",
+      },
+      {
+        id: "kong-brush",
+        label: "KONG cleaning brush ✔ bought",
+        why: "Stuffed Kongs grow science experiments inside without it — brush after every frozen fill.",
+        emoji: "🧼",
       },
       {
         id: "puppy-proof",
@@ -295,7 +320,8 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
       },
       {
         id: "chew-edibles",
-        label: "A few puppy-safe edible chews (no rawhide)",
+        label: "Puppy-safe edible chews ✔ started — 85 g rabbit-skin roll in the cupboard (no rawhide)",
+        why: "Save the rabbit-skin roll for after he lands — supervise long natural chews, and add one or two softer puppy chews closer to the date.",
         emoji: "🌾",
       },
       {
