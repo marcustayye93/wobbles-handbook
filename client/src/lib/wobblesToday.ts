@@ -26,10 +26,7 @@ import {
 } from "@/lib/householdSettings";
 import { type TrackerEntry } from "@/lib/trackers";
 import { nextToiletWindow } from "@/lib/insights";
-import {
-  currentWeek as currentShoppingWeek,
-  overdueItems as overdueShoppingItems,
-} from "@/content/shoppingPlan";
+import { overdueItems as overdueShoppingItems } from "@/content/shoppingPlan";
 
 export interface TodayStage {
   stage: string; // e.g. "Neonatal", "Socialisation window"
@@ -282,24 +279,16 @@ export function todaysNudges(
   }
 
   if (!age.born || daysUntil(WOBBLES.homecoming, now) > 0) {
-    // Pre-homecoming: shopping-countdown nudge first, then reading
-    // (imported at top as currentShoppingWeek / overdueShoppingItems)
+    // Pre-homecoming: only nudge when items have slipped from earlier weeks.
+    // (The current week's items live on the Shopping page itself — a weekly
+    // "n items to buy" sticker on Home was removed as clutter, 26 Jul.)
     if (shoppingTicks) {
-      const week = currentShoppingWeek(now);
-      const left = week.items.filter((it) => !shoppingTicks[it.id]).length;
       const behind = overdueShoppingItems(shoppingTicks, now).length;
       if (behind > 0)
         out.push({
           id: "shopping-catchup",
-          emoji: "🛒",
+          emoji: "\ud83d\uded2",
           text: `${behind} shopping item${behind === 1 ? "" : "s"} slipped from earlier weeks — catch up before the list stacks`,
-          link: "/handbook/shopping",
-        });
-      else if (left > 0)
-        out.push({
-          id: "shopping-week",
-          emoji: week.emoji,
-          text: `${week.title}: ${left} item${left === 1 ? "" : "s"} to buy this week on the countdown`,
           link: "/handbook/shopping",
         });
     }

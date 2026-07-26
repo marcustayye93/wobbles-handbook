@@ -417,7 +417,18 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 - [x] Tests + tsc clean (316/316 green; fixed birthday-nudge cap regression by pinning it with reminders) + screenshots verified (/grooming, /handbook, /handbook/shopping, retired-slug redirect) + checkpoint + GitHub push + delivery
 
 ## Shopping update — purchased haul (26 Jul)
-- [ ] Map user's purchased items (harness, leash, collar, dental kit, KONG brush, slow feeders, LickiMats, snuffle mat, KONG toys x4, tugs/chews) to shoppingPlan items and mark bought
-- [ ] Add purchased items missing from the plan as bought entries (e.g., KONG Squid, teething stick, rabbit-skin chew, mop toy, Beeztees tug)
-- [ ] Ensure Shopping page surfaces remaining items in priority order (what to buy next)
-- [ ] Tests + checkpoint + delivery with remaining-priority summary
+- [x] Map user's purchased items (harness, leash, collar, dental kit, KONG brush, slow feeders, LickiMats, snuffle mat, KONG toys x4, tugs/chews) to shoppingPlan items and mark bought (DB shared_state "shopping" updated; labels reflect actual products)
+- [x] Add purchased items missing from the plan as bought entries (new items: dental-kit, slow-feeder, kong-brush; KONG Squid/teething stick/tugs folded into chew-toys label; rabbit-skin chew → chew-edibles)
+- [x] Ensure Shopping page surfaces remaining items in priority order (week timeline + catch-up section verified; id-tag split out of bought collar so the tag still surfaces as to-buy)
+- [x] Tests + checkpoint + delivery with remaining-priority summary (tsc clean, 316/316 tests, checkpoint f3c22d7a auto-published, pushed to GitHub main @ f3c22d7)
+
+## UI fixes (26 Jul, from user screenshots)
+- [ ] Fix text overlap in Household settings sheet: intro line "Shared with the whole family…" collides with "WHO'S LOGGING ON THIS PHONE" heading
+- [ ] Remove the big-ticket week shopping nudge sticker from the Home page (clutter)
+- [ ] Verify visually + tests + checkpoint + push
+
+## UI fixes + rota review (26 Jul, from user screenshots)
+- [ ] Fix text overlap in Household settings sheet: intro line "Shared with the whole family…" collides with "WHO'S LOGGING ON THIS PHONE" heading
+- [ ] Remove the big-ticket week shopping nudge sticker from the Home page (clutter)
+- [ ] Verify visually + tests + checkpoint + push
+- [ ] Compile full inventory of daily + weekly to-do items (care rota, day plan, nudges) for user review and additions
