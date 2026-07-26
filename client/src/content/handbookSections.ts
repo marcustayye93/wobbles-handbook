@@ -227,7 +227,7 @@ export const PUPPY_SECTIONS: Section[] = [
           {
             when: "12+ months (from Jun 2027)",
             title: "Adult fleece coat",
-            text: "Defined wave, denser coat, stable routine: thorough brushing 3–4×/week plus a professional groom every 4–6 weeks.",
+            text: "Defined wave, denser coat, stable routine: thorough brushing 3–4×/week plus the fortnightly home bath + basic trim that holds the coat at its set length — professional grooms become optional shape-ups only.",
           },
         ],
       },

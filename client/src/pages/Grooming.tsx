@@ -60,7 +60,7 @@ export default function Grooming() {
     <PageShell>
       <PageHeader
         title="Home Grooming Master Class"
-        subtitle="Bath + haircut, start to finish — every step pre-decided"
+        subtitle="Fortnightly bath + basic trim, start to finish — every step pre-decided"
         emoji="✂️"
         back="/handbook"
       />

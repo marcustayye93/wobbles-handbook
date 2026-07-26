@@ -435,3 +435,10 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 - [x] Daily anchors (hydration, paw check) in careTasksFor with `daily` flag — shown in Due today, excluded from capped nudges and Health week preview
 - [x] Health footer rota copy updated; task links fixed to real routes (/handbook/checklists, /memories)
 - [x] Tests: 7 new specs (rota days, daily flags, nudge exclusion), 323/323 green, tsc clean, screenshots verified
+## Digital-first checklists + bath-time trim (user request 26 Jul)
+- [x] Remove print framing: Checklists page header/subtitle, print button, footer "fridge" copy, hidden print-only block
+- [x] HandbookIndex card: "Printable Checklists" → digital wording
+- [x] checklists.ts: comments + "printed" emergency item reworded to digital
+- [x] Bath = basic groom every time: fold face/eye/paw/sanitary tidy + light all-over trim into the bath-day flow (bath rota task detail, bath-day checklist, grooming-day checklist reframe)
+- [x] grooming.ts: GROOM_FREQUENCY rows — bath + maintenance trim every 2 weeks (coat held at constant length); clip cadence reworded from occasional big cuts to fortnightly top-ups
+- [x] Tests + tsc + screenshots + checkpoint + GitHub push + delivery

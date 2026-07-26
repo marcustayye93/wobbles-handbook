@@ -1,6 +1,7 @@
 /*
- * Storybook Picture-Book theme — printable checklists data.
- * Rendered as interactive tick-lists with localStorage state + print stylesheet.
+ * Storybook Picture-Book theme — family checklists data.
+ * Rendered as interactive tick-lists, synced live to both phones — fully digital,
+ * nothing needs printing.
  */
 
 export interface Checklist {
@@ -63,15 +64,14 @@ export const CHECKLISTS: Checklist[] = [
     emoji: "🗓️",
     cadence: "Every month",
     items: [
-      "Bath + conditioner + full fluff dry",
+      "Two bath + basic-trim sessions done this month (fortnightly Mondays — see Bath Day list)",
       "Nail length audit — grinder sessions (Mon/Wed/Sat) should mean no clicking on the floor",
       "Flea / tick / worm preventatives given & logged (dose day: the 24th)",
       "Check flea/tick topical + collar expiry dates — separate from the monthly chew if using both",
-      "Paw-pad hair trim",
-      "Sanitary tidy",
+      "Paw-pad + sanitary trim double-check (maintained at every bath — catch anything missed)",
       "Weight photo + coat photo (watch the red fade!)",
       "Restock: poo bags, treats, shampoo, styptic powder",
-      "Book next groom (every 4–6 weeks once adult coat is in)",
+      "Coat-length audit — fortnightly bath-time trims should be holding him at the set teddy length; book a professional shaping groom only if the shape has drifted",
     ],
   },
   {
@@ -99,9 +99,9 @@ export const CHECKLISTS: Checklist[] = [
   },
   {
     id: "grooming-day",
-    title: "Grooming Day",
+    title: "Grooming Day (full session)",
     emoji: "✂️",
-    cadence: "Home groom sessions",
+    cadence: "Every bath is a groom — fortnightly Mondays",
     items: [
       "Dog exercised first (a tired dog stands stiller)",
       "EVERYTHING laid out before he's in the room: slicker, comb, clippers oiled, 13 mm + 16–19 mm guards, scissors, ear wipes, cotton balls, towels ×3, dryer",
@@ -112,10 +112,11 @@ export const CHECKLISTS: Checklist[] = [
       "Wash attention zones: armpits, groin, under tail, paw pads, beard",
       "Rinse until water runs clear — then one more full pass (armpits, belly, behind ears trap suds)",
       "Blow-dry low heat, WITH the growth direction, brush following the nozzle; ears + face last on lowest setting",
-      "Body clip: 13 mm guard (#4 length), WITH the coat growth, blade flat",
+      "Maintenance trim EVERY session — hold the set length: 13 mm guard body top-up, WITH the coat growth, blade flat",
       "Legs + tail: 16–19 mm guard or comb-and-scissor — always longer than the body",
+      "Face, eye corners, paw pads + sanitary tidy — the basic trim finishes every bath",
       "Blade heat checked on your wrist every few minutes",
-      "Face & feet another day if patience runs out (that's fine)",
+      "If patience runs out, finish face & feet tomorrow — but never skip them for the fortnight",
       "Nails NOT today — grinder runs Mon/Wed/Sat as its own micro-sessions",
       "Finish photo for the style folder",
       "Big treat party at the end — always end on a win",
@@ -123,9 +124,9 @@ export const CHECKLISTS: Checklist[] = [
   },
   {
     id: "bath-day",
-    title: "Bath Day",
+    title: "Bath + Trim Day",
     emoji: "🛁",
-    cadence: "Every 3–4 weeks",
+    cadence: "Every 2 weeks — bath always ends with a basic trim",
     items: [
       "Brush + comb check FIRST (never bathe a matted coat)",
       "Cotton-wool ball loosely at ear openings — never inside the canal",
@@ -136,7 +137,13 @@ export const CHECKLISTS: Checklist[] = [
       "Squeeze + blot with microfibre (no rubbing)",
       "Blow-dry cool/warm, section by section, brushing with the airflow",
       "Dry INSIDE the ears last (cotton ball, visible parts only)",
-      "Comb check when fully dry",
+      "Comb check when fully dry — coat must glide before any trimming",
+      "BASIC TRIM (every bath, keeps the coat at a set length — no big haircuts needed):",
+      "• Eye corners + face tidy — round-tip scissors, tiny cuts pointing away from the eyes",
+      "• Paw pads + around the feet — hair level with the pads, round the foot shape",
+      "• Sanitary areas — 10 mm guard or careful scissor tidy, skin pulled taut",
+      "• Light all-over top-up — 13 mm guard body, 16–19 mm legs/tail, just skimming back to the set length",
+      "• Finish photo + big treat party — always end on a win",
     ],
   },
   {
@@ -197,7 +204,7 @@ export const CHECKLISTS: Checklist[] = [
     emoji: "🚑",
     cadence: "Assemble once, check quarterly",
     items: [
-      "Emergency vet name, address & phone saved + printed",
+      "Emergency vet name, address & phone saved on both phones + pinned in this app",
       "Styptic powder",
       "Saline eye/wound wash",
       "Bandage roll + non-stick pads + vet wrap",

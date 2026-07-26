@@ -11,7 +11,7 @@ import { wobblesAge } from "@/content/wobbles";
 import { HUNDRED_TOTAL } from "@/content/hundredThings";
 import { CHECKLISTS } from "@/content/checklists";
 import { CHAPTER_COVERS } from "@/content/wobbles";
-import { ChevronRight, Clock, Printer, ListChecks, Plane, Award, Search, GraduationCap, Scissors, ShoppingCart, HeartHandshake } from "lucide-react";
+import { ChevronRight, Clock, ListChecks, Plane, Award, Search, GraduationCap, Scissors, ShoppingCart, HeartHandshake } from "lucide-react";
 import { tbcCount } from "@/content/caretakerGuide";
 import { useSharedState } from "@/hooks/useSyncedData";
 import { useState } from "react";
@@ -263,10 +263,10 @@ export default function HandbookIndex() {
               </span>
               <div className="min-w-0 flex-1">
                 <p className="font-body font-bold text-[14px] leading-snug text-[#22364D]">
-                  Printable Checklists
+                  Family Checklists
                 </p>
                 <p className="text-[11px] font-body text-muted-foreground mt-0.5 flex items-center gap-1">
-                  {CHECKLISTS.length} lists · tick on screen or <Printer size={11} /> print
+                  {CHECKLISTS.length} lists · tick together, synced to both phones
                 </p>
               </div>
               <ChevronRight size={17} className="text-muted-foreground shrink-0" />

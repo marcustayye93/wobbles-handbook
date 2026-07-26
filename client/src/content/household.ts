@@ -49,7 +49,7 @@ export const WEEK_PLAN: DayPlan[] = [
     label: "Monday",
     marcus: "home",
     chesa: "home",
-    note: "Both home (Marcus WFH) — grooming day: bath fortnight, nails, ears, the whole spa.",
+    note: "Both home (Marcus WFH) — grooming day: fortnightly bath + basic trim, nails, ears, the whole spa.",
   },
   {
     dow: 2,
@@ -132,9 +132,9 @@ export function careTasksFor(date: Date): CareTask[] {
       out.push({
         id: "bath",
         emoji: "🛁",
-        label: "Bath day (every other Monday)",
+        label: "Bath + basic trim day (every other Monday)",
         detail:
-          "Line-brush FIRST (water sets mats), 37–38 °C lukewarm water, TWO lathers, cotton balls in the ears, towel-blot then low blow-dry with the coat direction.",
+          "Line-brush FIRST (water sets mats), 37–38 °C lukewarm water, TWO lathers, cotton balls in the ears, towel-blot then low blow-dry with the coat direction. Once FULLY dry: the basic trim — eye corners + face tidy, paw pads, sanitary, and a light 13 mm body / 16–19 mm legs top-up so the coat stays at its set length (no big haircuts needed).",
         link: "/grooming",
         owner: "both",
       });

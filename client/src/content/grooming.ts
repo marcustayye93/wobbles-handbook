@@ -249,7 +249,7 @@ export const GROOM_STEPS: GroomStep[] = [
       },
     ],
     watchOut: "Going too short in the heat: never shave to the skin — the coat insulates against heat too, and bare skin sunburns. 13 mm body / 16–19 mm legs is as short as Wobbles needs.",
-    puppyNote: "His first full clips should be professional (from ~5–6 months, post-vaccination, every 6–8 weeks). Home clipping starts as maintenance between salon visits once he's clipper-conditioned — expect your first solo full clip around adolescence, not puppyhood.",
+    puppyNote: "His first proper clip can be professional (~5–6 months, post-vaccination) so he learns the salon experience — but the plan is home maintenance: a light basic trim at EVERY fortnightly bath holds the coat at its set length, so no dramatic grow-out-and-chop cycles. Build the clipper conditioning ladder from puppyhood; expect your first solo full-length pass around adolescence.",
     confidence:
       "Clipper conditioning ladder, one rung per session: clippers visible → in hand, off → running across the room → running near him → OFF back of clippers touching him → running clippers flat against him, no cutting → single short strokes with jackpot treats. Back up a rung at any stress signal.",
   },
@@ -440,13 +440,13 @@ export const GROOM_KIT: { item: string; note: string }[] = [
 export const GROOM_FREQUENCY: { task: string; cadence: string; rota: string }[] = [
   { task: "Quick brush", cadence: "3–4× a week (daily during the 8–12 mo coat change)", rota: "Little and often" },
   { task: "Full line brush + comb", cadence: "Weekly", rota: "Weekend slot" },
-  { task: "Bath + blow-dry", cadence: "Every 2 weeks", rota: "Monday (care rota)" },
-  { task: "Body clip (home)", cadence: "Top-up every 3–4 weeks between salon visits, once clipper-trained", rota: "Weekend, after a bath" },
+  { task: "Bath + blow-dry + basic trim", cadence: "Every 2 weeks — every bath ends with a trim, so the coat holds one set length", rota: "Monday (care rota)" },
+  { task: "Basic trim (home)", cadence: "Every bath: eyes/face, paw pads, sanitary + light 13 mm body / 16–19 mm leg top-up", rota: "Same session, after the dry" },
   { task: "Ear check / clean", cadence: "Check weekly, clean when waxy", rota: "Monday (care rota)" },
   { task: "Nails (grinder)", cadence: "2–3 short sessions a week, a little off each time", rota: "Mon / Wed / Sat" },
   { task: "Teeth", cadence: "3× a week minimum", rota: "Tue / Thu / Sat (care rota)" },
   { task: "Eye wipe / face check", cadence: "Daily 10 seconds", rota: "With morning cuddle" },
-  { task: "Professional groom", cadence: "Every 6–8 weeks from ~5–6 months", rota: "First visit post-vaccination" },
+  { task: "Professional groom", cadence: "Optional — occasional shaping only, since fortnightly trims hold the length; first visit ~5–6 months for the experience", rota: "Book only if the shape drifts" },
 ];
 
 /* ---------------- Haircut style guide (merged from the old handbook chapter) ---------------- */
@@ -469,7 +469,7 @@ export const HAIRCUT_STYLES: HaircutStyle[] = [
     style: "Teddy bear (Wobbles' cut)",
     body: "13 mm body guard, legs 16–19 mm",
     headLegs: "Head scissored noticeably longer than body; legs full and column-like",
-    upkeep: "Brush 3×+/wk; trim ~6 wks",
+    upkeep: "Brush 3×+/wk; length held by the basic trim at every fortnightly bath",
   },
   {
     style: "Lamb cut",
