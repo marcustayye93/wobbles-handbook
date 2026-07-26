@@ -28,6 +28,8 @@ export const CHECKLISTS: Checklist[] = [
       "Play + enforced nap cycles",
       "Quick body feel-over during a cuddle (lumps, ticks, sore spots)",
       "Tick check — ears, face, neck, toes (Queensland!)",
+      "Afternoon water top-up + hydration check (tropical heat — bowl never runs low)",
+      "Paw-pad check after walks (hot pavement burns, cracks, grass seeds between toes)",
     ],
   },
   {
@@ -46,6 +48,13 @@ export const CHECKLISTS: Checklist[] = [
       "Refill three frozen Kongs",
       "Trim eye-corner hair if wicking tears",
       "Check harness fit — puppies outgrow it in weeks",
+      "Mid-week sanitary/bum check — quick look + tidy under the tail (long coat traps mess)",
+      "Food-quantity review — recalibrate portions against this week's weigh-in and the weight curve",
+      "Crate + pen deep-clean (wipe trays and bars, air the den — bedding wash is separate)",
+      "Toy safety audit — bin torn squeakers, loose parts, shredded rope ends",
+      "Training progression review — which cue graduated this week, what's next on the plan",
+      "Photo/memory prompt — same spot, same blanket, straight into Memories",
+      "Human jobs: restock poo-bag dispensers on BOTH leads, charge the puppy cam, check enzyme-cleaner stock",
     ],
   },
   {
@@ -56,7 +65,8 @@ export const CHECKLISTS: Checklist[] = [
     items: [
       "Bath + conditioner + full fluff dry",
       "Nail length audit — grinder sessions (Mon/Wed/Sat) should mean no clicking on the floor",
-      "Flea / tick / worm preventatives given & logged",
+      "Flea / tick / worm preventatives given & logged (dose day: the 24th)",
+      "Check flea/tick topical + collar expiry dates — separate from the monthly chew if using both",
       "Paw-pad hair trim",
       "Sanitary tidy",
       "Weight photo + coat photo (watch the red fade!)",

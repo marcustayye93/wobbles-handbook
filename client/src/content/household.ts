@@ -107,6 +107,10 @@ export interface CareTask {
   link: string;
   /** Which family member usually owns it (both = shared) */
   owner: "marcus" | "chesa" | "both";
+  /** True for standing everyday habits (hydration, paw checks) — shown in the
+   * Due-today card but excluded from the capped nudge feed so date-specific
+   * jobs (bath, nails, parasite) keep their priority. */
+  daily?: boolean;
 }
 
 /** ISO week index used for fortnight alternation, anchored so the first
@@ -177,6 +181,84 @@ export function careTasksFor(date: Date): CareTask[] {
       owner: "marcus",
     });
 
+  // Wednesday mid-week extras — sanitary check with Chesa's home day
+  if (dow === 3) {
+    out.push({
+      id: "sanitary",
+      emoji: "🧻",
+      label: "Mid-week sanitary check",
+      detail:
+        "Quick look and tidy under the tail — a long Cavoodle coat traps mess, and mid-week catches it before it mats or irritates.",
+      link: "/grooming",
+      owner: "chesa",
+    });
+    out.push({
+      id: "training-review",
+      emoji: "🎓",
+      label: "Training progression review",
+      detail:
+        "Chesa's training day: five minutes on which cue graduated this week and what moves up next — keeps the plan moving, not drifting.",
+      link: "/training",
+      owner: "chesa",
+    });
+  }
+
+  // Friday reset — weekly food-quantity review + human jobs before the weekend
+  if (dow === 5) {
+    out.push({
+      id: "food-review",
+      emoji: "🥣",
+      label: "Weekly food-quantity review",
+      detail:
+        "Recalibrate portions against this week's weigh-in and the weight curve — a growing puppy's ration changes almost weekly.",
+      link: "/trackers/weight",
+      owner: "marcus",
+    });
+    out.push({
+      id: "human-jobs",
+      emoji: "🎒",
+      label: "Human jobs: restock + recharge",
+      detail:
+        "Refill the poo-bag dispensers on BOTH leads, put the puppy cam on charge, and check the enzyme-cleaner bottle isn't running dry.",
+      link: "/handbook/checklists",
+      owner: "both",
+    });
+  }
+
+  // Saturday — crate deep-clean + toy safety audit alongside the weekend reset
+  if (dow === 6) {
+    out.push({
+      id: "crate-clean",
+      emoji: "🧽",
+      label: "Crate + pen deep-clean",
+      detail:
+        "Wipe the tray and bars, air the den while bedding is in the wash — a clean crate stays the safe place he loves.",
+      link: "/handbook/checklists",
+      owner: "marcus",
+    });
+    out.push({
+      id: "toy-audit",
+      emoji: "🧸",
+      label: "Toy safety audit",
+      detail:
+        "Bin torn squeakers, loose parts and shredded rope ends before they get swallowed — then rotate the survivors back into the box.",
+      link: "/handbook/checklists",
+      owner: "chesa",
+    });
+  }
+
+  // Sunday — the weekly milestone photo on the focus day
+  if (dow === 0)
+    out.push({
+      id: "photo-prompt",
+      emoji: "📸",
+      label: "Weekly milestone photo",
+      detail:
+        "Same spot, same blanket, every Sunday — the growth series future-you will treasure. File it straight into Memories.",
+      link: "/memories",
+      owner: "both",
+    });
+
   // Teeth: Tue / Thu / Sat rhythm (3x weekly minimum)
   if (dow === 2 || dow === 4 || dow === 6)
     out.push({
@@ -188,6 +270,30 @@ export function careTasksFor(date: Date): CareTask[] {
       link: "/handbook/daily-hacks",
       owner: "chesa",
     });
+
+  // Daily standing habits last — tropical-climate anchors that apply every day.
+  // Flagged `daily` so the Home Due-today card shows them but the capped
+  // nudge feed doesn't spend its 3 slots repeating them.
+  out.push({
+    id: "hydration",
+    emoji: "💧",
+    label: "Afternoon water top-up",
+    detail:
+      "Tropical heat: wash-and-refill happens in the morning, but check and top up the bowl again mid-afternoon so it never runs low.",
+    link: "/handbook/checklists",
+    owner: "both",
+    daily: true,
+  });
+  out.push({
+    id: "paw-check",
+    emoji: "🐾",
+    label: "Paw-pad check after walks",
+    detail:
+      "Hot pavement burns, cracked pads and grass seeds between the toes — a five-second flip-and-look after each walk catches them early.",
+    link: "/handbook/checklists",
+    owner: "both",
+    daily: true,
+  });
 
   return out;
 }

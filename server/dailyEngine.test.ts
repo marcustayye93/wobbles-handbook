@@ -52,6 +52,44 @@ describe("care rota", () => {
     expect(careTasksFor(d("2026-09-05")).map((t) => t.id)).toContain("teeth"); // Sat
     expect(careTasksFor(d("2026-09-02")).map((t) => t.id)).not.toContain("teeth"); // Wed
   });
+
+  it("runs nail grinder sessions 2 & 3 on Wed/Sat, not other days", () => {
+    expect(careTasksFor(d("2026-09-30")).map((t) => t.id)).toContain("nails-grind"); // Wed
+    expect(careTasksFor(d("2026-10-03")).map((t) => t.id)).toContain("nails-grind"); // Sat
+    expect(careTasksFor(d("2026-10-01")).map((t) => t.id)).not.toContain("nails-grind"); // Thu
+  });
+
+  it("adds sanitary check + training review on Wednesdays", () => {
+    const wed = careTasksFor(d("2026-09-30")).map((t) => t.id);
+    expect(wed).toEqual(expect.arrayContaining(["sanitary", "training-review"]));
+    expect(careTasksFor(d("2026-10-01")).map((t) => t.id)).not.toContain("sanitary");
+  });
+
+  it("adds food review + human jobs on Fridays", () => {
+    const fri = careTasksFor(d("2026-10-02")).map((t) => t.id);
+    expect(fri).toEqual(expect.arrayContaining(["food-review", "human-jobs"]));
+    expect(careTasksFor(d("2026-10-01")).map((t) => t.id)).not.toContain("food-review");
+  });
+
+  it("adds crate clean + toy audit on Saturdays and the photo prompt on Sundays", () => {
+    const sat = careTasksFor(d("2026-10-03")).map((t) => t.id);
+    expect(sat).toEqual(expect.arrayContaining(["crate-clean", "toy-audit"]));
+    const sun = careTasksFor(d("2026-10-04")).map((t) => t.id);
+    expect(sun).toContain("photo-prompt");
+    expect(careTasksFor(d("2026-10-05")).map((t) => t.id)).not.toContain("photo-prompt");
+  });
+
+  it("includes the two daily anchors every day, flagged daily and pushed last", () => {
+    for (const iso of ["2026-09-28", "2026-09-30", "2026-10-02", "2026-10-04"]) {
+      const tasks = careTasksFor(d(iso));
+      const ids = tasks.map((t) => t.id);
+      expect(ids).toEqual(expect.arrayContaining(["hydration", "paw-check"]));
+      const daily = tasks.filter((t) => t.daily).map((t) => t.id);
+      expect(daily.sort()).toEqual(["hydration", "paw-check"]);
+      // Date-anchored jobs come first; daily anchors sit at the bottom
+      expect(ids.slice(-2).sort()).toEqual(["hydration", "paw-check"]);
+    }
+  });
 });
 
 describe("rotating activity ideas", () => {
@@ -132,6 +170,21 @@ describe("todaysNudges with person tags", () => {
     expect(todaysNudges(noEntries, {}, d("2026-10-24")).length).toBeLessThanOrEqual(3);
   });
 
+  it("never spends nudge slots on the daily anchors (hydration / paw check)", () => {
+    for (const iso of ["2026-09-28", "2026-09-30", "2026-10-02", "2026-10-04"]) {
+      const ids = todaysNudges(noEntries, {}, d(iso)).map((n) => n.id);
+      expect(ids).not.toContain("care-hydration");
+      expect(ids).not.toContain("care-paw-check");
+    }
+  });
+
+  it("surfaces the new weekly rota jobs as owned nudges on their days", () => {
+    const wed = todaysNudges(noEntries, {}, d("2026-09-30")).map((n) => n.id);
+    expect(wed.some((id) => id.startsWith("care-"))).toBe(true);
+    const sun = todaysNudges(noEntries, {}, d("2026-10-04"));
+    expect(sun.find((n) => n.id === "care-photo-prompt")).toBeDefined();
+  });
+
   it("never emits the retired reading nudge, even with partial read progress", () => {
     const nudges = todaysNudges(noEntries, { "first-day": 0.5 }, d("2026-08-01"));
     expect(nudges.find((n) => n.id === "resume")).toBeUndefined();
@@ -193,7 +246,9 @@ describe("lifetime nudges (U1)", () => {
   const none = () => [] as never[];
 
   it("emits the monthly adult weigh-in when the log is stale", () => {
-    const nudges = todaysNudges(none, {}, d("2028-03-15"));
+    // Tuesday: teeth is the only rota job (excluded from nudges), so the
+    // data-driven weigh-in fits inside the 3-nudge cap.
+    const nudges = todaysNudges(none, {}, d("2028-03-14"));
     expect(nudges.find((n) => n.id === "weigh-monthly")).toBeDefined();
     expect(nudges.find((n) => n.id === "weigh")).toBeUndefined(); // puppy weekly nudge retired
   });

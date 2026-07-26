@@ -427,3 +427,11 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 - [x] Remove the big-ticket week shopping nudge sticker from the Home page (kept only the overdue catch-up nudge; unused import cleaned)
 - [x] Verify visually + tests + checkpoint + push (tsc clean, 316/316 tests, checkpoint 59c25aa3 auto-published, pushed to GitHub)
 - [x] Compile full inventory of daily + weekly to-do items (care rota, day plan, nudges, checklists, cheatsheet) — docs/rota-inventory.md delivered for user review
+## Rota gaps — all 10 approved items added (26 Jul)
+- [x] Daily checklist += afternoon water top-up + hydration check, paw-pad check after walks
+- [x] Weekly checklist += sanitary check, food-quantity review, crate+pen deep-clean, toy safety audit, training progression review, photo/memory prompt, human jobs (poo bags / puppy cam / enzyme cleaner)
+- [x] Monthly checklist += flea/tick topical + collar expiry check (parasite chew line already present)
+- [x] Care rota: Wed = sanitary (Chesa) + training review (Chesa); Fri = food review (Marcus) + human jobs (both); Sat = crate clean (Marcus) + toy audit (Chesa); Sun = weekly photo (both)
+- [x] Daily anchors (hydration, paw check) in careTasksFor with `daily` flag — shown in Due today, excluded from capped nudges and Health week preview
+- [x] Health footer rota copy updated; task links fixed to real routes (/handbook/checklists, /memories)
+- [x] Tests: 7 new specs (rota days, daily flags, nudge exclusion), 323/323 green, tsc clean, screenshots verified

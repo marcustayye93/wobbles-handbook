@@ -298,6 +298,7 @@ export function todaysNudges(
   // 1) Care rota first — they're date-anchored jobs with named owners
   for (const task of careTasksFor(now)) {
     if (task.id === "teeth") continue; // teeth shows in the day plan, not as a nudge
+    if (task.daily) continue; // everyday anchors (hydration, paw check) live in Due today, not the capped nudges
     out.push({
       id: `care-${task.id}`,
       emoji: task.emoji,

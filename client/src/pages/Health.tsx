@@ -94,7 +94,9 @@ export default function Health() {
     const days: { date: Date; iso: string; label: string; tasks: CareTask[] }[] = [];
     for (let i = 1; i <= 6; i++) {
       const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + i);
-      const tasks = careTasksFor(d);
+      // The week preview shows date-anchored jobs only — the two everyday
+      // anchors (hydration, paw check) would repeat on all six rows as noise.
+      const tasks = careTasksFor(d).filter((t) => !t.daily);
       if (tasks.length > 0)
         days.push({
           date: d,
@@ -425,7 +427,7 @@ export default function Health() {
       {/* Footer note */}
       <p className="px-5 mt-9 text-center text-[11px] font-body text-muted-foreground leading-relaxed flex items-center justify-center gap-1.5">
         <CalendarDays size={12} className="inline" />
-        Rota: baths every other Monday, nails & ears Mondays, teeth Tue/Thu/Sat, parasite dose the 24th.
+        Rota: baths every other Mon · nails & ears Mon · sanitary + training review Wed · food + supply check Fri · crate & toy day Sat · photo Sun · teeth Tue/Thu/Sat · parasite dose the 24th.
       </p>
 
       <QuickLogSheet open={sheetOpen} onOpenChange={setSheetOpen} initialTracker={sheetTracker} />
