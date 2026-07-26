@@ -114,8 +114,8 @@ export function wobblesToday(now: Date = new Date()): TodayStage {
       focus: "Daily 2-minute brush ritual with treats; 7:15am + evening walks on schedule",
       expect: "Adult teeth arriving, more stamina, selective hearing",
       training: "Loose-lead walking and 'leave it' — practise on the way to the park",
-      link: "/handbook/grooming-psychology",
-      linkLabel: "See guidance",
+      link: "/grooming",
+      linkLabel: "Open the Master Class",
     };
   if (age.months < 12)
     return {
@@ -413,8 +413,9 @@ export function todaysNudges(
   if (age.weeks >= 18 && age.months < 12 && isParkNight(now))
     out.push({ id: "park", emoji: "🏞️", text: "Park night tonight — 7pm at the park next door with dogs and people (or drive to the Waterfront dog run)", link: "/trackers/social" });
 
-  // Reminders always survive the cap; then up to 3 rule-based nudges
-  const reminders = out.filter((n) => n.id.startsWith("reminder-"));
-  const rest = out.filter((n) => !n.id.startsWith("reminder-"));
-  return [...reminders, ...rest.slice(0, 3)];
+  // Reminders and the birthday (a once-a-year moment) always survive the cap;
+  // then up to 3 rule-based nudges
+  const pinned = out.filter((n) => n.id.startsWith("reminder-") || n.id === "birthday");
+  const rest = out.filter((n) => !pinned.includes(n));
+  return [...pinned, ...rest.slice(0, 3)];
 }

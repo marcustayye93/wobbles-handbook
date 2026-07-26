@@ -73,7 +73,7 @@ export default function QoLCheckIn() {
   };
 
   return (
-    <section className="px-4 mt-7" id="qol">
+    <section className="px-4 mt-7 scroll-mt-20" id="qol">
       <div className="flex items-baseline justify-between px-1 mb-2.5">
         <Eyebrow>Quality of life</Eyebrow>
         {entries.length > 0 && (
@@ -113,7 +113,16 @@ export default function QoLCheckIn() {
 
         <button
           type="button"
-          onClick={() => setOpen((o) => !o)}
+          onClick={() => {
+            // On COLLAPSE, snap back to the section header so the viewport
+            // isn't left stranded when the tall form disappears.
+            if (open) {
+              requestAnimationFrame(() => {
+                document.getElementById("qol")?.scrollIntoView({ behavior: "auto", block: "start" });
+              });
+            }
+            setOpen((o) => !o);
+          }}
           className="btn-ink mt-4 inline-flex items-center gap-1.5 min-h-[44px]"
           aria-expanded={open}
         >

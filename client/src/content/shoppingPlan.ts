@@ -196,7 +196,8 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
       },
       {
         id: "nail-styptic",
-        label: "Puppy nail clippers + styptic powder",
+        label: "Low-noise nail grinder (e.g. Dremel PawControl) + styptic powder",
+        why: "We grind little-and-often (Mon/Wed/Sat), not clip — quieter, no crush pressure, and the quick recedes so nails stay short.",
         emoji: "💅",
       },
       {

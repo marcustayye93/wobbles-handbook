@@ -35,6 +35,17 @@ export default function Training() {
     });
   };
 
+  /** Toggle a skill card. On COLLAPSE, snap the viewport back to the card's
+   * header so the user isn't left stranded far down the page. */
+  const toggle = (slug: string, isOpen: boolean) => {
+    setOpen(isOpen ? null : slug);
+    if (isOpen) {
+      requestAnimationFrame(() => {
+        document.getElementById(`skill-${slug}`)?.scrollIntoView({ behavior: "auto", block: "start" });
+      });
+    }
+  };
+
   return (
     <PageShell>
       <PageHeader title="Training School" subtitle="The curriculum, in priority order" emoji="🎓" back="/handbook" />
@@ -109,7 +120,7 @@ export default function Training() {
             <div key={s.slug} id={`skill-${s.slug}`} className="keepsake-card overflow-hidden scroll-mt-20">
               {/* card header */}
               <button
-                onClick={() => setOpen(isOpen ? null : s.slug)}
+                onClick={() => toggle(s.slug, isOpen)}
                 className="w-full text-left px-4 py-3.5 flex items-center gap-3"
                 aria-expanded={isOpen}
               >

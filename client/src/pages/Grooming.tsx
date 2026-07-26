@@ -1,13 +1,32 @@
 /*
- * Grooming tab — start-to-finish home groom walkthrough for Wobbles.
- * Keepsake field-guide style: stage index chips, kit checklist, frequency
- * cheatsheet, then the 10-stage illustrated walkthrough in strict order.
+ * Home Grooming Master Class — the ONE consolidated grooming guide.
+ * Start-to-finish home groom (bath + haircut) in strict stage order, with
+ * per-stage confidence notes (cooperative-care psychology), the kit list,
+ * frequency cheatsheet, haircut style guide, blade/guard decoder and the
+ * "how to brief a groomer" crib sheet. Replaces the old handbook chapters:
+ * Grooming Masterclass, Grooming Psychology, Haircut Style Guide.
  */
 import { useState } from "react";
 import { Link } from "wouter";
 import { PageShell, PageHeader, PawDivider, Eyebrow } from "@/components/AppShell";
-import { GROOM_STEPS, GROOM_KIT, GROOM_FREQUENCY } from "@/content/grooming";
-import { PawPrint, ChevronDown, ChevronRight, AlertTriangle, Baby, Clock } from "lucide-react";
+import {
+  GROOM_STEPS,
+  GROOM_KIT,
+  GROOM_FREQUENCY,
+  HAIRCUT_STYLES,
+  GROOMER_BRIEF,
+  BLADE_GUIDE,
+} from "@/content/grooming";
+import {
+  PawPrint,
+  ChevronDown,
+  AlertTriangle,
+  Baby,
+  Clock,
+  Sparkles,
+  Scissors,
+  MessageCircle,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function Grooming() {
@@ -25,17 +44,38 @@ export default function Grooming() {
     });
   };
 
+  /** Toggle a stage card. On COLLAPSE, snap the viewport back to the card's
+   * header so the user isn't left stranded far down the page (the expanded
+   * content above the fold disappears and the page jumps otherwise). */
+  const toggle = (slug: string, isOpen: boolean) => {
+    setOpen(isOpen ? null : slug);
+    if (isOpen) {
+      requestAnimationFrame(() => {
+        document.getElementById(`groom-${slug}`)?.scrollIntoView({ behavior: "auto", block: "start" });
+      });
+    }
+  };
+
   return (
     <PageShell>
-      <PageHeader title="Grooming Salon" subtitle="The full home groom, start to finish" emoji="✂️" back="/handbook" />
+      <PageHeader
+        title="Home Grooming Master Class"
+        subtitle="Bath + haircut, start to finish — every step pre-decided"
+        emoji="✂️"
+        back="/handbook"
+      />
 
       {/* intro */}
       <div className="px-5 pt-4">
         <p className="text-sm text-muted-foreground leading-relaxed">
           A Cavoodle's fleece coat doesn't shed — it <strong className="text-foreground">mats</strong>. This
-          is the whole fortnightly groom in the exact order that keeps his teddy coat plush:{" "}
-          <strong className="text-foreground">brush before water, dry completely, tools last</strong>. Follow
-          the stages top to bottom.
+          is the whole home groom in the exact order that keeps his teddy coat plush:{" "}
+          <strong className="text-foreground">brush before water, two lathers, dry completely, clip last</strong>.
+          Every number is pre-decided — water at 37–38 °C, 13 mm on the body, 16–19 mm on the legs — so on
+          groom day you just follow the stages top to bottom. Background theory lives in the{" "}
+          <Link href="/handbook/coat-science" className="font-bold text-[#B4512E]">
+            Coat Science chapter →
+          </Link>
         </p>
       </div>
 
@@ -104,7 +144,7 @@ export default function Grooming() {
           return (
             <div key={g.slug} id={`groom-${g.slug}`} className="keepsake-card overflow-hidden scroll-mt-20">
               <button
-                onClick={() => setOpen(isOpen ? null : g.slug)}
+                onClick={() => toggle(g.slug, isOpen)}
                 className="w-full text-left px-4 py-3.5 flex items-center gap-3"
                 aria-expanded={isOpen}
               >
@@ -169,6 +209,17 @@ export default function Grooming() {
                       {g.puppyNote}
                     </p>
                   </div>
+
+                  {/* confidence note (cooperative-care psychology) */}
+                  {g.confidence && (
+                    <div className="mt-2.5 rounded-2xl bg-[#22364D]/6 px-4 py-3 flex gap-2.5">
+                      <Sparkles size={15} className="text-[#22364D] shrink-0 mt-0.5" />
+                      <p className="text-[12.5px] text-[#33475C] leading-relaxed">
+                        <strong className="text-[#22364D]">Confidence: </strong>
+                        {g.confidence}
+                      </p>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
@@ -183,7 +234,9 @@ export default function Grooming() {
       {/* frequency cheatsheet */}
       <div className="px-5 pb-2">
         <h2 className="font-display font-semibold text-[1.45rem] text-[#22364D] mb-1">How often?</h2>
-        <p className="text-xs text-muted-foreground mb-3">Aligned with the family care rota — Mondays are maintenance day.</p>
+        <p className="text-xs text-muted-foreground mb-3">
+          Aligned with the family care rota — nails are little-and-often with the grinder, not a groom-day job.
+        </p>
         <div className="keepsake-card overflow-hidden">
           {GROOM_FREQUENCY.map((f, i) => (
             <div
@@ -200,15 +253,97 @@ export default function Grooming() {
         </div>
       </div>
 
+      <div className="px-5">
+        <PawDivider />
+      </div>
+
+      {/* haircut style guide */}
+      <div className="px-5 pb-2">
+        <h2 className="font-display font-semibold text-[1.45rem] text-[#22364D] mb-1 flex items-center gap-2">
+          <Scissors size={18} className="text-[#C66A3D]" /> The style guide
+        </h2>
+        <p className="text-xs text-muted-foreground mb-3">
+          Wobbles wears the <strong className="text-[#22364D]">teddy bear cut</strong> — 13 mm body, fuller
+          16–19 mm legs, round scissored head. The rest, for reference:
+        </p>
+        <div className="space-y-2.5">
+          {HAIRCUT_STYLES.map((s) => {
+            const isWobbles = s.style.includes("Teddy");
+            return (
+              <div
+                key={s.style}
+                className={cn(
+                  "sticker-card px-4 py-3",
+                  isWobbles && "border-[1.5px] border-[#C66A3D] bg-[#C66A3D]/5",
+                )}
+              >
+                <p className="font-body font-bold text-[13px] text-[#22364D] flex items-center gap-2">
+                  {s.style}
+                  {isWobbles && (
+                    <span className="text-[8px] font-extrabold uppercase tracking-[0.12em] bg-[#B4512E] text-[#FFFDF8] px-1.5 py-0.5 rounded-full">
+                      Wobbles
+                    </span>
+                  )}
+                </p>
+                <dl className="mt-1.5 space-y-1">
+                  {[
+                    ["Body", s.body],
+                    ["Head & legs", s.headLegs],
+                    ["Upkeep", s.upkeep],
+                  ].map(([k, v]) => (
+                    <div key={k} className="flex gap-2 items-baseline">
+                      <dt className="shrink-0 w-[74px] text-[9px] font-body font-extrabold uppercase tracking-[0.1em] text-[#C66A3D]">
+                        {k}
+                      </dt>
+                      <dd className="text-[12px] text-[#33475C] leading-snug">{v}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* blade / guard decoder */}
+        <Eyebrow className="mt-5 mb-2">Blade & guard decoder</Eyebrow>
+        <div className="keepsake-card overflow-hidden">
+          {BLADE_GUIDE.map((b, i) => (
+            <div
+              key={b.blade}
+              className={cn("px-4 py-2.5 flex items-baseline gap-3", i > 0 && "border-t border-dashed border-[#E5DAC8]")}
+            >
+              <p className="w-[128px] shrink-0 font-body font-bold text-[12px] text-[#22364D] leading-snug">
+                {b.blade}
+                <span className="block text-[10px] font-extrabold text-[#B4512E]">{b.length}</span>
+              </p>
+              <p className="min-w-0 text-[12px] text-[#33475C] leading-snug">{b.use}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* groomer brief */}
+        <Eyebrow className="mt-5 mb-2">Briefing a professional groomer</Eyebrow>
+        <div className="sticker-card px-4 py-3.5">
+          <ul className="space-y-2.5">
+            {GROOMER_BRIEF.map((tip, i) => (
+              <li key={i} className="flex gap-2.5 items-baseline">
+                <MessageCircle size={12} className="text-[#C66A3D]/80 shrink-0 translate-y-0.5" />
+                <span className="text-[12.5px] text-[#33475C] leading-relaxed">{tip}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
       {/* footer links */}
-      <p className="px-5 pt-3 pb-4 text-center text-[11px] font-body text-muted-foreground leading-relaxed">
+      <p className="px-5 pt-4 pb-4 text-center text-[11px] font-body text-muted-foreground leading-relaxed">
         Log every session in the{" "}
         <Link href="/trackers/grooming" className="font-bold text-[#B4512E]">
           Grooming tracker →
         </Link>{" "}
-        or read the{" "}
-        <Link href="/handbook/grooming-masterclass" className="font-bold text-[#B4512E]">
-          Grooming Masterclass chapter →
+        or read the theory in{" "}
+        <Link href="/handbook/coat-science" className="font-bold text-[#B4512E]">
+          Coat Science →
         </Link>
       </p>
     </PageShell>

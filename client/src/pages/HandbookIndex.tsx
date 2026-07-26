@@ -225,10 +225,10 @@ export default function HandbookIndex() {
               </span>
               <div className="min-w-0 flex-1">
                 <p className="font-body font-bold text-[14px] leading-snug text-[#22364D]">
-                  Grooming Salon
+                  Home Grooming Master Class
                 </p>
                 <p className="text-[11px] font-body text-muted-foreground mt-0.5">
-                  The full home groom, start to finish
+                  Bath, blow-dry, clip, nails & styles — one step-by-step guide
                 </p>
               </div>
               <ChevronRight size={17} className="text-muted-foreground shrink-0" />

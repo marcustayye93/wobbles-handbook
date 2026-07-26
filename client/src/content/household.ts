@@ -94,8 +94,9 @@ export function dayPlanFor(date: Date): DayPlan {
 
 /* ---------------- Care rota ----------------
  * Recurring, date-deterministic care tasks. Bath is every other Monday
- * anchored to homecoming week; nails weekly on Mondays; parasite dose on
- * the 24th monthly (homecoming date); teeth a few times a week; ears weekly.
+ * anchored to homecoming week; nails are GRINDER sessions little-and-often
+ * (Mon/Wed/Sat); parasite dose on the 24th monthly (homecoming date);
+ * teeth a few times a week; ears weekly.
  */
 
 export interface CareTask {
@@ -129,17 +130,17 @@ export function careTasksFor(date: Date): CareTask[] {
         emoji: "🛁",
         label: "Bath day (every other Monday)",
         detail:
-          "Line-brush FIRST (water sets mats), lukewarm water, dog shampoo, towel + cool blow-dry, brush again once dry.",
-        link: "/handbook/grooming-masterclass",
+          "Line-brush FIRST (water sets mats), 37–38 °C lukewarm water, TWO lathers, cotton balls in the ears, towel-blot then low blow-dry with the coat direction.",
+        link: "/grooming",
         owner: "both",
       });
     out.push({
       id: "nails",
       emoji: "💅",
-      label: "Nail check + trim (Mondays)",
+      label: "Nail grinding — session 1 of the week",
       detail:
-        "If they click on the floor, they're due. Tiny slivers off the tip, treats between paws — stop before the quick.",
-      link: "/handbook/grooming-masterclass",
+        "Grinder, not clippers: 1–2 second touches, a little off each nail, treats between toes. Little-and-often (Mon/Wed/Sat) is what makes the quick recede.",
+      link: "/grooming",
       owner: "marcus",
     });
     out.push({
@@ -148,7 +149,7 @@ export function careTasksFor(date: Date): CareTask[] {
       label: "Ear check (Mondays)",
       detail:
         "Cavoodle drop ears trap humidity in Singapore. Look for redness, smell, head-shaking; wipe visible wax only.",
-      link: "/handbook/grooming-masterclass",
+      link: "/grooming",
       owner: "chesa",
     });
   }
@@ -162,6 +163,18 @@ export function careTasksFor(date: Date): CareTask[] {
         "Heartworm + tick + flea preventive chew or spot-on. Log it in the Health tracker so the family knows it's done.",
       link: "/trackers/health",
       owner: "both",
+    });
+
+  // Nails: grinder sessions 2 & 3 of the week (Wed / Sat) — Monday's is above
+  if (dow === 3 || dow === 6)
+    out.push({
+      id: "nails-grind",
+      emoji: "💅",
+      label: dow === 3 ? "Nail grinding — session 2 of the week" : "Nail grinding — session 3 of the week",
+      detail:
+        "Two minutes with the grinder: brief touches around each nail tip, dewclaws included. Frequent tiny sessions keep nails short for good.",
+      link: "/grooming",
+      owner: "marcus",
     });
 
   // Teeth: Tue / Thu / Sat rhythm (3x weekly minimum)

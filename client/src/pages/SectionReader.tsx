@@ -14,8 +14,20 @@ import { useReadProgress } from "@/pages/HandbookIndex";
 import { ChevronLeft, ChevronRight, Clock, ArrowDown } from "lucide-react";
 import NotFound from "@/pages/NotFound";
 
+/** Chapters consolidated into the Home Grooming Master Class page (/grooming).
+ * Old deep links redirect there instead of 404ing. */
+const RETIRED_TO_GROOMING = new Set([
+  "grooming-masterclass",
+  "grooming-psychology",
+  "haircut-styles",
+]);
+
 export default function SectionReader() {
   const { slug } = useParams<{ slug: string }>();
+  const isRetired = !!slug && RETIRED_TO_GROOMING.has(slug);
+  useEffect(() => {
+    if (isRetired) window.location.replace("/grooming");
+  }, [isRetired]);
   const idx = SECTIONS.findIndex((s) => s.slug === slug);
   const section = idx >= 0 ? SECTIONS[idx] : undefined;
   const [progress, setProgress] = useState(0);
@@ -52,6 +64,7 @@ export default function SectionReader() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug]);
 
+  if (isRetired) return null;
   if (!section) return <NotFound />;
 
   const prev = idx > 0 ? SECTIONS[idx - 1] : undefined;

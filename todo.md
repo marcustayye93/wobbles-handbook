@@ -401,3 +401,17 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 - [x] Fix: "No procedure found on path medical.meds.list" on published /health — same root cause + same resilience fix
 - [x] Verify QoL check-in stores a date and it is displayed — yes: each check-in saves a local YYYY-MM-DD date (+ server createdAt timestamp); card shows "Last check-in {date} — N/35" and /trackers/qol plots by date
 - [x] Checkpoint (auto-publish) + confirm fix on production
+
+## Grooming guide consolidation (user request 26 Jul)
+
+- [x] Review overlap across Coat Signs, Grooming Master Class, Grooming Psychology, Hairstylist Style Guide (notes in docs/grooming-consolidation-notes.md)
+- [x] Present consolidation recommendation to user and confirm approach (approved 26 Jul)
+- [x] Build consolidated "Home Grooming Master Class" step-by-step guide (station setup, bath, lather count, water temp, attention areas, blow-dry technique/direction, ear/skin protection, clipper lengths body/legs/tail) — grooming.ts rewritten, 11 stages
+- [x] Nail care: multiple short grinding sessions per week (not groom-day-only), using grinder not clipper — grinder-first nail stage + Mon/Wed/Sat rota
+- [x] Add nail grinder to the shopping/to-do list (shoppingPlan.ts grooming week)
+- [x] Retire/redirect the old overlapping guides (grooming-masterclass, grooming-psychology, haircut-styles → /grooming redirect in SectionReader; coat-science kept as slim background chapter)
+- [x] Update Grooming.tsx page title to "Home Grooming Master Class"; add clipping + haircut-styles chapters; psychology as prep chapter + per-stage confidence notes
+- [x] Update GROOM_FREQUENCY cheatsheet + household.ts nail rota to grinder cadence (Mon/Wed/Sat short sessions)
+- [x] Update all old-slug references (wobblesToday nudge, HandbookIndex card, checklists, products tier table)
+- [x] Fix collapse-scroll alignment: collapsing an expanded card/tab scrolls viewport back to the collapsed header (Grooming stages, Training skills, Shopping weeks, QoL check-in; TrackerInsights pending list is short with header in view — left as-is)
+- [x] Tests + tsc clean (316/316 green; fixed birthday-nudge cap regression by pinning it with reminders) + screenshots verified (/grooming, /handbook, /handbook/shopping, retired-slug redirect) + checkpoint + GitHub push + delivery

@@ -91,9 +91,29 @@ function WeekCard({
   const done = week.items.filter((it) => ticks[it.id]).length;
   const complete = done === week.items.length;
   const [open, setOpen] = useState(defaultOpen);
+  const cardRef = useRef<HTMLDivElement | null>(null);
+
+  /** On COLLAPSE, snap the viewport back to the card header so the user isn't
+   * left stranded far down the page when the tall item list disappears. */
+  const toggleOpen = () => {
+    setOpen((o) => {
+      if (o) {
+        requestAnimationFrame(() => {
+          cardRef.current?.scrollIntoView({ behavior: "auto", block: "start" });
+        });
+      }
+      return !o;
+    });
+  };
 
   return (
-    <div ref={innerRef} className="relative pl-9">
+    <div
+      ref={(el) => {
+        cardRef.current = el;
+        innerRef?.(el);
+      }}
+      className="relative pl-9 scroll-mt-20"
+    >
       {/* timeline node */}
       <span
         className={cn(
@@ -118,7 +138,7 @@ function WeekCard({
         )}
       >
         <button
-          onClick={() => setOpen((o) => !o)}
+          onClick={toggleOpen}
           className="w-full flex items-center gap-3 px-4 py-3.5 text-left press-scale"
         >
           <span className="text-[18px] shrink-0">{week.emoji}</span>
