@@ -422,13 +422,8 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 - [x] Ensure Shopping page surfaces remaining items in priority order (week timeline + catch-up section verified; id-tag split out of bought collar so the tag still surfaces as to-buy)
 - [x] Tests + checkpoint + delivery with remaining-priority summary (tsc clean, 316/316 tests, checkpoint f3c22d7a auto-published, pushed to GitHub main @ f3c22d7)
 
-## UI fixes (26 Jul, from user screenshots)
-- [ ] Fix text overlap in Household settings sheet: intro line "Shared with the whole family…" collides with "WHO'S LOGGING ON THIS PHONE" heading
-- [ ] Remove the big-ticket week shopping nudge sticker from the Home page (clutter)
-- [ ] Verify visually + tests + checkpoint + push
-
 ## UI fixes + rota review (26 Jul, from user screenshots)
-- [ ] Fix text overlap in Household settings sheet: intro line "Shared with the whole family…" collides with "WHO'S LOGGING ON THIS PHONE" heading
-- [ ] Remove the big-ticket week shopping nudge sticker from the Home page (clutter)
-- [ ] Verify visually + tests + checkpoint + push
-- [ ] Compile full inventory of daily + weekly to-do items (care rota, day plan, nudges) for user review and additions
+- [x] Fix text overlap in Household settings sheet: DrawerContent now strict flex-column with non-shrinking header (same defensive fix applied to QuickLogSheet)
+- [x] Remove the big-ticket week shopping nudge sticker from the Home page (kept only the overdue catch-up nudge; unused import cleaned)
+- [x] Verify visually + tests + checkpoint + push (tsc clean, 316/316 tests, checkpoint 59c25aa3 auto-published, pushed to GitHub)
+- [x] Compile full inventory of daily + weekly to-do items (care rota, day plan, nudges, checklists, cheatsheet) — docs/rota-inventory.md delivered for user review
