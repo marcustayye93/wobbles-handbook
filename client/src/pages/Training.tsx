@@ -11,6 +11,7 @@ import { TRAINING_SKILLS, TRAINING_RULES, skillStatus } from "@/content/training
 import { wobblesAge } from "@/content/wobbles";
 import { PawPrint, ChevronDown, ChevronRight, Lightbulb, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { anchoredToggle } from "@/hooks/useAnchoredToggle";
 
 const STATUS_STYLE: Record<string, { label: string; cls: string }> = {
   now: { label: "Start now", cls: "bg-[#6B7C5A] text-[#F8F3EB]" },
@@ -35,15 +36,12 @@ export default function Training() {
     });
   };
 
-  /** Toggle a skill card. On COLLAPSE, snap the viewport back to the card's
-   * header so the user isn't left stranded far down the page. */
+  /** Toggle a skill card without letting the page jump. Accordion collapse of
+   * an upper card shrinks content above the tapped card, so we anchor the
+   * tapped card's visual position across the state change (see
+   * hooks/useAnchoredToggle.ts). */
   const toggle = (slug: string, isOpen: boolean) => {
-    setOpen(isOpen ? null : slug);
-    if (isOpen) {
-      requestAnimationFrame(() => {
-        document.getElementById(`skill-${slug}`)?.scrollIntoView({ behavior: "auto", block: "start" });
-      });
-    }
+    anchoredToggle(`skill-${slug}`, () => setOpen(isOpen ? null : slug));
   };
 
   return (

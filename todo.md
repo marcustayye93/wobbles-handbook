@@ -456,4 +456,7 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 - [x] Cover illustration: reused existing grooming-masterclass gouache cover (verified live)
 - [x] Add masterclass as illustrated chapter card on Guides page (cover, read time, tagline, progress ring)
 - [x] Tests + tsc + screenshot verification
-- [ ] Checkpoint + GitHub push + delivery
+- [x] Checkpoint + GitHub push + delivery
+## Bug: grooming page jumps on card expand/collapse
+- [x] Fix page shift/misalignment when opening/closing stage cards on /grooming (anchoredToggle helper keeps tapped card visually in place; also applied to /training skill cards and the QoL check-in card)
+- [x] Verify + checkpoint + GitHub push + delivery (tsc clean, 339 tests green)

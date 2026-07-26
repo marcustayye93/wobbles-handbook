@@ -19,6 +19,7 @@ import {
   encodeQolNote,
 } from "@/lib/qol";
 import { cn } from "@/lib/utils";
+import { anchoredToggle } from "@/hooks/useAnchoredToggle";
 import { HeartPulse, ChevronDown, ChevronUp } from "lucide-react";
 
 const BAND_COLORS: Record<string, string> = {
@@ -114,14 +115,9 @@ export default function QoLCheckIn() {
         <button
           type="button"
           onClick={() => {
-            // On COLLAPSE, snap back to the section header so the viewport
-            // isn't left stranded when the tall form disappears.
-            if (open) {
-              requestAnimationFrame(() => {
-                document.getElementById("qol")?.scrollIntoView({ behavior: "auto", block: "start" });
-              });
-            }
-            setOpen((o) => !o);
+            // Anchor the card's visual position across the expand/collapse so
+            // the page never jumps (see hooks/useAnchoredToggle.ts).
+            anchoredToggle("qol", () => setOpen((o) => !o));
           }}
           className="btn-ink mt-4 inline-flex items-center gap-1.5 min-h-[44px]"
           aria-expanded={open}

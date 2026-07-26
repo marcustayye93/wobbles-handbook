@@ -29,6 +29,7 @@ import {
   MessageCircle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { anchoredToggle } from "@/hooks/useAnchoredToggle";
 
 export default function Grooming() {
   const [open, setOpen] = useState<string | null>(() => {
@@ -75,16 +76,12 @@ export default function Grooming() {
     });
   };
 
-  /** Toggle a stage card. On COLLAPSE, snap the viewport back to the card's
-   * header so the user isn't left stranded far down the page (the expanded
-   * content above the fold disappears and the page jumps otherwise). */
+  /** Toggle a stage card without letting the page jump. Accordion collapse of
+   * an upper card shrinks content above the tapped card, so we anchor the
+   * tapped card's visual position across the state change (see
+   * hooks/useAnchoredToggle.ts). */
   const toggle = (slug: string, isOpen: boolean) => {
-    setOpen(isOpen ? null : slug);
-    if (isOpen) {
-      requestAnimationFrame(() => {
-        document.getElementById(`groom-${slug}`)?.scrollIntoView({ behavior: "auto", block: "start" });
-      });
-    }
+    anchoredToggle(`groom-${slug}`, () => setOpen(isOpen ? null : slug));
   };
 
   return (
