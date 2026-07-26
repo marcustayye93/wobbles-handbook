@@ -80,6 +80,8 @@ export const photos = mysqlTable("photos", {
   date: varchar("date", { length: 10 }).notNull(),
   /** Optional place tag (id from client/src/content/places.ts) for Wobbles' Map */
   placeId: varchar("placeId", { length: 64 }),
+  /** Optional series tag — "coat-check" marks same-pose coat-length photos taken after each bath + trim */
+  category: varchar("category", { length: 32 }),
   createdBy: int("createdBy"),
   createdByName: varchar("createdByName", { length: 120 }),
   createdAt: timestamp("createdAt").defaultNow().notNull(),

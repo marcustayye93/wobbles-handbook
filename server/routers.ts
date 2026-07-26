@@ -152,6 +152,8 @@ export const appRouter = router({
           date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
           /** Optional place tag for Wobbles' Map (id from places content) */
           placeId: z.string().max(64).optional(),
+          /** Optional series tag — "coat-check" = same-pose coat-length photo after a bath + trim */
+          category: z.enum(["coat-check"]).optional(),
         }),
       )
       .mutation(async ({ ctx, input }) => {
@@ -167,6 +169,7 @@ export const appRouter = router({
           caption: input.caption,
           date: input.date,
           placeId: input.placeId,
+          category: input.category,
           createdBy: ctx.member.id,
           createdByName: ctx.member.name,
         });

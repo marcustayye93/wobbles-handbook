@@ -24,6 +24,7 @@ import Grooming from "@/pages/Grooming";
 import TrackersHub from "@/pages/TrackersHub";
 import TrackerPage from "@/pages/TrackerPage";
 import Memories from "@/pages/Memories";
+import CoatCheck from "@/pages/CoatCheck";
 import Growth from "@/pages/Growth";
 import YearReview from "@/pages/YearReview";
 import Health from "@/pages/Health";
@@ -51,6 +52,7 @@ function Router() {
       <Route path="/trackers" component={TrackersHub} />
       <Route path="/trackers/:id" component={TrackerPage} />
       <Route path="/memories" component={Memories} />
+      <Route path="/memories/coat-check" component={CoatCheck} />
       <Route path="/growth" component={Growth} />
       <Route path="/growth/year/:year" component={YearReview} />
       <Route path="/health" component={Health} />

@@ -178,3 +178,26 @@ describe("digital-first checklists (no printing)", () => {
     expect(bath!.detail.toLowerCase()).toContain("basic trim");
   });
 });
+
+describe("coat length check ritual", () => {
+  it("bath-day and grooming-day checklists end with the coat check photo", () => {
+    for (const id of ["bath-day", "grooming-day"]) {
+      const list = CHECKLISTS.find((c) => c.id === id);
+      expect(list).toBeDefined();
+      expect(list!.items.join(" ").toLowerCase()).toContain("coat check photo");
+    }
+  });
+
+  it("the bath rota task tells you to finish with the coat check photo", () => {
+    const tasks = careTasksFor(new Date("2026-09-28T00:00:00"));
+    const bath = tasks.find((t) => t.id === "bath");
+    expect(bath).toBeDefined();
+    expect(bath!.detail.toLowerCase()).toContain("coat check photo");
+  });
+
+  it("monthly checklist routes coat photos into the coat length check series", () => {
+    const monthly = CHECKLISTS.find((c) => c.id === "monthly");
+    expect(monthly).toBeDefined();
+    expect(monthly!.items.join(" ").toLowerCase()).toContain("coat length check");
+  });
+});

@@ -134,7 +134,7 @@ export function careTasksFor(date: Date): CareTask[] {
         emoji: "🛁",
         label: "Bath + basic trim day (every other Monday)",
         detail:
-          "Line-brush FIRST (water sets mats), 37–38 °C lukewarm water, TWO lathers, cotton balls in the ears, towel-blot then low blow-dry with the coat direction. Once FULLY dry: the basic trim — eye corners + face tidy, paw pads, sanitary, and a light 13 mm body / 16–19 mm legs top-up so the coat stays at its set length (no big haircuts needed).",
+          "Line-brush FIRST (water sets mats), 37–38 °C lukewarm water, TWO lathers, cotton balls in the ears, towel-blot then low blow-dry with the coat direction. Once FULLY dry: the basic trim — eye corners + face tidy, paw pads, sanitary, and a light 13 mm body / 16–19 mm legs top-up so the coat stays at its set length (no big haircuts needed). Finish with the coat check photo — same spot, same angle — into Memories → Coat length check.",
         link: "/grooming",
         owner: "both",
       });

@@ -442,3 +442,12 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 - [x] Bath = basic groom every time: fold face/eye/paw/sanitary tidy + light all-over trim into the bath-day flow (bath rota task detail, bath-day checklist, grooming-day checklist reframe)
 - [x] grooming.ts: GROOM_FREQUENCY rows — bath + maintenance trim every 2 weeks (coat held at constant length); clip cadence reworded from occasional big cuts to fortnightly top-ups
 - [x] Tests + tsc + screenshots + checkpoint + GitHub push + delivery
+
+## Coat Length Check photo comparison (user request 26 Jul)
+- [x] Review Memories page + photo schema/storage to see how photos are tagged/categorised
+- [x] Add "coat check" photo category/series (tag on upload, filterable)
+- [x] Comparison view: side-by-side of any two coat-check photos + timeline strip ordered by date with age/days-since labels
+- [x] Link from bath-day checklist final step + bath rota task detail to the coat-check capture flow
+- [x] Empty state explaining the same-pose ritual (same spot, same angle, after every bath+trim)
+- [x] Tests for new logic, tsc clean, screenshots verified
+- [ ] Checkpoint + GitHub push + delivery

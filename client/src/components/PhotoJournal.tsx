@@ -333,12 +333,22 @@ export default function PhotoJournal() {
                         className="keepsake-card p-2 pb-3 text-left press-scale"
                         style={{ transform: `rotate(${i % 2 === 0 ? -1 : 1.2}deg)` }}
                       >
-                        <img
-                          src={p.url}
-                          alt={p.caption ?? "Wobbles photo"}
-                          loading="lazy"
-                          className="w-full aspect-square object-cover rounded-[6px] bg-[#22364D]/5"
-                        />
+                        <span className="relative block">
+                          <img
+                            src={p.url}
+                            alt={p.caption ?? "Wobbles photo"}
+                            loading="lazy"
+                            className="w-full aspect-square object-cover rounded-[6px] bg-[#22364D]/5"
+                          />
+                          {p.category === "coat-check" && (
+                            <span
+                              className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-full text-[8px] font-body font-extrabold uppercase tracking-[0.1em]"
+                              style={{ backgroundColor: "#FFFDF8E6", color: "#B4512E" }}
+                            >
+                              📏 coat check
+                            </span>
+                          )}
+                        </span>
                         <p className="text-[10px] font-body font-extrabold uppercase tracking-[0.1em] mt-2 px-1" style={{ color: SIENNA }}>
                           {formatDate(p.date)}
                         </p>
