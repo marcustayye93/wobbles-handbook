@@ -6,8 +6,9 @@
  * "how to brief a groomer" crib sheet. Replaces the old handbook chapters:
  * Grooming Masterclass, Grooming Psychology, Haircut Style Guide.
  */
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
+import { useReadProgress } from "@/pages/HandbookIndex";
 import { PageShell, PageHeader, PawDivider, Eyebrow } from "@/components/AppShell";
 import {
   GROOM_STEPS,
@@ -36,6 +37,36 @@ export default function Grooming() {
     return q && GROOM_STEPS.some((s) => s.slug === q) ? q : GROOM_STEPS[0].slug;
   });
   const [showKit, setShowKit] = useState(false);
+
+  // Reading progress — mirrors SectionReader: persist the furthest scroll point
+  // (rounded to 5%) under the shared "grooming" key so the Guides chapter card
+  // shows a progress ring like the other chapters.
+  const [saved, setSaved] = useReadProgress();
+  const savedRef = useRef(saved);
+  savedRef.current = saved;
+  useEffect(() => {
+    let maxSeen = savedRef.current["grooming"] ?? 0;
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const h = document.documentElement;
+        const max = h.scrollHeight - h.clientHeight;
+        const p = max > 0 ? Math.min(1, h.scrollTop / max) : 0;
+        const rounded = Math.round(p * 20) / 20;
+        if (rounded > maxSeen) {
+          maxSeen = rounded;
+          setSaved({ ...savedRef.current, grooming: rounded });
+        }
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(raf);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const jump = (slug: string) => {
     setOpen(slug);

@@ -450,4 +450,10 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 - [x] Link from bath-day checklist final step + bath rota task detail to the coat-check capture flow
 - [x] Empty state explaining the same-pose ritual (same spot, same angle, after every bath+trim)
 - [x] Tests for new logic, tsc clean, screenshots verified
+- [x] Checkpoint + GitHub push + delivery
+
+## Grooming masterclass card on Guides page
+- [x] Cover illustration: reused existing grooming-masterclass gouache cover (verified live)
+- [x] Add masterclass as illustrated chapter card on Guides page (cover, read time, tagline, progress ring)
+- [x] Tests + tsc + screenshot verification
 - [ ] Checkpoint + GitHub push + delivery

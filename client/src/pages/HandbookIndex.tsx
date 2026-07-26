@@ -11,7 +11,7 @@ import { wobblesAge } from "@/content/wobbles";
 import { HUNDRED_TOTAL } from "@/content/hundredThings";
 import { CHECKLISTS } from "@/content/checklists";
 import { CHAPTER_COVERS } from "@/content/wobbles";
-import { ChevronRight, Clock, ListChecks, Plane, Award, Search, GraduationCap, Scissors, ShoppingCart, HeartHandshake } from "lucide-react";
+import { ChevronRight, Clock, ListChecks, Plane, Award, Search, GraduationCap, ShoppingCart, HeartHandshake } from "lucide-react";
 import { tbcCount } from "@/content/caretakerGuide";
 import { useSharedState } from "@/hooks/useSyncedData";
 import { useState } from "react";
@@ -81,7 +81,7 @@ export default function HandbookIndex() {
           </Link>
         </div>
 
-        {/* Chapter covers */}
+        {/* Chapter covers — puppy chapters + the grooming masterclass */}
         <div className="space-y-4 pb-2">
           {PUPPY_SECTIONS.map((s, i) => {
             const cover = CHAPTER_COVERS[s.slug];
@@ -147,6 +147,63 @@ export default function HandbookIndex() {
               </Link>
             );
           })}
+
+          {/* Home Grooming Master Class — same illustrated cover treatment */}
+          {(() => {
+            const pct = progress["grooming"] ?? 0;
+            return (
+              <Link
+                href="/grooming"
+                className="block press-scale fade-up"
+                style={{ animationDelay: `${Math.min(PUPPY_SECTIONS.length * 50, 300)}ms` }}
+              >
+                <div className="relative rounded-[28px] overflow-hidden shadow-[0_12px_32px_rgba(34,54,77,0.14)]">
+                  <img
+                    src={CHAPTER_COVERS["grooming-masterclass"]}
+                    alt="Illustrated cover for the Home Grooming Master Class"
+                    className="w-full aspect-[16/10] object-cover"
+                    loading="lazy"
+                  />
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(to top, rgba(20,32,48,0.82) 0%, rgba(20,32,48,0.35) 38%, rgba(20,32,48,0.05) 62%, transparent 100%)",
+                    }}
+                    aria-hidden
+                  />
+                  {pct > 0 && (
+                    <div className="absolute top-3.5 right-3.5">
+                      <ProgressRing
+                        value={pct}
+                        size={46}
+                        stroke={3.5}
+                        trackColor="rgba(255,253,248,0.35)"
+                        color="#E8935C"
+                      >
+                        <span className="font-body font-extrabold text-[9px] text-white leading-none">
+                          {Math.round(pct * 100)}%
+                        </span>
+                      </ProgressRing>
+                    </div>
+                  )}
+                  <div className="absolute inset-x-0 bottom-0 p-4.5 pb-4">
+                    <p className="text-[9.5px] font-body font-extrabold uppercase tracking-[0.2em] text-[#E8935C]">
+                      Chapter {PUPPY_SECTIONS.length + 1} · Masterclass
+                    </p>
+                    <h2 className="font-display font-semibold text-[1.6rem] leading-[1.05] text-[#FFFDF8] mt-1">
+                      Home Grooming Master Class
+                    </h2>
+                    <p className="text-[11px] font-body font-semibold text-[#D8DEE7] mt-1.5 flex items-center gap-1.5">
+                      <Clock size={11} /> 14 min read
+                      <span className="opacity-60">·</span>
+                      <span className="truncate">Fortnightly bath + basic trim, start to finish</span>
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            );
+          })()}
         </div>
 
         <PawDivider />
@@ -212,23 +269,6 @@ export default function HandbookIndex() {
                 </p>
                 <p className="text-[11px] font-body text-muted-foreground mt-0.5">
                   The 11-skill curriculum, in priority order
-                </p>
-              </div>
-              <ChevronRight size={17} className="text-muted-foreground shrink-0" />
-            </div>
-          </Link>
-
-          <Link href="/grooming" className="block sticker-card p-4 press-scale">
-            <div className="flex items-center gap-3.5">
-              <span className="w-11 h-11 rounded-2xl bg-[#7B8C6A]/15 flex items-center justify-center">
-                <Scissors size={21} className="text-[#5D7048]" />
-              </span>
-              <div className="min-w-0 flex-1">
-                <p className="font-body font-bold text-[14px] leading-snug text-[#22364D]">
-                  Home Grooming Master Class
-                </p>
-                <p className="text-[11px] font-body text-muted-foreground mt-0.5">
-                  Bath, blow-dry, clip, nails & styles — one step-by-step guide
                 </p>
               </div>
               <ChevronRight size={17} className="text-muted-foreground shrink-0" />
