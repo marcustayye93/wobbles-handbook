@@ -489,3 +489,10 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 - [x] Inspect current caching / service worker / PWA setup (sw.js cache-first v2, PersistQueryClient, no update path existed)
 - [x] Implement version-check auto-update: version.json emitted at build + __APP_BUILD_ID__ define (vite.config.ts), client/src/lib/autoUpdate.ts watcher (launch/visible/online/5-min checks, reload-loop guard, typing guard, SW update + cache purge + reload), sw.js bumped to v3 + bypasses version.json, main.tsx registers SW with updateViaCache:'none'
 - [x] Verify (tsc clean, vitest 339/339, prod build emits version.json with matching inlined build id, mobile screenshots) + checkpoint + GitHub push + deliver
+
+# Record Taobao purchases (user request 2026-07-28)
+
+- [ ] Map 6 Taobao order screenshots to shopping plan item ids (playpen, PVC pee mat, grooming scissors set, detangle spray, pet wipes, poo bags; skip non-dog household items)
+- [ ] Mark matched items as purchased in the shared shopping plan (pre-seed ticks server-side) with purchase notes (product, price CNY, Taobao)
+- [ ] Handle items not on the plan (detangle spray, wipes) — add as bought extras
+- [ ] Verify (tsc, tests, screenshot) + checkpoint + GitHub push + deliver

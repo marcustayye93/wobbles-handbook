@@ -27,3 +27,8 @@ Dev preview renders a BLANK page (screenshots blank at /, /handbook/shopping/pet
 4. webdev_save_checkpoint (auto-publishes).
 5. git push github main.
 6. Deliver result message.
+
+## Post-deploy verification (2026-07-27)
+- Checkpoint 755899fb saved (auto-published), pushed github main @ 755899f.
+- Production /version.json returns 302 → manus.im/app-auth for UNAUTHENTICATED curl. This is the platform-level privacy gate (site visibility restricted), NOT an app bug. Logged-in users' browsers hold the session cookie, so their fetch of /version.json succeeds (fetch with credentials: same-origin default — verify autoUpdate uses credentialed fetch!).
+- CHECK: autoUpdate.ts fetch must include credentials (same-origin is fetch default, OK) and must handle non-JSON (302→HTML login page) gracefully — it try/catches, so worst case: no update detected while logged out, which is fine.

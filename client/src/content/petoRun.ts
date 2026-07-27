@@ -247,8 +247,8 @@ export const PETO_RUN: PetoRunItem[] = [
   {
     id: "poo-bags",
     emoji: "💩",
-    label: "Poo bag dispenser + starter rolls",
-    why: "Cheap, light, and one less thing to source in the first SG week.",
+    label: "Poo bag dispenser + starter rolls — already sorted via Taobao (28 Jul)",
+    why: "150 biodegradable bags + a clip-on dispenser were ordered from Taobao on 28 Jul, so this line is covered — skip unless you want a spare AU-made roll.",
     pick: {
       name: "FuzzYard 'What the Poop' Dispenser + 2 rolls",
       price: "$12.99",

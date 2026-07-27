@@ -61,8 +61,8 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
       },
       {
         id: "playpen-gates",
-        label: "Playpen and/or baby gates",
-        why: "Bulky delivery. Decide the pen corner now so furniture can shift before he lands.",
+        label: "White 6-panel playpen 120×60×60 + PVC waterproof pen mat ✔ bought",
+        why: "Ordered 28 Jul — white steel 6-panel pen (120×60×60 cm) plus a sea-salt-blue PVC waterproof mat (60×120 cm) to protect the floor underneath. Decide the pen corner now so furniture can shift before he lands.",
         emoji: "🚧",
       },
       {
@@ -209,14 +209,14 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
       },
       {
         id: "grooming-tools",
-        label: "Slicker brush + comb set ✔ bought — still need puppy shampoo & conditioner",
-        why: "Macaron-grey slicker + comb set ordered 27 Jul. Brush-tolerance training starts day one; grab the dog-specific shampoo & conditioner to finish this line.",
+        label: "Slicker brush + comb set & detangle spray ✔ bought — still need puppy shampoo & conditioner",
+        why: "Macaron-grey slicker + comb set ordered 27 Jul; 奇愈记 detangling leave-in spray (120 ml) added 28 Jul for knot-free brushing. Brush-tolerance training starts day one; grab the dog-specific shampoo & conditioner to finish this line.",
         emoji: "🪮",
       },
       {
         id: "clippers",
-        label: "Codos CP-6800 pet clipper + 7\" straight & 6.5\" thinning shears ✔ bought",
-        why: "Ordered 27 Jul — the home-grooming trim kit is sorted. Add guard combs check + clipper oil when it arrives, and start the clipper conditioning ladder from week one.",
+        label: "Codos CP-6800 pet clipper + full-steel shears kit ✔ bought",
+        why: "Clipper ordered 27 Jul; full-steel shears kit ordered 28 Jul — 7\" straight + 7\" curved + 6.5\" thinning + grooming comb, with case, finger guards and oil. The home-grooming trim kit is sorted; start the clipper conditioning ladder from week one.",
         emoji: "✂️",
       },
       {
@@ -294,12 +294,14 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
       },
       {
         id: "poo-bags",
-        label: "Poo bags + dispenser for the lead",
+        label: "Biodegradable poo bags ×150 (10 rolls) + lead dispenser ✔ bought",
+        why: "Ordered 28 Jul — 150 biodegradable bags plus a pill-shaped dispenser that clips onto the lead. Walk-ready from day one.",
         emoji: "💩",
       },
       {
         id: "wipes-towels",
-        label: "Pet wipes + dedicated puppy towels ×3 (incl. one microfibre)",
+        label: "KOJIMA thick pet wipes ×5 packs ✔ bought — still need puppy towels ×3 (incl. one microfibre)",
+        why: "KOJIMA thick wipes (80 pulls × 5 packs) ordered 28 Jul — paws, bums and muddy walks covered. Still to grab: three dedicated puppy towels, one of them microfibre for bath days.",
         emoji: "🧽",
       },
       {
