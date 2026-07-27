@@ -300,8 +300,8 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
       },
       {
         id: "wipes-towels",
-        label: "KOJIMA thick pet wipes ×5 packs ✔ bought — still need puppy towels ×3 (incl. one microfibre)",
-        why: "KOJIMA thick wipes (80 pulls × 5 packs) ordered 28 Jul — paws, bums and muddy walks covered. Still to grab: three dedicated puppy towels, one of them microfibre for bath days.",
+        label: "KOJIMA thick pet wipes ×5 packs + microfibre cloths ×5 ✔ bought",
+        why: "KOJIMA thick wipes (80 pulls × 5 packs) and five microfibre cloths ordered 28 Jul — paws, bums, muddy walks and bath-day drying all covered. This line is done.",
         emoji: "🧽",
       },
       {

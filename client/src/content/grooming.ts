@@ -423,16 +423,16 @@ export const GROOM_STEPS: GroomStep[] = [
 export const GROOM_KIT: { item: string; note: string }[] = [
   { item: "Soft slicker brush ✔ bought", note: "Macaron-grey slicker + comb set ordered 27 Jul — puppy-soft pins now; standard slicker for the adult coat" },
   { item: "Metal greyhound comb ✔ bought", note: "Came with the slicker set — the mat lie-detector; coat isn't done until this glides" },
-  { item: "Detangle spray", note: "Or water + a drop of dog conditioner in a mist bottle" },
+  { item: "Detangle spray ✔ bought", note: "奇愈记 leave-in detangling mist (120 ml) ordered 28 Jul — spritz before line-brushing" },
   { item: "Puppy shampoo + conditioner", note: "Dog-specific, shampoo diluted 1:3; conditioner every bath; never human products" },
-  { item: "Two cotton towels", note: "High-GSM; dab and blot only" },
+  { item: "Drying towels ✔ bought", note: "Microfibre cloths ×5 ordered 28 Jul — dab and blot only, never rub in circles" },
   { item: "Dryer + Happy Hoodie", note: "Human hairdryer on cool/low works; the ear wrap muffles noise and shields ears" },
   { item: "Cotton balls", note: "Loose in the ear openings during the bath — water out, no post-bath ear trouble" },
   { item: "Dog ear cleaner + cotton pads", note: "Never cotton buds in the canal" },
   { item: "Nail grinder + styptic powder", note: "Grinder-first routine, 2–3 short sessions a week; cornflour backup" },
   { item: "Clippers + guard combs (13 mm & 16–19 mm) ✔ bought", note: "Codos CP-6800 cordless clipper + original blade ordered 27 Jul — 13 mm body, 16–19 mm legs/tail; clipper oil + coolant spray alongside" },
   { item: "Dog toothpaste + finger brush", note: "Human toothpaste is toxic (xylitol)" },
-  { item: "Grooming scissors: 7\" straight + 6.5\" thinning shears ✔ bought", note: "Full-steel set ordered 27 Jul — still add round-tip (blunt-nose) scissors for eye and ear work" },
+  { item: "Grooming scissors: 7\" straight + 7\" curved + 6.5\" thinning shears ✔ bought", note: "Full-steel kit ordered 28 Jul with comb, case and oil — still add round-tip (blunt-nose) scissors for eye and ear work" },
   { item: "Non-slip mat + treat pouch + lick mat", note: "The three that make every other tool usable" },
 ];
 

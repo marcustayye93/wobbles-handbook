@@ -496,3 +496,8 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 - [x] Mark matched items as purchased in the shared shopping plan (pre-seed ticks server-side) with purchase notes (product, price CNY, Taobao)
 - [x] Handle items not on the plan (detangle spray, wipes) — add as bought extras
 - [x] Verify (tsc, tests, screenshot) + checkpoint + GitHub push + deliver
+
+# Microfibre cloths bought (user follow-up 2026-07-28)
+
+- [ ] wipes-towels item: mark towels sorted too — 5 microfibre cloths bought; label/why show line fully complete
+- [ ] Verify, checkpoint, GitHub push, deliver
