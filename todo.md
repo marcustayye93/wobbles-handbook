@@ -499,5 +499,5 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 
 # Microfibre cloths bought (user follow-up 2026-07-28)
 
-- [ ] wipes-towels item: mark towels sorted too — 5 microfibre cloths bought; label/why show line fully complete
-- [ ] Verify, checkpoint, GitHub push, deliver
+- [x] wipes-towels item: mark towels sorted too — 5 microfibre cloths bought; label/why show line fully complete (+ grooming kit checklist: detangle spray, drying towels, shears note updated)
+- [x] Verify (tsc clean, 339/339 tests, shopping screenshot), checkpoint ed91e05c, GitHub push, deliver
