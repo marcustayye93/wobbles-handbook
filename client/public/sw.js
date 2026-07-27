@@ -3,7 +3,7 @@
  * - Navigations & other same-origin GETs: network-first with cache fallback
  * - API calls (/api/*): never cached here (react-query persistence handles data)
  */
-const CACHE = "wobbles-handbook-v2";
+const CACHE = "wobbles-handbook-v3";
 const PRECACHE = ["/", "/manifest.json", "/icons/icon-192.png", "/icons/icon-512.png"];
 
 self.addEventListener("install", (event) => {
@@ -28,6 +28,8 @@ self.addEventListener("fetch", (event) => {
   if (url.origin !== self.location.origin) return;
   // Data goes through react-query's persisted cache, not the SW cache.
   if (url.pathname.startsWith("/api/")) return;
+  // version.json powers the auto-update check — must always hit the network.
+  if (url.pathname === "/version.json") return;
 
   // Hashed build assets are immutable — serve from cache first.
   if (url.pathname.startsWith("/assets/")) {

@@ -150,10 +150,43 @@ function vitePluginManusDebugCollector(): Plugin {
   };
 }
 
-const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector()];
+// ---------------------------------------------------------------------------
+// Build version stamp — emits /version.json into the build output and exposes
+// the same id to the client as __APP_BUILD_ID__. The client polls version.json
+// (network-only, never SW-cached) to detect new deployments and auto-update.
+// ---------------------------------------------------------------------------
+const BUILD_ID = process.env.BUILD_ID || `build-${Date.now().toString(36)}`;
+
+function vitePluginBuildVersion(): Plugin {
+  return {
+    name: "manus-build-version",
+    // Serve version.json in dev too, so the client code path always works.
+    configureServer(server: ViteDevServer) {
+      server.middlewares.use("/version.json", (_req, res) => {
+        res.writeHead(200, {
+          "Content-Type": "application/json",
+          "Cache-Control": "no-store",
+        });
+        res.end(JSON.stringify({ buildId: BUILD_ID }));
+      });
+    },
+    generateBundle() {
+      this.emitFile({
+        type: "asset",
+        fileName: "version.json",
+        source: JSON.stringify({ buildId: BUILD_ID }),
+      });
+    },
+  };
+}
+
+const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector(), vitePluginBuildVersion()];
 
 export default defineConfig({
   plugins,
+  define: {
+    __APP_BUILD_ID__: JSON.stringify(BUILD_ID),
+  },
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),

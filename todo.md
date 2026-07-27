@@ -475,7 +475,7 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 - [x] Determine remaining "still to buy" gaps from shopping plan + grooming kit after Taobao haul
 - [x] Research PetO (peto.com.au) Brisbane stores + specific products/prices matching each gap
 - [x] Add revisitable "PetO Brisbane run" shopping list to the app (English, tickable, synced)
-- [ ] Verify (tsc, tests, screenshots) + checkpoint + GitHub push + delivery
+- [x] Verify (tsc, tests, screenshots) + checkpoint + GitHub push + delivery
 
 # PetO Brisbane run (user request 2026-07-27)
 - [x] Research PetO Brisbane: 7 QLD stores confirmed + 11 gap items verified on peto.com.au (products, prices, links)
@@ -483,4 +483,9 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 - [x] /handbook/shopping/peto-run page (Keepsake style): progress hero, grab-first/core/optional groups, product links, store cards
 - [x] Entry banner on Shopping Countdown page linking to the PetO run
 - [x] Verify: tsc clean, vitest 339/339 passing, mobile screenshots of both pages
-- [ ] Checkpoint + GitHub push + deliver
+- [x] Checkpoint d2e1a27b + GitHub push (main @ d2e1a27) + deliver
+
+# Auto-update mechanism (user request 2026-07-27)
+- [x] Inspect current caching / service worker / PWA setup (sw.js cache-first v2, PersistQueryClient, no update path existed)
+- [x] Implement version-check auto-update: version.json emitted at build + __APP_BUILD_ID__ define (vite.config.ts), client/src/lib/autoUpdate.ts watcher (launch/visible/online/5-min checks, reload-loop guard, typing guard, SW update + cache purge + reload), sw.js bumped to v3 + bypasses version.json, main.tsx registers SW with updateViaCache:'none'
+- [x] Verify (tsc clean, vitest 339/339, prod build emits version.json with matching inlined build id, mobile screenshots) + checkpoint + GitHub push + deliver
