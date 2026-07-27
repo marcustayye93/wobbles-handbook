@@ -492,7 +492,7 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 
 # Record Taobao purchases (user request 2026-07-28)
 
-- [ ] Map 6 Taobao order screenshots to shopping plan item ids (playpen, PVC pee mat, grooming scissors set, detangle spray, pet wipes, poo bags; skip non-dog household items)
-- [ ] Mark matched items as purchased in the shared shopping plan (pre-seed ticks server-side) with purchase notes (product, price CNY, Taobao)
-- [ ] Handle items not on the plan (detangle spray, wipes) — add as bought extras
-- [ ] Verify (tsc, tests, screenshot) + checkpoint + GitHub push + deliver
+- [x] Map 6 Taobao order screenshots to shopping plan item ids (playpen, PVC pee mat, grooming scissors set, detangle spray, pet wipes, poo bags; skip non-dog household items)
+- [x] Mark matched items as purchased in the shared shopping plan (pre-seed ticks server-side) with purchase notes (product, price CNY, Taobao)
+- [x] Handle items not on the plan (detangle spray, wipes) — add as bought extras
+- [x] Verify (tsc, tests, screenshot) + checkpoint + GitHub push + deliver
