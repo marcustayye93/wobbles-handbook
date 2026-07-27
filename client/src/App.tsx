@@ -18,6 +18,7 @@ import SectionReader from "@/pages/SectionReader";
 import HundredThings from "@/pages/HundredThings";
 import Checklists from "@/pages/Checklists";
 import Shopping from "@/pages/Shopping";
+import PetoRun from "@/pages/PetoRun";
 import Singapore from "@/pages/Singapore";
 import Training from "@/pages/Training";
 import Grooming from "@/pages/Grooming";
@@ -45,6 +46,7 @@ function Router() {
       <Route path="/handbook/100-things" component={HundredThings} />
       <Route path="/handbook/checklists" component={Checklists} />
       <Route path="/handbook/shopping" component={Shopping} />
+      <Route path="/handbook/shopping/peto-run" component={PetoRun} />
       <Route path="/handbook/:slug" component={SectionReader} />
       <Route path="/singapore" component={Singapore} />
       <Route path="/training" component={Training} />
