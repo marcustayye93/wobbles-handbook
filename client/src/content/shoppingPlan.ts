@@ -83,8 +83,8 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
     items: [
       {
         id: "bed-mat",
-        label: "Crate bed + washable vet-bed mat (buy two for laundry rotation)",
-        why: "Accidents happen — a spare mat means the crate never smells like one.",
+        label: "MIKIPAD waterproof dog bed (dark brown) + latex cooling mat ✔ bought",
+        why: "Ordered 27 Jul — all-season waterproof bed with a cooling mat for Singapore heat. A spare washable vet-bed mat is still a smart add for laundry rotation.",
         emoji: "🛌",
       },
       {
@@ -135,8 +135,8 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
       },
       {
         id: "lead",
-        label: "TUG retractable tape leash ✔ bought — plus a fixed 1.8 m training lead",
-        why: "The retractable is for relaxed sniffy walks later; puppy lessons and roadside walks still want a short fixed lead for control.",
+        label: "TUG retractable leash ✔ bought + slip lead & 580 ml walk water bottle ✔ bought — plus a fixed 1.8 m training lead",
+        why: "The retractable is for relaxed sniffy walks later and the slip lead (lemon yellow, with clip-on water bottle) covers quick toilet runs; puppy lessons and roadside walks still want a short fixed lead for control.",
         emoji: "🪢",
       },
       {
@@ -191,8 +191,8 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
     items: [
       {
         id: "bowls",
-        label: "Stainless/ceramic food bowl + narrow water bowl (beard-friendly)",
-        why: "A narrow water bowl keeps a Cavoodle beard drier — less staining, less daily blotting.",
+        label: "Raised 304 stainless-steel bowl + stand ✔ bought — add a narrow water bowl",
+        why: "Ordered 27 Jul. A narrow water bowl is still worth adding — it keeps a Cavoodle beard drier, so less staining and daily blotting.",
         emoji: "🥣",
       },
       {
@@ -209,9 +209,15 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
       },
       {
         id: "grooming-tools",
-        label: "Slicker brush + metal comb + puppy shampoo & conditioner",
-        why: "Brush-tolerance training starts day one; fleece coats mat fast without a proper comb.",
+        label: "Slicker brush + comb set ✔ bought — still need puppy shampoo & conditioner",
+        why: "Macaron-grey slicker + comb set ordered 27 Jul. Brush-tolerance training starts day one; grab the dog-specific shampoo & conditioner to finish this line.",
         emoji: "🪮",
+      },
+      {
+        id: "clippers",
+        label: "Codos CP-6800 pet clipper + 7\" straight & 6.5\" thinning shears ✔ bought",
+        why: "Ordered 27 Jul — the home-grooming trim kit is sorted. Add guard combs check + clipper oil when it arrives, and start the clipper conditioning ladder from week one.",
+        emoji: "✂️",
       },
       {
         id: "nail-styptic",
@@ -237,7 +243,7 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
     items: [
       {
         id: "chew-toys",
-        label: "Chew & tug arsenal ✔ bought — KONG Squid, KONG Teething Stick, Beeztees tug, mop toy, fleece rope tug",
+        label: "Chew & tug arsenal ✔ bought — KONG Squid, KONG Teething Stick, Beeztees tug, mop toy, fleece rope tug, GiGwi antler chew ×2, squeaky duck plush",
         why: "Teething peaks 12–24 weeks — rotate two or three at a time so the box stays novel.",
         emoji: "🧸",
       },
@@ -276,9 +282,15 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
     items: [
       {
         id: "pads-cleaner",
-        label: "Puppy pads (big stock) + enzyme cleaner",
-        why: "Pad-first potty training in an HDB flat burns through pads fast; enzyme cleaner is the only thing that erases accident smells.",
+        label: "UP+ pee pads XL 60×90 cm ×3 packs ✔ bought — still need enzyme cleaner",
+        why: "Thickened odour-control pads ordered 27 Jul. Enzyme cleaner is the missing half — it's the only thing that erases accident smells.",
         emoji: "🚽",
+      },
+      {
+        id: "toilet-tray",
+        label: "XL dog toilet tray with wall (white-grey) ✔ bought",
+        why: "Ordered 27 Jul — the pad holder tray keeps pads flat and chew-proof, and the wall catches leg-lifts. Pairs with the pad-first HDB potty plan.",
+        emoji: "🛁",
       },
       {
         id: "poo-bags",

@@ -465,3 +465,8 @@ NOTE: tracker sync P0 from the report was already shipped earlier (tracker_entri
 - [x] Build reusable ~200ms animated Collapse component (height + opacity, ease-out, prefers-reduced-motion aware)
 - [x] Wire into Grooming stage cards + kit checklist, Training skill cards, and QoL check-in card; anchoredToggle now pins the tapped card for the full transition duration
 - [x] Verify (tsc clean, 339 tests green, mobile screenshots incl. deep-link ?open=bath) + checkpoint + GitHub push + delivery
+
+## Update: mark user's Taobao purchases in supplies checklist (English)
+- [x] Translate all purchased items from the 6 order screenshots into English (notes in .notes/taobao-purchases-2026-07-27.md; non-pet items like artwork/tissue/toilet paper skipped)
+- [x] Match purchases to shopping plan: bed-mat, bowls ticked + relabelled; new clippers + toilet-tray items added and ticked; lead, chew-toys, grooming-tools, pads-cleaner labels updated (partial buys stay unticked); GROOM_KIT list updated (slicker/comb, clipper, scissors ✔ bought)
+- [x] Verify (tsc clean, 339 tests passing, mobile screenshots of shopping + grooming) + checkpoint + GitHub push + delivery
