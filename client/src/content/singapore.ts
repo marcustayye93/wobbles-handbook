@@ -35,7 +35,7 @@ export const SG_STEPS: SgStep[] = [
     title: "Microchip + vaccination check",
     timing: "Done with normal puppy care",
     detail:
-      "Wobbles is microchipped at his first vet visit (11 Aug). Singapore requires core dog vaccinations — his full Protech C3 course (11 Aug, 25 Aug, 8 Sep) is done at the breeder's vet with the rest of the litter. Keep every certificate in one folder.",
+      "Paddington is microchipped at his first vet visit (11 Aug). Singapore requires core dog vaccinations — his full Protech C3 course (11 Aug, 25 Aug, 8 Sep) is done at the breeder's vet with the rest of the litter. Keep every certificate in one folder.",
     icon: "scan",
   },
   {
@@ -67,7 +67,7 @@ export const SG_STEPS: SgStep[] = [
     title: "Door-to-door travel day",
     timing: "23 Sep 2026 (12w6d old)",
     detail:
-      "A Jet Pets handler collects Wobbles, he waits in a transit lounge (not on hot tarmac), then flies in a dim, climate-controlled hold kept around 18 °C — pets are loaded last and unloaded first. Vets advise NO sedation for flying; it interferes with balance and breathing at altitude. Optional PetTrakr tag lets you follow his journey.",
+      "A Jet Pets handler collects Paddington, he waits in a transit lounge (not on hot tarmac), then flies in a dim, climate-controlled hold kept around 18 °C — pets are loaded last and unloaded first. Vets advise NO sedation for flying; it interferes with balance and breathing at altitude. Optional PetTrakr tag lets you follow his journey.",
     icon: "plane",
   },
   {
@@ -75,7 +75,7 @@ export const SG_STEPS: SgStep[] = [
     title: "Changi arrival & inspection",
     timing: "On landing",
     detail:
-      "Wobbles clears Singapore's Changi Animal & Plant Quarantine (CAPQ) inspection — with Schedule I paperwork there is no quarantine stay — and is delivered to your door in Singapore.",
+      "Paddington clears Singapore's Changi Animal & Plant Quarantine (CAPQ) inspection — with Schedule I paperwork there is no quarantine stay — and is delivered to your door in Singapore.",
     icon: "check",
   },
   {

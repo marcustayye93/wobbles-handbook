@@ -7,11 +7,12 @@
 import { useMemo, useState } from "react";
 import { useRoute, Link } from "wouter";
 import { PageShell, PageHeader, Eyebrow } from "@/components/AppShell";
-import QuickLogSheet from "@/components/QuickLogSheet";
-import { useTrackerEntries } from "@/hooks/useSyncedData";
+import { useTrackerEntries, useAddTrackerEntry } from "@/hooks/useSyncedData";
 import { getTrick, entryMatchesTrick, TRICKS } from "@/content/tricks";
-import { friendlyDate } from "@/lib/dates";
-import { GraduationCap, Clock, Baby, Lightbulb, ChevronRight, Check } from "lucide-react";
+import { todayISO, nowHM, friendlyDate } from "@/lib/dates";
+import { cn } from "@/lib/utils";
+import { GraduationCap, Clock, Baby, Lightbulb, ChevronRight, Check, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 const LEVEL_LABEL: Record<string, string> = {
   foundation: "Foundation",
@@ -23,7 +24,8 @@ export default function TrickDetail() {
   const [, params] = useRoute("/journey/tricks/:id");
   const trick = getTrick(params?.id ?? "");
   const { entries: trainingEntries } = useTrackerEntries("training");
-  const [logOpen, setLogOpen] = useState(false);
+  const addEntry = useAddTrackerEntry();
+  const [justLogged, setJustLogged] = useState(false);
 
   const matches = useMemo(
     () => (trick ? trainingEntries.filter((e) => entryMatchesTrick(trick, e)) : []),
@@ -46,6 +48,25 @@ export default function TrickDetail() {
   const count = matches.length;
   const next = TRICKS[(TRICKS.findIndex((t) => t.id === trick.id) + 1) % TRICKS.length];
 
+  const logPractice = () => {
+    addEntry.mutate(
+      {
+        trackerId: "training",
+        date: todayISO(),
+        time: nowHM(),
+        option: trick.matchOptions[0] ?? "Tricks / fun",
+        note: `${trick.name} practice`,
+      },
+      {
+        onSuccess: () => {
+          setJustLogged(true);
+          toast.success(`Practice logged — that's ${count + 1} for ${trick.name}!`);
+          setTimeout(() => setJustLogged(false), 2500);
+        },
+      },
+    );
+  };
+
   return (
     <PageShell className="pb-28">
       <PageHeader
@@ -60,7 +81,7 @@ export default function TrickDetail() {
         <div className="keepsake-card overflow-hidden">
           <img
             src={trick.image}
-            alt={`Gouache illustration showing how to train "${trick.name}" with Wobbles`}
+            alt={`Gouache illustration showing how to train "${trick.name}" with Paddington`}
             className="w-full aspect-[4/3] object-cover"
           />
           <div className="px-4 py-3 flex items-center gap-3">
@@ -79,13 +100,27 @@ export default function TrickDetail() {
         </div>
       </section>
 
-      {/* ===== Log practice CTA — opens the training log pre-filled with this trick ===== */}
+      {/* ===== Log practice CTA ===== */}
       <section className="px-4 mt-3">
         <button
-          onClick={() => setLogOpen(true)}
-          className="w-full btn-ink justify-center py-3 text-[13px]"
+          onClick={logPractice}
+          disabled={addEntry.isPending}
+          className={cn(
+            "w-full btn-ink justify-center py-3 text-[13px]",
+            justLogged && "bg-[#6B7C5A] border-[#6B7C5A]",
+          )}
         >
-          <GraduationCap size={15} /> Log a practice session
+          {addEntry.isPending ? (
+            <Loader2 size={15} className="animate-spin" />
+          ) : justLogged ? (
+            <>
+              <Check size={15} /> Logged!
+            </>
+          ) : (
+            <>
+              <GraduationCap size={15} /> Log a practice session
+            </>
+          )}
         </button>
         <p className="text-center text-[10.5px] font-body text-muted-foreground mt-1.5">
           Counts every Training Log entry for “{trick.matchOptions[0] ?? "Tricks / fun"}”
@@ -147,26 +182,6 @@ export default function TrickDetail() {
         </div>
       </section>
 
-      {/* ===== Watch it in action ===== */}
-      {trick.video && (
-        <section className="px-4 mt-4">
-          <Eyebrow className="px-1 mb-2.5">Watch it in action</Eyebrow>
-          <div className="keepsake-card overflow-hidden">
-            <video
-              src={trick.video}
-              poster={trick.image}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              aria-label={`Looping demo of Wobbles practising "${trick.name}"`}
-              className="w-full aspect-video object-cover"
-            />
-          </div>
-        </section>
-      )}
-
       {/* ===== Pro tip ===== */}
       <section className="px-4 mt-4">
         <div className="keepsake-card relative p-4 pl-11">
@@ -221,15 +236,6 @@ export default function TrickDetail() {
           <ChevronRight size={16} className="text-muted-foreground shrink-0" />
         </Link>
       </section>
-
-      {/* Pre-filled quick log: training tracker, trick's skill option + note */}
-      <QuickLogSheet
-        open={logOpen}
-        onOpenChange={setLogOpen}
-        initialTracker="training"
-        initialOption={trick.matchOptions[0]}
-        initialNote={`${trick.name} practice`}
-      />
     </PageShell>
   );
 }

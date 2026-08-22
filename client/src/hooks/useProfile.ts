@@ -1,5 +1,5 @@
 /*
- * Device-remembered profile (no login) — Wobbles' Handbook opens straight
+ * Device-remembered profile (no login) — Paddington's Handbook opens straight
  * into the app once a profile has been picked on this device. Three profiles:
  * Marcus, Chesa, and Caretaker (for friends dog-sitting while the family is
  * overseas). The choice lives in localStorage and is sent to the server on
@@ -16,15 +16,6 @@ const EVENT = "wobbles-profile-changed";
 
 export function readProfile(): Profile | null {
   try {
-    // URL bootstrap: opening any link with ?profile=Marcus|Chesa|Caretaker
-    // preselects the profile on this device (handy for sharing set-up links
-    // with a caretaker — and for automated previews).
-    const fromUrl = new URLSearchParams(window.location.search).get("profile");
-    if (fromUrl && PROFILES.includes(fromUrl as Profile)) {
-      if (localStorage.getItem(PROFILE_KEY) !== fromUrl)
-        localStorage.setItem(PROFILE_KEY, fromUrl);
-      return fromUrl as Profile;
-    }
     const raw = localStorage.getItem(PROFILE_KEY);
     return PROFILES.includes(raw as Profile) ? (raw as Profile) : null;
   } catch {

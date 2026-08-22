@@ -1,5 +1,5 @@
 /*
- * Keepsake Field Guide — "Wobbles Today" daily engine (v2).
+ * Keepsake Field Guide — "Paddington Today" daily engine (v2).
  * Stage-aware guidance (focus / expect / training) computed from age,
  * PLUS a date-deterministic daily layer: the household weekly schedule
  * (Marcus WFH Mon/Fri, office Tue–Thu; Chesa home most days), recurring
@@ -26,7 +26,10 @@ import {
 } from "@/lib/householdSettings";
 import { type TrackerEntry } from "@/lib/trackers";
 import { nextToiletWindow } from "@/lib/insights";
-import { overdueItems as overdueShoppingItems } from "@/content/shoppingPlan";
+import {
+  currentWeek as currentShoppingWeek,
+  overdueItems as overdueShoppingItems,
+} from "@/content/shoppingPlan";
 
 export interface TodayStage {
   stage: string; // e.g. "Neonatal", "Socialisation window"
@@ -48,7 +51,7 @@ export function wobblesToday(now: Date = new Date()): TodayStage {
   if (!age.born)
     return {
       stage: "Countdown",
-      title: "Counting Down to Wobbles",
+      title: "Counting Down to Paddington",
       text: "He hasn't been born yet — use this time to read the handbook and prepare the house.",
       focus: "Read the first-day chapter and shop the kit list",
       expect: "Nothing yet — he's still a twinkle",
@@ -61,7 +64,7 @@ export function wobblesToday(now: Date = new Date()): TodayStage {
       return {
         stage: age.weeks < 3 ? "Neonatal — with the litter" : "Litter socialisation",
         title: "Settle In, Little One",
-        text: `Wobbles is ${age.weeks} weeks old, growing up with his litter at The Doghouse QLD. The breeder is running ENS and Puppy Culture — your job is the humans-only prep: puppy-proof, shop the kit list and read the first-day guide.`,
+        text: `Paddington is ${age.weeks} weeks old, growing up with his litter at The Doghouse QLD. The breeder is running ENS and Puppy Culture — your job is the humans-only prep: puppy-proof, shop the kit list and read the first-day guide.`,
         focus: "Puppy-proof one room fully this week; keep working the kit list",
         expect: "The breeder is running ENS and enrichment — he's learning without you",
         training: "Decide your cue words now so the household is consistent from day one",
@@ -84,7 +87,7 @@ export function wobblesToday(now: Date = new Date()): TodayStage {
     if (daysHome <= 3)
       return {
         stage: "Just landed — decompression bubble",
-        title: "Welcome Home, Wobbles",
+        title: "Welcome Home, Paddington",
         text: `He's here! Days 1–3 are the decompression bubble: flat-only, calm, predictable. No visitors, no outings — just toilet trips, naps, gentle play and letting him learn that this is home. The socialisation sprint starts from day 4.`,
         focus: "Quiet flat, toilet-spot repetition, name + hand-feeding, long naps",
         expect: "Jet-lag tired, some whining at night, toilet accidents — all normal after a big flight",
@@ -111,8 +114,8 @@ export function wobblesToday(now: Date = new Date()): TodayStage {
       focus: "Daily 2-minute brush ritual with treats; 7:15am + evening walks on schedule",
       expect: "Adult teeth arriving, more stamina, selective hearing",
       training: "Loose-lead walking and 'leave it' — practise on the way to the park",
-      link: "/grooming",
-      linkLabel: "Open the Master Class",
+      link: "/handbook/grooming-psychology",
+      linkLabel: "See guidance",
     };
   if (age.months < 12)
     return {
@@ -125,74 +128,16 @@ export function wobblesToday(now: Date = new Date()): TodayStage {
       link: "/handbook/coat-science",
       linkLabel: "See guidance",
     };
-  /* ---- Lifetime stages (U1): the app grows old with him ---- */
-  const years = Math.floor(age.months / 12);
-  if (age.months < 18)
-    return {
-      stage: "Adolescence (12–18 months)",
-      title: "The Teenage Months",
-      text: `Wobbles is ${age.months} months old — physically nearly grown, mentally still a teenager. Expect selective hearing, boundary-testing and bursts of zoomies. Keep training short, fun and consistent; this phase passes, and the dog who comes out the other side is the one you built during it.`,
-      focus: "Hold the line on house rules — consistency now shapes the adult",
-      expect: "Selective hearing, energy spikes, testing what he can get away with",
-      training: "Re-run the basics in new places: recall at the park, stay with distractions",
-      link: "/handbook/adolescence",
-      linkLabel: "Adolescence guide",
-    };
-  if (age.months < 48)
-    return {
-      stage: "Young adult (1½–4 years)",
-      title: "The Settled Rhythm",
-      text: `Wobbles is ${years === 1 ? "one and a bit" : years === 2 ? "two" : "three"} — the routines are his now. The job shifts from building habits to keeping them: a monthly weigh-in, the annual booster around his birthday, teeth three times a week and the groom cycle. Adult dogs drift quietly; the trackers catch what eyes miss.`,
-      focus: "Monthly weigh-in, keep the teeth habit, groom every 4–6 weeks",
-      expect: "Settled, predictable, occasionally cheeky — the golden routine years",
-      training: "One new trick a month keeps the brain young; keep recall sharp",
-      link: "/handbook/adult-rhythm",
-      linkLabel: "Adult rhythm guide",
-    };
-  if (age.months < 96)
-    return {
-      stage: "Prime years (4–8)",
-      title: "The Prime of His Life",
-      text: `Wobbles is ${years} — right in his prime. These are the years subtle changes hide in plain sight: a slow weight drift, a tooth going quietly bad, a little less enthusiasm on the stairs. Keep the monthly weigh, look in his mouth weekly, and treat the annual vet visit as non-negotiable.`,
-      focus: "Watch for subtle change: weight drift, dental wear, stamina dips",
-      expect: "Full stride — but ageing starts invisibly in these years",
-      training: "Keep him thinking: scent games, new routes, trick refreshers",
-      link: "/handbook/prime-years",
-      linkLabel: "Prime years guide",
-    };
-  if (age.months < 144)
-    return {
-      stage: "Senior (8–12)",
-      title: "The Golden Years",
-      text: `Wobbles is ${years} — officially a senior gentleman. The care rhythm steps up: vet visits go twice-yearly with bloodwork, walks stay regular but gentler, and comfort matters more — softer bedding, no big jumps, warmth for the joints. A monthly quality-of-life check-in keeps you honest about how he's really doing.`,
-      focus: "Twice-yearly vet + bloodwork, joint comfort, monthly QoL check-in",
-      expect: "Slower mornings, deeper naps, the same big heart",
-      training: "Gentle brain work: slow sniffy walks, food puzzles, easy tricks",
-      link: "/handbook/golden-years",
-      linkLabel: "Golden years guide",
-    };
   return {
-    stage: "Golden twilight (12+)",
-    title: "Every Day Is the Good Stuff",
-    text: `Wobbles is ${years} — a grand old man. The job now is comfort and joy: short happy outings, favourite foods (vet-approved), warm spots, and honest monthly quality-of-life check-ins. Celebrate the small wins and photograph everything — these are the days you'll want to remember.`,
-    focus: "Comfort first: warmth, soft bedding, gentle routine, QoL check-ins",
-    expect: "Slow and sweet — more naps, more cuddles, treasure the good days",
-    training: "No agenda — sniffy strolls and the tricks he still loves doing",
-    link: "/handbook/twilight-care",
-    linkLabel: "Twilight care guide",
+    stage: "Adult",
+    title: "All Grown Up (Mostly)",
+    text: "Keep the routines: brush most days, groom every 4–6 weeks, and log health notes in the trackers.",
+    focus: "Keep the brush-most-days habit",
+    expect: "Settled routines — watch weight and coat condition",
+    training: "One trick a month keeps his brain busy",
+    link: "/trackers",
+    linkLabel: "Open trackers",
   };
-}
-
-/** Wobbles' next birthday relative to `now`: the date and the age he turns. */
-export function nextBirthday(now: Date = new Date()): { iso: string; turning: number } {
-  const dob = new Date(WOBBLES.dob + "T00:00:00");
-  const year =
-    now.getMonth() > dob.getMonth() ||
-    (now.getMonth() === dob.getMonth() && now.getDate() > dob.getDate())
-      ? now.getFullYear() + 1
-      : now.getFullYear();
-  const iso = `${year}-${String(dob.getMonth() + 1).padStart(2, "0")}-${String(dob.getDate()).padStart(2, "0")}`;
-  return { iso, turning: year - dob.getFullYear() };
 }
 
 /* ---------------- Daily layer (varies every date) ---------------- */
@@ -279,16 +224,24 @@ export function todaysNudges(
   }
 
   if (!age.born || daysUntil(WOBBLES.homecoming, now) > 0) {
-    // Pre-homecoming: only nudge when items have slipped from earlier weeks.
-    // (The current week's items live on the Shopping page itself — a weekly
-    // "n items to buy" sticker on Home was removed as clutter, 26 Jul.)
+    // Pre-homecoming: shopping-countdown nudge first, then reading
+    // (imported at top as currentShoppingWeek / overdueShoppingItems)
     if (shoppingTicks) {
+      const week = currentShoppingWeek(now);
+      const left = week.items.filter((it) => !shoppingTicks[it.id]).length;
       const behind = overdueShoppingItems(shoppingTicks, now).length;
       if (behind > 0)
         out.push({
           id: "shopping-catchup",
-          emoji: "\ud83d\uded2",
+          emoji: "🛒",
           text: `${behind} shopping item${behind === 1 ? "" : "s"} slipped from earlier weeks — catch up before the list stacks`,
+          link: "/handbook/shopping",
+        });
+      else if (left > 0)
+        out.push({
+          id: "shopping-week",
+          emoji: week.emoji,
+          text: `${week.title}: ${left} item${left === 1 ? "" : "s"} to buy this week on the countdown`,
           link: "/handbook/shopping",
         });
     }
@@ -298,7 +251,6 @@ export function todaysNudges(
   // 1) Care rota first — they're date-anchored jobs with named owners
   for (const task of careTasksFor(now)) {
     if (task.id === "teeth") continue; // teeth shows in the day plan, not as a nudge
-    if (task.daily) continue; // everyday anchors (hydration, paw check) live in Due today, not the capped nudges
     out.push({
       id: `care-${task.id}`,
       emoji: task.emoji,
@@ -344,54 +296,6 @@ export function todaysNudges(
       link: "/trackers/weight",
       person: "Marcus",
     });
-  // Adults drift quietly: monthly weigh-in from his first birthday on
-  if (age.months >= 12 && (weight == null || weight >= 30))
-    out.push({
-      id: "weigh-monthly",
-      emoji: "⚖️",
-      text:
-        weight == null
-          ? "Monthly weigh-in — adult weight drifts quietly, the scale catches it"
-          : `Last weigh-in was ${weight} days ago — the monthly check is due`,
-      link: "/trackers/weight",
-      person: "Marcus",
-    });
-
-  // Senior rhythm (8+): twice-yearly vet visits and a monthly QoL check-in
-  if (age.months >= 96) {
-    const vet = daysSince(readEntries("vaccines")[0]?.date, now);
-    if (vet == null || vet >= 182)
-      out.push({
-        id: "senior-vet",
-        emoji: "🩺",
-        text: "Seniors see the vet twice a year — time to book the check-up + bloodwork",
-        link: "/health",
-      });
-    const qol = daysSince(readEntries("qol")[0]?.date, now);
-    if (qol == null || qol >= 30)
-      out.push({
-        id: "qol-checkin",
-        emoji: "💕",
-        text: "Monthly quality-of-life check-in — five quiet minutes, seven gentle questions",
-        link: "/health",
-      });
-  }
-
-  // Birthday window: 14 days before every birthday from age 1
-  {
-    const bday = nextBirthday(now);
-    const toBday = daysUntil(bday.iso, now);
-    if (bday.turning >= 1 && toBday >= 0 && toBday <= 14)
-      out.push({
-        id: "birthday",
-        emoji: "🎂",
-        text:
-          toBday === 0
-            ? `Wobbles turns ${bday.turning} today — happy birthday, good boy! 🎉`
-            : `Wobbles turns ${bday.turning} in ${toBday} day${toBday === 1 ? "" : "s"} — plan the birthday walk (and the annual booster)`,
-        link: "/growth",
-      });
-  }
 
   if (age.weeks < 16) {
     const social = daysSince(readEntries("social")[0]?.date, now);
@@ -403,9 +307,8 @@ export function todaysNudges(
   if (age.weeks >= 18 && age.months < 12 && isParkNight(now))
     out.push({ id: "park", emoji: "🏞️", text: "Park night tonight — 7pm at the park next door with dogs and people (or drive to the Waterfront dog run)", link: "/trackers/social" });
 
-  // Reminders and the birthday (a once-a-year moment) always survive the cap;
-  // then up to 3 rule-based nudges
-  const pinned = out.filter((n) => n.id.startsWith("reminder-") || n.id === "birthday");
-  const rest = out.filter((n) => !pinned.includes(n));
-  return [...pinned, ...rest.slice(0, 3)];
+  // Reminders always survive the cap; then up to 3 rule-based nudges
+  const reminders = out.filter((n) => n.id.startsWith("reminder-"));
+  const rest = out.filter((n) => !n.id.startsWith("reminder-"));
+  return [...reminders, ...rest.slice(0, 3)];
 }

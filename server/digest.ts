@@ -1,5 +1,5 @@
 /*
- * Weekly digest — composes a Sunday summary of Wobbles' week from the
+ * Weekly digest — composes a Sunday summary of Paddington's week from the
  * household tracker feed and photo journal, delivered to the project owner
  * via notifyOwner(). Called by the /api/scheduled/weeklyDigest Heartbeat
  * handler (see server/scheduled.ts).
@@ -122,7 +122,7 @@ export function composeDigest(
 
   /* ---- Compose the message ---- */
   const lines: string[] = [];
-  lines.push(`Wobbles is now ${age.weeks}w ${age.days}d old. Here's his week (${startISO} → ${endISO}):`);
+  lines.push(`Paddington is now ${age.weeks}w ${age.days}d old. Here's his week (${startISO} → ${endISO}):`);
   lines.push("");
 
   if (week.length === 0 && photosThisWeek === 0) {
@@ -161,10 +161,10 @@ export function composeDigest(
   }
 
   lines.push("");
-  lines.push("Open Wobbles' Handbook → Trackers for the full picture.");
+  lines.push("Open Paddington's Handbook → Trackers for the full picture.");
 
   return {
-    title: `Wobbles' week in review (${age.weeks}w ${age.days}d)`,
+    title: `Paddington's week in review (${age.weeks}w ${age.days}d)`,
     content: lines.join("\n"),
     stats: {
       totalEntries: week.length,

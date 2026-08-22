@@ -45,7 +45,7 @@ export default function Singapore() {
         <div className="relative rounded-3xl overflow-hidden">
           <img
             src={CHAPTER_COVERS.singapore}
-            alt="Wobbles the Cavoodle in front of the Singapore skyline"
+            alt="Paddington the Cavoodle in front of the Singapore skyline"
             className="w-full aspect-[16/10] object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#22364D]/70 via-transparent to-transparent" aria-hidden />
@@ -57,7 +57,7 @@ export default function Singapore() {
         </div>
         <p className="text-sm text-muted-foreground leading-relaxed mt-4">
           The family moves to Singapore in <strong className="text-foreground">September 2026</strong>, with
-          Wobbles flying on <strong className="text-foreground">23 September</strong> via{" "}
+          Paddington flying on <strong className="text-foreground">23 September</strong> via{" "}
           <strong className="text-foreground">Jet Pets</strong>. Great news: because
           Australia is rabies-free, this is one of the easiest international pet moves in the world —
           <strong className="text-foreground"> no rabies shots, no quarantine</strong>, roughly 2–3 weeks of

@@ -5,10 +5,8 @@
  */
 import type { Section } from "./types";
 import { ASSETS } from "./wobbles";
-import { LIFETIME_SECTIONS } from "./lifetimeSections";
 
-/** Chapters for the puppy year (written for now). */
-export const PUPPY_SECTIONS: Section[] = [
+export const SECTIONS: Section[] = [
   // ─────────────────────────────────────────────────────────── 1. First Day
   {
     slug: "first-day",
@@ -20,7 +18,7 @@ export const PUPPY_SECTIONS: Section[] = [
     blocks: [
       {
         type: "p",
-        text: "Wobbles comes home at nearly 13 weeks old on Thursday 24 September 2026, flying with Jet Pets on the 23rd — Singapore's AVS rules mean puppies can only be imported from 12 weeks of age, so he spends his first three months with his litter at The Doghouse QLD. He'll arrive with his puppy pack: a blanket carrying his mum's scent, his puppy passport, microchip and vaccination records (all three Protech C3 shots done in Australia). The first 48 hours set the tone for everything — but they don't have to be perfect, just calm. Remember he's also just flown 7+ hours from Brisbane, so day one is about rest, not introductions.",
+        text: "Paddington comes home at nearly 13 weeks old on Thursday 24 September 2026, flying with Jet Pets on the 23rd — Singapore's AVS rules mean puppies can only be imported from 12 weeks of age, so he spends his first three months with his litter at The Doghouse QLD. He'll arrive with his puppy pack: a blanket carrying his mum's scent, his puppy passport, microchip and vaccination records (all three Protech C3 shots done in Australia). The first 48 hours set the tone for everything — but they don't have to be perfect, just calm. Remember he's also just flown 7+ hours from Brisbane, so day one is about rest, not introductions.",
       },
       { type: "h", text: "Before he arrives" },
       {
@@ -58,7 +56,7 @@ export const PUPPY_SECTIONS: Section[] = [
       {
         type: "tip",
         title: "Fear periods & the big move",
-        text: "Puppies go through a fear-imprint period around 8–11 weeks — Wobbles rides most of it out safely at the farm, but the flight and rehoming at 12 weeks are still a big deal, and a second sensitive patch can linger. Anything genuinely frightening this week can leave a lasting mark. Keep week one gentle, positive and boring (in a good way).",
+        text: "Puppies go through a fear-imprint period around 8–11 weeks — Paddington rides most of it out safely at the farm, but the flight and rehoming at 12 weeks are still a big deal, and a second sensitive patch can linger. Anything genuinely frightening this week can leave a lasting mark. Keep week one gentle, positive and boring (in a good way).",
       },
       { type: "h", text: "The first day rhythm" },
       {
@@ -112,7 +110,7 @@ export const PUPPY_SECTIONS: Section[] = [
     blocks: [
       {
         type: "p",
-        text: "Wobbles isn't starting from zero. The Doghouse QLD raises litters on Puppy Culture and Early Neurological Stimulation — structured, evidence-informed early-development programs. Your job is to keep the momentum going through the critical socialisation window, which for Wobbles closes around 16 weeks (16 October 2026).",
+        text: "Paddington isn't starting from zero. The Doghouse QLD raises litters on Puppy Culture and Early Neurological Stimulation — structured, evidence-informed early-development programs. Your job is to keep the momentum going through the critical socialisation window, which for Paddington closes around 16 weeks (16 October 2026).",
       },
       { type: "h", text: "Puppy Culture — what the breeder has already done" },
       {
@@ -122,7 +120,7 @@ export const PUPPY_SECTIONS: Section[] = [
       {
         type: "list",
         items: [
-          "Manding: when Wobbles sits and looks at you, reward it — he's 'asking politely'. Ignore jumping; reward sitting.",
+          "Manding: when Paddington sits and looks at you, reward it — he's 'asking politely'. Ignore jumping; reward sitting.",
           "Exchange games: trade a treat for whatever is in his mouth. Never chase-and-snatch — that teaches guarding.",
           "Communication trinity: a marker word or clicker ('yes!') powered up with treats makes every future lesson faster.",
           "Fear-period awareness: gentle first week home (he lands at 12 weeks, fresh off a flight) and again during the second fear period around 6–14 months.",
@@ -132,7 +130,7 @@ export const PUPPY_SECTIONS: Section[] = [
       { type: "h", text: "ENS — already done, days 3–16" },
       {
         type: "p",
-        text: "Early Neurological Stimulation (the US military 'Bio Sensor' program, popularised by Dr Carmen Battaglia) was performed on Wobbles by the breeder between days 3 and 16 of his life: five gentle exercises, once daily, 3–5 seconds each — tactile toe stimulation with a cotton tip, head held up, head pointed down, resting on his back, and a moment on a cool damp towel.",
+        text: "Early Neurological Stimulation (the US military 'Bio Sensor' program, popularised by Dr Carmen Battaglia) was performed on Paddington by the breeder between days 3 and 16 of his life: five gentle exercises, once daily, 3–5 seconds each — tactile toe stimulation with a cotton tip, head held up, head pointed down, resting on his back, and a moment on a cool damp towel.",
       },
       {
         type: "bars",
@@ -157,7 +155,7 @@ export const PUPPY_SECTIONS: Section[] = [
       {
         type: "list",
         items: [
-          "Train the dog in front of you — respond to Wobbles' actual personality, not Cavoodle stereotypes.",
+          "Train the dog in front of you — respond to Paddington's actual personality, not Cavoodle stereotypes.",
           "Exercise before training: a puppy with the zoomies cannot concentrate. Play first, then train.",
           "Manage the environment instead of punishing: gates, pens, leashes indoors, and nothing chewable left out.",
           "Capture good behaviour: the instant he does something you like, mark and reward it.",
@@ -179,7 +177,7 @@ export const PUPPY_SECTIONS: Section[] = [
       {
         type: "tip",
         title: "Your one job before 16 October",
-        text: "The socialisation window is the single highest-leverage project of Wobbles' entire life. Aim for daily, brief, positive exposures: people of all kinds, surfaces, sounds, handling, car rides — and since home is an HDB flat in Woodlands, prioritise lifts, void decks, corridor noise, traffic and the MRT rumble. Once the SG vet signs off at the first visit (~28 Sep — his Protech C3 course finished back on 8 Sep), the 7pm every-other-day park sessions take over: the small park next to the block for the walkable nights, and Woodlands Waterfront Park's dog run (a short drive away, open 24/7 with sea views) when you want off-leash play with other dogs. Positive, brief, and puppy-chooses. Never flood him.",
+        text: "The socialisation window is the single highest-leverage project of Paddington's entire life. Aim for daily, brief, positive exposures: people of all kinds, surfaces, sounds, handling, car rides — and since home is an HDB flat in Woodlands, prioritise lifts, void decks, corridor noise, traffic and the MRT rumble. Once the SG vet signs off at the first visit (~28 Sep — his Protech C3 course finished back on 8 Sep), the 7pm every-other-day park sessions take over: the small park next to the block for the walkable nights, and Woodlands Waterfront Park's dog run (a short drive away, open 24/7 with sea views) when you want off-leash play with other dogs. Positive, brief, and puppy-chooses. Never flood him.",
       },
     ],
   },
@@ -194,7 +192,7 @@ export const PUPPY_SECTIONS: Section[] = [
     blocks: [
       {
         type: "p",
-        text: "Wobbles has a breeder-listed FLEECE coat: soft and wavy — the classic low-shedding 'teddy bear' Cavoodle coat. With curly-coated mum Addie and Blenheim Cavalier dad Hughie, his coat blends Poodle curl genes with Cavalier silk. Whatever the exact cross percentages, the fleece coat is what determines his care.",
+        text: "Paddington has a breeder-listed FLEECE coat: soft and wavy — the classic low-shedding 'teddy bear' Cavoodle coat. With curly-coated mum Addie and Blenheim Cavalier dad Hughie, his coat blends Poodle curl genes with Cavalier silk. Whatever the exact cross percentages, the fleece coat is what determines his care.",
       },
       { type: "h", text: "The three Cavoodle coat types" },
       {
@@ -202,7 +200,7 @@ export const PUPPY_SECTIONS: Section[] = [
         headers: ["Coat", "Look", "Shedding", "Matting risk", "Brushing"],
         rows: [
           ["Hair (straight)", "Silky, Cavalier-leaning", "Moderate", "Low", "1–2×/week"],
-          ["Fleece (wavy) ← Wobbles", "Soft waves, teddy-bear look", "Low", "Moderate", "3–4×/week (daily in coat change)"],
+          ["Fleece (wavy) ← Paddington", "Soft waves, teddy-bear look", "Low", "Moderate", "3–4×/week (daily in coat change)"],
           ["Wool (curly)", "Tight Poodle curls", "Lowest", "Highest", "Daily"],
         ],
       },
@@ -227,14 +225,14 @@ export const PUPPY_SECTIONS: Section[] = [
           {
             when: "12+ months (from Jun 2027)",
             title: "Adult fleece coat",
-            text: "Defined wave, denser coat, stable routine: thorough brushing 3–4×/week plus the fortnightly home bath + basic trim that holds the coat at its set length — professional grooms become optional shape-ups only.",
+            text: "Defined wave, denser coat, stable routine: thorough brushing 3–4×/week plus a professional groom every 4–6 weeks.",
           },
         ],
       },
       {
         type: "warn",
         title: "Singapore humidity accelerates matting",
-        text: "Moisture tightens tangles into mats. Singapore's year-round humidity means Wobbles' coat will mat faster than it would in Queensland winter. A shorter cut and religious brushing are your friends in the tropics.",
+        text: "Moisture tightens tangles into mats. Singapore's year-round humidity means Paddington's coat will mat faster than it would in Queensland winter. A shorter cut and religious brushing are your friends in the tropics.",
       },
       { type: "h", text: "Where mats form (check these daily)" },
       {
@@ -260,16 +258,299 @@ export const PUPPY_SECTIONS: Section[] = [
       {
         type: "img",
         src: ASSETS.adultRendering,
-        alt: "Artist's rendering of Wobbles as an adult Cavoodle",
-        caption: "An artist's guess at grown-up Wobbles — fleece coat, Blenheim markings and all.",
+        alt: "Artist's rendering of Paddington as an adult Cavoodle",
+        caption: "An artist's guess at grown-up Paddington — fleece coat, Blenheim markings and all.",
       },
     ],
   },
 
+  // ────────────────────────────────────────────────── 4. Grooming masterclass
+  {
+    slug: "grooming-masterclass",
+    title: "Home Grooming Masterclass",
+    emoji: "✂️",
+    tagline: "Line brushing, mat-safe bathing, and clipper technique",
+    readMins: 12,
+    hero: ASSETS.heroGrooming,
+    blocks: [
+      {
+        type: "p",
+        text: "This is the core skill of Cavoodle ownership. Master three things — line brushing, the mat-safe bath-and-dry workflow, and basic clipper handling — and you'll never face a forced shave-down.",
+      },
+      { type: "h", text: "Line brushing — the gold standard" },
+      {
+        type: "steps",
+        items: [
+          {
+            title: "Section the coat",
+            text: "Work one area at a time, bottom-up (start at a leg, move up the body). Use your free hand to hold the upper hair out of the way, exposing a horizontal line of coat.",
+          },
+          {
+            title: "Brush skin to tip",
+            text: "With a slicker brush, brush the exposed line from the SKIN outward to the hair tips. Light pressure — the pins should touch skin without scratching it.",
+          },
+          {
+            title: "Move up one line",
+            text: "Drop the next line of hair down and repeat, row by row, over the whole body.",
+          },
+          {
+            title: "Verify with the comb",
+            text: "Finish each section with a metal greyhound comb from skin to tip. If it glides, done. If it catches, there's a hidden tangle — go back.",
+          },
+        ],
+      },
+      {
+        type: "warn",
+        title: "The fluff-brushing trap",
+        text: "Brushing only the top layer makes the coat LOOK perfect while mats felt silently at the skin. This is the #1 cause of the 'surprise shave-down' — the groomer finds a pelt under a fluffy surface and has no humane option but to clip it all off.",
+      },
+      {
+        type: "tip",
+        title: "Never brush a bone-dry coat",
+        text: "Brushing a completely dry coat with nothing on it causes breakage and static. Mist lightly with detangler or diluted conditioner spray first. (But don't brush a soaking-wet coat either — damp-misted is the sweet spot.)",
+      },
+      { type: "h", text: "Dematting decision tree" },
+      {
+        type: "table",
+        headers: ["What you find", "What to do"],
+        rows: [
+          ["Small tangle", "Detangler spray, work with fingers, then slicker, then comb-check"],
+          ["Pea-to-marble mat", "Split it vertically with a mat splitter or thinning shears into strips, then brush out tip-to-base"],
+          ["Felted patch / many big mats", "Stop. Clip under the mat with a #10 blade or book a professional shave-down. 'Humanity over vanity.'"],
+        ],
+      },
+      {
+        type: "warn",
+        title: "Never point scissors at a mat",
+        text: "Mats pull the skin up into themselves. Cutting a mat out with scissor points is the classic at-home grooming injury — one wiggle and you've cut skin. Use clippers UNDER the mat or thinning shears ACROSS it, never scissor tips toward the body.",
+      },
+      {
+        type: "p",
+        text: "Golden dematting rules: pinch the hair between the mat and the skin so pulling tugs your fingers, not his skin. Work from the mat's TIP toward the skin in short strokes. Detangler and fingers before any tool. And if he's had enough, stop — his trust matters more than one mat.",
+      },
+      { type: "h", text: "The mat-safe bath & dry workflow" },
+      {
+        type: "steps",
+        items: [
+          {
+            title: "1 · Brush FIRST, always",
+            text: "Water tightens existing tangles like concrete. Never, ever bathe a matted dog — fully line-brush and comb-check before the tap goes on.",
+          },
+          {
+            title: "2 · Wash",
+            text: "Lukewarm water, dog-specific shampoo diluted per label (many concentrate 10:1–20:1). Work in with your fingers along the coat — no circular scrubbing, which whips hair into tangles.",
+          },
+          {
+            title: "3 · Condition",
+            text: "Conditioner every bath on a fleece coat. Leave 3–5 minutes (trim nails while you wait), then rinse EXTREMELY well — residue causes itching.",
+          },
+          {
+            title: "4 · Squeeze & blot",
+            text: "Squeeze water out of the coat, then blot with a microfibre towel. Never rub in circles.",
+          },
+          {
+            title: "5 · Fluff dry",
+            text: "Blow-dry warm-not-hot, section by section, brushing WITH the airflow in the growth direction. The coat dries straight, fluffy and mat-free. Never let a fleece coat air-dry — it dries into tangles.",
+          },
+        ],
+      },
+      { type: "h", text: "Clipper technique for beginners" },
+      {
+        type: "list",
+        items: [
+          "Only clip a CLEAN, DRY, fully brushed coat. Dirt dulls blades; mats jam guard combs.",
+          "Clip WITH the direction of coat growth for a smooth finish. Against growth cuts shorter and leaves marks.",
+          "Long, smooth, overlapping strokes. Let the clipper do the work; keep the blade FLAT against the body — a tipped blade edge gouges.",
+          "Pull skin taut in loose areas: armpits, flanks, sanitary. 'Scoop off' at the end of each stroke to blend.",
+          "Check blade heat against your inner wrist every few minutes. Hot blades burn skin — rotate blades or use coolant spray.",
+          "Oil blades every 10–15 minutes of running time.",
+          "Order: neck/shoulders → back → sides → chest → legs → sanitary → tail → feet → face last.",
+          "Two-session rule: body one day, head and face another. A puppy's patience is a budget — don't overspend it.",
+        ],
+      },
+      {
+        type: "tip",
+        title: "Blade numbers decoded",
+        text: "Higher number = shorter cut. #10 ≈ 1.5 mm (sanitary, paw pads only), #7F ≈ 3 mm, #5F ≈ 6 mm, #4F ≈ 9.5 mm. Groomer consensus: never go below a #5 (6 mm) on the body unless dematting. For longer looks, snap guard combs over a #10 or #30 blade — but guards demand a perfectly mat-free coat.",
+      },
+      { type: "h", text: "Grooming calendar for Paddington" },
+      {
+        type: "table",
+        headers: ["Task", "How often"],
+        rows: [
+          ["Line brush + comb check", "3–4×/week (daily during coat change & in Singapore humidity)"],
+          ["Face & eye wipe", "Daily (white Blenheim face shows tear stains)"],
+          ["Ear check / clean", "Check weekly; clean per vet advice & after baths/swims"],
+          ["Bath + full fluff dry", "Every 3–4 weeks"],
+          ["Nails", "Every 3–4 weeks"],
+          ["Professional groom", "Every 4–6 weeks once adult coat arrives"],
+          ["First puppy groom intro", "~16 weeks, after vaccinations — short, happy 'intro groom'"],
+        ],
+      },
+    ],
+  },
 
-  // NOTE: The former "Grooming Masterclass", "Grooming Psychology" and
-  // "Haircut Style Guide" chapters were consolidated into the Home Grooming
-  // Master Class page (/grooming). Old slugs redirect in SectionReader.tsx.
+  // ────────────────────────────────────────────── 5. Grooming psychology
+  {
+    slug: "grooming-psychology",
+    title: "Grooming Psychology",
+    emoji: "🧠",
+    tagline: "Cooperative care: teach Paddington to say yes",
+    readMins: 9,
+    blocks: [
+      {
+        type: "p",
+        text: "The difference between a dog who tolerates grooming and a dog who enjoys it is built in puppyhood — and it starts the day Paddington comes home. The modern approach is 'cooperative care', borrowed from zoo animal training: the animal actively participates and can say no.",
+      },
+      { type: "h", text: "Start buttons: giving him a voice" },
+      {
+        type: "p",
+        text: "A 'start button' is a consent behaviour. Paddington offers a chin rest in your palm = green light, you may groom. He lifts his head or walks away = red light, you stop immediately. Counterintuitively, dogs who are rewarded for saying no opt IN faster and more often — control itself is a powerful reward.",
+      },
+      { type: "h", text: "The chin-rest protocol" },
+      {
+        type: "steps",
+        items: [
+          { title: "Step 1", text: "Feed five treats one at a time while he sits or stands calmly." },
+          { title: "Step 2", text: "Hold your other palm about 10 cm under his chin while feeding." },
+          {
+            title: "Step 3",
+            text: "Gradually raise the palm until it's just under his chin. Deliver treats slightly LOWER than the palm so he pushes his chin down into your hand.",
+          },
+          { title: "Step 4", text: "Add the cue 'CHIN' just before contact. Keep sessions under 2 minutes." },
+          {
+            title: "Step 5",
+            text: "Build duration slowly, then transfer to a rolled towel on a table edge — a portable grooming chin rest.",
+          },
+        ],
+      },
+      { type: "h", text: "The lick-mat method" },
+      {
+        type: "p",
+        text: "Smear a lick mat with dog-safe peanut butter (xylitol-free!) and stick it to the wall or bath at his head height. Groom while he licks. He may walk away at any time — never chase or hold him. Reward him for coming back. He learns grooming is a choose-to-stay activity.",
+      },
+      { type: "h", text: "Dryer desensitisation" },
+      {
+        type: "list",
+        items: [
+          "Dogs hear far better than we do — a dryer that's loud to you is deafening to him. Go slower than feels necessary.",
+          "Session length: about 1 minute. Start with the dryer on LOW, no heat, pointed down and away, in a room he can leave.",
+          "Feed high-value treats one at a time while it runs. Over sessions, move the airflow gradually closer.",
+          "Cool-not-cold air; avoid ears, eyes and paws at first. A Happy Hoodie (stretchy ear wrap) muffles the noise dramatically.",
+          "Stay neutral if he's uneasy — no scolding, and no anxious 'it's okaaay' cooing. Praise while he eats.",
+          "Escalate settings only when he's relaxed at the current level. If the air feels too hot on your hand, it's too hot for him.",
+        ],
+      },
+      { type: "h", text: "Clipper conditioning ladder" },
+      {
+        type: "steps",
+        items: [
+          { title: "Rung 1", text: "Clippers visible on the floor → treat rain near them." },
+          { title: "Rung 2", text: "Clippers in your hand, off → treats." },
+          { title: "Rung 3", text: "Clippers running across the room → treats." },
+          { title: "Rung 4", text: "Running clippers near him → treats." },
+          { title: "Rung 5", text: "Back of the OFF clippers touching his body → treats." },
+          { title: "Rung 6", text: "Running clippers held flat against him, no cutting → treats." },
+          { title: "Rung 7", text: "Short single clip strokes → jackpot treats." },
+        ],
+      },
+      {
+        type: "warn",
+        title: "Know his stress signals",
+        text: "Lip licking, yawning out of context, 'whale eye' (whites showing), tucked tail, freezing, panting and full-body shake-offs all mean 'I'm not okay'. Back up a rung. Pushing through stress teaches him grooming is something done TO him, not WITH him.",
+      },
+      {
+        type: "tip",
+        title: "Start from day one home — gently",
+        text: "From day one at home (12 weeks), handle his paws, ears, mouth and tail for a few seconds at a time with treats — a couple of body parts per session, not all of them. At his age, sessions of 2–5 minutes are plenty. His first professional groom (~5–6 months, post-vaccination) should be a short, happy 'intro groom': bath, dry, tidy, party.",
+      },
+    ],
+  },
+
+  // ─────────────────────────────────────────────────── 6. Haircut styles
+  {
+    slug: "haircut-styles",
+    title: "Haircut Style Guide",
+    emoji: "💇",
+    tagline: "Teddy bear, puppy cut, lamb, summer & Asian fusion",
+    readMins: 7,
+    blocks: [
+      {
+        type: "p",
+        text: "One quirk to know upfront: Cavoodles have longer, heavier ears than most doodles (thanks, Cavalier side), so the perfectly round 'teddy head' is harder to achieve than on a Goldendoodle — Paddington will trend slightly 'lamb-ish'. It's adorable. Lean into it.",
+      },
+      { type: "h", text: "The five classic styles" },
+      {
+        type: "table",
+        headers: ["Style", "Body", "Head & legs", "Upkeep"],
+        rows: [
+          [
+            "Puppy cut",
+            "One length all over, 1–2.5 cm",
+            "Head same or slightly longer; round muzzle; tapered ears",
+            "Easiest. Trim every 4–6 wks",
+          ],
+          [
+            "Teddy bear",
+            "2.5–5 cm with guard comb",
+            "Head cut noticeably longer than body; legs hand-scissored full and column-like",
+            "Brush 3×+/wk; trim ~6 wks",
+          ],
+          [
+            "Lamb cut",
+            "Short body 1–2.5 cm",
+            "Long fluffy sculpted legs, poofy rounded head",
+            "Daily leg brushing; pro styling",
+          ],
+          [
+            "Summer / kennel",
+            "≤1.25 cm all over (never below 6 mm)",
+            "Often keeps a teddy head and plumed tail",
+            "Lowest. Groom every 8–12 wks",
+          ],
+          [
+            "Asian fusion",
+            "Short body",
+            "Flared bell-bottom legs, very round 'mushroom' muzzle, dramatic ears",
+            "Highest skill; frequent upkeep",
+          ],
+        ],
+      },
+      {
+        type: "tip",
+        title: "The Singapore pick",
+        text: "In tropical humidity, shorter is kinder: a summer cut or short puppy cut with a teddy head keeps Paddington cooler and slashes matting risk. Save the long flowing teddy coat for a cooler-climate holiday. Never shave to the skin though — the coat insulates against heat too, and bare skin sunburns.",
+      },
+      { type: "h", text: "How to talk to a groomer" },
+      {
+        type: "list",
+        items: [
+          "Bring PHOTOS. 'Teddy bear cut' means something different in every salon.",
+          "Specify each zone separately: ears, top of head, muzzle, body, legs, feet, tail.",
+          "Say 'don't poodle my doodle' if you want a round muzzle and round feet instead of shaved poodle face/feet.",
+          "Never let anyone shave between the eyes or down the bridge of the nose — it takes months to regrow.",
+          "Your maintenance level sets the length: lots of home brushing earns a long coat; minimal brushing means a practical short cut.",
+          "Ask about a 48-hour free-fix window (common) and book cheaper bath-and-tidy visits between full grooms.",
+        ],
+      },
+      { type: "h", text: "Teddy bear cut at home (once you're confident)" },
+      {
+        type: "steps",
+        items: [
+          { title: "Prep", text: "Bath, conditioner, rinse thoroughly, then fluff-dry the coat perfectly straight — clippers need smooth, tangle-free coat for an even cut." },
+          { title: "Body", text: "Clip body and legs with a LONG guard comb, with the growth direction." },
+          { title: "Head", text: "Scissor the head and face round, checking symmetry from the front constantly. Thinning shears give a soft, natural finish." },
+          { title: "Feet", text: "Scissor round 'bootie' feet; trim hair between paw pads with a small trimmer." },
+          { title: "Finish", text: "Full comb-through, detail scissoring, wipe out ears (visible parts only — never into the canal)." },
+        ],
+      },
+      {
+        type: "p",
+        text: "A freshly groomed fleece coat looks straighter than usual — the waves bounce back within days, faster if you mist with water or diluted conditioner and scrunch.",
+      },
+    ],
+  },
+
   // ─────────────────────────────────────────────────── 7. Daily life hacks
   {
     slug: "daily-hacks",
@@ -280,7 +561,7 @@ export const PUPPY_SECTIONS: Section[] = [
     blocks: [
       {
         type: "p",
-        text: "Wobbles' gorgeous white Blenheim face comes with one catch: everything shows. Tear stains, beard gunk and muddy paws are all more visible on white — so tiny daily habits matter more for him than for a solid-red Cavoodle.",
+        text: "Paddington's gorgeous white Blenheim face comes with one catch: everything shows. Tear stains, beard gunk and muddy paws are all more visible on white — so tiny daily habits matter more for him than for a solid-red Cavoodle.",
       },
       { type: "h", text: "Tear stains (his #1 cosmetic battle)" },
       {
@@ -303,7 +584,7 @@ export const PUPPY_SECTIONS: Section[] = [
       { type: "h", text: "Floppy-ear care (high priority)" },
       {
         type: "p",
-        text: "Wobbles has the double whammy: heavy Cavalier ear flaps that trap moisture, plus Poodle-type hair growing in the canal. Warm, damp, dark ear canals grow yeast — and Queensland and Singapore humidity both make it worse.",
+        text: "Paddington has the double whammy: heavy Cavalier ear flaps that trap moisture, plus Poodle-type hair growing in the canal. Warm, damp, dark ear canals grow yeast — and Queensland and Singapore humidity both make it worse.",
       },
       {
         type: "list",
@@ -340,7 +621,7 @@ export const PUPPY_SECTIONS: Section[] = [
       {
         type: "warn",
         title: "Queensland special: paralysis ticks",
-        text: "Until the move, remember Moreton Bay is paralysis-tick country (Ixodes holocyclus) — deadly to dogs. Wobbles needs a vet-recommended tick preventative from homecoming, plus daily fingertip tick checks (ears, face, neck, between toes) after any grass or bush time. Early signs: wobbly back legs, voice change, vomiting. It's an emergency.",
+        text: "Until the move, remember Moreton Bay is paralysis-tick country (Ixodes holocyclus) — deadly to dogs. Paddington needs a vet-recommended tick preventative from homecoming, plus daily fingertip tick checks (ears, face, neck, between toes) after any grass or bush time. Early signs: wobbly back legs, voice change, vomiting. It's an emergency.",
       },
       {
         type: "tip",
@@ -360,7 +641,7 @@ export const PUPPY_SECTIONS: Section[] = [
     blocks: [
       {
         type: "p",
-        text: "You don't need the pro tier on day one. The budget column grooms Wobbles perfectly well; upgrade the tools you use most as your skills grow. The two items worth over-buying from the start: the slicker brush and the metal comb — they're your daily drivers.",
+        text: "You don't need the pro tier on day one. The budget column grooms Paddington perfectly well; upgrade the tools you use most as your skills grow. The two items worth over-buying from the start: the slicker brush and the metal comb — they're your daily drivers.",
       },
       { type: "h", text: "The tier table" },
       {
@@ -372,7 +653,7 @@ export const PUPPY_SECTIONS: Section[] = [
           ["Clippers", "Oneisall low-noise kit (~$40–60)", "Wahl Bravura (~$200)", "Andis Pulse ZR2 (~$330)"],
           ["Dryer", "Microfibre towels + human dryer on COOL", "Shelandy HV dryer (~$60–100)", "K9-II / Flying Pig Pro (~$250+)"],
           ["Shampoo", "TropiClean Hypoallergenic Puppy (~$10)", "Earthbath Oatmeal & Aloe (~$20)", "CC Smart Wash / iGroom (~$25–40)"],
-          ["Nails", "Dremel PawControl grinder (~$40) + styptic", "Grinder + scratchboard training", "Grinder, diamond bit + LED quick-light"],
+          ["Nails", "Clipper + styptic powder (~$12)", "Dremel PawControl grinder (~$40)", "Grinder + scratchboard training"],
         ],
       },
       { type: "h", text: "Shampoo rules (read before buying)" },
@@ -473,11 +754,6 @@ export const PUPPY_SECTIONS: Section[] = [
     ],
   },
 ];
-
-/** All chapters: the puppy year plus the "Growing with Wobbles" lifetime chapters. */
-export const SECTIONS: Section[] = [...PUPPY_SECTIONS, ...LIFETIME_SECTIONS];
-
-export { LIFETIME_SECTIONS };
 
 export function getSection(slug: string): Section | undefined {
   return SECTIONS.find((s) => s.slug === slug);

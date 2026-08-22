@@ -4,7 +4,7 @@
  * to the shared server (S3) with an optional caption; shows a keepsake
  * polaroid grid with dates, captions and who added each photo.
  */
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { Eyebrow } from "@/components/AppShell";
 import { Input } from "@/components/ui/input";
@@ -13,9 +13,9 @@ import {
 } from "@/components/ui/dialog";
 import { todayISO } from "@/lib/dates";
 import { formatDate } from "@/content/wobbles";
-import { filterPhotos, groupPhotosByYear, photoYears } from "@/lib/photoGroups";
+import { groupPhotosByMonth } from "@/lib/photoGroups";
 import PhotoLightbox from "@/components/PhotoLightbox";
-import { Camera, Loader2, Plus, Search, X } from "lucide-react";
+import { Camera, Loader2, Plus } from "lucide-react";
 import { toast } from "sonner";
 
 const INK = "#22364D";
@@ -89,16 +89,6 @@ export default function PhotoJournal() {
   // can't leave the lightbox pointing at the wrong photo.
   const [viewerId, setViewerId] = useState<number | null>(null);
 
-  // U6 — search + year filter. Query is debounced 250ms so typing on a phone
-  // doesn't re-filter (and re-layout the polaroid grid) on every keystroke.
-  const [queryInput, setQueryInput] = useState("");
-  const [query, setQuery] = useState("");
-  const [yearFilter, setYearFilter] = useState<string | null>(null);
-  useEffect(() => {
-    const t = setTimeout(() => setQuery(queryInput), 250);
-    return () => clearTimeout(t);
-  }, [queryInput]);
-
   const pick = (f: File | undefined) => {
     if (!f) return;
     if (!f.type.startsWith("image/") && f.type !== "") {
@@ -138,13 +128,9 @@ export default function PhotoJournal() {
     }
   };
 
-  const all = photos ?? [];
-  const filtered = useMemo(() => filterPhotos(all, query, yearFilter), [all, query, yearFilter]);
-  const chapters = useMemo(() => groupPhotosByYear(filtered), [filtered]);
-  const years = useMemo(() => photoYears(all), [all]);
-  const filtering = query.trim() !== "" || yearFilter != null;
+  const groups = useMemo(() => groupPhotosByMonth(photos ?? []), [photos]);
   // Flat list in display order so the lightbox swipes across month boundaries
-  const flat = useMemo(() => chapters.flatMap((c) => c.months.flatMap((m) => m.photos)), [chapters]);
+  const flat = useMemo(() => groups.flatMap((g) => g.photos), [groups]);
   const viewerIndex = useMemo(() => {
     if (viewerId == null) return null;
     const i = flat.findIndex((p) => p.id === viewerId);
@@ -196,172 +182,49 @@ export default function PhotoJournal() {
         </button>
       ) : (
         <>
-          {/* U6 — search + year chips (only once the album has enough to hunt through) */}
-          {all.length > 3 && (
-            <div className="mt-3">
-              <div className="relative">
-                <Search
-                  size={15}
-                  className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
-                  style={{ color: `${INK}66` }}
-                />
-                <input
-                  type="search"
-                  value={queryInput}
-                  onChange={(e) => setQueryInput(e.target.value)}
-                  placeholder="Find a memory — “beach”, “dec”, “2027-03”…"
-                  aria-label="Search photos by caption or date"
-                  className="w-full h-11 rounded-2xl bg-[#FFFDF8] border border-[#E5DAC8] pl-10 pr-10 text-[13px] font-body font-bold placeholder:font-medium placeholder:text-[#22364D]/40 focus:outline-none focus:ring-2 focus:ring-[#C66A3D]/40"
-                  style={{ color: INK }}
-                />
-                {queryInput !== "" && (
-                  <button
-                    onClick={() => setQueryInput("")}
-                    aria-label="Clear search"
-                    className="absolute right-1 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full press-scale"
-                    style={{ color: `${INK}99` }}
-                  >
-                    <X size={15} />
-                  </button>
-                )}
-              </div>
-              {years.length > 1 && (
-                <div className="mt-2 flex gap-1.5 overflow-x-auto pb-0.5 -mx-1 px-1">
-                  <button
-                    onClick={() => setYearFilter(null)}
-                    className="shrink-0 h-8 px-3.5 rounded-full border text-[11px] font-body font-extrabold press-scale"
-                    style={
-                      yearFilter == null
-                        ? { backgroundColor: "#B4512E", borderColor: "#B4512E", color: "#FFFDF8" }
-                        : { backgroundColor: "#FFFDF8", borderColor: "#E5DAC8", color: INK }
-                    }
-                  >
-                    All years
-                  </button>
-                  {years.map((y) => (
-                    <button
-                      key={y}
-                      onClick={() => setYearFilter(yearFilter === y ? null : y)}
-                      className="shrink-0 h-8 px-3.5 rounded-full border text-[11px] font-body font-extrabold press-scale"
-                      style={
-                        yearFilter === y
-                          ? { backgroundColor: "#B4512E", borderColor: "#B4512E", color: "#FFFDF8" }
-                          : { backgroundColor: "#FFFDF8", borderColor: "#E5DAC8", color: INK }
-                      }
-                    >
-                      {y}
-                    </button>
-                  ))}
-                </div>
-              )}
-              {filtering && (
-                <p className="mt-2 text-[11px] font-body font-bold text-muted-foreground" aria-live="polite">
-                  {filtered.length === 0
-                    ? ""
-                    : `${filtered.length} ${filtered.length === 1 ? "memory" : "memories"} found`}
-                </p>
-              )}
-            </div>
-          )}
-
-          {/* no-results keepsake note */}
-          {filtering && filtered.length === 0 && (
-            <div className="keepsake-card relative mt-3 p-5 text-center">
-              <span className="tape" aria-hidden />
-              <p className="font-display font-semibold text-[1.15rem]" style={{ color: INK }}>
-                No memories match
-              </p>
-              <p className="text-[12.5px] font-body text-muted-foreground leading-relaxed mt-1">
-                Try a shorter word, a month like “dec”, or clear the year chip —
-                the moment you're after is in here somewhere.
-              </p>
-              <button
-                onClick={() => {
-                  setQueryInput("");
-                  setYearFilter(null);
-                }}
-                className="btn-ink mt-3 inline-flex text-[12px]"
-              >
-                Show everything
-              </button>
-            </div>
-          )}
-
-          {/* year chapters → month groups → polaroid grid */}
-          {chapters.map((ch) => (
-            <div key={ch.key} className="mt-4">
-              {/* sticky year chapter header */}
+          {/* month-grouped polaroid grid */}
+          {groups.map((g) => (
+            <div key={g.key} className="mt-3">
+              {/* sticky month header */}
               <div
-                className="sticky top-0 z-40 -mx-1 px-1 pt-1 pb-2 flex items-baseline gap-2.5"
-                style={{ background: "linear-gradient(to bottom, #F8F3EB 82%, transparent)" }}
+                className="sticky top-0 z-30 -mx-1 px-1 py-1.5 flex items-baseline gap-2"
+                style={{ background: "linear-gradient(to bottom, #F8F3EB 78%, transparent)" }}
               >
-                <h2 className="font-display font-semibold text-[1.6rem] leading-none" style={{ color: INK }}>
-                  {ch.year}
-                </h2>
-                {ch.stageLabel && (
-                  <span className="text-[10px] font-body font-extrabold uppercase tracking-[0.12em]" style={{ color: "#B4512E" }}>
-                    {ch.stageLabel}
-                  </span>
-                )}
+                <h3 className="font-display font-semibold text-[1.15rem]" style={{ color: INK }}>
+                  {g.label}
+                </h3>
+                <span className="text-[10px] font-body font-extrabold uppercase tracking-[0.1em]" style={{ color: SIENNA }}>
+                  {g.ageLabel}
+                </span>
                 <span className="ml-auto text-[10px] font-body font-bold text-muted-foreground">
-                  {ch.count} photo{ch.count === 1 ? "" : "s"}
+                  {g.photos.length} photo{g.photos.length === 1 ? "" : "s"}
                 </span>
               </div>
-
-              {ch.months.map((g) => (
-                <div key={g.key} className="mt-1.5">
-                  {/* month sub-header (sits under the year header when stuck) */}
-                  <div
-                    className="sticky top-[34px] z-30 -mx-1 px-1 py-1 flex items-baseline gap-2"
-                    style={{ background: "linear-gradient(to bottom, #F8F3EB 78%, transparent)" }}
+              <div className="mt-1.5 grid grid-cols-2 gap-3">
+                {g.photos.map((p, i) => (
+                  <button
+                    key={p.id}
+                    onClick={() => setViewerId(p.id)}
+                    className="keepsake-card p-2 pb-3 text-left press-scale"
+                    style={{ transform: `rotate(${i % 2 === 0 ? -1 : 1.2}deg)` }}
                   >
-                    <h3 className="font-display font-semibold text-[1.1rem]" style={{ color: INK }}>
-                      {g.label}
-                    </h3>
-                    <span className="text-[10px] font-body font-extrabold uppercase tracking-[0.1em]" style={{ color: SIENNA }}>
-                      {g.ageLabel}
-                    </span>
-                    <span className="ml-auto text-[10px] font-body font-bold text-muted-foreground">
-                      {g.photos.length} photo{g.photos.length === 1 ? "" : "s"}
-                    </span>
-                  </div>
-                  <div className="mt-1.5 grid grid-cols-2 gap-3">
-                    {g.photos.map((p, i) => (
-                      <button
-                        key={p.id}
-                        onClick={() => setViewerId(p.id)}
-                        className="keepsake-card p-2 pb-3 text-left press-scale"
-                        style={{ transform: `rotate(${i % 2 === 0 ? -1 : 1.2}deg)` }}
-                      >
-                        <span className="relative block">
-                          <img
-                            src={p.url}
-                            alt={p.caption ?? "Wobbles photo"}
-                            loading="lazy"
-                            className="w-full aspect-square object-cover rounded-[6px] bg-[#22364D]/5"
-                          />
-                          {p.category === "coat-check" && (
-                            <span
-                              className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-full text-[8px] font-body font-extrabold uppercase tracking-[0.1em]"
-                              style={{ backgroundColor: "#FFFDF8E6", color: "#B4512E" }}
-                            >
-                              📏 coat check
-                            </span>
-                          )}
-                        </span>
-                        <p className="text-[10px] font-body font-extrabold uppercase tracking-[0.1em] mt-2 px-1" style={{ color: SIENNA }}>
-                          {formatDate(p.date)}
-                        </p>
-                        {p.caption && (
-                          <p className="text-[12px] font-body font-bold leading-snug px-1 mt-0.5 line-clamp-2" style={{ color: INK }}>
-                            {p.caption}
-                          </p>
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ))}
+                    <img
+                      src={p.url}
+                      alt={p.caption ?? "Paddington photo"}
+                      loading="lazy"
+                      className="w-full aspect-square object-cover rounded-[6px] bg-[#22364D]/5"
+                    />
+                    <p className="text-[10px] font-body font-extrabold uppercase tracking-[0.1em] mt-2 px-1" style={{ color: SIENNA }}>
+                      {formatDate(p.date)}
+                    </p>
+                    {p.caption && (
+                      <p className="text-[12px] font-body font-bold leading-snug px-1 mt-0.5 line-clamp-2" style={{ color: INK }}>
+                        {p.caption}
+                      </p>
+                    )}
+                  </button>
+                ))}
+              </div>
             </div>
           ))}
           <button

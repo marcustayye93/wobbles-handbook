@@ -1,7 +1,7 @@
 /*
  * Redesign v2.2 — "Keepsake Field Guide" Home, logging-first (teardown):
  * Compact cover → One-tap care row (Walk/Meal/Toilet/Sleep/Shower) →
- * Due today (rota + reminders) → Wobbles Today → Today's timeline →
+ * Due today (rota + reminders) → Paddington Today → Today's timeline →
  * Coming up. Reading content lives in the Chapters tab. Paper bg,
  * Cormorant serif, ink navy + sienna, restrained keepsake details.
  */
@@ -12,7 +12,6 @@ import SyncIndicator from "@/components/SyncIndicator";
 import QuickLogSheet from "@/components/QuickLogSheet";
 import TodayTimeline, { useDayFeed } from "@/components/TodayTimeline";
 import CareRow from "@/components/CareRow";
-import OnThisDay from "@/components/OnThisDay";
 import SearchDialog from "@/components/SearchDialog";
 import { wobblesToday, todaysNudges, todaysBrief } from "@/lib/wobblesToday";
 import HouseholdSettingsSheet from "@/components/HouseholdSettingsSheet";
@@ -21,15 +20,14 @@ import type { HouseholdSettings } from "@/lib/householdSettings";
 import ReminderCelebration from "@/components/ReminderCelebration";
 import { todayISO } from "@/lib/dates";
 import { useTrackerFeed, useSharedState, rowToEntry } from "@/hooks/useSyncedData";
-import { ASSETS, WOBBLES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
-import { allMilestones } from "@/content/lifetimeMilestones";
+import { ASSETS, WOBBLES, MILESTONES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
 import { ChevronRight, ArrowRight, PawPrint, CalendarDays, Search, SlidersHorizontal, Check, Sparkles } from "lucide-react";
 
 /** Countdown keepsake: picks the most relevant upcoming date */
 function nextCountdown(): { days: number; label: string } | null {
   const toHome = daysUntil(WOBBLES.homecoming);
   if (toHome > 0) return { days: toHome, label: "days until homecoming" };
-  const next = allMilestones().filter((m) => daysUntil(m.date) > 0)[0];
+  const next = MILESTONES.filter((m) => daysUntil(m.date) > 0)[0];
   if (next) return { days: daysUntil(next.date), label: next.label.toLowerCase() };
   return null;
 }
@@ -38,10 +36,7 @@ export default function Home() {
   const age = wobblesAge();
   const today = wobblesToday();
   const countdown = nextCountdown();
-  const nextMilestones = useMemo(
-    () => allMilestones().filter((m) => daysUntil(m.date) >= 0).slice(0, 3),
-    [],
-  );
+  const nextMilestones = MILESTONES.filter((m) => daysUntil(m.date) >= 0).slice(0, 3);
 
   // Nudges from the family-shared server data (same feed the trackers use)
   const { rows } = useTrackerFeed();
@@ -104,9 +99,9 @@ export default function Home() {
           {/* Wordmark + search */}
           <div className="flex items-center gap-2 fade-up">
             <span className="w-7 h-7 rounded-md border-[1.5px] border-[#C66A3D] text-[#C66A3D] font-display font-bold text-sm flex items-center justify-center">
-              W
+              P
             </span>
-            <Eyebrow>Wobbles' Handbook</Eyebrow>
+            <Eyebrow>Paddington's Handbook</Eyebrow>
             <SyncIndicator className="ml-auto" />
             <button
               onClick={() => setSettingsOpen(true)}
@@ -124,7 +119,7 @@ export default function Home() {
             </button>
             <Link
               href="/ask"
-              aria-label="Ask Wobbles — the family AI assistant"
+              aria-label="Ask Paddington — the family AI assistant"
               className="w-11 h-11 rounded-full bg-[#22364D] flex items-center justify-center text-[#E8935C] press-scale shadow-sm"
             >
               <Sparkles size={16} />
@@ -137,7 +132,7 @@ export default function Home() {
               className="relative z-10 font-display font-semibold text-[3.1rem] leading-[0.98] text-[#22364D] fade-up"
               style={{ animationDelay: "40ms", letterSpacing: "-0.01em" }}
             >
-              Wobbles’
+              Paddington’
               <br />
               Handbook
             </h1>
@@ -175,7 +170,7 @@ export default function Home() {
         <div className="relative mt-4 fade-up" style={{ animationDelay: "150ms" }}>
           <img
             src={ASSETS.v2Hero}
-            alt="Gouache illustration of Wobbles the red-parti Cavoodle puppy on a navy blanket"
+            alt="Gouache illustration of Paddington the red-parti Cavoodle puppy on a navy blanket"
             className="w-full aspect-[4/5] object-cover"
           />
           <div
@@ -333,11 +328,11 @@ export default function Home() {
         )}
       </section>
 
-      {/* ===== Wobbles Today (stage intelligence) ===== */}
+      {/* ===== Paddington Today (stage intelligence) ===== */}
       <section className="relative z-10 px-4 mt-6">
         <div className="keepsake-card relative p-5 fade-up" style={{ animationDelay: "230ms" }}>
           <span className="absolute -top-3 left-4 bg-[#22364D] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
-            Wobbles today
+            Paddington today
           </span>
           <div className="flex items-start gap-3 mt-1">
             <div className="min-w-0 flex-1">
@@ -374,7 +369,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== Ask Wobbles (AI assistant) ===== */}
+      {/* ===== Ask Paddington (AI assistant) ===== */}
       <section className="px-4 mt-7">
         <Link href="/ask" className="block sticker-card px-4 py-3.5 press-scale">
           <div className="flex items-center gap-3">
@@ -383,7 +378,7 @@ export default function Home() {
             </span>
             <span className="min-w-0 flex-1">
               <span className="block font-body font-bold text-[14px] leading-snug text-[#22364D]">
-                Ask Wobbles anything
+                Ask Paddington anything
               </span>
               <span className="block text-[11px] font-body text-muted-foreground leading-snug mt-0.5">
                 An assistant that knows his age and stage — and remembers what you tell it.
@@ -406,9 +401,6 @@ export default function Home() {
           <TodayTimeline dateISO={todayISO()} />
         </section>
       )}
-
-      {/* ===== On this day (U4) — renders only when history exists ===== */}
-      <OnThisDay />
 
       {/* ===== Coming up ===== */}
       {nextMilestones.length > 0 && (

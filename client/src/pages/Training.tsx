@@ -1,5 +1,5 @@
 /*
- * Training tab — priority-ordered puppy curriculum for Wobbles.
+ * Training tab — priority-ordered puppy curriculum for Paddington.
  * Keepsake field-guide style: numbered syllabus index (jump chips), golden
  * rules, then one illustrated step-by-step card per skill with an age-aware
  * status badge (Start now / Soon / Later) and a link into the Training Log.
@@ -11,8 +11,6 @@ import { TRAINING_SKILLS, TRAINING_RULES, skillStatus } from "@/content/training
 import { wobblesAge } from "@/content/wobbles";
 import { PawPrint, ChevronDown, ChevronRight, Lightbulb, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { anchoredToggle } from "@/hooks/useAnchoredToggle";
-import Collapse from "@/components/Collapse";
 
 const STATUS_STYLE: Record<string, { label: string; cls: string }> = {
   now: { label: "Start now", cls: "bg-[#6B7C5A] text-[#F8F3EB]" },
@@ -37,14 +35,6 @@ export default function Training() {
     });
   };
 
-  /** Toggle a skill card without letting the page jump. Accordion collapse of
-   * an upper card shrinks content above the tapped card, so we anchor the
-   * tapped card's visual position across the state change (see
-   * hooks/useAnchoredToggle.ts). */
-  const toggle = (slug: string, isOpen: boolean) => {
-    anchoredToggle(`skill-${slug}`, () => setOpen(isOpen ? null : slug));
-  };
-
   return (
     <PageShell>
       <PageHeader title="Training School" subtitle="The curriculum, in priority order" emoji="🎓" back="/handbook" />
@@ -52,14 +42,14 @@ export default function Training() {
       {/* intro */}
       <div className="px-5 pt-4">
         <p className="text-sm text-muted-foreground leading-relaxed">
-          Eleven skills, taught in this order. Numbers 1–4 start the day Wobbles comes home; everything
+          Eleven skills, taught in this order. Numbers 1–4 start the day Paddington comes home; everything
           else layers on top. Every skill below opens into a step-by-step guide —{" "}
           <strong className="text-foreground">3–5 minute sessions, always ending on a win</strong>.
         </p>
         {age.born && (
           <p className="mt-2 text-[12px] font-body font-bold text-[#B4512E]">
             <PawPrint size={12} className="inline -mt-0.5 mr-1" />
-            Wobbles is {age.weeks}w {age.remDays}d old — badges below update with his age.
+            Paddington is {age.weeks}w {age.remDays}d old — badges below update with his age.
           </p>
         )}
       </div>
@@ -119,7 +109,7 @@ export default function Training() {
             <div key={s.slug} id={`skill-${s.slug}`} className="keepsake-card overflow-hidden scroll-mt-20">
               {/* card header */}
               <button
-                onClick={() => toggle(s.slug, isOpen)}
+                onClick={() => setOpen(isOpen ? null : s.slug)}
                 className="w-full text-left px-4 py-3.5 flex items-center gap-3"
                 aria-expanded={isOpen}
               >
@@ -144,7 +134,7 @@ export default function Training() {
               </button>
 
               {/* expanded body */}
-              <Collapse open={isOpen}>
+              {isOpen && (
                 <div className="px-4 pb-4 border-t border-dashed border-[#E5DAC8]">
                   {s.img && (
                     <img
@@ -184,10 +174,10 @@ export default function Training() {
                     ))}
                   </div>
 
-                  {/* Wobbles-specific note */}
+                  {/* Paddington-specific note */}
                   <div className="mt-3.5 rounded-2xl bg-[#22364D]/5 px-4 py-3">
                     <p className="text-[9px] font-body font-extrabold uppercase tracking-[0.14em] text-[#22364D]/70 flex items-center gap-1.5">
-                      <MapPin size={11} /> For Wobbles, specifically
+                      <MapPin size={11} /> For Paddington, specifically
                     </p>
                     <p className="text-[12.5px] text-[#33475C] leading-relaxed mt-1.5">{s.wobbles}</p>
                   </div>
@@ -203,7 +193,7 @@ export default function Training() {
                     Log a session <ChevronRight size={15} />
                   </Link>
                 </div>
-              </Collapse>
+              )}
             </div>
           );
         })}

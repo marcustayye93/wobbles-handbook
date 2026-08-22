@@ -6,8 +6,6 @@
 import { describe, expect, it } from "vitest";
 import { TRAINING_SKILLS, TRAINING_RULES, skillStatus } from "../client/src/content/training";
 import { GROOM_STEPS, GROOM_KIT, GROOM_FREQUENCY } from "../client/src/content/grooming";
-import { CHECKLISTS } from "../client/src/content/checklists";
-import { careTasksFor } from "../client/src/content/household";
 
 describe("training curriculum content", () => {
   it("has skills in strict ascending priority order starting at 1", () => {
@@ -132,72 +130,5 @@ describe("grooming walkthrough content", () => {
       expect(f.cadence.length).toBeGreaterThan(3);
       expect(f.rota.length).toBeGreaterThan(0);
     }
-  });
-
-  it("bath row includes the basic trim on a fortnightly cadence", () => {
-    const bath = GROOM_FREQUENCY.find((f) => f.task.toLowerCase().includes("bath"));
-    expect(bath).toBeDefined();
-    expect(bath!.task.toLowerCase()).toContain("trim");
-    expect(bath!.cadence.toLowerCase()).toContain("2 weeks");
-  });
-});
-
-describe("digital-first checklists (no printing)", () => {
-  it("no checklist item tells the family to print anything", () => {
-    for (const c of CHECKLISTS) {
-      for (const item of c.items) {
-        expect(item.toLowerCase()).not.toContain("print");
-      }
-    }
-  });
-
-  it("bath-day list is fortnightly and ends with the basic trim steps", () => {
-    const bath = CHECKLISTS.find((c) => c.id === "bath-day");
-    expect(bath).toBeDefined();
-    expect(bath!.cadence.toLowerCase()).toContain("2 weeks");
-    const all = bath!.items.join(" ").toLowerCase();
-    expect(all).toContain("basic trim");
-    expect(all).toContain("paw pads");
-    expect(all).toContain("sanitary");
-    expect(all).toContain("eye corners");
-  });
-
-  it("grooming-day list frames every bath as a groom with a maintenance trim", () => {
-    const groom = CHECKLISTS.find((c) => c.id === "grooming-day");
-    expect(groom).toBeDefined();
-    expect(groom!.cadence.toLowerCase()).toContain("every bath");
-    expect(groom!.items.join(" ").toLowerCase()).toContain("maintenance trim");
-  });
-
-  it("the bath rota task carries the trim in its label and detail", () => {
-    // 2026-09-28 is the anchored first bath Monday
-    const tasks = careTasksFor(new Date("2026-09-28T00:00:00"));
-    const bath = tasks.find((t) => t.id === "bath");
-    expect(bath).toBeDefined();
-    expect(bath!.label.toLowerCase()).toContain("trim");
-    expect(bath!.detail.toLowerCase()).toContain("basic trim");
-  });
-});
-
-describe("coat length check ritual", () => {
-  it("bath-day and grooming-day checklists end with the coat check photo", () => {
-    for (const id of ["bath-day", "grooming-day"]) {
-      const list = CHECKLISTS.find((c) => c.id === id);
-      expect(list).toBeDefined();
-      expect(list!.items.join(" ").toLowerCase()).toContain("coat check photo");
-    }
-  });
-
-  it("the bath rota task tells you to finish with the coat check photo", () => {
-    const tasks = careTasksFor(new Date("2026-09-28T00:00:00"));
-    const bath = tasks.find((t) => t.id === "bath");
-    expect(bath).toBeDefined();
-    expect(bath!.detail.toLowerCase()).toContain("coat check photo");
-  });
-
-  it("monthly checklist routes coat photos into the coat length check series", () => {
-    const monthly = CHECKLISTS.find((c) => c.id === "monthly");
-    expect(monthly).toBeDefined();
-    expect(monthly!.items.join(" ").toLowerCase()).toContain("coat length check");
   });
 });

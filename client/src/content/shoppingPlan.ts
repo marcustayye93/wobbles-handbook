@@ -1,7 +1,7 @@
 /*
  * Pre-homecoming shopping countdown — week-by-week purchase plan.
  *
- * Sequences everything the flat needs before Wobbles lands on 24 Sep 2026
+ * Sequences everything the flat needs before Paddington lands on 24 Sep 2026
  * (flies with Jet Pets on 23 Sep at 12w5d — past the AVS 12-week minimum). Ordering logic:
  *   - Big, slow-to-ship, needs-practice items first (IATA crate, pen, setup)
  *   - Admin with lead times mid-plan (insurance quotes, vet shortlist, PALS)
@@ -50,7 +50,7 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
       {
         id: "crate-iata",
         label: "IATA flight crate (size for ~8 kg adult, breathable, clip-lock)",
-        why: "The single most time-critical buy: Jet Pets needs the crate weeks early so Wobbles' meals can be fed in it at the farm — crate love takes weeks to build.",
+        why: "The single most time-critical buy: Jet Pets needs the crate weeks early so Paddington's meals can be fed in it at the farm — crate love takes weeks to build.",
         emoji: "✈️",
       },
       {
@@ -61,8 +61,8 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
       },
       {
         id: "playpen-gates",
-        label: "White 6-panel playpen 120×60×60 + PVC waterproof pen mat ✔ bought",
-        why: "Ordered 28 Jul — white steel 6-panel pen (120×60×60 cm) plus a sea-salt-blue PVC waterproof mat (60×120 cm) to protect the floor underneath. Decide the pen corner now so furniture can shift before he lands.",
+        label: "Playpen and/or baby gates",
+        why: "Bulky delivery. Decide the pen corner now so furniture can shift before he lands.",
         emoji: "🚧",
       },
       {
@@ -83,8 +83,8 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
     items: [
       {
         id: "bed-mat",
-        label: "MIKIPAD waterproof dog bed (dark brown) + latex cooling mat ✔ bought",
-        why: "Ordered 27 Jul — all-season waterproof bed with a cooling mat for Singapore heat. A spare washable vet-bed mat is still a smart add for laundry rotation.",
+        label: "Crate bed + washable vet-bed mat (buy two for laundry rotation)",
+        why: "Accidents happen — a spare mat means the crate never smells like one.",
         emoji: "🛌",
       },
       {
@@ -117,26 +117,19 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
     items: [
       {
         id: "harness",
-        label: "Blue padded Y-front harness — Ruffwear Front Range style, reflective trim ✔ bought",
-        why: "Check fit as he grows — the Front Range XXS fits ~2 kg at 12 weeks; keep the receipt in case he sizes up fast.",
+        label: "Y-front puppy harness (size XS/S — he'll be ~2 kg at 12 weeks)",
+        why: "Exchanges take a week; a Y-front protects a toy-breed windpipe better than a collar-led walk.",
         emoji: "🎽",
       },
       {
         id: "collar-tag",
-        label: "Ruffwear Front Range collar (blue) ✔ bought",
-        why: "Bought — the matching engraved ID tag is its own item below.",
+        label: "Lightweight collar + engraved ID tag (SG phone number)",
+        why: "Engraving takes days. AVS also requires the licence disc once PALS is done.",
         emoji: "🏷️",
       },
       {
-        id: "id-tag",
-        label: "Engraved ID tag (SG phone number) + AVS licence disc once PALS is done",
-        why: "Engraving takes days, and AVS requires the licence disc on the collar. The collar is home — the tag is the missing half.",
-        emoji: "🪪",
-      },
-      {
         id: "lead",
-        label: "TUG retractable leash ✔ bought + slip lead & 580 ml walk water bottle ✔ bought — plus a fixed 1.8 m training lead",
-        why: "The retractable is for relaxed sniffy walks later and the slip lead (lemon yellow, with clip-on water bottle) covers quick toilet runs; puppy lessons and roadside walks still want a short fixed lead for control.",
+        label: "Lightweight 1.8 m lead (no retractables for puppies)",
         emoji: "🪢",
       },
       {
@@ -191,38 +184,19 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
     items: [
       {
         id: "bowls",
-        label: "Raised 304 stainless-steel bowl + stand ✔ bought — add a narrow water bowl",
-        why: "Ordered 27 Jul. A narrow water bowl is still worth adding — it keeps a Cavoodle beard drier, so less staining and daily blotting.",
+        label: "Stainless/ceramic food bowl + narrow water bowl (beard-friendly)",
+        why: "A narrow water bowl keeps a Cavoodle beard drier — less staining, less daily blotting.",
         emoji: "🥣",
       },
       {
-        id: "slow-feeder",
-        label: "Slow feeder + lick mats — Trixie spiral mat + LickiMat UFO ✔ bought",
-        why: "Slows gulpy meals and turns bath/grooming time into licking time — the UFO suction-cups to the shower wall.",
-        emoji: "🍥",
-      },
-      {
-        id: "dental-kit",
-        label: "Dental kit — TropiClean Fresh Breath gel + TripleFlex toothbrush ✔ bought",
-        why: "Teeth brushing starts as gum massage from week one home; daily by the time adult teeth land (~6 months).",
-        emoji: "🦷",
-      },
-      {
         id: "grooming-tools",
-        label: "Slicker brush + comb set & detangle spray ✔ bought — still need puppy shampoo & conditioner",
-        why: "Macaron-grey slicker + comb set ordered 27 Jul; 奇愈记 detangling leave-in spray (120 ml) added 28 Jul for knot-free brushing. Brush-tolerance training starts day one; grab the dog-specific shampoo & conditioner to finish this line.",
+        label: "Slicker brush + metal comb + puppy shampoo & conditioner",
+        why: "Brush-tolerance training starts day one; fleece coats mat fast without a proper comb.",
         emoji: "🪮",
       },
       {
-        id: "clippers",
-        label: "Codos CP-6800 pet clipper + full-steel shears kit ✔ bought",
-        why: "Clipper ordered 27 Jul; full-steel shears kit ordered 28 Jul — 7\" straight + 7\" curved + 6.5\" thinning + grooming comb, with case, finger guards and oil. The home-grooming trim kit is sorted; start the clipper conditioning ladder from week one.",
-        emoji: "✂️",
-      },
-      {
         id: "nail-styptic",
-        label: "Low-noise nail grinder (e.g. Dremel PawControl) + styptic powder",
-        why: "We grind little-and-often (Mon/Wed/Sat), not clip — quieter, no crush pressure, and the quick recedes so nails stay short.",
+        label: "Puppy nail clippers + styptic powder",
         emoji: "💅",
       },
       {
@@ -243,26 +217,20 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
     items: [
       {
         id: "chew-toys",
-        label: "Chew & tug arsenal ✔ bought — KONG Squid, KONG Teething Stick, Beeztees tug, mop toy, fleece rope tug, GiGwi antler chew ×2, squeaky duck plush",
-        why: "Teething peaks 12–24 weeks — rotate two or three at a time so the box stays novel.",
-        emoji: "🧸",
+        label: "Chew + teething toys ×6 (varied textures) + rotate box",
+        why: "Teething peaks 12–24 weeks — exactly his first months home. More legal chews = fewer chewed cables.",
+        emoji: "🦷",
       },
       {
         id: "kong-lickmat",
-        label: "KONG Puppy + KONG Classic (small) ✔ bought",
+        label: "Two puppy Kongs + a lick mat",
         why: "Frozen Kongs power crate training and grooming-table patience from day one.",
         emoji: "🍦",
       },
       {
         id: "puzzle",
-        label: "Snuffle mat ✔ bought",
+        label: "One beginner puzzle feeder / snuffle mat",
         emoji: "🧩",
-      },
-      {
-        id: "kong-brush",
-        label: "KONG cleaning brush ✔ bought",
-        why: "Stuffed Kongs grow science experiments inside without it — brush after every frozen fill.",
-        emoji: "🧼",
       },
       {
         id: "puppy-proof",
@@ -282,26 +250,18 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
     items: [
       {
         id: "pads-cleaner",
-        label: "UP+ pee pads XL 60×90 cm ×3 packs ✔ bought — still need enzyme cleaner",
-        why: "Thickened odour-control pads ordered 27 Jul. Enzyme cleaner is the missing half — it's the only thing that erases accident smells.",
+        label: "Puppy pads (big stock) + enzyme cleaner",
+        why: "Pad-first potty training in an HDB flat burns through pads fast; enzyme cleaner is the only thing that erases accident smells.",
         emoji: "🚽",
       },
       {
-        id: "toilet-tray",
-        label: "XL dog toilet tray with wall (white-grey) ✔ bought",
-        why: "Ordered 27 Jul — the pad holder tray keeps pads flat and chew-proof, and the wall catches leg-lifts. Pairs with the pad-first HDB potty plan.",
-        emoji: "🛁",
-      },
-      {
         id: "poo-bags",
-        label: "Biodegradable poo bags ×150 (10 rolls) + lead dispenser ✔ bought",
-        why: "Ordered 28 Jul — 150 biodegradable bags plus a pill-shaped dispenser that clips onto the lead. Walk-ready from day one.",
+        label: "Poo bags + dispenser for the lead",
         emoji: "💩",
       },
       {
         id: "wipes-towels",
-        label: "KOJIMA thick pet wipes ×5 packs + microfibre cloths ×5 ✔ bought",
-        why: "KOJIMA thick wipes (80 pulls × 5 packs) and five microfibre cloths ordered 28 Jul — paws, bums, muddy walks and bath-day drying all covered. This line is done.",
+        label: "Pet wipes + dedicated puppy towels ×3 (incl. one microfibre)",
         emoji: "🧽",
       },
       {
@@ -334,8 +294,7 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
       },
       {
         id: "chew-edibles",
-        label: "Puppy-safe edible chews ✔ started — 85 g rabbit-skin roll in the cupboard (no rawhide)",
-        why: "Save the rabbit-skin roll for after he lands — supervise long natural chews, and add one or two softer puppy chews closer to the date.",
+        label: "A few puppy-safe edible chews (no rawhide)",
         emoji: "🌾",
       },
       {

@@ -1,5 +1,5 @@
 /*
- * Training tab content — priority-ordered puppy curriculum for Wobbles.
+ * Training tab content — priority-ordered puppy curriculum for Paddington.
  * Synthesised from AKC puppy training timeline, The Puppy Academy schedule,
  * How to Train a Dream Dog (8-week essentials) and Found Animals pad-to-
  * outdoors transition guidance, adapted to a Singapore HDB Cavoodle.
@@ -18,30 +18,30 @@ export interface TrainingSkill {
   title: string;
   short: string; // one-line summary for the index
   startWhen: string; // human-readable timing
-  startWeeks: number; // Wobbles age (weeks) when this skill should begin
+  startWeeks: number; // Paddington age (weeks) when this skill should begin
   goal: string;
   img?: string; // illustration URL
   imgAlt?: string;
   steps: TrainingStep[];
-  wobbles: string; // Wobbles/Singapore-specific note
+  wobbles: string; // Paddington/Singapore-specific note
   proTip: string;
   trackerChoice: string; // matching option in the Training Log tracker
 }
 
 /** Illustration assets (uploaded, webdev storage URLs — use as-is) */
 export const TRAINING_IMGS = {
-  potty: "/manus-storage/train-potty_dc3c2c22_a5182309.png",
-  name: "/manus-storage/train-name_1e420efc_fea79e6e.png",
-  crate: "/manus-storage/train-crate_ced70d0a_64ae81c4.png",
-  sit: "/manus-storage/train-sit_a088dcd6_9f07ee0a.png",
-  recall: "/manus-storage/train-recall_3df38a28_9170e96b.png",
-  leash: "/manus-storage/train-leash_1a09440a_795785f6.png",
-  handling: "/manus-storage/train-handling_00e3a4fd_36233371.png",
-  social: "/manus-storage/train-social_9d76efed_9a7a47c1.png",
-  confidence: "/manus-storage/train-confidence_7ebd9739_7c91d844.png",
-  bite: "/manus-storage/train-bite_3cf46d65_f1072e1c.png",
-  stay: "/manus-storage/train-stay_b68e27ae_849a5eb4.png",
-  tricks: "/manus-storage/train-tricks_d10f4535_cd71cf41.png",
+  potty: "/manus-storage/train-potty_dc3c2c22_4f181fcf.png",
+  name: "/manus-storage/train-name_1e420efc_7d3e3162.png",
+  crate: "/manus-storage/train-crate_ced70d0a_efed254b.png",
+  sit: "/manus-storage/train-sit_a088dcd6_7482f1a9.png",
+  recall: "/manus-storage/train-recall_3df38a28_b8ed2e70.png",
+  leash: "/manus-storage/train-leash_1a09440a_6cd7bd58.png",
+  handling: "/manus-storage/train-handling_00e3a4fd_a86cd74f.png",
+  social: "/manus-storage/train-social_9d76efed_e8d10c99.png",
+  confidence: "/manus-storage/train-confidence_7ebd9739_04a4a780.png",
+  bite: "/manus-storage/train-bite_3cf46d65_95599dcf.png",
+  stay: "/manus-storage/train-stay_b68e27ae_c024d336.png",
+  tricks: "/manus-storage/train-tricks_d10f4535_14927f89.png",
 } as const;
 
 export const TRAINING_SKILLS: TrainingSkill[] = [
@@ -53,7 +53,7 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
     short: "Pad-first HDB routine, then the outdoor transition",
     startWhen: "Day 1 home (12 weeks)",
     startWeeks: 12,
-    goal: "Wobbles reliably goes on his pad (and later, his park patch) — and never learns that carpet is an option.",
+    goal: "Paddington reliably goes on his pad (and later, his park patch) — and never learns that carpet is an option.",
     img: TRAINING_IMGS.potty,
     imgAlt: "Gouache sketch of a Cavoodle puppy on a toilet pad near the door while a person praises him",
     steps: [
@@ -87,7 +87,7 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
       },
     ],
     wobbles:
-      "Good news: his full Protech C3 course finishes on 8 Sep, so he lands (~24 Sep) already vaccinated — grass outings can start once the SG vet gives the nod at the first check-up. Until then, pads in the flat are the default; afterwards the pad stays as a rainy-day backup, which most Singapore dog owners keep for monsoon season.",
+      "Pre-vaccination (until ~30 Oct 2026), pads are the safe default in the flat — HDB grass is parvo-risky ground. The 7:15am lift-to-park routine takes over once the vet clears him; the pad can stay as a rainy-day backup, which most Singapore dog owners keep for monsoon season.",
     proTip:
       "Track every wee and poo in the Toilet tracker for the first fortnight. The pattern that emerges IS his schedule — you'll start pre-empting him instead of reacting.",
     trackerChoice: "Name response", // potty logs live in the toilet tracker; nearest training log choice not used
@@ -100,13 +100,13 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
     short: "His name = the best word he knows. Foundation of everything.",
     startWhen: "Day 1–2 home (12 weeks)",
     startWeeks: 12,
-    goal: "Hearing 'Wobbles' whips his head toward you, every time — the attention switch every other skill is built on.",
+    goal: "Hearing 'Paddington's whips his head toward you, every time — the attention switch every other skill is built on.",
     img: TRAINING_IMGS.name,
     imgAlt: "Gouache sketch of a person holding a treat at eye level while a Cavoodle puppy looks up",
     steps: [
       {
-        title: "Say 'Wobbles' once, brightly",
-        text: "Quiet room, treats in hand. One clear, happy 'Wobbles!' — don't repeat it if he doesn't look; wait, or make a small kissy sound to help.",
+        title: "Say 'Paddington's once, brightly",
+        text: "Quiet room, treats in hand. One clear, happy 'Paddington!' — don't repeat it if he doesn't look; wait, or make a small kissy sound to help.",
       },
       {
         title: "Mark the head-turn",
@@ -122,7 +122,7 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
       },
     ],
     wobbles:
-      "House rule for Marcus and Chesa: his name is NEVER followed by anything bad (no 'Wobbles, no!'). The name only ever predicts good things — that's what keeps the head-turn reliable for life.",
+      "House rule for Marcus and Chesa: his name is NEVER followed by anything bad (no 'Paddington, no!'). The name only ever predicts good things — that's what keeps the head-turn reliable for life.",
     proTip: "His pedigree name 'Paddington' makes a fun secondary cue later, but pick ONE everyday name now and both humans stick to it.",
     trackerChoice: "Name response",
   },
@@ -134,7 +134,7 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
     short: "The crate as his den — and calm minutes alone from week one",
     startWhen: "Week 1 home (12–13 weeks)",
     startWeeks: 12,
-    goal: "Wobbles walks into his crate on cue, settles, and can be alone briefly without drama — the anti-separation-anxiety vaccine.",
+    goal: "Paddington walks into his crate on cue, settles, and can be alone briefly without drama — the anti-separation-anxiety vaccine.",
     img: TRAINING_IMGS.crate,
     imgAlt: "Gouache sketch of a treat trail leading into an open crate with a Cavoodle puppy approaching",
     steps: [
@@ -195,7 +195,7 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
     ],
     wobbles:
       "This skill is the bridge to the whole Grooming tab — his fleece coat means lifelong brushing, and Monday nail/ear rota only works if he was taught to enjoy handling now, during the socialisation window.",
-    proTip: "The breeder's ENS + Puppy Culture start means Wobbles arrives pre-loaded with positive handling history. Don't spend it — keep investing.",
+    proTip: "The breeder's ENS + Puppy Culture start means Paddington arrives pre-loaded with positive handling history. Don't spend it — keep investing.",
     trackerChoice: "Handling & cooperative care",
   },
   {
@@ -206,7 +206,7 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
     short: "First cue + built-in impulse control before meals and play",
     startWhen: "Week 1 home (12–13 weeks)",
     startWeeks: 12,
-    goal: "A fast, happy sit on one cue — then sit becomes how Wobbles asks for everything (meals, doors, leash, play).",
+    goal: "A fast, happy sit on one cue — then sit becomes how Paddington asks for everything (meals, doors, leash, play).",
     img: TRAINING_IMGS.sit,
     imgAlt: "Gouache sketch of a hand luring a treat in an arc over a Cavoodle puppy's nose into a sit",
     steps: [
@@ -239,13 +239,13 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
     short: "The lifetime safety skill; start indoors, day one week two",
     startWhen: "Week 1–2 home (12–14 weeks)",
     startWeeks: 12,
-    goal: "'Wobbles, come!' beats squirrels, other dogs and interesting smells — because coming to you has never once been a bad deal.",
+    goal: "'Paddington, come!' beats squirrels, other dogs and interesting smells — because coming to you has never once been a bad deal.",
     img: TRAINING_IMGS.recall,
     imgAlt: "Gouache sketch of a person crouched with open arms as a Cavoodle puppy runs joyfully toward them",
     steps: [
       {
         title: "Start at silly-easy range",
-        text: "Two metres away, crouch, arms open, one bright 'Wobbles, come!' — he'll come because you're the most interesting thing in the room. Jackpot: 3 treats, one after another, plus praise.",
+        text: "Two metres away, crouch, arms open, one bright 'Paddington, come!' — he'll come because you're the most interesting thing in the room. Jackpot: 3 treats, one after another, plus praise.",
       },
       {
         title: "The hallway relay",
@@ -276,7 +276,7 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
     short: "He lands at 12 weeks with ~4 weeks of window left: carry-socialise Woodlands hard",
     startWhen: "Day 1 home — only ~4 weeks left; window closes ~16 Oct 2026",
     startWeeks: 12,
-    goal: "By 16 weeks, Wobbles has calmly experienced the sounds, surfaces, people and sights of his world — so adult Wobbles finds nothing scary.",
+    goal: "By 16 weeks, Paddington has calmly experienced the sounds, surfaces, people and sights of his world — so adult Paddington finds nothing scary.",
     img: TRAINING_IMGS.social,
     imgAlt: "Gouache sketch of a person carrying a Cavoodle puppy in their arms while it watches a busy Singapore street",
     steps: [
@@ -302,7 +302,7 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
       },
     ],
     wobbles:
-      "Wobbles lands in Singapore right at the tail of his window — the Woodlands lobby-bench sessions and 7pm park-edge watching aren't optional extras, they're the syllabus. The '100 Things' checklist in this app IS his socialisation scorecard.",
+      "Paddington lands in Singapore right at the tail of his window — the Woodlands lobby-bench sessions and 7pm park-edge watching aren't optional extras, they're the syllabus. The '100 Things' checklist in this app IS his socialisation scorecard.",
     proTip: "Fearful moment? Add distance, feed, retreat, retry smaller another day. One bad scare teaches faster than ten good visits — protect him from being overwhelmed.",
     trackerChoice: "Handling & cooperative care",
   },
@@ -314,7 +314,7 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
     short: "A dedicated day-one programme to melt away shyness before it sets",
     startWhen: "Day 1 home (12 weeks) \u2014 daily 5-minute sessions",
     startWeeks: 12,
-    goal: "Wobbles learns that new people, sounds and places predict good things \u2014 and that he always has an exit \u2014 so early wariness never hardens into lifelong social anxiety.",
+    goal: "Paddington learns that new people, sounds and places predict good things \u2014 and that he always has an exit \u2014 so early wariness never hardens into lifelong social anxiety.",
     img: TRAINING_IMGS.confidence,
     imgAlt: "Gouache sketch of a shy Cavoodle puppy peeking out from behind a person's legs while the person crouches and tosses a treat toward him",
     steps: [
@@ -328,7 +328,7 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
       },
       {
         title: "Treat-toss greetings \u2014 he always approaches, never the reverse",
-        text: "With every new person (start with one calm friend): they sit or crouch side-on, no eye contact, no reaching, and toss a treat toward Wobbles. He chooses whether to close the gap \u2014 each toss lands slightly closer. Only when HE initiates contact may they offer a chin or chest scratch (never over-the-head pats). His choice is the whole trick: dogs who approach on their own terms come back braver.",
+        text: "With every new person (start with one calm friend): they sit or crouch side-on, no eye contact, no reaching, and toss a treat toward Paddington. He chooses whether to close the gap \u2014 each toss lands slightly closer. Only when HE initiates contact may they offer a chin or chest scratch (never over-the-head pats). His choice is the whole trick: dogs who approach on their own terms come back braver.",
       },
       {
         title: "'Look at that' \u2014 turn scary into a paycheck",
@@ -344,7 +344,7 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
       },
       {
         title: "Confidence through the body: wobble work & sniffing games",
-        text: "Fitting for a puppy named Wobbles: cushions, folded towels, a wobbly sofa cushion to climb over, cardboard boxes to explore, treats scattered in a snuffle mat or rolled towel. Conquering small physical puzzles and using his nose are proven general confidence builders \u2014 and perfect rainy-day sessions.",
+        text: "Fitting for a puppy named Paddington: cushions, folded towels, a wobbly sofa cushion to climb over, cardboard boxes to explore, treats scattered in a snuffle mat or rolled towel. Conquering small physical puzzles and using his nose are proven general confidence builders \u2014 and perfect rainy-day sessions.",
       },
       {
         title: "Retreat is always allowed \u2014 and always rewarded",
@@ -352,7 +352,7 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
       },
     ],
     wobbles:
-      "Cavaliers lean velcro-soft and poodles lean sensitive \u2014 so a Cavoodle's shyness responds beautifully to this programme but punishes any forcing. Wobbles' syllabus: day 1\u20133 flat-only bubble, week 1 lobby bench with treat-toss strangers at a distance, week 2 void deck 'look at that' sessions, week 3+ one calm visitor at a time into the flat. If wariness ever escalates (growling at all strangers, refusing food outdoors for days), loop in a force-free trainer early \u2014 weeks 8\u201316 are the cheapest time to fix it.",
+      "Cavaliers lean velcro-soft and poodles lean sensitive \u2014 so a Cavoodle's shyness responds beautifully to this programme but punishes any forcing. Paddington's syllabus: day 1\u20133 flat-only bubble, week 1 lobby bench with treat-toss strangers at a distance, week 2 void deck 'look at that' sessions, week 3+ one calm visitor at a time into the flat. If wariness ever escalates (growling at all strangers, refusing food outdoors for days), loop in a force-free trainer early \u2014 weeks 8\u201316 are the cheapest time to fix it.",
     proTip:
       "Keep a 'brave list' in the Training Log: every session, note ONE thing he handled calmly. On the inevitable wobbly day, the list is your proof that the graph points up \u2014 progress with fearful puppies is measured in weeks, not walks.",
     trackerChoice: "Confidence building",
@@ -365,7 +365,7 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
     short: "Teeth on toys, never skin — plus 'drop it' before he's big enough to argue",
     startWhen: "From day 1 home; peaks during teething (14–26 weeks)",
     startWeeks: 12,
-    goal: "Wobbles learns human skin is off-limits, mouths softly if ever, and trades anything in his mouth for a better offer.",
+    goal: "Paddington learns human skin is off-limits, mouths softly if ever, and trades anything in his mouth for a better offer.",
     img: TRAINING_IMGS.bite,
     imgAlt: "Gouache sketch of a Cavoodle puppy chewing a rope toy offered by a hand instead of fingers",
     steps: [
@@ -402,7 +402,7 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
     short: "The J-shaped leash: gear desensitisation now, real walks post-vaccination",
     startWhen: "Gear from week 1 home; street walks from ~18 weeks (fully vaccinated)",
     startWeeks: 12,
-    goal: "Wobbles walks beside you on a slack, J-shaped leash — because pulling has never once worked.",
+    goal: "Paddington walks beside you on a slack, J-shaped leash — because pulling has never once worked.",
     img: TRAINING_IMGS.leash,
     imgAlt: "Gouache sketch of a Cavoodle puppy walking at heel with a relaxed J-shaped leash",
     steps: [
@@ -440,7 +440,7 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
     short: "The calm-is-a-skill trio for the first month home",
     startWhen: "Weeks 12–16 (first month home)",
     startWeeks: 12,
-    goal: "Wobbles can lie down on cue, hold position while life happens, and park himself on a mat while humans eat, work or order coffee.",
+    goal: "Paddington can lie down on cue, hold position while life happens, and park himself on a mat while humans eat, work or order coffee.",
     img: TRAINING_IMGS.stay,
     imgAlt: "Gouache sketch of a Cavoodle puppy lying calmly on a small mat while a person holds up a gentle stay hand signal",
     steps: [
@@ -508,7 +508,7 @@ export const TRAINING_SKILLS: TrainingSkill[] = [
   },
 ];
 
-/** Skill status relative to Wobbles' age in weeks */
+/** Skill status relative to Paddington's age in weeks */
 export function skillStatus(skill: TrainingSkill, ageWeeks: number): "now" | "soon" | "later" {
   if (ageWeeks >= skill.startWeeks) return "now";
   if (skill.startWeeks - ageWeeks <= 2) return "soon";

@@ -6,7 +6,6 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "@/components/ErrorBoundary";
-import ScrollToTop from "@/components/ScrollToTop";
 import AuthGate from "@/components/AuthGate";
 import OfflineBanner from "@/components/OfflineBanner";
 import { ThemeProvider } from "@/contexts/ThemeContext";
@@ -18,16 +17,13 @@ import SectionReader from "@/pages/SectionReader";
 import HundredThings from "@/pages/HundredThings";
 import Checklists from "@/pages/Checklists";
 import Shopping from "@/pages/Shopping";
-import PetoRun from "@/pages/PetoRun";
 import Singapore from "@/pages/Singapore";
 import Training from "@/pages/Training";
 import Grooming from "@/pages/Grooming";
 import TrackersHub from "@/pages/TrackersHub";
 import TrackerPage from "@/pages/TrackerPage";
 import Memories from "@/pages/Memories";
-import CoatCheck from "@/pages/CoatCheck";
 import Growth from "@/pages/Growth";
-import YearReview from "@/pages/YearReview";
 import Health from "@/pages/Health";
 import Journey from "@/pages/Journey";
 import TrickDetail from "@/pages/TrickDetail";
@@ -36,9 +32,7 @@ import NotFound from "@/pages/NotFound";
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
-    <>
-      <ScrollToTop />
-      <Switch>
+    <Switch>
       <Route path="/" component={Home} />
       <Route path="/about" component={About} />
       <Route path="/handbook" component={HandbookIndex} />
@@ -46,7 +40,6 @@ function Router() {
       <Route path="/handbook/100-things" component={HundredThings} />
       <Route path="/handbook/checklists" component={Checklists} />
       <Route path="/handbook/shopping" component={Shopping} />
-      <Route path="/handbook/shopping/peto-run" component={PetoRun} />
       <Route path="/handbook/:slug" component={SectionReader} />
       <Route path="/singapore" component={Singapore} />
       <Route path="/training" component={Training} />
@@ -54,17 +47,14 @@ function Router() {
       <Route path="/trackers" component={TrackersHub} />
       <Route path="/trackers/:id" component={TrackerPage} />
       <Route path="/memories" component={Memories} />
-      <Route path="/memories/coat-check" component={CoatCheck} />
       <Route path="/growth" component={Growth} />
-      <Route path="/growth/year/:year" component={YearReview} />
       <Route path="/health" component={Health} />
       <Route path="/journey" component={Journey} />
       <Route path="/journey/tricks/:id" component={TrickDetail} />
       <Route path="/ask" component={Ask} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
-      </Switch>
-    </>
+    </Switch>
   );
 }
 

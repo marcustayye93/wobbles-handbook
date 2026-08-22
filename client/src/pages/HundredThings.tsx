@@ -65,7 +65,7 @@ export default function HundredThings() {
           <img src={ASSETS.v2SpotHighfive} alt="" className="w-14 h-14 object-contain shrink-0" />
           <div>
             <p className="font-bold text-[14px]" style={{ color: INK }}>
-              {nextCount === 100 ? "All 100! Wobbles is proud." : `${nextCount} down — high five!`}
+              {nextCount === 100 ? "All 100! Paddington is proud." : `${nextCount} down — high five!`}
             </p>
             <p className="text-[12px] text-muted-foreground">
               {nextCount === 100

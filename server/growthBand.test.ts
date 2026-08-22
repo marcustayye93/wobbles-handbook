@@ -13,7 +13,7 @@ import {
   growthCurveSeries,
 } from "../client/src/lib/growthBand";
 
-const DOB = "2026-06-26"; // Wobbles' actual date of birth
+const DOB = "2026-06-26"; // Paddington's actual date of birth
 
 describe("GROWTH_BAND anchors", () => {
   it("is sorted by weeks and min < max everywhere", () => {

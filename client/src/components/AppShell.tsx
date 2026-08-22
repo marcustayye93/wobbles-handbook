@@ -45,7 +45,7 @@ export function BottomNav() {
       // NOTE: never use transform-based centering (left-1/2 -translate-x-1/2) on a
       // position:fixed element — iOS Safari mispaints it mid-page during momentum
       // scroll / URL-bar collapse. inset-x-0 + mx-auto keeps it pinned reliably.
-      className="fixed bottom-0 inset-x-0 mx-auto w-full max-w-md z-50"
+      className="fixed bottom-0 inset-x-0 mx-auto w-full max-w-md z-50 print:hidden"
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
     >
       <div className="mx-3 mb-2.5 rounded-[26px] bg-[#22364D] shadow-[0_10px_30px_rgba(34,54,77,0.35)]">
@@ -114,12 +114,12 @@ export function PageHeader({
   emoji?: string;
 }) {
   return (
-    <header className="sticky top-0 z-40 bg-[#F8F3EB]/92 backdrop-blur-md border-b border-border/60">
+    <header className="sticky top-0 z-40 bg-[#F8F3EB]/92 backdrop-blur-md border-b border-border/60 print:static print:bg-white">
       <div className="px-4 py-3 flex items-center gap-2.5">
         {back && (
           <Link
             href={back}
-            className="shrink-0 w-9 h-9 -ml-1 rounded-full flex items-center justify-center bg-[#22364D] text-[#F8F3EB] press-scale"
+            className="shrink-0 w-9 h-9 -ml-1 rounded-full flex items-center justify-center bg-[#22364D] text-[#F8F3EB] press-scale print:hidden"
             aria-label="Back"
           >
             <ChevronLeft size={19} />

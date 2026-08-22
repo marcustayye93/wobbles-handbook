@@ -1,6 +1,6 @@
 /*
  * Growth band — expected weight range (kg) by age for a toy Cavoodle
- * expected to peak at ≈6 kg as an adult (family estimate for Wobbles).
+ * expected to peak at ≈6 kg as an adult (family estimate for Paddington).
  * Points compiled from toy Cavoodle / toy-poodle-cross growth charts and
  * scaled to a 6 kg adult; interpolated linearly between anchors.
  *
@@ -132,7 +132,7 @@ export interface GrowthCurvePoint {
   expected: number; // blue yardstick midline (kg)
   bandMin: number;
   bandMax: number;
-  actual?: number; // orange line — Wobbles' real weigh-in mapped to this week
+  actual?: number; // orange line — Paddington's real weigh-in mapped to this week
 }
 
 /**

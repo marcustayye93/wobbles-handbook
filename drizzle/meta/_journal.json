@@ -15,20 +15,6 @@
       "when": 1784875395363,
       "tag": "0001_spooky_living_tribunal",
       "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1785003716939,
-      "tag": "0002_low_doctor_spectrum",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "5",
-      "when": 1785060532128,
-      "tag": "0003_soft_starhawk",
-      "breakpoints": true
     }
   ]
 }

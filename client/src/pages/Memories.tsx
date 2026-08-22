@@ -5,17 +5,14 @@
  */
 import { useMemo } from "react";
 import { PageShell, Eyebrow, PawDivider } from "@/components/AppShell";
-import { Link } from "wouter";
-import { trpc } from "@/lib/trpc";
-import { ASSETS, MILESTONES, WOBBLES, daysUntil, formatDate, wobblesAge } from "@/content/wobbles";
-import { coatCheckSeries } from "@/lib/coatCheck";
+import { ASSETS, MILESTONES, daysUntil, formatDate, wobblesAge } from "@/content/wobbles";
 import { TRACKERS } from "@/lib/trackers";
 import { useTrackerFeed, rowToEntry, type TrackerRow } from "@/hooks/useSyncedData";
 import { cn } from "@/lib/utils";
 import PhotoJournal from "@/components/PhotoJournal";
 import {
   Star, Hand, Syringe, Home as HomeIcon, Plane, Users, Scissors, Cake, PawPrint,
-  Shield, BadgeCheck, Trees, Ruler, ChevronRight,
+  Shield, BadgeCheck, Trees,
 } from "lucide-react";
 
 const INK = "#22364D";
@@ -80,9 +77,6 @@ export default function Memories() {
   const age = wobblesAge();
   const { rows } = useTrackerFeed();
   const firsts = useMemo(() => computeFirsts(rows), [rows]);
-  const { data: photos } = trpc.photos.list.useQuery(undefined, { staleTime: 30_000 });
-  const coatChecks = useMemo(() => coatCheckSeries(photos ?? [], WOBBLES.dob), [photos]);
-  const latestChecks = coatChecks.slice(-3);
 
   return (
     <PageShell>
@@ -90,7 +84,7 @@ export default function Memories() {
       <div className="relative aspect-[4/3] overflow-hidden">
         <img
           src={ASSETS.v2ChMemories}
-          alt="Wobbles memories illustration"
+          alt="Paddington memories illustration"
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#22364D]/85 via-[#22364D]/20 to-transparent" />
@@ -101,7 +95,7 @@ export default function Memories() {
           </h1>
           <p className="text-[12.5px] font-body text-[#FFFDF8]/85 mt-1.5">
             {age.born
-              ? `Wobbles is ${age.weeks} weeks and ${age.remDays} days old`
+              ? `Paddington is ${age.weeks} weeks and ${age.remDays} days old`
               : "The story starts soon"}
           </p>
         </div>
@@ -110,42 +104,6 @@ export default function Memories() {
       <div className="px-5 pt-6">
         {/* family-shared photo journal */}
         <PhotoJournal />
-
-        {/* coat length check series */}
-        <Link
-          href="/memories/coat-check"
-          className="keepsake-card relative mt-5 p-4 flex items-center gap-3.5 press-scale"
-        >
-          <span className="tape" aria-hidden />
-          {latestChecks.length > 0 ? (
-            <span className="flex -space-x-3 shrink-0">
-              {latestChecks.map((p, i) => (
-                <img
-                  key={p.id}
-                  src={p.url}
-                  alt=""
-                  className="w-11 h-14 object-cover rounded-lg border-2 border-[#FFFDF8] bg-[#22364D]/5"
-                  style={{ transform: `rotate(${(i - 1) * 4}deg)`, zIndex: i }}
-                />
-              ))}
-            </span>
-          ) : (
-            <span className="w-11 h-11 rounded-full bg-[#22364D]/6 flex items-center justify-center shrink-0">
-              <Ruler size={18} style={{ color: SIENNA }} />
-            </span>
-          )}
-          <span className="min-w-0 flex-1">
-            <span className="block font-body font-bold text-[14px] leading-snug" style={{ color: INK }}>
-              Coat length check
-            </span>
-            <span className="block text-[11px] font-body text-muted-foreground leading-snug mt-0.5">
-              {coatChecks.length > 0
-                ? `${coatChecks.length} check${coatChecks.length === 1 ? "" : "s"} · compare side-by-side`
-                : "Same pose after every bath + trim — watch the length drift"}
-            </span>
-          </span>
-          <ChevronRight size={16} className="text-muted-foreground shrink-0" />
-        </Link>
 
         <PawDivider />
 
@@ -223,7 +181,7 @@ export default function Memories() {
         </ol>
 
         <p className="text-[11px] font-body text-muted-foreground text-center pt-4 pb-4 leading-relaxed">
-          More memories get added as Wobbles grows — this is only chapter one.
+          More memories get added as Paddington grows — this is only chapter one.
         </p>
       </div>
     </PageShell>

@@ -12,11 +12,9 @@ import {
 } from "./aiChat";
 import * as db from "./db";
 import { storagePut } from "./storage";
-import { buildSnapshot } from "./exportData";
-import { medicalRouter } from "./medical";
 
 /**
- * Wobbles' Handbook — household-shared API.
+ * Paddington's Handbook — household-shared API.
  * This is a private family app: every authenticated user reads and
  * writes the SAME household data (no per-user partitioning).
  */
@@ -150,10 +148,8 @@ export const appRouter = router({
           dataBase64: z.string().max(7_500_000),
           caption: z.string().max(500).optional(),
           date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
-          /** Optional place tag for Wobbles' Map (id from places content) */
+          /** Optional place tag for Paddington's Map (id from places content) */
           placeId: z.string().max(64).optional(),
-          /** Optional series tag — "coat-check" = same-pose coat-length photo after a bath + trim */
-          category: z.enum(["coat-check"]).optional(),
         }),
       )
       .mutation(async ({ ctx, input }) => {
@@ -169,7 +165,6 @@ export const appRouter = router({
           caption: input.caption,
           date: input.date,
           placeId: input.placeId,
-          category: input.category,
           createdBy: ctx.member.id,
           createdByName: ctx.member.name,
         });
@@ -185,10 +180,10 @@ export const appRouter = router({
   }),
 
   /**
-   * Ask Wobbles — the family AI assistant.
+   * Ask Paddington — the family AI assistant.
    * Every conversation is persisted (ai_conversations + ai_messages), and a
    * separate memory store (ai_memory) accumulates durable facts about
-   * Wobbles distilled from each exchange, so the assistant learns him.
+   * Paddington distilled from each exchange, so the assistant learns him.
    */
   ai: router({
     /** Send a message; creates a conversation on first message. */
@@ -258,7 +253,7 @@ export const appRouter = router({
             }
           }
         } catch (err) {
-          console.warn("[AskWobbles] memory step failed:", err);
+          console.warn("[AskPaddington] memory step failed:", err);
           learned = [];
         }
 
@@ -293,7 +288,7 @@ export const appRouter = router({
         return { success: true } as const;
       }),
 
-    /** "What I've learned about Wobbles" — the active memory book. */
+    /** "What I've learned about Paddington" — the active memory book. */
     memory: familyProcedure.query(() => db.listActiveAiMemory()),
 
     /** Forget one memory fact (soft delete, auditable). */
@@ -304,17 +299,6 @@ export const appRouter = router({
         return { success: true } as const;
       }),
   }),
-
-  /**
-   * U2 — Data export. One family-gated query returning the complete
-   * household dataset; the client turns it into JSON/CSV downloads.
-   */
-  exportData: router({
-    snapshot: familyProcedure.query(() => buildSnapshot()),
-  }),
-
-  /** U3 — Medical vault: filed vet paperwork + the medicine cabinet. */
-  medical: medicalRouter,
 });
 
 export type AppRouter = typeof appRouter;

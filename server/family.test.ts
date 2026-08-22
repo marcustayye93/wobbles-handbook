@@ -26,7 +26,7 @@ describe("resolveProfile", () => {
   });
 
   it("falls back to Family (9000) for unknown strings", () => {
-    expect(resolveProfile("Wobbles")).toEqual({ id: 9000, name: "Family" });
+    expect(resolveProfile("Paddington")).toEqual({ id: 9000, name: "Family" });
     expect(resolveProfile("")).toEqual({ id: 9000, name: "Family" });
     expect(resolveProfile("admin")).toEqual({ id: 9000, name: "Family" });
   });

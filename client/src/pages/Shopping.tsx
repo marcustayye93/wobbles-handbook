@@ -21,9 +21,7 @@ import {
 import { WOBBLES, daysUntil, formatDate } from "@/content/wobbles";
 import { useSharedState } from "@/hooks/useSyncedData";
 import { cn } from "@/lib/utils";
-import { PawPrint, AlertTriangle, ChevronDown, PartyPopper, ShoppingBag, ChevronRight } from "lucide-react";
-import { Link } from "wouter";
-import { PETO_RUN } from "@/content/petoRun";
+import { PawPrint, AlertTriangle, ChevronDown, PartyPopper } from "lucide-react";
 import { toast } from "sonner";
 
 const INK = "#22364D";
@@ -93,29 +91,9 @@ function WeekCard({
   const done = week.items.filter((it) => ticks[it.id]).length;
   const complete = done === week.items.length;
   const [open, setOpen] = useState(defaultOpen);
-  const cardRef = useRef<HTMLDivElement | null>(null);
-
-  /** On COLLAPSE, snap the viewport back to the card header so the user isn't
-   * left stranded far down the page when the tall item list disappears. */
-  const toggleOpen = () => {
-    setOpen((o) => {
-      if (o) {
-        requestAnimationFrame(() => {
-          cardRef.current?.scrollIntoView({ behavior: "auto", block: "start" });
-        });
-      }
-      return !o;
-    });
-  };
 
   return (
-    <div
-      ref={(el) => {
-        cardRef.current = el;
-        innerRef?.(el);
-      }}
-      className="relative pl-9 scroll-mt-20"
-    >
+    <div ref={innerRef} className="relative pl-9">
       {/* timeline node */}
       <span
         className={cn(
@@ -140,7 +118,7 @@ function WeekCard({
         )}
       >
         <button
-          onClick={toggleOpen}
+          onClick={() => setOpen((o) => !o)}
           className="w-full flex items-center gap-3 px-4 py-3.5 text-left press-scale"
         >
           <span className="text-[18px] shrink-0">{week.emoji}</span>
@@ -208,7 +186,7 @@ export default function Shopping() {
           <PartyPopper size={28} style={{ color: SIENNA }} className="shrink-0" />
           <div>
             <p className="font-bold text-[14px]" style={{ color: INK }}>
-              Everything's ready for Wobbles!
+              Everything's ready for Paddington!
             </p>
             <p className="text-[12px] text-muted-foreground">
               The den is stocked. Now you just wait for {formatDate(WOBBLES.homecoming)}.
@@ -275,7 +253,7 @@ export default function Shopping() {
                   last — the plan below spreads it out so nothing is a scramble.
                 </>
               ) : (
-                <>Wobbles is home! Anything left below doubles as the settling-in shopping list.</>
+                <>Paddington is home! Anything left below doubles as the settling-in shopping list.</>
               )}
             </p>
             {allDone && (
@@ -285,27 +263,6 @@ export default function Shopping() {
             )}
           </div>
         </div>
-      </div>
-
-      {/* PetO Brisbane run banner */}
-      <div className="px-5 pt-3">
-        <Link
-          href="/handbook/shopping/peto-run"
-          className="sticker-card px-4 py-3 flex items-center gap-3 press-scale border-[#C66A3D]/40"
-        >
-          <span className="shrink-0 w-9 h-9 rounded-full flex items-center justify-center" style={{ backgroundColor: "rgba(198,106,61,0.12)" }}>
-            <ShoppingBag size={16} style={{ color: SIENNA }} />
-          </span>
-          <span className="min-w-0 flex-1">
-            <span className="block font-body font-bold text-[13px] leading-snug" style={{ color: INK }}>
-              Doing a PetO run in Brisbane?
-            </span>
-            <span className="block text-[11px] font-body text-muted-foreground mt-0.5">
-              {PETO_RUN.filter((i) => ticks[i.id]).length}/{PETO_RUN.length} grabbed · specific products, prices & the 7 stores
-            </span>
-          </span>
-          <ChevronRight size={16} className="shrink-0 text-muted-foreground" />
-        </Link>
       </div>
 
       {/* catch-up section */}

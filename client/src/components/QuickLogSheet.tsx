@@ -22,19 +22,9 @@ interface Props {
   onOpenChange: (open: boolean) => void;
   /** jump straight to a tracker's form (from Home quick actions) */
   initialTracker?: string | null;
-  /** pre-select an option chip (e.g. the trick's training skill) */
-  initialOption?: string;
-  /** pre-fill the note field (e.g. "Sit practice") */
-  initialNote?: string;
 }
 
-export default function QuickLogSheet({
-  open,
-  onOpenChange,
-  initialTracker,
-  initialOption,
-  initialNote,
-}: Props) {
+export default function QuickLogSheet({ open, onOpenChange, initialTracker }: Props) {
   const addMutation = useAddTrackerEntry();
   const [trackerId, setTrackerId] = useState<string | null>(null);
   const [date, setDate] = useState(todayISO());
@@ -47,19 +37,14 @@ export default function QuickLogSheet({
   useEffect(() => {
     if (open) {
       const id = initialTracker ?? null;
-      const choices = id ? (getTracker(id)?.fields.options?.choices ?? []) : [];
       setTrackerId(id);
       setDate(todayISO());
       setTime(nowHM());
       setValue("");
-      setOption(
-        initialOption && choices.includes(initialOption)
-          ? initialOption
-          : (choices[0] ?? ""),
-      );
-      setNote(initialNote ?? "");
+      setOption(id ? (getTracker(id)?.fields.options?.choices[0] ?? "") : "");
+      setNote("");
     }
-  }, [open, initialTracker, initialOption, initialNote]);
+  }, [open, initialTracker]);
 
   const meta = trackerId ? getTracker(trackerId) : undefined;
   const f = meta?.fields;
@@ -98,8 +83,8 @@ export default function QuickLogSheet({
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
-      <DrawerContent className="bg-[#FFFDF8] max-h-[92dvh] flex flex-col overflow-hidden">
-        <DrawerHeader className="relative z-10 shrink-0 pb-1">
+      <DrawerContent className="bg-[#FFFDF8]">
+        <DrawerHeader className="pb-1">
           <DrawerTitle className="font-display text-[1.5rem] text-[#22364D] flex items-center gap-2">
             {meta ? (
               <>
@@ -138,7 +123,7 @@ export default function QuickLogSheet({
           </div>
         ) : (
           /* Step 2 — mini form */
-          <div className="relative flex-1 min-h-0 px-5 pb-8 pt-1 max-h-[65vh] overflow-y-auto">
+          <div className="px-5 pb-8 pt-1 max-h-[65vh] overflow-y-auto">
             <div className="grid grid-cols-2 gap-2.5">
               <label className="block">
                 <span className="text-[10px] font-body font-extrabold uppercase tracking-wide text-muted-foreground">Date</span>

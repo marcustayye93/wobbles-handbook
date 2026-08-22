@@ -113,8 +113,8 @@ export default function HouseholdSettingsSheet({ open, onOpenChange }: Props) {
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
-      <DrawerContent className="bg-[#FFFDF8] max-h-[92dvh] flex flex-col overflow-hidden">
-        <DrawerHeader className="relative z-10 shrink-0 pb-2">
+      <DrawerContent className="bg-[#FFFDF8] max-h-[92dvh]">
+        <DrawerHeader className="pb-1">
           <DrawerTitle className="font-display text-[1.5rem] text-[#22364D]">
             ⚙️ Household settings
           </DrawerTitle>
@@ -123,7 +123,7 @@ export default function HouseholdSettingsSheet({ open, onOpenChange }: Props) {
           </p>
         </DrawerHeader>
 
-        <div className="relative flex-1 min-h-0 overflow-y-auto px-4 pb-10 space-y-6">
+        <div className="overflow-y-auto px-4 pb-10 space-y-6">
           {/* ===== Who's logging on this phone (device profile) ===== */}
           <section>
             <h3 className="text-[10px] font-body font-extrabold uppercase tracking-[0.16em] text-[#B4512E] mb-2">
