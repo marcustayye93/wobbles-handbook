@@ -21,6 +21,7 @@ import {
 import NotFound from "@/pages/NotFound";
 import TrackerInsights from "@/components/TrackerInsights";
 import { bandSeriesFor, growthVerdict } from "@/lib/growthBand";
+import { fixProductCopy } from "@/lib/productCopy";
 
 const INK = "#22364D";
 const SIENNA = "#C66A3D";
@@ -37,7 +38,6 @@ export default function TrackerPage() {
   const [value, setValue] = useState<string>("");
   const [option, setOption] = useState<string>(meta?.fields.options?.choices[0] ?? "");
   const [note, setNote] = useState("");
-  // ?add=1 (from the hub's quick-log sheet) opens the form immediately
   const [formOpen, setFormOpen] = useState(
     () => new URLSearchParams(window.location.search).get("add") === "1",
   );
@@ -97,9 +97,8 @@ export default function TrackerPage() {
       <PageHeader title={meta.title} subtitle="Synced for the whole family" back="/trackers" emoji={meta.emoji} />
 
       <div className="px-5 pt-4">
-        <p className="text-[13px] font-body text-muted-foreground leading-relaxed">{meta.intro}</p>
+        <p className="text-[13px] font-body text-muted-foreground leading-relaxed">{fixProductCopy(meta.intro)}</p>
 
-        {/* add button / form */}
         {!formOpen ? (
           <button
             className="btn-ink w-full mt-4 h-12 rounded-2xl flex items-center justify-center gap-1.5 font-body font-extrabold text-[14px] press-scale"
@@ -195,7 +194,6 @@ export default function TrackerPage() {
           </div>
         )}
 
-        {/* chart (weight gets the expected toy-Cavoodle growth corridor) */}
         {meta.chart && chartData.length >= 2 && (
           <div className="keepsake-card p-4 mt-4">
             <Eyebrow>{meta.chart.label} over time</Eyebrow>
@@ -221,7 +219,6 @@ export default function TrackerPage() {
                   />
                   {isWeight && (
                     <>
-                      {/* shaded expected corridor: max area painted, min area erases below */}
                       <Area type="monotone" dataKey="bandMax" stroke="none" fill="rgba(107,124,90,0.18)" fillOpacity={1} activeDot={false} />
                       <Area type="monotone" dataKey="bandMin" stroke="none" fill="#FFFDF8" fillOpacity={1} activeDot={false} />
                     </>
@@ -245,7 +242,6 @@ export default function TrackerPage() {
           </div>
         )}
 
-        {/* growth verdict — weight only */}
         {verdict && (
           <div
             className={cn(
@@ -268,12 +264,10 @@ export default function TrackerPage() {
           </div>
         )}
 
-        {/* intelligence — feeding & toilet only */}
         {(meta.id === "feeding" || meta.id === "toilet") && !isLoading && (
           <TrackerInsights trackerId={meta.id} entries={entries} />
         )}
 
-        {/* entries */}
         <h2 className="font-display font-semibold text-[1.35rem] mt-6 mb-2.5" style={{ color: INK }}>
           Log{" "}
           <span className="text-sm font-body font-bold text-muted-foreground">
@@ -322,7 +316,6 @@ export default function TrackerPage() {
 
         <PawDivider />
 
-        {/* tips */}
         <div className="pb-4">
           <p className="flex items-center gap-1.5 text-[11px] font-body font-extrabold uppercase tracking-wider mb-2.5" style={{ color: SIENNA }}>
             <Lightbulb size={13} /> Good to know
@@ -331,7 +324,7 @@ export default function TrackerPage() {
             {meta.tips.map((t, i) => (
               <li key={i} className="text-[13px] font-body text-muted-foreground leading-relaxed flex gap-2">
                 <PawPrint size={13} className="shrink-0 mt-1" style={{ color: `${SIENNA}80` }} />
-                <span>{t}</span>
+                <span>{fixProductCopy(t)}</span>
               </li>
             ))}
           </ul>
