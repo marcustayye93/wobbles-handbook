@@ -3,6 +3,7 @@
  * Collectible illustrated chapter covers (gouache art per chapter), eyebrow
  * chapter numbers, serif titles, reading-progress rings, plus special pages
  * (100 Things, Checklists, Singapore) as keepsake rows.
+ * This-week admin / First Day lead; caretaker handover is travel, not START HERE.
  */
 import { Link } from "wouter";
 import { PageShell, Eyebrow, PawDivider, ProgressRing } from "@/components/AppShell";
@@ -10,7 +11,7 @@ import { SECTIONS } from "@/content/handbookSections";
 import { HUNDRED_TOTAL } from "@/content/hundredThings";
 import { CHECKLISTS } from "@/content/checklists";
 import { CHAPTER_COVERS } from "@/content/wobbles";
-import { ChevronRight, Clock, Printer, ListChecks, Plane, Award, Search, GraduationCap, Scissors, ShoppingCart, HeartHandshake } from "lucide-react";
+import { ChevronRight, Clock, Printer, ListChecks, Plane, Award, Search, GraduationCap, Scissors, ShoppingCart, HeartHandshake, Shield } from "lucide-react";
 import { tbcCount } from "@/content/caretakerGuide";
 import { useSharedState } from "@/hooks/useSyncedData";
 import { useState } from "react";
@@ -38,7 +39,7 @@ export default function HandbookIndex() {
           <button
             onClick={() => setSearchOpen(true)}
             aria-label="Search the handbook"
-            className="mt-1 w-9 h-9 rounded-full bg-[#FFFDF8] border border-[#E5DAC8] flex items-center justify-center text-[#22364D] press-scale shadow-sm"
+            className="mt-1 w-11 h-11 rounded-full bg-[#FFFDF8] border border-[#E5DAC8] flex items-center justify-center text-[#22364D] press-scale shadow-sm"
           >
             <Search size={16} />
           </button>
@@ -51,31 +52,62 @@ export default function HandbookIndex() {
       <SearchDialog open={searchOpen} onOpenChange={setSearchOpen} />
 
       <div className="px-4 pt-4">
-        {/* Caretaker's Guide — first entry, the handover template */}
-        <div className="pb-4">
-          <Link href="/handbook/caretaker" className="block press-scale fade-up">
+        {/* This-week admin / First Day — the actual START HERE until he lands */}
+        <div className="pb-4 space-y-2.5">
+          <Eyebrow className="px-1">This week</Eyebrow>
+          <Link href="/handbook/first-day" className="block press-scale fade-up">
             <div className="keepsake-card relative p-4.5">
               <span className="absolute -top-3 left-4 bg-[#B4512E] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
-                Start here when we travel
+                Start here
               </span>
               <div className="flex items-center gap-3.5 mt-1">
-                <span className="w-12 h-12 rounded-2xl bg-[#B4512E]/12 flex items-center justify-center shrink-0">
-                  <HeartHandshake size={24} className="text-[#B4512E]" />
+                <span className="w-12 h-12 rounded-2xl bg-[#B4512E]/12 flex items-center justify-center shrink-0 text-[22px]">
+                  🏡
                 </span>
                 <div className="min-w-0 flex-1">
                   <h2 className="font-display font-semibold text-[1.35rem] leading-tight text-[#22364D]">
-                    A Caretaker's Guide to Paddington
+                    The First Day & Night
                   </h2>
                   <p className="text-[11px] font-body text-muted-foreground mt-1 leading-relaxed">
-                    The full handover for friends dog-sitting Paddington — duties, routine,
-                    feeding, contacts and the kit we pass over.
-                    {tbcCount() > 0 && (
-                      <span className="font-bold text-[#8A6D1F]"> {tbcCount()} details to be confirmed.</span>
-                    )}
+                    Landing 24 Sep — decompression, toilet spot, crate as den. Not a logger.
                   </p>
                 </div>
                 <ChevronRight size={17} className="text-muted-foreground shrink-0" />
               </div>
+            </div>
+          </Link>
+
+          <Link href="/singapore" className="block sticker-card p-4 press-scale">
+            <div className="flex items-center gap-3.5">
+              <span className="w-11 h-11 rounded-2xl bg-[#22364D]/8 flex items-center justify-center">
+                <Shield size={21} className="text-[#22364D]" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="font-body font-bold text-[14px] leading-snug text-[#22364D]">
+                  PALS, then the import licence
+                </p>
+                <p className="text-[11px] font-body text-muted-foreground mt-0.5">
+                  Licence is valid 90 days, not 30. C3 dose 3 on 8 Sep is not full vaccination.
+                </p>
+              </div>
+              <ChevronRight size={17} className="text-muted-foreground shrink-0" />
+            </div>
+          </Link>
+
+          <Link href="/handbook/shopping" className="block sticker-card p-4 press-scale">
+            <div className="flex items-center gap-3.5">
+              <span className="w-11 h-11 rounded-2xl bg-[#C66A3D]/12 flex items-center justify-center">
+                <ShoppingCart size={21} className="text-[#B4512E]" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="font-body font-bold text-[14px] leading-snug text-[#22364D]">
+                  This week's shopping countdown
+                </p>
+                <p className="text-[11px] font-body text-muted-foreground mt-0.5">
+                  Big things first — the week-by-week kit list to 24 Sep.
+                </p>
+              </div>
+              <ChevronRight size={17} className="text-muted-foreground shrink-0" />
             </div>
           </Link>
         </div>
@@ -103,7 +135,6 @@ export default function HandbookIndex() {
                   ) : (
                     <div className="w-full aspect-[16/10] bg-[#22364D]" />
                   )}
-                  {/* Legibility gradient */}
                   <div
                     className="absolute inset-0"
                     style={{
@@ -112,7 +143,6 @@ export default function HandbookIndex() {
                     }}
                     aria-hidden
                   />
-                  {/* Progress ring */}
                   {pct > 0 && (
                     <div className="absolute top-3.5 right-3.5">
                       <ProgressRing
@@ -128,7 +158,6 @@ export default function HandbookIndex() {
                       </ProgressRing>
                     </div>
                   )}
-                  {/* Text overlay */}
                   <div className="absolute inset-x-0 bottom-0 p-4.5 pb-4">
                     <p className="text-[9.5px] font-body font-extrabold uppercase tracking-[0.2em] text-[#E8935C]">
                       Chapter {i + 1}
@@ -225,23 +254,6 @@ export default function HandbookIndex() {
             </div>
           </Link>
 
-          <Link href="/handbook/shopping" className="block sticker-card p-4 press-scale">
-            <div className="flex items-center gap-3.5">
-              <span className="w-11 h-11 rounded-2xl bg-[#C66A3D]/12 flex items-center justify-center">
-                <ShoppingCart size={21} className="text-[#B4512E]" />
-              </span>
-              <div className="min-w-0 flex-1">
-                <p className="font-body font-bold text-[14px] leading-snug text-[#22364D]">
-                  Shopping Countdown
-                </p>
-                <p className="text-[11px] font-body text-muted-foreground mt-0.5">
-                  Week-by-week buying plan to homecoming — big things first
-                </p>
-              </div>
-              <ChevronRight size={17} className="text-muted-foreground shrink-0" />
-            </div>
-          </Link>
-
           <Link href="/singapore" className="block sticker-card p-4 press-scale">
             <div className="flex items-center gap-3.5">
               <span className="w-11 h-11 rounded-2xl bg-[#22364D]/8 flex items-center justify-center">
@@ -256,6 +268,33 @@ export default function HandbookIndex() {
                 </p>
               </div>
               <ChevronRight size={17} className="text-muted-foreground shrink-0" />
+            </div>
+          </Link>
+
+          {/* Caretaker — travel handover, not this week's START HERE */}
+          <Link href="/handbook/caretaker" className="block press-scale">
+            <div className="keepsake-card relative p-4.5">
+              <span className="absolute -top-3 left-4 bg-[#22364D] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
+                When we travel
+              </span>
+              <div className="flex items-center gap-3.5 mt-1">
+                <span className="w-12 h-12 rounded-2xl bg-[#22364D]/8 flex items-center justify-center shrink-0">
+                  <HeartHandshake size={24} className="text-[#22364D]" />
+                </span>
+                <div className="min-w-0 flex-1">
+                  <h2 className="font-display font-semibold text-[1.35rem] leading-tight text-[#22364D]">
+                    A Caretaker's Guide to Paddington
+                  </h2>
+                  <p className="text-[11px] font-body text-muted-foreground mt-1 leading-relaxed">
+                    The full handover for friends dog-sitting Paddington — duties, routine,
+                    feeding, contacts and the kit we pass over.
+                    {tbcCount() > 0 && (
+                      <span className="font-bold text-[#8A6D1F]"> {tbcCount()} details to be confirmed.</span>
+                    )}
+                  </p>
+                </div>
+                <ChevronRight size={17} className="text-muted-foreground shrink-0" />
+              </div>
             </div>
           </Link>
         </div>
