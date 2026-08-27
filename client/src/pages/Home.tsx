@@ -1,9 +1,9 @@
 /*
- * Redesign v2.2 — "Keepsake Field Guide" Home, logging-first (teardown):
- * Compact cover → One-tap care row (Walk/Meal/Toilet/Sleep/Shower) →
- * Due today (rota + reminders) → Paddington Today → Today's timeline →
- * Coming up. Reading content lives in the Chapters tab. Paper bg,
- * Cormorant serif, ink navy + sienna, restrained keepsake details.
+ * Home — date-switched on WOBBLES.homecoming (landing 24 Sep 2026).
+ * Pre-homecoming (until 23 Sep): compact hero, countdown + irreversible admin,
+ * logging demoted. Empty logs are the truth. Not a 7am logger.
+ * Week-1 (from 24 Sep): decompression days 1–3, three logs only (weight /
+ * toilet / sleep), book SingVet, carry-socialise, park after ≥16-week core.
  */
 import { useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
@@ -11,7 +11,7 @@ import { PageShell, Eyebrow } from "@/components/AppShell";
 import SyncIndicator from "@/components/SyncIndicator";
 import QuickLogSheet from "@/components/QuickLogSheet";
 import TodayTimeline, { useDayFeed } from "@/components/TodayTimeline";
-import CareRow from "@/components/CareRow";
+import CareRow, { WEEK1_CARE_ACTIONS } from "@/components/CareRow";
 import SearchDialog from "@/components/SearchDialog";
 import { wobblesToday, todaysNudges, todaysBrief } from "@/lib/wobblesToday";
 import HouseholdSettingsSheet from "@/components/HouseholdSettingsSheet";
@@ -20,25 +20,80 @@ import type { HouseholdSettings } from "@/lib/householdSettings";
 import ReminderCelebration from "@/components/ReminderCelebration";
 import { todayISO } from "@/lib/dates";
 import { useTrackerFeed, useSharedState, rowToEntry } from "@/hooks/useSyncedData";
-import { ASSETS, WOBBLES, MILESTONES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
-import { ChevronRight, ArrowRight, PawPrint, CalendarDays, Search, SlidersHorizontal, Check, Sparkles } from "lucide-react";
+import {
+  ASSETS,
+  WOBBLES,
+  MILESTONES,
+  wobblesAge,
+  daysUntil,
+  formatDate,
+  isPreHomecoming,
+  daysHome,
+} from "@/content/wobbles";
+import { ChevronRight, ArrowRight, PawPrint, Search, SlidersHorizontal, Check, Sparkles, Scale, HeartPulse, Footprints } from "lucide-react";
 
-/** Countdown keepsake: picks the most relevant upcoming date */
-function nextCountdown(): { days: number; label: string } | null {
-  const toHome = daysUntil(WOBBLES.homecoming);
-  if (toHome > 0) return { days: toHome, label: "days until homecoming" };
-  const next = MILESTONES.filter((m) => daysUntil(m.date) > 0)[0];
-  if (next) return { days: daysUntil(next.date), label: next.label.toLowerCase() };
-  return null;
+const ADMIN_ITEMS = [
+  {
+    emoji: "🪪",
+    title: "PALS before the import licence",
+    detail: "Get his Singapore dog licence number first — AVS will not issue the import permit without it.",
+  },
+  {
+    emoji: "🛂",
+    title: "Import licence is valid 90 days",
+    detail: "Not 30. Time the AVS application against the 24 Sep landing with that 90-day window.",
+  },
+  {
+    emoji: "💉",
+    title: "C3 dose 3 — 8 Sep",
+    detail: "Third Protech C3 at the farm. That shot is not the 16-week core.",
+  },
+  {
+    emoji: "🚫",
+    title: "Not fully vaccinated",
+    detail: "Dose 3 on 8 Sep does not make him fully protected. The ≥16-week core is ~15 Oct.",
+  },
+  {
+    emoji: "🌳",
+    title: "Not park-cleared",
+    detail: "No ground time in public parks until the 16-week core plus a Singapore vet nod.",
+  },
+] as const;
+
+function HisRecordRow() {
+  const items = [
+    { href: "/growth", label: "Growth", Icon: Scale },
+    { href: "/health", label: "Health", Icon: HeartPulse },
+    { href: "/journey", label: "Journey", Icon: Footprints },
+  ] as const;
+  return (
+    <section className="px-4 mt-6">
+      <Eyebrow className="px-1 mb-2.5">His record</Eyebrow>
+      <div className="grid grid-cols-3 gap-2">
+        {items.map(({ href, label, Icon }) => (
+          <Link
+            key={href}
+            href={href}
+            className="sticker-card px-2 py-3 flex flex-col items-center gap-1.5 press-scale min-h-[44px]"
+          >
+            <Icon size={16} className="text-[#C66A3D]" />
+            <span className="text-[12px] font-body font-extrabold text-[#22364D]">{label}</span>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
 }
 
 export default function Home() {
   const age = wobblesAge();
   const today = wobblesToday();
-  const countdown = nextCountdown();
+  const preHome = isPreHomecoming();
+  const homeDays = daysHome();
+  const toHome = daysUntil(WOBBLES.homecoming);
+  const decompressing = !preHome && homeDays >= 0 && homeDays <= 3;
   const nextMilestones = MILESTONES.filter((m) => daysUntil(m.date) >= 0).slice(0, 3);
 
-  // Nudges from the family-shared server data (same feed the trackers use)
   const { rows } = useTrackerFeed();
   const [readProgress] = useSharedState<Record<string, number>>("readProgress", {});
   const [shoppingTicks] = useSharedState<Record<string, boolean>>("shopping", {});
@@ -65,8 +120,6 @@ export default function Home() {
   const { feed: todayFeed } = useDayFeed(todayISO());
   const hasFeedToday = todayFeed.length > 0;
 
-  // Celebration fires only on the toggle that completes the last reminder —
-  // never on page load or when another device already finished the list.
   const [celebrate, setCelebrate] = useState(false);
   const celebrateTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const toggleReminder = (id: string) => {
@@ -92,11 +145,10 @@ export default function Home() {
   };
 
   return (
-    <PageShell className="pb-28" hideFab>
-      {/* ===== Cover ===== */}
+    <PageShell hideFab>
+      {/* ===== Compact cover — next action stays one-handed ===== */}
       <section className="relative overflow-hidden">
-        <div className="relative px-5 pt-9">
-          {/* Wordmark + search */}
+        <div className="relative px-5 pt-7">
           <div className="flex items-center gap-2 fade-up">
             <span className="w-7 h-7 rounded-md border-[1.5px] border-[#C66A3D] text-[#C66A3D] font-display font-bold text-sm flex items-center justify-center">
               P
@@ -126,81 +178,156 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* Title + taped countdown */}
-          <div className="relative mt-3">
-            <h1
-              className="relative z-10 font-display font-semibold text-[3.1rem] leading-[0.98] text-[#22364D] fade-up"
-              style={{ animationDelay: "40ms", letterSpacing: "-0.01em" }}
-            >
-              Paddington’
-              <br />
-              Handbook
+          <div className="mt-3 fade-up" style={{ animationDelay: "40ms" }}>
+            <h1 className="font-display font-semibold text-[2.15rem] leading-[1.02] text-[#22364D]">
+              {preHome ? "Still in Queensland" : decompressing ? "Quiet days home" : "Welcome home"}
             </h1>
-            <p
-              className="relative z-10 mt-3 text-[11px] font-body font-extrabold uppercase tracking-[0.2em] text-[#B4512E] leading-relaxed fade-up"
-              style={{ animationDelay: "80ms" }}
-            >
-              A guide. A journey.
-              <br />
-              A lifetime together.
+            <p className="mt-1.5 text-[12.5px] font-body text-[#5A6B7E] leading-snug">
+              {preHome
+                ? "Paddy stays at The Doghouse QLD until he lands 24 Sep. Empty logs are the truth — this is not a 7am logger."
+                : decompressing
+                  ? "Days 1–3: quiet flat, his toilet spot, crate as a den, no visitors."
+                  : "Carry-socialise. Book SingVet. Grass waits for the 16-week core and a vet nod."}
             </p>
-
-            {/* Taped countdown keepsake card */}
-            {countdown && (
-              <div
-                className="absolute -top-2 right-0 z-20 rotate-[3deg] fade-up"
-                style={{ animationDelay: "120ms" }}
-              >
-                <div className="relative keepsake-card w-[124px] px-3 pt-4 pb-3 text-center">
-                  <span className="tape" aria-hidden />
-                  <CalendarDays size={15} className="mx-auto text-[#C66A3D]" />
-                  <p className="font-display font-bold text-[2.1rem] leading-none text-[#B4512E] mt-1.5">
-                    {countdown.days}
-                  </p>
-                  <p className="text-[8px] font-body font-extrabold uppercase tracking-[0.14em] text-[#22364D] mt-1 leading-snug">
-                    {countdown.label}
-                  </p>
-                </div>
-              </div>
-            )}
           </div>
         </div>
 
-        {/* Full-bleed hero illustration */}
-        <div className="relative mt-4 fade-up" style={{ animationDelay: "150ms" }}>
+        <div className="relative mt-3 fade-up" style={{ animationDelay: "80ms" }}>
           <img
             src={ASSETS.v2Hero}
             alt="Gouache illustration of Paddington the red-parti Cavoodle puppy on a navy blanket"
-            className="w-full aspect-[4/5] object-cover"
+            className="w-full aspect-[2/1] max-h-[168px] object-cover object-top"
           />
           <div
-            className="absolute inset-x-0 bottom-0 h-16"
+            className="absolute inset-x-0 bottom-0 h-10"
             style={{ background: "linear-gradient(to bottom, transparent, #F8F3EB)" }}
             aria-hidden
           />
-          <span className="absolute top-3 right-4 bg-[#FFFDF8]/90 backdrop-blur px-3 py-1.5 rounded-full text-[11px] font-body font-extrabold text-[#22364D] border border-[#E5DAC8] shadow-sm">
+          <span className="absolute top-2.5 right-3 bg-[#FFFDF8]/90 backdrop-blur px-2.5 py-1 rounded-full text-[11px] font-body font-extrabold text-[#22364D] border border-[#E5DAC8] shadow-sm">
             <PawPrint size={11} className="inline -mt-0.5 mr-1 text-[#C66A3D]" />
             {age.born ? `${age.weeks}w ${age.remDays}d old` : "coming soon"}
           </span>
         </div>
       </section>
 
-      {/* ===== One-tap care row (the most-used loggers, always first) ===== */}
-      <section className="relative z-10 px-4 -mt-10">
-        <div className="keepsake-card relative p-3.5 fade-up" style={{ animationDelay: "170ms" }}>
-          <span className="absolute -top-3 left-4 bg-[#22364D] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
-            One-tap log
-          </span>
-          <div className="mt-1.5">
-            <CareRow onDetails={(id) => quickLog(id)} />
-          </div>
-          <p className="mt-2 text-[10px] font-body font-semibold text-muted-foreground text-center">
-            Tap to log it now · hold for details · synced to both phones
-          </p>
-        </div>
-      </section>
+      {preHome ? (
+        <>
+          {/* Countdown — the lead, not a taped corner card */}
+          <section className="relative z-10 px-4 -mt-6">
+            <div className="keepsake-card relative p-5 fade-up" style={{ animationDelay: "120ms" }}>
+              <span className="absolute -top-3 left-4 bg-[#B4512E] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
+                Until he lands
+              </span>
+              <div className="flex items-end gap-3 mt-1">
+                <p className="font-display font-bold text-[3.1rem] leading-none text-[#B4512E]">{Math.max(0, toHome)}</p>
+                <div className="pb-1">
+                  <p className="text-[11px] font-body font-extrabold uppercase tracking-[0.14em] text-[#22364D]">
+                    days to 24 Sep
+                  </p>
+                  <p className="text-[12.5px] font-body text-[#5A6B7E] leading-snug mt-0.5">
+                    Jet Pets flies 23 Sep · he lands the 24th · still in QLD until then.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
 
-      {/* ===== Due today (plan + reminders + care rota) — second priority ===== */}
+          {/* Next irreversible admin */}
+          <section className="px-4 mt-3">
+            <div className="keepsake-card relative p-5 fade-up" style={{ animationDelay: "160ms" }}>
+              <span className="absolute -top-3 left-4 bg-[#22364D] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
+                Next irreversible admin
+              </span>
+              <ul className="mt-1 space-y-3">
+                {ADMIN_ITEMS.map((item) => (
+                  <li key={item.title} className="flex items-start gap-2.5">
+                    <span className="text-[15px] shrink-0 leading-snug">{item.emoji}</span>
+                    <span className="min-w-0">
+                      <span className="block text-[13px] font-body font-bold text-[#22364D] leading-snug">
+                        {item.title}
+                      </span>
+                      <span className="block text-[11.5px] font-body text-[#5A6B7E] leading-snug mt-0.5">
+                        {item.detail}
+                      </span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-4 flex flex-col gap-2">
+                <Link href="/singapore" className="btn-ink inline-flex justify-center">
+                  Road to Singapore <ArrowRight size={15} />
+                </Link>
+                <Link
+                  href="/handbook/shopping"
+                  className="text-center text-[12px] font-body font-extrabold text-[#B4512E] py-2"
+                >
+                  This week's shopping countdown →
+                </Link>
+              </div>
+            </div>
+          </section>
+        </>
+      ) : (
+        <>
+          {/* Week-1 lead: decompression or carry-socialise */}
+          <section className="relative z-10 px-4 -mt-6">
+            <div className="keepsake-card relative p-5 fade-up" style={{ animationDelay: "120ms" }}>
+              <span className="absolute -top-3 left-4 bg-[#B4512E] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
+                {decompressing ? `Day ${homeDays + 1} · decompression` : "Week one at home"}
+              </span>
+              {decompressing ? (
+                <ul className="mt-1 space-y-2 text-[13px] font-body text-[#33475C] leading-snug">
+                  <li>Quiet flat — no visitors.</li>
+                  <li>Show him his toilet spot (pad + downstairs grass, carried).</li>
+                  <li>Crate is a den, not a timeout.</li>
+                </ul>
+              ) : (
+                <div className="mt-1 space-y-2 text-[13px] font-body text-[#33475C] leading-snug">
+                  <p>Carry-socialise: arms, not paws, until the 16-week core (~15 Oct) and a SingVet nod.</p>
+                  <p>Ground and park wait. Book SingVet if you have not already.</p>
+                </div>
+              )}
+              <Link href="/handbook/first-day" className="btn-ink mt-4 inline-flex">
+                First-day guide <ArrowRight size={15} />
+              </Link>
+            </div>
+          </section>
+
+          {/* Three logs only — after the lead, never empty theatre */}
+          <section className="px-4 mt-3">
+            <div className="keepsake-card relative p-3.5 fade-up" style={{ animationDelay: "170ms" }}>
+              <span className="absolute -top-3 left-4 bg-[#22364D] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
+                Week-1 logs
+              </span>
+              <p className="mt-1 mb-2 text-[11px] font-body text-muted-foreground text-center">
+                Weight, toilet, sleep. Toilet asks what happened — it will not invent “wee on pad”.
+              </p>
+              <CareRow onDetails={(id) => quickLog(id)} actions={WEEK1_CARE_ACTIONS} />
+            </div>
+          </section>
+
+          <section className="px-4 mt-3">
+            <Link href="/health" className="block sticker-card px-4 py-3.5 press-scale">
+              <div className="flex items-center gap-3">
+                <span className="shrink-0 w-10 h-10 rounded-full bg-[#22364D]/8 flex items-center justify-center text-[17px]">
+                  🩺
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block font-body font-bold text-[14px] leading-snug text-[#22364D]">
+                    Book SingVet
+                  </span>
+                  <span className="block text-[11px] font-body text-muted-foreground leading-snug mt-0.5">
+                    First Singapore vet visit — records, parasite plan, and when grass is actually allowed.
+                  </span>
+                </span>
+                <ChevronRight size={16} className="text-muted-foreground shrink-0" />
+              </div>
+            </Link>
+          </section>
+        </>
+      )}
+
+      {/* ===== Due today — admin/rota, not a fake care logger ===== */}
       <section className="relative z-10 px-4 mt-3">
         <div className="keepsake-card relative p-5 fade-up" style={{ animationDelay: "200ms" }}>
           <span className="absolute -top-3 left-4 bg-[#B4512E] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
@@ -212,7 +339,6 @@ export default function Home() {
           </p>
           <p className="text-[12.5px] font-body text-[#5A6B7E] leading-relaxed mt-1">{brief.plan.note}</p>
 
-          {/* Family-added one-off reminders for today (tap to tick off — synced) */}
           {brief.reminders.length > 0 && (
             <div className="relative mt-3 space-y-1 border-t border-dashed border-[#E5DAC8] pt-3">
               {celebrate && <ReminderCelebration />}
@@ -223,7 +349,7 @@ export default function Home() {
                   role="checkbox"
                   aria-checked={r.done === true}
                   onClick={() => toggleReminder(r.id)}
-                  className="w-full flex items-start gap-2.5 py-1 text-left press-scale rounded-md"
+                  className="w-full flex items-start gap-2.5 py-1 text-left press-scale rounded-md min-h-[44px]"
                 >
                   <span
                     aria-hidden
@@ -261,7 +387,6 @@ export default function Home() {
             </div>
           )}
 
-          {/* Care rota due today */}
           {brief.care.length > 0 && (
             <div className="mt-3 space-y-1.5 border-t border-dashed border-[#E5DAC8] pt-3">
               {brief.care.map((c) => (
@@ -282,17 +407,8 @@ export default function Home() {
               ))}
             </div>
           )}
-
-          {/* Full health & care plan lives in the Health tab */}
-          <Link
-            href="/health"
-            className="mt-3 border-t border-dashed border-[#E5DAC8] pt-3 flex items-center gap-1.5 text-[11px] font-body font-extrabold text-[#B4512E] press-scale"
-          >
-            Full care plan & health record <ChevronRight size={13} className="shrink-0" />
-          </Link>
         </div>
 
-        {/* Nudges (reminder nudges have no link — render as plain rows) */}
         {nudges.length > 0 && (
           <div className="mt-2.5 space-y-2">
             {nudges.map((n) => {
@@ -328,7 +444,7 @@ export default function Home() {
         )}
       </section>
 
-      {/* ===== Paddington Today (stage intelligence) ===== */}
+      {/* ===== Paddington Today ===== */}
       <section className="relative z-10 px-4 mt-6">
         <div className="keepsake-card relative p-5 fade-up" style={{ animationDelay: "230ms" }}>
           <span className="absolute -top-3 left-4 bg-[#22364D] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
@@ -347,7 +463,6 @@ export default function Home() {
             <img src={ASSETS.v2SpotBed} alt="" className="w-20 h-20 object-contain shrink-0 mt-1" aria-hidden />
           </div>
 
-          {/* stage details */}
           <dl className="mt-3.5 space-y-2 border-t border-dashed border-[#E5DAC8] pt-3.5">
             {[
               ["Today's focus", today.focus],
@@ -369,8 +484,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== Ask Paddington (AI assistant) ===== */}
-      <section className="px-4 mt-7">
+      <HisRecordRow />
+
+      {/* ===== Ask Paddington ===== */}
+      <section className="px-4 mt-6">
         <Link href="/ask" className="block sticker-card px-4 py-3.5 press-scale">
           <div className="flex items-center gap-3">
             <span className="shrink-0 w-10 h-10 rounded-full bg-[#22364D] flex items-center justify-center">
@@ -389,20 +506,27 @@ export default function Home() {
         </Link>
       </section>
 
-      {/* ===== Today's timeline ===== */}
+      {/* Timeline only when there is a real log — empty is the truth */}
       {hasFeedToday && (
         <section className="px-4 mt-7">
           <div className="flex items-baseline justify-between px-1 mb-2.5">
             <Eyebrow>Today so far</Eyebrow>
             <Link href="/trackers" className="text-[11px] font-body font-extrabold text-[#B4512E]">
-              All trackers →
+              All logs →
             </Link>
           </div>
           <TodayTimeline dateISO={todayISO()} />
         </section>
       )}
 
-      {/* ===== Coming up ===== */}
+      {preHome && (
+        <section className="px-4 mt-6">
+          <p className="text-center text-[11.5px] font-body text-muted-foreground leading-relaxed px-2">
+            Logging waits until he is home. Empty logs are the truth.
+          </p>
+        </section>
+      )}
+
       {nextMilestones.length > 0 && (
         <section className="px-5 mt-8">
           <Eyebrow className="mb-2.5">Coming up</Eyebrow>
@@ -427,7 +551,6 @@ export default function Home() {
         </section>
       )}
 
-      {/* ===== The handbook lives in Chapters — one quiet doorway ===== */}
       <section className="px-4 mt-8">
         <Link href="/handbook" className="block sticker-card px-4 py-3.5 press-scale">
           <div className="flex items-center gap-3">
@@ -439,7 +562,7 @@ export default function Home() {
                 The handbook — all chapters
               </span>
               <span className="block text-[11px] font-body text-muted-foreground leading-snug mt-0.5">
-                Guides, tips and the 100 Things list, tucked away for when you need them.
+                First Day, this week's admin, and the rest of the guides.
               </span>
             </span>
             <ChevronRight size={16} className="text-muted-foreground shrink-0" />
@@ -447,12 +570,10 @@ export default function Home() {
         </Link>
       </section>
 
-      {/* Footer note */}
       <p className="px-5 mt-9 text-center text-[11px] font-body text-muted-foreground leading-relaxed">
         Made with love for {WOBBLES.name} ({WOBBLES.pedigreeName}), born {formatDate(WOBBLES.dob)}.
       </p>
 
-      {/* Quick-log sheet + search + household settings */}
       <QuickLogSheet open={sheetOpen} onOpenChange={setSheetOpen} initialTracker={sheetTracker} />
       <SearchDialog open={searchOpen} onOpenChange={setSearchOpen} />
       <HouseholdSettingsSheet open={settingsOpen} onOpenChange={setSettingsOpen} />
