@@ -266,8 +266,8 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
       },
       {
         id: "import-licence",
-        label: "Apply for the AVS import licence (valid 30 days — timing matters)",
-        why: "It's only valid 30 days, so applying this week covers the 23 Sep flight with margin.",
+        label: "Apply for the AVS import licence (valid 90 days — after PALS)",
+        why: "Valid 90 days, not 30. Apply after the PALS licence number is in; this week still covers the 24 Sep landing with margin.",
         emoji: "🛂",
       },
     ],
