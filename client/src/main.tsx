@@ -1,4 +1,3 @@
-import { startAutoUpdate } from "@/lib/autoUpdate";
 import { trpc } from "@/lib/trpc";
 import { COOKIE_NAME } from '@shared/const';
 import { readProfile } from "@/hooks/useProfile";
@@ -115,16 +114,9 @@ createRoot(document.getElementById("root")!).render(
   </trpc.Provider>
 );
 
-// PWA: register service worker for offline support (production only), and
-// start the auto-update watcher so new deployments load without a manual
-// hard-refresh (see client/src/lib/autoUpdate.ts).
-if (import.meta.env.PROD) {
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker
-        .register("/sw.js", { updateViaCache: "none" })
-        .catch(() => {});
-    });
-  }
-  startAutoUpdate();
+// PWA: register service worker for offline support (production only)
+if ("serviceWorker" in navigator && import.meta.env.PROD) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js").catch(() => {});
+  });
 }

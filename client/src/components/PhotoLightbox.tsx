@@ -2,7 +2,7 @@
  * PhotoLightbox — full-screen album viewer for the Memories page.
  * Swipe left/right (touch) or use arrow keys/buttons to move between
  * photos; swipe down or press Esc / the close button to dismiss.
- * Shows date, who added it, caption and Wobbles' age; keeps the
+ * Shows date, who added it, caption and Paddington's age; keeps the
  * confirm-before-delete flow from the old viewer dialog.
  */
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -148,7 +148,7 @@ export default function PhotoLightbox({ photos, index, onIndexChange, onClose, o
         <img
           key={photo.id}
           src={photo.url}
-          alt={photo.caption ?? "Wobbles photo"}
+          alt={photo.caption ?? "Paddington photo"}
           draggable={false}
           className="max-w-full max-h-full object-contain rounded-lg select-none lightbox-photo-enter"
           style={{

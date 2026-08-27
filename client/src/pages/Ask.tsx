@@ -1,10 +1,10 @@
 /*
- * Ask Wobbles — the family AI assistant, keepsake style.
- * Chat with a puppy-care assistant that knows Wobbles' profile and remembers
+ * Ask Paddington — the family AI assistant, keepsake style.
+ * Chat with a puppy-care assistant that knows Paddington's profile and remembers
  * facts the family shares. Three surfaces on one page:
  *  - the chat thread (persisted server-side, family-shared)
  *  - a history sheet (past conversations, resumable/deletable)
- *  - a memory-book sheet ("What I've learned about Wobbles", forgettable)
+ *  - a memory-book sheet ("What I've learned about Paddington", forgettable)
  */
 import { useEffect, useRef, useState } from "react";
 import { PageShell, PageHeader, Eyebrow } from "@/components/AppShell";
@@ -78,7 +78,7 @@ export default function Ask() {
       utils.ai.conversations.invalidate();
       if (res.learned.length > 0) {
         utils.ai.memory.invalidate();
-        toast(`Remembered ${res.learned.length} new thing${res.learned.length === 1 ? "" : "s"} about Wobbles`, {
+        toast(`Remembered ${res.learned.length} new thing${res.learned.length === 1 ? "" : "s"} about Paddington`, {
           icon: "🧠",
         });
       }
@@ -138,7 +138,7 @@ export default function Ask() {
 
   return (
     <PageShell className="pb-0" hideNav>
-      <PageHeader title="Ask Wobbles" subtitle="Puppy questions, answered for him" back="/" emoji="✨" />
+      <PageHeader title="Ask Paddington" subtitle="Puppy questions, answered for him" back="/" emoji="✨" />
 
       {/* Toolbar: new chat / history / memory */}
       <div className="px-4 pt-3 flex items-center gap-2">
@@ -211,10 +211,10 @@ export default function Ask() {
           </SheetTrigger>
           <SheetContent side="bottom" className="bg-[#F8F3EB] rounded-t-3xl max-h-[75vh] overflow-y-auto">
             <SheetHeader className="pb-1">
-              <SheetTitle className="font-display text-[#22364D]">What I've learned about Wobbles</SheetTitle>
+              <SheetTitle className="font-display text-[#22364D]">What I've learned about Paddington</SheetTitle>
             </SheetHeader>
             <p className="text-[11.5px] font-body text-muted-foreground px-1 pb-2 leading-relaxed">
-              Facts distilled from your chats, saved in Wobbles' own memory book and used to tailor every future
+              Facts distilled from your chats, saved in Paddington's own memory book and used to tailor every future
               answer. Tap the bin to make me forget one.
             </p>
             <div className="space-y-2 pb-6 px-1">
@@ -223,7 +223,7 @@ export default function Ask() {
               )}
               {memoryQuery.data?.length === 0 && (
                 <p className="text-[12px] font-body text-muted-foreground py-4 text-center">
-                  Nothing yet — tell me about Wobbles in chat (his weight, favourite treats, quirks) and I'll
+                  Nothing yet — tell me about Paddington in chat (his weight, favourite treats, quirks) and I'll
                   remember it here.
                 </p>
               )}
@@ -258,7 +258,7 @@ export default function Ask() {
               <span className="tape" aria-hidden />
               <Sparkles size={22} className="mx-auto text-[#C66A3D]" />
               <h2 className="font-display font-semibold text-[1.5rem] text-[#22364D] mt-2 leading-tight">
-                Ask me anything about Wobbles
+                Ask me anything about Paddington
               </h2>
               <p className="text-[12.5px] font-body text-[#5A6B7E] leading-relaxed mt-1.5">
                 I know his breed, age, coat and the move to Singapore — and I remember what you tell me, so my
@@ -295,7 +295,7 @@ export default function Ask() {
             ) : (
               <div className="max-w-[92%] keepsake-card px-4 py-3">
                 <p className="text-[9px] font-body font-extrabold uppercase tracking-[0.14em] text-[#C66A3D] mb-1 flex items-center gap-1">
-                  <Sparkles size={10} /> Ask Wobbles
+                  <Sparkles size={10} /> Ask Paddington
                 </p>
                 <div className="ai-answer text-[13.5px] font-body text-[#33475C] leading-relaxed">
                   <Streamdown>{m.content}</Streamdown>
@@ -309,7 +309,7 @@ export default function Ask() {
           <div className="flex justify-start">
             <div className="keepsake-card px-4 py-3 flex items-center gap-2.5">
               <Loader2 size={14} className="animate-spin text-[#C66A3D]" />
-              <span className="text-[12.5px] font-body text-[#5A6B7E]">Thinking about Wobbles…</span>
+              <span className="text-[12.5px] font-body text-[#5A6B7E]">Thinking about Paddington…</span>
             </div>
           </div>
         )}
@@ -338,7 +338,7 @@ export default function Ask() {
               }
             }}
             rows={1}
-            placeholder="Ask about Wobbles…"
+            placeholder="Ask about Paddington…"
             className="flex-1 resize-none bg-transparent outline-none text-[14px] font-body text-[#22364D] placeholder:text-muted-foreground py-1.5 max-h-28"
             style={{ minHeight: "34px" }}
           />

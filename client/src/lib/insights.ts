@@ -13,7 +13,7 @@
  *    average with vectors (a 23:50 and a 00:10 wee average to midnight, not
  *    noon). Spread comes from the resultant vector length.
  *  - Everything returns structured objects the UI can render as cards, and
- *    todaysNudges() can lift the top prediction into Wobbles Today.
+ *    todaysNudges() can lift the top prediction into Paddington Today.
  */
 import type { TrackerEntry } from "@/lib/trackers";
 
@@ -511,7 +511,7 @@ export function feedingIntelligence(
   return { insights, pending, allPending: insights.length === 0 };
 }
 
-/* ================= Wobbles Today prediction ================= */
+/* ================= Paddington Today prediction ================= */
 
 export interface ToiletPrediction {
   /** minutes since midnight of the predicted next likely toilet need */

@@ -1,8 +1,8 @@
 /*
- * Caretaker's Guide to Wobbles — the handover template.
+ * Caretaker's Guide to Paddington — the handover template.
  *
  * This is the single document Marcus & Chesa pass to whoever is looking
- * after Wobbles while they travel. Wobbles LIVES AT THE CARETAKER'S HOUSE
+ * after Paddington while they travel. Paddington LIVES AT THE CARETAKER'S HOUSE
  * during the stay (not visited at home), so the guide covers the full
  * day-to-day: safety, water, food, and at least one daily walk.
  *
@@ -39,7 +39,7 @@ export const CORE_DUTIES: { emoji: string; title: string; text: string }[] = [
   {
     emoji: "🛡️",
     title: "Keep him safe",
-    text: "Wobbles stays at your house for the stay. Keep doors, gates and balconies closed, keep anything chewable or toxic out of reach, and never leave him unsupervised outdoors.",
+    text: "Paddington stays at your house for the stay. Keep doors, gates and balconies closed, keep anything chewable or toxic out of reach, and never leave him unsupervised outdoors.",
   },
   {
     emoji: "💧",
@@ -53,7 +53,7 @@ export const CORE_DUTIES: { emoji: string; title: string; text: string }[] = [
   },
 ];
 
-/** Everything we physically hand over with Wobbles. */
+/** Everything we physically hand over with Paddington. */
 export interface HandoverItem {
   emoji: string;
   name: string;
@@ -95,17 +95,17 @@ export const GUIDE_SECTIONS: GuideSection[] = [
   {
     id: "profile",
     emoji: "🐶",
-    title: "Meet Wobbles",
+    title: "Meet Paddington",
     intro: "The essentials about who you're looking after.",
     items: [
-      { label: "Name", value: "Wobbles (pedigree name: Paddington)" },
+      { label: "Name", value: "Paddington (pedigree name: Paddington)" },
       { label: "Breed", value: "Cavoodle (Cavalier King Charles Spaniel × Toy Poodle), toy size" },
       { label: "Born", value: "26 June 2026" },
       { label: "Sex", value: "Male" },
       { label: "Colour & coat", value: "Red parti (Blenheim) fleece coat — rich red patches on white" },
-      { label: "Microchip number", value: TBC, note: "On his vaccination card — we'll fill this in after his microchipping at the breeder's vet." },
+      { label: "Microchip number", value: "900164002411316 (implanted between shoulder blades, 7 Aug 2026)" },
       { label: "AVS dog licence number", value: TBC, note: "Issued via PALS once he's licensed in Singapore." },
-      { label: "Temperament notes", value: TBC, note: "We'll describe his personality, fears and quirks once we've lived with him." },
+      { label: "Temperament notes", value: "Most confident puppy in his litter. Calm and praise-driven (Cavalier trait — bred to please). Not an excessive barker, chewer, or stressor. Startles at sudden sights but recovers quickly. Companion/lap dog — he wants to be near people. Responds best to praise and rewards." },
     ],
   },
   {
@@ -114,9 +114,7 @@ export const GUIDE_SECTIONS: GuideSection[] = [
     title: "Contacts & emergencies",
     intro: "Who to call, in order. Save these before we leave.",
     items: [
-      { label: "Marcus (dad) — mobile / WhatsApp", value: TBC, note: "We answer WhatsApp even overseas — message anytime, day or night." },
-      { label: "Chesa (mum) — mobile / WhatsApp", value: TBC },
-      { label: "Our travel dates & destination", value: TBC, note: "So you know our timezone and when we're back." },
+      { label: "Our travel dates & destination", value: "Tentatively flying out 23 Sep 2026 (Brisbane → Singapore). We'll confirm the exact return date closer to the time — WhatsApp us anytime, day or night." },
       { label: "Regular vet (clinic, address, phone)", value: TBC, note: "Will be his Woodlands clinic once registered after homecoming." },
       { label: "24-hour emergency vet", value: TBC, note: "Nearest after-hours animal hospital to YOUR home — we'll look this up together before the handover." },
       { label: "Backup local contact", value: TBC, note: "A nearby friend/family member who can help if you can't reach us." },
@@ -141,9 +139,9 @@ export const GUIDE_SECTIONS: GuideSection[] = [
     title: "Feeding",
     intro: "His kibble only. Measured meals, fresh water always.",
     items: [
-      { label: "Kibble brand & formula", value: TBC, note: "The breeder confirms his exact kibble before export — we'll hand over a full supply, pre-portioned." },
-      { label: "Meals per day", value: TBC, note: "Likely 3 meals/day as a young puppy, dropping to 2 as he grows — we'll confirm for the stay." },
-      { label: "Portion per meal", value: TBC, note: "We'll include a scoop marked to the right level." },
+      { label: "Kibble brand & formula", value: "Royal Canin Mini Puppy (small-breed dry kibble). We'll hand over a full supply — feed only this brand to avoid stomach upsets from sudden food changes." },
+      { label: "Meals per day", value: "Free-feeding — leave kibble out in his bowl and let him eat as and when he likes. Cavoodles self-regulate and will not overeat. Refill the bowl when it runs low." },
+      { label: "Daily kibble guide (dry diet only)", value: "~50–60 g/day at 8 weeks · ~70–85 g/day at 12 weeks · ~85–100 g/day at 16 weeks · ~100–115 g/day at 6 months. Adjust up or down based on his body condition — you should feel (not see) his ribs. We'll include a measuring scoop." },
       { label: "Meal times", value: TBC },
       { label: "Treats", value: "Only the treats we provide, and only a few a day (use part of his kibble ration for rewards where possible)." },
       { label: "Never feed", value: "Chocolate, grapes/raisins, onion, garlic, xylitol (sugar-free gum/sweets), cooked bones, alcohol, caffeine — and no table scraps, however much he begs." },
@@ -209,7 +207,7 @@ export const GUIDE_SECTIONS: GuideSection[] = [
     intro: "What's due during the stay, and when to worry.",
     items: [
       { label: "Vaccination status", value: "Fully vaccinated (three Protech C3 doses completed in Australia before export). Card included in his folder." },
-      { label: "Monthly parasite preventive", value: TBC, note: "He gets a monthly chew/spot-on on the 24th of each month — if a dose falls in the stay, we'll hand it over with written instructions." },
+      { label: "Monthly parasite preventive", value: "Due on the 23rd of each month. If a dose falls during the stay, we'll hand it over with written instructions and the exact product." },
       { label: "Other medication", value: TBC, note: "None expected — we'll confirm before the handover." },
       { label: "Insurance / payment for vet visits", value: TBC, note: "Policy details or our guarantee to cover any vet bill — call us first unless it's an emergency." },
       { label: "Go to the vet NOW if", value: "Repeated vomiting or diarrhoea, refusing food AND water, lethargy/collapse, difficulty breathing, suspected poisoning, any injury, or a fall from height. Call us on the way — never wait for us to reply first." },

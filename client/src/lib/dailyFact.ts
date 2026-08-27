@@ -1,5 +1,5 @@
 /*
- * Daily "100 Things" field note for the Home (Wobbles Today) tab.
+ * Daily "100 Things" field note for the Home (Paddington Today) tab.
  * Deterministic pick seeded by the date so everyone in the household sees the
  * same fact, rotating to a new one every other day (48-hour cadence).
  * A multiplicative hash shuffles the visit order so consecutive periods jump

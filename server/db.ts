@@ -4,13 +4,9 @@ import {
   aiConversations,
   aiMemory,
   aiMessages,
-  InsertMedicalRecord,
-  InsertMedication,
   InsertPhoto,
   InsertTrackerEntry,
   InsertUser,
-  medicalRecords,
-  medications,
   photos,
   sharedState,
   trackerEntries,
@@ -105,7 +101,7 @@ export async function getUserByOpenId(openId: string) {
 }
 
 /* ============================================================
- * Wobbles' Handbook — household-shared queries.
+ * Paddington's Handbook — household-shared queries.
  * All authenticated users read/write the same data.
  * ============================================================ */
 
@@ -249,7 +245,7 @@ export async function deletePhoto(id: number) {
   await db.delete(photos).where(eq(photos.id, id));
 }
 
-/* ---- Ask Wobbles AI: conversations, messages, memory ---- */
+/* ---- Ask Paddington AI: conversations, messages, memory ---- */
 
 export async function createAiConversation(
   title: string,
@@ -375,72 +371,4 @@ export async function forgetAiMemoryFact(id: number) {
   const db = await getDb();
   requireDb(db);
   await db.update(aiMemory).set({ active: 0 }).where(and(eq(aiMemory.id, id), eq(aiMemory.active, 1)));
-}
-
-/* ---- U3 Medical vault: documents + medications ---- */
-
-export async function listMedicalRecords() {
-  const db = await getDb();
-  requireDb(db);
-  return db
-    .select()
-    .from(medicalRecords)
-    .orderBy(desc(medicalRecords.recordDate), desc(medicalRecords.id));
-}
-
-export async function addMedicalRecord(record: InsertMedicalRecord): Promise<number> {
-  const db = await getDb();
-  requireDb(db);
-  const [result] = await db.insert(medicalRecords).values(record);
-  return result.insertId;
-}
-
-export async function getMedicalRecordById(id: number) {
-  const db = await getDb();
-  requireDb(db);
-  const rows = await db.select().from(medicalRecords).where(eq(medicalRecords.id, id)).limit(1);
-  return rows[0];
-}
-
-export async function deleteMedicalRecord(id: number) {
-  const db = await getDb();
-  requireDb(db);
-  await db.delete(medicalRecords).where(eq(medicalRecords.id, id));
-}
-
-export async function listMedications() {
-  const db = await getDb();
-  requireDb(db);
-  return db
-    .select()
-    .from(medications)
-    .orderBy(desc(medications.active), asc(medications.name), desc(medications.id));
-}
-
-export async function addMedication(med: InsertMedication): Promise<number> {
-  const db = await getDb();
-  requireDb(db);
-  const [result] = await db.insert(medications).values(med);
-  return result.insertId;
-}
-
-export async function updateMedication(
-  id: number,
-  patch: Partial<
-    Pick<
-      InsertMedication,
-      "name" | "kind" | "dose" | "frequencyDays" | "startDate" | "endDate" | "lastGivenDate" | "active" | "note"
-    >
-  >,
-) {
-  const db = await getDb();
-  requireDb(db);
-  if (Object.keys(patch).length === 0) return;
-  await db.update(medications).set(patch).where(eq(medications.id, id));
-}
-
-export async function deleteMedication(id: number) {
-  const db = await getDb();
-  requireDb(db);
-  await db.delete(medications).where(eq(medications.id, id));
 }

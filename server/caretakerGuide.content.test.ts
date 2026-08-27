@@ -68,10 +68,10 @@ describe("caretaker guide content", () => {
     expect(tbcCount()).toBeGreaterThan(5);
   });
 
-  it("keeps kibble brand and vet contacts as TBC placeholders for now", () => {
+  it("kibble brand is now confirmed as Royal Canin; regular vet is still TBC", () => {
     const feeding = GUIDE_SECTIONS.find((s) => s.id === "feeding")!;
     const kibble = feeding.items.find((i) => i.label.toLowerCase().includes("kibble"))!;
-    expect(kibble.value).toBe(TBC);
+    expect(kibble.value).toContain("Royal Canin");
 
     const contacts = GUIDE_SECTIONS.find((s) => s.id === "contacts")!;
     const vet = contacts.items.find((i) => i.label.toLowerCase().includes("regular vet"))!;

@@ -1,1 +1,0 @@
-ALTER TABLE `photos` ADD `category` varchar(32);

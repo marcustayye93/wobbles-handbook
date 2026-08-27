@@ -1,11 +1,11 @@
 /*
- * Family access layer — Wobbles' Handbook is a private household app with
+ * Family access layer — Paddington's Handbook is a private household app with
  * NO login (user-confirmed 2026-07-25). Access control is simply keeping the
  * URL private. Every request carries an `x-wobbles-profile` header set by the
  * client from its device-remembered profile picker (Marcus / Chesa / Caretaker).
  *
  * All data continues to live in the Manus cloud database + S3 storage —
- * nothing is device-only — so the Wobbles AI can always retrieve the full
+ * nothing is device-only — so the Paddington AI can always retrieve the full
  * history of trackers, photos and memories regardless of which device wrote it.
  *
  * Attribution: entries are stamped with a stable numeric id per profile plus

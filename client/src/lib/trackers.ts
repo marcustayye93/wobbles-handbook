@@ -43,7 +43,7 @@ export const TRACKERS: TrackerMeta[] = [
     group: "health",
     empty: "Weekly weigh-ins",
     intro:
-      "Weigh weekly as a puppy (hold him on bathroom scales, subtract yourself), then monthly as an adult. Toy Cavoodles typically land around 4–7 kg full-grown; Wobbles is expected to peak at ≈6 kg.",
+      "Weigh weekly as a puppy (hold him on bathroom scales, subtract yourself), then monthly as an adult. Toy Cavoodles typically land around 4–7 kg full-grown; Paddington is expected to peak at ≈6 kg.",
     fields: {
       value: { label: "Weight", unit: "kg", min: 0.2, max: 20, step: 0.05 },
       note: true,
@@ -208,7 +208,7 @@ export const TRACKERS: TrackerMeta[] = [
     group: "health",
     empty: "Shots, worming & vet visits",
     intro:
-      "Wobbles' breeder's vet uses Protech C3, booked with the rest of his litter: 11 Aug, 25 Aug and 8 Sep 2026 — all three shots done in Australia before export, so he's fully protected ~22 Sep, a day or two before the flight. Log everything here, since AVS wants the full history for the Singapore paperwork.",
+      "Paddington's breeder's vet uses Protech C3, booked with the rest of his litter: 11 Aug, 25 Aug and 8 Sep 2026 — all three shots done in Australia before export, so he's fully protected ~22 Sep, a day or two before the flight. Log everything here, since AVS wants the full history for the Singapore paperwork.",
     fields: {
       options: {
         label: "Event",
@@ -228,58 +228,6 @@ export const TRACKERS: TrackerMeta[] = [
       "Keep every vaccination certificate — AVS in Singapore wants the full history with the microchip number on each record.",
       "Puppy worming: typically every 2 weeks till 12 weeks, monthly till 6 months, then per vet advice.",
       "His C3 course finished at 10.5 weeks (8 Sep) — ask the SG vet at the first visit about a 16-week booster, which many vets recommend when the last dose was before 16 weeks.",
-    ],
-  },
-  {
-    id: "symptom",
-    title: "Symptom Log",
-    emoji: "🩺",
-    group: "health",
-    empty: "Anything off? Note it here",
-    intro:
-      "A dated symptom diary is the single most useful thing you can bring to a vet visit. Log anything unusual the moment you notice it — what it was, when it started, how bad it seemed. Patterns across days tell the vet far more than memory can, at every age from puppyhood to his senior years.",
-    fields: {
-      time: true,
-      options: {
-        label: "Symptom",
-        choices: [
-          "Vomiting",
-          "Diarrhoea",
-          "Limping",
-          "Scratching / itching",
-          "Appetite change",
-          "Lethargy",
-          "Coughing / sneezing",
-          "Eye or ear issue",
-          "Skin / lump",
-          "Other",
-        ],
-      },
-      note: true,
-    },
-    tips: [
-      "Note severity and duration in the note — \"vomited twice, ate dinner fine after\" beats \"was sick\".",
-      "Same-day vet: repeated vomiting, watery diarrhoea over 24h, any blood, collapse, laboured breathing, or refusing two meals in a row.",
-      "Photos help — snap the rash, lump or limp on video and add it to Memories with the same date.",
-    ],
-  },
-  {
-    id: "qol",
-    title: "Quality of Life",
-    emoji: "💗",
-    group: "health",
-    empty: "Monthly HHHHHMM check-ins",
-    intro:
-      "The HHHHHMM quality-of-life check-in — Hurt, Hunger, Hydration, Hygiene, Happiness, Mobility, More good days than bad — scored 0–5 each, 35 total. Built for the senior years, worth starting early: monthly scores build the baseline that makes real change unmissable. Use the guided check-in on the Health page; totals land here as a trend.",
-    fields: {
-      value: { label: "Total score", unit: "/35", min: 0, max: 35, step: 1 },
-      note: true,
-    },
-    chart: { label: "QoL score", unit: "/35" },
-    tips: [
-      "Above 28 — comfortable and thriving. 21–28 — watch closely and mention the low dimensions at the next vet visit. Below 21 — book a vet conversation soon.",
-      "Score honestly, not hopefully — the scale only works if a hard month is allowed to look like one.",
-      "The trend line matters more than any single check-in. One low score is a data point; three sliding months are a conversation.",
     ],
   },
   {
@@ -339,7 +287,7 @@ export const TRACKERS: TrackerMeta[] = [
     tips: [
       "Always brush BEFORE a bath — water tightens existing mats into felt.",
       "Check the 5 mat hotspots every session: behind ears, armpits, collar line, inner thighs, tail base.",
-      "During the 6–12 month coat change, daily brushing is the only thing standing between Wobbles and a shave-down.",
+      "During the 6–12 month coat change, daily brushing is the only thing standing between Paddington and a shave-down.",
     ],
   },
   {

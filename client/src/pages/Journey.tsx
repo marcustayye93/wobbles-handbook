@@ -1,5 +1,5 @@
 /*
- * Journey tab — Wobbles' learning journey.
+ * Journey tab — Paddington's learning journey.
  * Top: trick library grouped by level (foundation → core → party tricks),
  * each card showing its gouache illustration and a live "times practiced"
  * counter fed by Training Log entries. Tap → trick detail page.
@@ -11,8 +11,7 @@ import { PageShell, PageHeader, Eyebrow, PawDivider } from "@/components/AppShel
 import QuickLogSheet from "@/components/QuickLogSheet";
 import { useTrackerEntries } from "@/hooks/useSyncedData";
 import { TRICKS, practiceCount, type Trick, type TrickLevel } from "@/content/tricks";
-import { WOBBLES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
-import { allMilestones } from "@/content/lifetimeMilestones";
+import { WOBBLES, MILESTONES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
 import { cn } from "@/lib/utils";
 import {
   GraduationCap,
@@ -34,7 +33,7 @@ import {
 
 const LEVELS: { id: TrickLevel; label: string; blurb: string }[] = [
   { id: "foundation", label: "Foundations", blurb: "Start here — the big three every puppy needs first." },
-  { id: "core", label: "Life skills", blurb: "The skills that make daily life with Wobbles easy." },
+  { id: "core", label: "Life skills", blurb: "The skills that make daily life with Paddington easy." },
   { id: "party", label: "Party tricks", blurb: "Pure fun — confidence, body awareness and applause." },
 ];
 
@@ -103,9 +102,8 @@ export default function Journey() {
   const socialDaysLeft = daysUntil(socialCloseISO);
   const homecomingDays = daysUntil(WOBBLES.homecoming);
 
-  const lifetime = useMemo(() => allMilestones(), []);
-  const upcoming = lifetime.filter((m) => daysUntil(m.date) >= 0).slice(0, 6);
-  const past = lifetime.filter((m) => daysUntil(m.date) < 0);
+  const upcoming = MILESTONES.filter((m) => daysUntil(m.date) >= 0);
+  const past = MILESTONES.filter((m) => daysUntil(m.date) < 0);
 
   return (
     <PageShell className="pb-28">

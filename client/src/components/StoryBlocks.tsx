@@ -3,13 +3,15 @@
  * Renders the Block union from content/types.ts with keepsake styling:
  * tips as honey sticker cards, warnings blush, bars in warm chart palette,
  * timelines with a stitched thread, tables as rounded cards.
+ *
+ * ENS % bars are not rendered as science — listed as reported claims only.
  */
 import type { Block } from "@/content/types";
 import { PawPrint, Lightbulb, AlertTriangle } from "lucide-react";
+import { fixProductCopy } from "@/lib/productCopy";
 
 function Bold({ text }: { text: string }) {
-  // minimal **bold** support inside content strings
-  const parts = text.split(/\*\*(.+?)\*\*/g);
+  const parts = fixProductCopy(text).split(/\*\*(.+?)\*\*/g);
   return (
     <>
       {parts.map((p, i) =>
@@ -150,36 +152,21 @@ export function StoryBlock({ block }: { block: Block }) {
         </blockquote>
       );
     case "bars": {
-      const max = Math.max(...block.items.map((b) => b.value));
-      const palette = [
-        "oklch(0.52 0.115 45)",
-        "oklch(0.68 0.11 60)",
-        "oklch(0.72 0.07 25)",
-        "oklch(0.62 0.09 85)",
-        "oklch(0.58 0.07 140)",
-      ];
       return (
         <div className="sticker-card px-4 py-4 mb-5">
-          <p className="font-extrabold text-[13px] mb-3">{block.title}</p>
-          <div className="space-y-2.5">
+          <p className="font-extrabold text-[13px] mb-2">{block.title}</p>
+          <ul className="space-y-1.5">
             {block.items.map((b, i) => (
-              <div key={i}>
-                <div className="flex justify-between text-xs mb-1">
-                  <span className="font-semibold text-foreground/80">{b.label}</span>
-                  {b.note && <span className="text-muted-foreground">{b.note}</span>}
-                </div>
-                <div className="h-3 rounded-full bg-muted overflow-hidden">
-                  <div
-                    className="h-full rounded-full"
-                    style={{
-                      width: `${Math.max(6, (b.value / max) * 100)}%`,
-                      background: palette[i % palette.length],
-                    }}
-                  />
-                </div>
-              </div>
+              <li key={i} className="text-sm text-foreground/80 leading-snug">
+                {b.label}
+                {b.note ? ` — ${b.note}` : ""}
+              </li>
             ))}
-          </div>
+          </ul>
+          <p className="text-[11px] text-muted-foreground mt-3 leading-relaxed">
+            Reported claims, not percentages we treat as science. Independent evidence is limited;
+            ENS is not a substitute for real socialisation.
+          </p>
         </div>
       );
     }

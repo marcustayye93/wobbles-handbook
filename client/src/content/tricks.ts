@@ -17,8 +17,6 @@ export interface Trick {
   emoji: string;
   level: TrickLevel;
   image: string;
-  /** Optional muted looping demo clip (lightweight mp4), shown below the steps */
-  video?: string;
   tagline: string;
   why: string;
   /** Training Log `option` values that count toward this trick */
@@ -39,10 +37,9 @@ export const TRICKS: Trick[] = [
     name: "Sit",
     emoji: "🪑",
     level: "foundation",
-    image: "/manus-storage/trick-sit_a79cad14.webp",
-    video: "/manus-storage/trick-sit-loop_bc0e1fa2.mp4",
+    image: "/manus-storage/trick-sit_11e8d077.webp",
     tagline: "The polite default position",
-    why: "Sit is Wobbles' first 'please'. Once it's solid, he can offer it instead of jumping, mugging for food, or bolting out doors — it becomes his way of asking nicely for everything.",
+    why: "Sit is Paddington's first 'please'. Once it's solid, he can offer it instead of jumping, mugging for food, or bolting out doors — it becomes his way of asking nicely for everything.",
     matchOptions: ["Sit / down"],
     keywords: ["sit"],
     startAge: "From 8 weeks — he can learn this the first week home",
@@ -72,8 +69,7 @@ export const TRICKS: Trick[] = [
     name: "Down",
     emoji: "⬇️",
     level: "foundation",
-    image: "/manus-storage/trick-down_5c118aef.webp",
-    video: "/manus-storage/trick-down-loop_50d849f2.mp4",
+    image: "/manus-storage/trick-down_1b3b3a1e.webp",
     tagline: "Settle into a calm lie-down",
     why: "Down is the gateway to calm. A puppy who can hold a down can wait at cafés, relax during dinner, and switch off when the household is busy.",
     matchOptions: ["Sit / down"],
@@ -83,7 +79,7 @@ export const TRICKS: Trick[] = [
     steps: [
       {
         title: "Start from a sit",
-        detail: "With Wobbles sitting, hold a treat at his nose and slowly draw it straight down to the floor between his front paws.",
+        detail: "With Paddington sitting, hold a treat at his nose and slowly draw it straight down to the floor between his front paws.",
       },
       {
         title: "Draw it forward",
@@ -105,10 +101,9 @@ export const TRICKS: Trick[] = [
     name: "Come (Recall)",
     emoji: "📣",
     level: "foundation",
-    image: "/manus-storage/trick-recall_43152dab.webp",
-    video: "/manus-storage/trick-recall-loop_652e6964.mp4",
+    image: "/manus-storage/trick-recall_c1546414.webp",
     tagline: "The cue that can save his life",
-    why: "A rock-solid recall is the single most important thing Wobbles will ever learn — it's what lets him have off-lead freedom safely, and it can genuinely save his life near roads.",
+    why: "A rock-solid recall is the single most important thing Paddington will ever learn — it's what lets him have off-lead freedom safely, and it can genuinely save his life near roads.",
     matchOptions: ["Recall ('come')"],
     keywords: ["recall", "come"],
     startAge: "From day one home — start indoors at 2 metres",
@@ -116,11 +111,11 @@ export const TRICKS: Trick[] = [
     steps: [
       {
         title: "Make his name golden",
-        detail: "Say 'Wobbles!' in a bright voice, and the instant he looks at you, mark and treat. His name should always predict good things, never trouble.",
+        detail: "Say 'Paddington!' in a bright voice, and the instant he looks at you, mark and treat. His name should always predict good things, never trouble.",
       },
       {
         title: "Short happy recalls",
-        detail: "Crouch, open your arms, call 'Wobbles, come!' in your happiest voice. When he arrives, throw a party — several treats fed one by one, plus praise.",
+        detail: "Crouch, open your arms, call 'Paddington, come!' in your happiest voice. When he arrives, throw a party — several treats fed one by one, plus praise.",
       },
       {
         title: "Ping-pong between people",
@@ -138,8 +133,7 @@ export const TRICKS: Trick[] = [
     name: "Stay",
     emoji: "✋",
     level: "core",
-    image: "/manus-storage/trick-stay_2e0cb0df.webp",
-    video: "/manus-storage/trick-stay-loop_3d5b9cbd.mp4",
+    image: "/manus-storage/trick-stay_0143515f.webp",
     tagline: "Patience in position",
     why: "Stay teaches impulse control — the puppy skill that transfers to everything: waiting at doors, staying calm at kerbs, and posing beautifully for photos.",
     matchOptions: [],
@@ -157,7 +151,7 @@ export const TRICKS: Trick[] = [
       },
       {
         title: "Always return to him",
-        detail: "In early training, come back to Wobbles to deliver the treat rather than calling him out of the stay — it teaches him the stay itself is what pays.",
+        detail: "In early training, come back to Paddington to deliver the treat rather than calling him out of the stay — it teaches him the stay itself is what pays.",
       },
       {
         title: "Release word",
@@ -171,8 +165,7 @@ export const TRICKS: Trick[] = [
     name: "Touch",
     emoji: "👆",
     level: "core",
-    image: "/manus-storage/trick-touch_b5f6d32a.webp",
-    video: "/manus-storage/trick-touch-loop_64750549.mp4",
+    image: "/manus-storage/trick-touch_d0e79bba.webp",
     tagline: "Nose-to-hand target",
     why: "Touch is the Swiss army knife of tricks: it repositions him without grabbing, redirects him from trouble, builds recall, and becomes the foundation for spin, heel and fancy tricks later.",
     matchOptions: [],
@@ -204,8 +197,7 @@ export const TRICKS: Trick[] = [
     name: "Leave It",
     emoji: "🚫",
     level: "core",
-    image: "/manus-storage/trick-leaveit_54e5f9f7.webp",
-    video: "/manus-storage/trick-leaveit-loop_23a8fd64.mp4",
+    image: "/manus-storage/trick-leaveit_4ecf16de.webp",
     tagline: "Self-control around temptation",
     why: "Singapore footpaths are full of chicken bones and mystery snacks. 'Leave it' is the cue that keeps dropped medication, toxic food and gross finds out of his mouth.",
     matchOptions: ["Leave it / drop it"],
@@ -237,8 +229,7 @@ export const TRICKS: Trick[] = [
     name: "Drop It",
     emoji: "🎾",
     level: "core",
-    image: "/manus-storage/trick-dropit_2f056717.webp",
-    video: "/manus-storage/trick-dropit-loop_fa9bb162.mp4",
+    image: "/manus-storage/trick-dropit_baa8026e.webp",
     tagline: "Give things up happily",
     why: "Puppies grab everything. A cheerful 'drop it' means no chasing him around the flat for a sock, and no resource guarding — he learns giving things up is a trade, not a loss.",
     matchOptions: ["Leave it / drop it"],
@@ -270,8 +261,7 @@ export const TRICKS: Trick[] = [
     name: "Shake / Paw",
     emoji: "🐾",
     level: "party",
-    image: "/manus-storage/trick-paw_1affa1ae.webp",
-    video: "/manus-storage/trick-paw-loop_1d76455b.mp4",
+    image: "/manus-storage/trick-paw_65453a4c.webp",
     tagline: "The classic crowd-pleaser",
     why: "Beyond the cuteness, paw builds handling tolerance — a puppy who happily offers his paw makes nail trims, paw wipes after walks, and vet exams far easier.",
     matchOptions: ["Handling & cooperative care"],
@@ -303,8 +293,7 @@ export const TRICKS: Trick[] = [
     name: "Spin",
     emoji: "🌀",
     level: "party",
-    image: "/manus-storage/trick-spin_d800a946.webp",
-    video: "/manus-storage/trick-spin-loop_d06cf495.mp4",
+    image: "/manus-storage/trick-spin_d9cd9a43.webp",
     tagline: "A happy twirl on cue",
     why: "Spin is pure joy and great body awareness for a growing puppy — it stretches his spine, builds rear-end coordination, and looks adorable before dinner.",
     matchOptions: ["Tricks / fun"],
@@ -336,8 +325,7 @@ export const TRICKS: Trick[] = [
     name: "Roll Over",
     emoji: "🔄",
     level: "party",
-    image: "/manus-storage/trick-rollover_1ffc82ec.webp",
-    video: "/manus-storage/trick-rollover-loop_9bdaadd2.mp4",
+    image: "/manus-storage/trick-rollover_3d987e63.webp",
     tagline: "The full tumble",
     why: "Roll over builds trust — a puppy who happily flips onto his back near you is a confident puppy. It also makes belly checks and grooming much easier.",
     matchOptions: ["Tricks / fun"],
@@ -347,7 +335,7 @@ export const TRICKS: Trick[] = [
     steps: [
       {
         title: "Start in a down",
-        detail: "With Wobbles lying down, hold a treat at his nose and slowly curve it toward his shoulder blade. His head turns, his weight shifts onto one hip.",
+        detail: "With Paddington lying down, hold a treat at his nose and slowly curve it toward his shoulder blade. His head turns, his weight shifts onto one hip.",
       },
       {
         title: "Reward the hip roll",
@@ -369,10 +357,9 @@ export const TRICKS: Trick[] = [
     name: "Settle on Mat",
     emoji: "🛏️",
     level: "core",
-    image: "/manus-storage/trick-mat_e0c83a05.webp",
-    video: "/manus-storage/trick-mat-loop_ede5224d.mp4",
+    image: "/manus-storage/trick-mat_642ca15e.webp",
     tagline: "His portable off-switch",
-    why: "'Go to your mat' gives Wobbles a job when the doorbell rings, guests arrive, or you're eating. The mat travels — cafés, friends' homes, the vet waiting room — and calm comes with it.",
+    why: "'Go to your mat' gives Paddington a job when the doorbell rings, guests arrive, or you're eating. The mat travels — cafés, friends' homes, the vet waiting room — and calm comes with it.",
     matchOptions: ["Settle on mat"],
     keywords: ["mat", "settle", "place", "bed"],
     startAge: "From 10 weeks",
@@ -402,8 +389,7 @@ export const TRICKS: Trick[] = [
     name: "Loose-Lead Walking",
     emoji: "🚶",
     level: "core",
-    image: "/manus-storage/trick-heel_896f9455.webp",
-    video: "/manus-storage/trick-heel-loop_3a15eb95.mp4",
+    image: "/manus-storage/trick-heel_19af21cd.webp",
     tagline: "Walks that are a pleasure",
     why: "A Cavoodle who walks on a loose lead gets more walks, more adventures and more freedom — pulling is the number one reason dogs get walked less. Start before bad habits start.",
     matchOptions: ["Loose-lead walking"],
@@ -413,7 +399,7 @@ export const TRICKS: Trick[] = [
     steps: [
       {
         title: "Charge the position",
-        detail: "Stand still with Wobbles at your left side. Mark and treat at your trouser seam. That spot next to your leg becomes the best place in the world.",
+        detail: "Stand still with Paddington at your left side. Mark and treat at your trouser seam. That spot next to your leg becomes the best place in the world.",
       },
       {
         title: "One step, treat",

@@ -1,7 +1,7 @@
 /*
  * Household rhythm — the family's real weekly schedule, the recurring care
  * rota, and a rotating library of age-appropriate activity ideas.
- * Everything here is deterministic by calendar date, so "Wobbles Today"
+ * Everything here is deterministic by calendar date, so "Paddington Today"
  * changes every single day but stays identical for everyone in the family
  * (and across refreshes) on the same date.
  */
@@ -22,7 +22,7 @@ export const FAMILY: Person[] = [
 /* ---------------- Weekly schedule ----------------
  * Marcus: WFH Mon + Fri, office Tue/Wed/Thu, weekends home.
  * Chesa:  home most days; office sometimes on Tue and Thu.
- * Weekends: at least one of the two days is a home-focused Wobbles day —
+ * Weekends: at least one of the two days is a home-focused Paddington day —
  * we treat Sunday as the default "focus day" (Saturday flagged flexible).
  */
 
@@ -42,14 +42,14 @@ export const WEEK_PLAN: DayPlan[] = [
     label: "Sunday",
     marcus: "home",
     chesa: "home",
-    note: "Wobbles focus day — the week's big adventure and unhurried together-time.",
+    note: "Paddington focus day — the week's big adventure and unhurried together-time.",
   },
   {
     dow: 1,
     label: "Monday",
     marcus: "home",
     chesa: "home",
-    note: "Both home (Marcus WFH) — grooming day: fortnightly bath + basic trim, nails, ears, the whole spa.",
+    note: "Both home (Marcus WFH) — grooming day: bath fortnight, nails, ears, the whole spa.",
   },
   {
     dow: 2,
@@ -84,7 +84,7 @@ export const WEEK_PLAN: DayPlan[] = [
     label: "Saturday",
     marcus: "home",
     chesa: "home",
-    note: "Flexible weekend day — errands with Wobbles carried along, or a bigger park by car.",
+    note: "Flexible weekend day — errands with Paddington carried along, or a bigger park by car.",
   },
 ];
 
@@ -94,9 +94,8 @@ export function dayPlanFor(date: Date): DayPlan {
 
 /* ---------------- Care rota ----------------
  * Recurring, date-deterministic care tasks. Bath is every other Monday
- * anchored to homecoming week; nails are GRINDER sessions little-and-often
- * (Mon/Wed/Sat); parasite dose on the 24th monthly (homecoming date);
- * teeth a few times a week; ears weekly.
+ * anchored to homecoming week; nails weekly on Mondays; parasite dose on
+ * the 24th monthly (homecoming date); teeth a few times a week; ears weekly.
  */
 
 export interface CareTask {
@@ -107,10 +106,6 @@ export interface CareTask {
   link: string;
   /** Which family member usually owns it (both = shared) */
   owner: "marcus" | "chesa" | "both";
-  /** True for standing everyday habits (hydration, paw checks) — shown in the
-   * Due-today card but excluded from the capped nudge feed so date-specific
-   * jobs (bath, nails, parasite) keep their priority. */
-  daily?: boolean;
 }
 
 /** ISO week index used for fortnight alternation, anchored so the first
@@ -132,19 +127,19 @@ export function careTasksFor(date: Date): CareTask[] {
       out.push({
         id: "bath",
         emoji: "🛁",
-        label: "Bath + basic trim day (every other Monday)",
+        label: "Bath day (every other Monday)",
         detail:
-          "Line-brush FIRST (water sets mats), 37–38 °C lukewarm water, TWO lathers, cotton balls in the ears, towel-blot then low blow-dry with the coat direction. Once FULLY dry: the basic trim — eye corners + face tidy, paw pads, sanitary, and a light 13 mm body / 16–19 mm legs top-up so the coat stays at its set length (no big haircuts needed). Finish with the coat check photo — same spot, same angle — into Memories → Coat length check.",
-        link: "/grooming",
+          "Line-brush FIRST (water sets mats), lukewarm water, dog shampoo, towel + cool blow-dry, brush again once dry.",
+        link: "/handbook/grooming-masterclass",
         owner: "both",
       });
     out.push({
       id: "nails",
       emoji: "💅",
-      label: "Nail grinding — session 1 of the week",
+      label: "Nail check + trim (Mondays)",
       detail:
-        "Grinder, not clippers: 1–2 second touches, a little off each nail, treats between toes. Little-and-often (Mon/Wed/Sat) is what makes the quick recede.",
-      link: "/grooming",
+        "If they click on the floor, they're due. Tiny slivers off the tip, treats between paws — stop before the quick.",
+      link: "/handbook/grooming-masterclass",
       owner: "marcus",
     });
     out.push({
@@ -153,7 +148,7 @@ export function careTasksFor(date: Date): CareTask[] {
       label: "Ear check (Mondays)",
       detail:
         "Cavoodle drop ears trap humidity in Singapore. Look for redness, smell, head-shaking; wipe visible wax only.",
-      link: "/grooming",
+      link: "/handbook/grooming-masterclass",
       owner: "chesa",
     });
   }
@@ -169,96 +164,6 @@ export function careTasksFor(date: Date): CareTask[] {
       owner: "both",
     });
 
-  // Nails: grinder sessions 2 & 3 of the week (Wed / Sat) — Monday's is above
-  if (dow === 3 || dow === 6)
-    out.push({
-      id: "nails-grind",
-      emoji: "💅",
-      label: dow === 3 ? "Nail grinding — session 2 of the week" : "Nail grinding — session 3 of the week",
-      detail:
-        "Two minutes with the grinder: brief touches around each nail tip, dewclaws included. Frequent tiny sessions keep nails short for good.",
-      link: "/grooming",
-      owner: "marcus",
-    });
-
-  // Wednesday mid-week extras — sanitary check with Chesa's home day
-  if (dow === 3) {
-    out.push({
-      id: "sanitary",
-      emoji: "🧻",
-      label: "Mid-week sanitary check",
-      detail:
-        "Quick look and tidy under the tail — a long Cavoodle coat traps mess, and mid-week catches it before it mats or irritates.",
-      link: "/grooming",
-      owner: "chesa",
-    });
-    out.push({
-      id: "training-review",
-      emoji: "🎓",
-      label: "Training progression review",
-      detail:
-        "Chesa's training day: five minutes on which cue graduated this week and what moves up next — keeps the plan moving, not drifting.",
-      link: "/training",
-      owner: "chesa",
-    });
-  }
-
-  // Friday reset — weekly food-quantity review + human jobs before the weekend
-  if (dow === 5) {
-    out.push({
-      id: "food-review",
-      emoji: "🥣",
-      label: "Weekly food-quantity review",
-      detail:
-        "Recalibrate portions against this week's weigh-in and the weight curve — a growing puppy's ration changes almost weekly.",
-      link: "/trackers/weight",
-      owner: "marcus",
-    });
-    out.push({
-      id: "human-jobs",
-      emoji: "🎒",
-      label: "Human jobs: restock + recharge",
-      detail:
-        "Refill the poo-bag dispensers on BOTH leads, put the puppy cam on charge, and check the enzyme-cleaner bottle isn't running dry.",
-      link: "/handbook/checklists",
-      owner: "both",
-    });
-  }
-
-  // Saturday — crate deep-clean + toy safety audit alongside the weekend reset
-  if (dow === 6) {
-    out.push({
-      id: "crate-clean",
-      emoji: "🧽",
-      label: "Crate + pen deep-clean",
-      detail:
-        "Wipe the tray and bars, air the den while bedding is in the wash — a clean crate stays the safe place he loves.",
-      link: "/handbook/checklists",
-      owner: "marcus",
-    });
-    out.push({
-      id: "toy-audit",
-      emoji: "🧸",
-      label: "Toy safety audit",
-      detail:
-        "Bin torn squeakers, loose parts and shredded rope ends before they get swallowed — then rotate the survivors back into the box.",
-      link: "/handbook/checklists",
-      owner: "chesa",
-    });
-  }
-
-  // Sunday — the weekly milestone photo on the focus day
-  if (dow === 0)
-    out.push({
-      id: "photo-prompt",
-      emoji: "📸",
-      label: "Weekly milestone photo",
-      detail:
-        "Same spot, same blanket, every Sunday — the growth series future-you will treasure. File it straight into Memories.",
-      link: "/memories",
-      owner: "both",
-    });
-
   // Teeth: Tue / Thu / Sat rhythm (3x weekly minimum)
   if (dow === 2 || dow === 4 || dow === 6)
     out.push({
@@ -270,30 +175,6 @@ export function careTasksFor(date: Date): CareTask[] {
       link: "/handbook/daily-hacks",
       owner: "chesa",
     });
-
-  // Daily standing habits last — tropical-climate anchors that apply every day.
-  // Flagged `daily` so the Home Due-today card shows them but the capped
-  // nudge feed doesn't spend its 3 slots repeating them.
-  out.push({
-    id: "hydration",
-    emoji: "💧",
-    label: "Afternoon water top-up",
-    detail:
-      "Tropical heat: wash-and-refill happens in the morning, but check and top up the bowl again mid-afternoon so it never runs low.",
-    link: "/handbook/checklists",
-    owner: "both",
-    daily: true,
-  });
-  out.push({
-    id: "paw-check",
-    emoji: "🐾",
-    label: "Paw-pad check after walks",
-    detail:
-      "Hot pavement burns, cracked pads and grass seeds between the toes — a five-second flip-and-look after each walk catches them early.",
-    link: "/handbook/checklists",
-    owner: "both",
-    daily: true,
-  });
 
   return out;
 }

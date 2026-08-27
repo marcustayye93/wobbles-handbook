@@ -2,9 +2,10 @@
  * CareRow — tests for the one-tap care row's smart defaults. The key
  * invariant: every default option string MUST exactly match one of that
  * tracker's option choices, or the saved entry would carry an orphan label.
+ * Toilet must never silently invent "Wee on pad".
  */
 import { describe, expect, it } from "vitest";
-import { CARE_ACTIONS, defaultOptionFor } from "../client/src/components/CareRow";
+import { CARE_ACTIONS, WEEK1_CARE_ACTIONS, defaultOptionFor } from "../client/src/components/CareRow";
 import { getTracker } from "../client/src/lib/trackers";
 
 describe("CARE_ACTIONS wiring", () => {
@@ -35,6 +36,30 @@ describe("CARE_ACTIONS wiring", () => {
         }
       }
     }
+  });
+
+  it("toilet has no default option so one-tap cannot invent wee on pad", () => {
+    const toilet = CARE_ACTIONS.find((a) => a.trackerId === "toilet")!;
+    expect(toilet.defaultOption).toBeUndefined();
+    expect(toilet.requireChoice).toBe(true);
+    for (let hour = 0; hour < 24; hour++) {
+      expect(defaultOptionFor("toilet", hour)).toBeUndefined();
+    }
+  });
+});
+
+describe("WEEK1_CARE_ACTIONS", () => {
+  it("is only weight, toilet and sleep", () => {
+    expect(WEEK1_CARE_ACTIONS.map((a) => a.trackerId)).toEqual(["weight", "toilet", "sleep"]);
+  });
+
+  it("weight and toilet require a choice; sleep may one-tap", () => {
+    const w = WEEK1_CARE_ACTIONS.find((a) => a.trackerId === "weight")!;
+    const t = WEEK1_CARE_ACTIONS.find((a) => a.trackerId === "toilet")!;
+    const s = WEEK1_CARE_ACTIONS.find((a) => a.trackerId === "sleep")!;
+    expect(w.requireChoice).toBe(true);
+    expect(t.requireChoice).toBe(true);
+    expect(s.defaultOption).toBeTypeOf("function");
   });
 });
 

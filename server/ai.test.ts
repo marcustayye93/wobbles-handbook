@@ -1,5 +1,5 @@
 /*
- * Ask Wobbles — unit tests for the pure helpers in server/aiChat.ts.
+ * Ask Paddington — unit tests for the pure helpers in server/aiChat.ts.
  * The LLM calls themselves are network-bound, so we test everything around
  * them: prompt assembly, memory dedupe/normalisation, distill parsing, and
  * conversation titling.
@@ -8,7 +8,7 @@ import { describe, expect, it } from "vitest";
 import type { AiMemoryRow } from "../drizzle/schema";
 import {
   buildSystemPrompt,
-  buildWobblesContext,
+  buildPaddingtonContext,
   conversationTitle,
   dedupeNewFacts,
   parseDistillResponse,
@@ -41,10 +41,10 @@ describe("conversationTitle", () => {
   });
 });
 
-describe("buildWobblesContext", () => {
+describe("buildPaddingtonContext", () => {
   it("includes the core profile facts", () => {
-    const ctx = buildWobblesContext();
-    expect(ctx).toContain("Wobbles");
+    const ctx = buildPaddingtonContext();
+    expect(ctx).toContain("Paddington");
     expect(ctx).toContain("Cavoodle");
     expect(ctx).toContain("Singapore");
   });
@@ -53,17 +53,17 @@ describe("buildWobblesContext", () => {
 describe("buildSystemPrompt", () => {
   it("contains no memory section when the book is empty", () => {
     const prompt = buildSystemPrompt([]);
-    expect(prompt).toContain("Wobbles");
+    expect(prompt).toContain("Paddington");
     expect(prompt).toContain("nothing recorded yet");
   });
 
   it("embeds memory facts so answers can personalise", () => {
     const prompt = buildSystemPrompt([
-      mem(1, "Wobbles weighed 2.1kg on 20 Jul 2026", "health"),
+      mem(1, "Paddington weighed 2.1kg on 20 Jul 2026", "health"),
       mem(2, "He loves freeze-dried chicken treats", "food"),
     ]);
     expect(prompt).toContain("memory book");
-    expect(prompt).toContain("[health] Wobbles weighed 2.1kg on 20 Jul 2026");
+    expect(prompt).toContain("[health] Paddington weighed 2.1kg on 20 Jul 2026");
     expect(prompt).toContain("freeze-dried chicken treats");
   });
 });
@@ -73,13 +73,13 @@ describe("parseDistillResponse", () => {
     const facts = parseDistillResponse(
       JSON.stringify({
         facts: [
-          { fact: "Wobbles is scared of the vacuum", category: "behaviour" },
+          { fact: "Paddington is scared of the vacuum", category: "behaviour" },
           { fact: "Dinner moved to 6pm", category: "routine" },
         ],
       }),
     );
     expect(facts).toHaveLength(2);
-    expect(facts[0]).toEqual({ fact: "Wobbles is scared of the vacuum", category: "behaviour" });
+    expect(facts[0]).toEqual({ fact: "Paddington is scared of the vacuum", category: "behaviour" });
   });
 
   it("coerces unknown categories to 'other'", () => {
@@ -104,10 +104,10 @@ describe("parseDistillResponse", () => {
 
 describe("dedupeNewFacts", () => {
   it("drops facts already in the memory book (case/punctuation-insensitive)", () => {
-    const existing = [mem(1, "Wobbles loves chicken treats!", "food")];
+    const existing = [mem(1, "Paddington loves chicken treats!", "food")];
     const kept = dedupeNewFacts(
       [
-        { fact: "wobbles loves chicken treats", category: "food" },
+        { fact: "Paddington loves chicken treats", category: "food" },
         { fact: "He sleeps in the laundry", category: "routine" },
       ],
       existing,
@@ -129,7 +129,7 @@ describe("dedupeNewFacts", () => {
 
   it("caps a single turn at 5 facts", () => {
     const many = Array.from({ length: 9 }, (_, i) => ({
-      fact: `Unique fact number ${i} about Wobbles`,
+      fact: `Unique fact number ${i} about Paddington`,
       category: "other",
     }));
     expect(dedupeNewFacts(many, [])).toHaveLength(5);

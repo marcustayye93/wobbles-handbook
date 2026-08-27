@@ -2,7 +2,8 @@
  * Redesign v2 — "Keepsake Field Guide" app shell.
  * Paper #F8F3EB bg w/ grain, ivory cards, Ink Navy #22364D nav bar + CTAs,
  * Burnt Sienna #C66A3D active/eyebrow accents, Cormorant Garamond display.
- * Bottom nav: Home / Growth / Health / Journey / Trackers / Memories / Guides (navy pill bar).
+ * Bottom nav matches live grok.me: Home / Logs / Photos / Guides / Ask.
+ * Growth, Health and Journey live under Home → "His record".
  */
 import { Link, useLocation } from "wouter";
 import {
@@ -10,46 +11,42 @@ import {
   BookOpen,
   ClipboardList,
   Camera,
-  TrendingUp,
-  HeartPulse,
-  Footprints,
   ChevronLeft,
   PawPrint,
+  Sparkles,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import PawFab from "@/components/PawFab";
+import { WOBBLES, daysUntil } from "@/content/wobbles";
 
 const TABS = [
   { href: "/", label: "Home", icon: Home },
-  { href: "/growth", label: "Growth", icon: TrendingUp },
-  { href: "/health", label: "Health", icon: HeartPulse },
-  { href: "/journey", label: "Journey", icon: Footprints },
   { href: "/trackers", label: "Logs", icon: ClipboardList },
   { href: "/memories", label: "Photos", icon: Camera },
   { href: "/handbook", label: "Guides", icon: BookOpen },
+  { href: "/ask", label: "Ask", icon: Sparkles },
 ] as const;
 
 function isTabActive(href: string, loc: string) {
   if (href === "/") return loc === "/";
-  // Chapters is the umbrella for the handbook reader plus the Training,
-  // Grooming and 100 Things guides folded under it.
   if (href === "/handbook")
     return loc.startsWith("/handbook") || loc.startsWith("/training") || loc.startsWith("/grooming");
   return loc.startsWith(href);
+}
+
+function preHomecoming() {
+  return daysUntil(WOBBLES.homecoming) > 0;
 }
 
 export function BottomNav() {
   const [loc] = useLocation();
   return (
     <nav
-      // NOTE: never use transform-based centering (left-1/2 -translate-x-1/2) on a
-      // position:fixed element — iOS Safari mispaints it mid-page during momentum
-      // scroll / URL-bar collapse. inset-x-0 + mx-auto keeps it pinned reliably.
-      className="fixed bottom-0 inset-x-0 mx-auto w-full max-w-md z-50"
+      className="fixed bottom-0 inset-x-0 mx-auto w-full max-w-md z-50 print:hidden"
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
     >
       <div className="mx-3 mb-2.5 rounded-[26px] bg-[#22364D] shadow-[0_10px_30px_rgba(34,54,77,0.35)]">
-        <div className="grid grid-cols-7 py-2 px-0.5">
+        <div className="grid grid-cols-5 py-1.5 px-1">
           {TABS.map((t) => {
             const active = isTabActive(t.href, loc);
             const Icon = t.icon;
@@ -58,14 +55,14 @@ export function BottomNav() {
                 key={t.href}
                 href={t.href}
                 className={cn(
-                  "flex flex-col items-center gap-1 py-1 rounded-2xl press-scale select-none transition-colors duration-200",
-                  active ? "text-[#E8935C]" : "text-[#8FA0B5]",
+                  "flex flex-col items-center justify-center gap-0.5 min-h-[44px] py-1 rounded-2xl press-scale select-none transition-colors duration-200",
+                  active ? "text-[#E8935C]" : "text-[#C9D4E2]",
                 )}
               >
                 <Icon size={18} strokeWidth={active ? 2.4 : 1.9} />
                 <span
                   className={cn(
-                    "text-[7.5px] leading-none uppercase tracking-[0.04em]",
+                    "text-[11px] leading-none tracking-[0.04em]",
                     active ? "font-extrabold" : "font-semibold",
                   )}
                 >
@@ -89,19 +86,27 @@ export function PageShell({
   children: React.ReactNode;
   className?: string;
   hideNav?: boolean;
-  /** Home has the one-tap care row, so it opts out of the floating paw. */
   hideFab?: boolean;
 }) {
+  const hideTheFab = hideFab || preHomecoming();
   return (
     <div className="phone-shell paper-grain">
-      <main className={cn(hideNav ? "pb-6" : "safe-bottom", className)}>{children}</main>
-      {!hideNav && !hideFab && <PawFab />}
+      <main
+        className={cn(className, hideNav ? "pb-6" : "safe-bottom")}
+        style={
+          hideNav
+            ? undefined
+            : { paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 8.75rem)" }
+        }
+      >
+        {children}
+      </main>
+      {!hideNav && !hideTheFab && <PawFab />}
       {!hideNav && <BottomNav />}
     </div>
   );
 }
 
-/** Sticky page header with optional back link — v2 style */
 export function PageHeader({
   title,
   subtitle,
@@ -114,12 +119,12 @@ export function PageHeader({
   emoji?: string;
 }) {
   return (
-    <header className="sticky top-0 z-40 bg-[#F8F3EB]/92 backdrop-blur-md border-b border-border/60">
+    <header className="sticky top-0 z-40 bg-[#F8F3EB]/92 backdrop-blur-md border-b border-border/60 print:static print:bg-white">
       <div className="px-4 py-3 flex items-center gap-2.5">
         {back && (
           <Link
             href={back}
-            className="shrink-0 w-9 h-9 -ml-1 rounded-full flex items-center justify-center bg-[#22364D] text-[#F8F3EB] press-scale"
+            className="shrink-0 w-9 h-9 -ml-1 rounded-full flex items-center justify-center bg-[#22364D] text-[#F8F3EB] press-scale print:hidden"
             aria-label="Back"
           >
             <ChevronLeft size={19} />
@@ -137,12 +142,10 @@ export function PageHeader({
   );
 }
 
-/** Sienna eyebrow label, small-caps, per mockup */
 export function Eyebrow({ children, className }: { children: React.ReactNode; className?: string }) {
   return <p className={cn("eyebrow", className)}>{children}</p>;
 }
 
-/** Hand-stitched dashed divider with a paw in the middle */
 export function PawDivider() {
   return (
     <div className="flex items-center gap-3 my-6" aria-hidden>
@@ -153,7 +156,6 @@ export function PawDivider() {
   );
 }
 
-/** Small stat chip */
 export function StatChip({ label, value }: { label: string; value: string }) {
   return (
     <div className="sticker-card px-3 py-2.5 text-center">
@@ -163,7 +165,6 @@ export function StatChip({ label, value }: { label: string; value: string }) {
   );
 }
 
-/** Circular progress ring (SVG), used on chapter covers & 100 Things */
 export function ProgressRing({
   value,
   size = 56,
@@ -174,7 +175,7 @@ export function ProgressRing({
   color = "#C66A3D",
   children,
 }: {
-  value: number; // 0..1
+  value: number;
   size?: number;
   stroke?: number;
   label?: string;

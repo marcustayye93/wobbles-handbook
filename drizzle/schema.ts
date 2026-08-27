@@ -26,7 +26,7 @@ export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
 /* ============================================================
- * Wobbles' Handbook — household-shared data.
+ * Paddington's Handbook — household-shared data.
  * This is a private family app: every authenticated user sees
  * and edits the SAME data (no per-user partitioning).
  * ============================================================ */
@@ -78,10 +78,8 @@ export const photos = mysqlTable("photos", {
   caption: text("caption"),
   /** ISO date YYYY-MM-DD the photo is "about" (defaults to upload day) */
   date: varchar("date", { length: 10 }).notNull(),
-  /** Optional place tag (id from client/src/content/places.ts) for Wobbles' Map */
+  /** Optional place tag (id from client/src/content/places.ts) for Paddington's Map */
   placeId: varchar("placeId", { length: 64 }),
-  /** Optional series tag — "coat-check" marks same-pose coat-length photos taken after each bath + trim */
-  category: varchar("category", { length: 32 }),
   createdBy: int("createdBy"),
   createdByName: varchar("createdByName", { length: 120 }),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
@@ -91,10 +89,10 @@ export type PhotoRow = typeof photos.$inferSelect;
 export type InsertPhoto = typeof photos.$inferInsert;
 
 /* ============================================================
- * Ask Wobbles AI — persistent chat + distilled memory.
+ * Ask Paddington AI — persistent chat + distilled memory.
  * Conversations/messages keep the full family chat history;
  * aiMemory is the dedicated "memory file": durable facts about
- * Wobbles distilled from conversations and injected into future
+ * Paddington distilled from conversations and injected into future
  * system prompts so the assistant learns him over time.
  * ============================================================ */
 
@@ -125,14 +123,14 @@ export const aiMessages = mysqlTable("ai_messages", {
 export type AiMessageRow = typeof aiMessages.$inferSelect;
 
 /**
- * Wobbles' memory book — durable facts the AI has learned about
- * Wobbles from family conversations (weights, quirks, what worked
+ * Paddington's memory book — durable facts the AI has learned about
+ * Paddington from family conversations (weights, quirks, what worked
  * in training, health notes). Active facts are injected into the
  * system prompt of every future conversation.
  */
 export const aiMemory = mysqlTable("ai_memory", {
   id: int("id").autoincrement().primaryKey(),
-  /** A single durable fact, e.g. "Wobbles weighed 2.1kg on 3 Oct 2026" */
+  /** A single durable fact, e.g. "Paddington weighed 2.1kg on 3 Oct 2026" */
   fact: text("fact").notNull(),
   /** health | training | food | behaviour | routine | grooming | other */
   category: varchar("category", { length: 32 }).default("other").notNull(),
@@ -144,69 +142,3 @@ export const aiMemory = mysqlTable("ai_memory", {
 });
 
 export type AiMemoryRow = typeof aiMemory.$inferSelect;
-
-/* ============================================================
- * U3 — Medical vault (household-shared, like everything else).
- * medicalRecords: vet paperwork filed as documents in S3.
- * medications: recurring meds/preventives with next-due maths
- * computed client-side from lastGivenDate + frequencyDays.
- * ============================================================ */
-
-/** One row per filed document (vaccine cert, vet report, licence, ...). Bytes live in S3. */
-export const medicalRecords = mysqlTable("medical_records", {
-  id: int("id").autoincrement().primaryKey(),
-  title: varchar("title", { length: 160 }).notNull(),
-  category: mysqlEnum("category", [
-    "vaccine-cert",
-    "vet-report",
-    "lab-result",
-    "insurance",
-    "licence",
-    "prescription",
-    "receipt",
-    "other",
-  ])
-    .default("other")
-    .notNull(),
-  /** ISO date YYYY-MM-DD the document is "about" (visit date, issue date) */
-  recordDate: varchar("recordDate", { length: 10 }).notNull(),
-  fileKey: varchar("fileKey", { length: 256 }).notNull(),
-  url: varchar("url", { length: 512 }).notNull(),
-  mimeType: varchar("mimeType", { length: 80 }),
-  sizeBytes: int("sizeBytes"),
-  note: text("note"),
-  createdBy: int("createdBy"),
-  createdByName: varchar("createdByName", { length: 120 }),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-});
-
-export type MedicalRecordRow = typeof medicalRecords.$inferSelect;
-export type InsertMedicalRecord = typeof medicalRecords.$inferInsert;
-
-/** One row per medication / preventive on a repeating schedule. */
-export const medications = mysqlTable("medications", {
-  id: int("id").autoincrement().primaryKey(),
-  name: varchar("name", { length: 120 }).notNull(),
-  kind: mysqlEnum("kind", ["parasite", "heartworm", "prescription", "supplement", "other"])
-    .default("other")
-    .notNull(),
-  /** Free-text dose, e.g. "1 chew (2–4 kg)" */
-  dose: varchar("dose", { length: 120 }),
-  /** Repeat interval in days (30 = monthly, 1 = daily) */
-  frequencyDays: int("frequencyDays").default(30).notNull(),
-  /** ISO date the schedule starts */
-  startDate: varchar("startDate", { length: 10 }).notNull(),
-  /** Optional ISO date the course ends (null = ongoing) */
-  endDate: varchar("endDate", { length: 10 }),
-  /** ISO date of the most recent dose ("Given today" updates this) */
-  lastGivenDate: varchar("lastGivenDate", { length: 10 }),
-  /** 1 = active in the cabinet, 0 = archived */
-  active: int("active").default(1).notNull(),
-  note: text("note"),
-  createdBy: int("createdBy"),
-  createdByName: varchar("createdByName", { length: 120 }),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-});
-
-export type MedicationRow = typeof medications.$inferSelect;
-export type InsertMedication = typeof medications.$inferInsert;

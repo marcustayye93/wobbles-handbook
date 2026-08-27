@@ -1,5 +1,5 @@
 /*
- * Caretaker's Guide to Wobbles — the handover template page.
+ * Caretaker's Guide to Paddington — the handover template page.
  * Keepsake Field Guide style: paper bg, serif display, ink navy + sienna,
  * sticker cards. Renders CORE_DUTIES, the handover kit, and all structured
  * sections from caretakerGuide.ts. Values marked TBC show an amber
@@ -42,7 +42,7 @@ export default function CaretakerGuide() {
           <div className="min-w-0 flex-1">
             <Eyebrow>The handover guide</Eyebrow>
             <h1 className="font-display font-semibold text-[2.2rem] leading-[1.04] text-[#22364D] mt-1.5">
-              A Caretaker's Guide to Wobbles
+              A Caretaker's Guide to Paddington
             </h1>
             <p className="text-[13px] font-body text-muted-foreground mt-2 leading-relaxed">
               Everything you need while {WOBBLES.name} stays at your place. Thank
@@ -65,7 +65,7 @@ export default function CaretakerGuide() {
           <p className="text-[12px] font-body text-[#6E571A] leading-relaxed">
             This is a living template — <strong>{tbc} details</strong> are still
             marked "To be confirmed". We'll fill every one in before handing
-            Wobbles over.
+            Paddington over.
           </p>
         </div>
       )}

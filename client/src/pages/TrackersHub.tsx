@@ -1,8 +1,7 @@
 /*
- * Redesign v2 — "Keepsake Field Guide" trackers hub.
- * Grouped into Daily care / Health & vet / Growing up (mockup grouping),
- * ivory rows with last-logged summaries, peeking Wobbles spot illustration,
- * navy quick-log FAB opening a bottom-sheet drawer of all trackers.
+ * Redesign v2 — "Keepsake Field Guide" logs hub (tab label: Logs).
+ * Grouped into Daily care / Health & vet / Growing up,
+ * ivory rows with last-logged summaries, peeking Paddington spot illustration.
  */
 import { useMemo, useState } from "react";
 import { Link } from "wouter";
@@ -11,9 +10,8 @@ import SyncIndicator from "@/components/SyncIndicator";
 import QuickLogSheet from "@/components/QuickLogSheet";
 import { TRACKERS, TRACKER_GROUPS, type TrackerEntry } from "@/lib/trackers";
 import { useTrackerFeed, rowToEntry } from "@/hooks/useSyncedData";
-import { buildMonthRollups } from "@/lib/yearScale";
-import { ASSETS } from "@/content/wobbles";
-import { ChevronRight, Plus, CalendarRange, ListTodo } from "lucide-react";
+import { ASSETS, isPreHomecoming } from "@/content/wobbles";
+import { ChevronRight, Plus } from "lucide-react";
 
 function summarise(e: TrackerEntry | undefined, unit?: string): string {
   if (!e) return "No logs yet";
@@ -31,16 +29,9 @@ function summarise(e: TrackerEntry | undefined, unit?: string): string {
 export default function TrackersHub() {
   const [sheetOpen, setSheetOpen] = useState(false);
   const [sheetTracker, setSheetTracker] = useState<string | null>(null);
-  const [view, setView] = useState<"recent" | "months">("recent");
   const { rows } = useTrackerFeed();
+  const preHome = isPreHomecoming();
 
-  // U4 — per-month rollups (only computed when Months view is open)
-  const rollups = useMemo(
-    () => (view === "months" ? buildMonthRollups(rows) : []),
-    [view, rows],
-  );
-
-  // Latest summaries from the shared family feed (rows are newest-first)
   const latest = useMemo(() => {
     const firstRow = new Map<string, (typeof rows)[number]>();
     for (const r of rows) {
@@ -60,19 +51,20 @@ export default function TrackersHub() {
   };
 
   return (
-    <PageShell>
+    <PageShell hideFab={preHome}>
       <header className="relative px-5 pt-9 pb-1 overflow-hidden">
         <div className="flex items-center justify-between">
-          <Eyebrow>Trackers</Eyebrow>
+          <Eyebrow>Logs</Eyebrow>
           <SyncIndicator />
         </div>
         <h1 className="relative z-10 font-display font-semibold text-[clamp(1.8rem,9vw,2.4rem)] leading-[1.02] mt-1.5">
-          Wobbles’ Logbook
+          Paddington's Logbook
         </h1>
         <p className="relative z-10 text-[13px] font-body text-muted-foreground mt-2 leading-relaxed max-w-[230px]">
-          Little logs, big patterns. Synced live for the whole family.
+          {preHome
+            ? "Empty logs are the truth until he lands. Little logs, big patterns — synced for the whole family."
+            : "Little logs, big patterns. Synced live for the whole family."}
         </p>
-        {/* Peeking Wobbles — sits behind the text and below the title line */}
         <img
           src={ASSETS.v2SpotPeek}
           alt=""
@@ -81,101 +73,6 @@ export default function TrackersHub() {
         />
       </header>
 
-      {/* U4 — Recent | Months segmented toggle */}
-      <div className="px-5 pt-3">
-        <div
-          role="tablist"
-          aria-label="Logbook view"
-          className="inline-flex rounded-full bg-[#22364D]/6 p-1 border border-[#E5DAC8]"
-        >
-          {(
-            [
-              { id: "recent", label: "Recent", icon: ListTodo },
-              { id: "months", label: "Months", icon: CalendarRange },
-            ] as const
-          ).map((tab) => (
-            <button
-              key={tab.id}
-              role="tab"
-              aria-selected={view === tab.id}
-              onClick={() => setView(tab.id)}
-              className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-[11px] font-body font-extrabold uppercase tracking-[0.1em] press-scale transition-colors ${
-                view === tab.id
-                  ? "bg-[#22364D] text-[#FFFDF8] shadow-sm"
-                  : "text-[#22364D]/70"
-              }`}
-            >
-              <tab.icon size={13} />
-              {tab.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* ===== Months rollup view (U4) ===== */}
-      {view === "months" && (
-        <div className="px-4 pt-4 space-y-3 pb-4">
-          {rollups.length === 0 && (
-            <div className="keepsake-card p-5 text-center">
-              <p className="text-[13px] font-body text-muted-foreground leading-relaxed">
-                No months to roll up yet — once the logs start, each month of
-                Wobbles&rsquo; life gets its own summary card here.
-              </p>
-            </div>
-          )}
-          {rollups.map((m) => (
-            <div key={m.key} className="keepsake-card p-4">
-              <div className="flex items-baseline justify-between">
-                <h2 className="font-display font-semibold text-[1.3rem] text-[#22364D]">
-                  {m.label}
-                </h2>
-                <span className="text-[10px] font-body font-extrabold uppercase tracking-[0.12em] text-muted-foreground">
-                  {m.total} logs · {m.activeDays} days
-                </span>
-              </div>
-              <div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-3">
-                {m.walks > 0 && (
-                  <p className="text-[12px] font-body text-[#33475C]">
-                    🐾 <strong className="font-bold">{m.walks}</strong> walks
-                  </p>
-                )}
-                {m.meals > 0 && (
-                  <p className="text-[12px] font-body text-[#33475C]">
-                    🍽️ <strong className="font-bold">{m.meals}</strong> meals
-                  </p>
-                )}
-                {m.toiletSuccess != null && (
-                  <p className="text-[12px] font-body text-[#33475C]">
-                    🚽 <strong className="font-bold">{m.toiletSuccess}%</strong> toilet success
-                  </p>
-                )}
-                {m.avgWeight != null && (
-                  <p className="text-[12px] font-body text-[#33475C]">
-                    ⚖️ <strong className="font-bold">{m.avgWeight} kg</strong> avg weight
-                  </p>
-                )}
-                {m.trainingSessions > 0 && (
-                  <p className="text-[12px] font-body text-[#33475C]">
-                    🎓 <strong className="font-bold">{m.trainingSessions}</strong> training
-                  </p>
-                )}
-              </div>
-              <div className="flex gap-3 mt-3 pt-3 border-t border-dashed border-[#E5DAC8]">
-                {TRACKER_GROUPS.map((g) => (
-                  <span
-                    key={g.id}
-                    className="text-[10px] font-body font-extrabold uppercase tracking-[0.1em] text-muted-foreground"
-                  >
-                    {g.title}: {m.groupCounts[g.id] ?? 0}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {view === "recent" && (
       <div className="px-4 pt-4 space-y-6 pb-4">
         {TRACKER_GROUPS.map((g) => {
           const members = TRACKERS.filter((t) => t.group === g.id);
@@ -190,7 +87,7 @@ export default function TrackersHub() {
                   <div key={t.id} className="flex items-center gap-2 pr-3">
                     <Link
                       href={`/trackers/${t.id}`}
-                      className="flex items-center gap-3.5 pl-4 py-3.5 press-scale bg-transparent min-w-0 flex-1"
+                      className="flex items-center gap-3.5 pl-4 py-3.5 press-scale bg-transparent min-w-0 flex-1 min-h-[44px]"
                     >
                       <span className="w-10 h-10 rounded-2xl bg-[#22364D]/6 flex items-center justify-center text-lg shrink-0">
                         {t.emoji}
@@ -205,13 +102,15 @@ export default function TrackersHub() {
                       </span>
                       <ChevronRight size={16} className="text-muted-foreground shrink-0" />
                     </Link>
-                    <button
-                      onClick={() => quickAdd(t.id)}
-                      aria-label={`Quick log ${t.title}`}
-                      className="w-8 h-8 rounded-full bg-[#C66A3D]/10 text-[#B4512E] flex items-center justify-center shrink-0 press-scale"
-                    >
-                      <Plus size={16} />
-                    </button>
+                    {!preHome && (
+                      <button
+                        onClick={() => quickAdd(t.id)}
+                        aria-label={`Quick log ${t.title}`}
+                        className="w-11 h-11 rounded-full bg-[#C66A3D]/10 text-[#B4512E] flex items-center justify-center shrink-0 press-scale"
+                      >
+                        <Plus size={16} />
+                      </button>
+                    )}
                   </div>
                 ))}
               </div>
@@ -219,18 +118,17 @@ export default function TrackersHub() {
           );
         })}
       </div>
+
+      {!preHome && (
+        <button
+          onClick={() => quickAdd(null)}
+          aria-label="Quick log"
+          className="fixed bottom-24 right-5 z-40 w-14 h-14 rounded-full bg-[#22364D] text-[#FFFDF8] flex items-center justify-center shadow-[0_10px_28px_rgba(34,54,77,0.4)] press-scale"
+        >
+          <Plus size={26} />
+        </button>
       )}
 
-      {/* Quick-log FAB */}
-      <button
-        onClick={() => quickAdd(null)}
-        aria-label="Quick log"
-        className="fixed bottom-24 right-5 z-40 w-14 h-14 rounded-full bg-[#22364D] text-[#FFFDF8] flex items-center justify-center shadow-[0_10px_28px_rgba(34,54,77,0.4)] press-scale"
-      >
-        <Plus size={26} />
-      </button>
-
-      {/* Quick-log bottom sheet (shared component — grid + inline mini-form) */}
       <QuickLogSheet open={sheetOpen} onOpenChange={setSheetOpen} initialTracker={sheetTracker} />
     </PageShell>
   );

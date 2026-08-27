@@ -1,8 +1,8 @@
 /*
- * Growth tab — Wobbles' growth yardstick and life timeline.
+ * Growth tab — Paddington's growth yardstick and life timeline.
  * Top: full-life weight chart (8w → 60w). BLUE line = expected weight for a
  * toy Cavoodle peaking at ≈6 kg (with a soft expected band). ORANGE line =
- * Wobbles' actual weigh-ins snapped onto the same axis. With no weigh-ins yet,
+ * Paddington's actual weigh-ins snapped onto the same axis. With no weigh-ins yet,
  * only the blue yardstick shows.
  * Below: on-track verdict card, quick "log a weigh-in" access, current age
  * card, and the age/milestone timeline (past + upcoming).
@@ -21,12 +21,9 @@ import {
 } from "recharts";
 import { PageShell, PageHeader, Eyebrow } from "@/components/AppShell";
 import QuickLogSheet from "@/components/QuickLogSheet";
-import { useTrackerEntries, useTrackerFeed } from "@/hooks/useSyncedData";
-import { trpc } from "@/lib/trpc";
-import { yearsWithData } from "@/lib/yearScale";
+import { useTrackerEntries } from "@/hooks/useSyncedData";
 import { growthCurveSeries, growthVerdict, ageWeeksOn } from "@/lib/growthBand";
-import { WOBBLES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
-import { allMilestones } from "@/content/lifetimeMilestones";
+import { WOBBLES, MILESTONES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
 import { cn } from "@/lib/utils";
 import {
   Scale,
@@ -62,19 +59,7 @@ const MILESTONE_ICONS: Record<string, React.ComponentType<{ size?: number; class
 
 export default function Growth() {
   const { entries: weighIns } = useTrackerEntries("weight");
-  const { rows: allRows } = useTrackerFeed();
-  const { data: photos } = trpc.photos.list.useQuery(undefined, { staleTime: 5 * 60_000 });
   const [sheetOpen, setSheetOpen] = useState(false);
-
-  // U4 — years that have any logged data drive the Year-in-review cards
-  const years = useMemo(
-    () =>
-      yearsWithData(
-        allRows,
-        (photos ?? []).map((p) => ({ id: p.id, date: p.date, url: p.url, caption: p.caption })),
-      ),
-    [allRows, photos],
-  );
 
   const curve = useMemo(
     () => growthCurveSeries(weighIns.map((e) => ({ date: e.date, value: e.value }))),
@@ -92,9 +77,9 @@ export default function Growth() {
     .filter((e) => typeof e.value === "number" && e.value > 0)
     .sort((a, b) => b.date.localeCompare(a.date))[0];
 
-  // Timeline: full lifetime map (U5) — everything past + the next 8 upcoming
-  const sorted = useMemo(() => allMilestones(), []);
-  const upcoming = sorted.filter((m) => daysUntil(m.date) >= 0).slice(0, 8);
+  // Timeline: split into past and upcoming relative to today
+  const sorted = [...MILESTONES].sort((a, b) => a.date.localeCompare(b.date));
+  const upcoming = sorted.filter((m) => daysUntil(m.date) >= 0);
   const past = sorted.filter((m) => daysUntil(m.date) < 0);
 
   return (
@@ -167,7 +152,7 @@ export default function Growth() {
                   }}
                   formatter={(v: number | string, name: string) => {
                     if (name === "expected") return [`${v} kg`, "Expected"];
-                    if (name === "actual") return [`${v} kg`, "Wobbles"];
+                    if (name === "actual") return [`${v} kg`, "Paddington"];
                     if (name === "bandMax") return [`${v} kg`, "Band high"];
                     if (name === "bandMin") return [`${v} kg`, "Band low"];
                     return [`${v} kg`, name];
@@ -209,7 +194,7 @@ export default function Growth() {
             </span>
             {hasWeighIns && (
               <span className="inline-flex items-center gap-1.5 text-[10px] font-body font-extrabold" style={{ color: ORANGE }}>
-                <span className="w-4 h-0.5 rounded-full" style={{ background: ORANGE }} /> Wobbles
+                <span className="w-4 h-0.5 rounded-full" style={{ background: ORANGE }} /> Paddington
               </span>
             )}
           </div>
@@ -274,7 +259,7 @@ export default function Growth() {
             aria-hidden
           />
           <div className="space-y-3">
-            {[...past, ...upcoming].map((m) => {
+            {sorted.map((m) => {
               const days = daysUntil(m.date);
               const isPast = days < 0;
               const isNext = upcoming[0]?.date === m.date && upcoming[0]?.label === m.label;
@@ -326,40 +311,9 @@ export default function Growth() {
         </div>
 
         <p className="mt-4 text-center text-[10.5px] font-body text-muted-foreground">
-          {past.length} done · next {upcoming.length} shown ·{" "}
-          {Math.max(0, sorted.length - past.length - upcoming.length)} more mapped — his whole life,
-          through {sorted[sorted.length - 1]?.date.slice(0, 4)}
+          {past.length} done · {upcoming.length} ahead · {age.born ? `week ${Math.floor(ageWeeksNow)}` : "counting down"}
         </p>
       </section>
-
-      {/* ===== Year in review (U4) ===== */}
-      {years.length > 0 && (
-        <section className="px-4 mt-7">
-          <Eyebrow className="px-1 mb-2.5">Year in review</Eyebrow>
-          <div className="space-y-2.5">
-            {years.map((y) => (
-              <Link
-                key={y}
-                href={`/growth/year/${y}`}
-                className="sticker-card px-4 py-3.5 flex items-center gap-3.5 press-scale"
-              >
-                <span className="w-10 h-10 rounded-2xl bg-[#22364D]/6 flex items-center justify-center font-display font-bold text-[15px] text-[#C66A3D] shrink-0">
-                  {String(y).slice(2)}
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="block font-body font-bold text-[14px] leading-snug text-[#22364D]">
-                    {y} — the story of the year
-                  </span>
-                  <span className="block text-[11px] font-body text-muted-foreground mt-0.5">
-                    Weight journey, totals, milestones & photos
-                  </span>
-                </span>
-                <ChevronRight size={16} className="text-muted-foreground shrink-0" />
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
 
       <QuickLogSheet open={sheetOpen} onOpenChange={setSheetOpen} initialTracker="weight" />
     </PageShell>

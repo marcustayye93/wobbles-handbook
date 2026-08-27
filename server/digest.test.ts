@@ -112,7 +112,7 @@ describe("composeDigest", () => {
     expect(d.content).toContain("No logs this week");
   });
 
-  it("includes Wobbles' age in the title (dob 2026-06-26)", () => {
+  it("includes Paddington's age in the title (dob 2026-06-26)", () => {
     const d = composeDigest([], [], WINDOW);
     // 2026-06-26 → 2026-07-20 = 24 days = 3w 3d
     expect(d.title).toContain("3w 3d");
@@ -176,7 +176,7 @@ describe("weeklyDigestHandler", () => {
     expect(res.statusCode).toBe(200);
     expect(notifyOwnerMock).toHaveBeenCalledOnce();
     const payload = notifyOwnerMock.mock.calls[0][0] as { title: string; content: string };
-    expect(payload.title).toContain("Wobbles' week in review");
+    expect(payload.title).toContain("Paddington's week in review");
     expect((res.body as { ok: boolean }).ok).toBe(true);
   });
 

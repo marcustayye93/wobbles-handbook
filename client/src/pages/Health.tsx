@@ -1,5 +1,5 @@
 /*
- * Health tab — Wobbles' complete medical picture in one place.
+ * Health tab — Paddington's complete medical picture in one place.
  * Due today (full care rota) → Due this week (7-day rota preview) →
  * Vaccine schedule (milestone dates vs today + logged doses) →
  * Parasite preventive (next 24th) → Vet visit log (vaccines tracker) →
@@ -10,12 +10,9 @@ import { useMemo, useState } from "react";
 import { Link } from "wouter";
 import { PageShell, PageHeader, Eyebrow } from "@/components/AppShell";
 import QuickLogSheet from "@/components/QuickLogSheet";
-import { MedicineCabinet, PaperTrail, SymptomLog } from "@/components/MedicalVault";
-import QoLCheckIn from "@/components/QoLCheckIn";
 import { useTrackerEntries } from "@/hooks/useSyncedData";
 import { careTasksFor, type CareTask } from "@/content/household";
-import { WOBBLES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
-import { allMilestones } from "@/content/lifetimeMilestones";
+import { WOBBLES, MILESTONES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
 import { growthVerdict } from "@/lib/growthBand";
 import { cn } from "@/lib/utils";
 import {
@@ -47,13 +44,9 @@ export function nextParasiteDose(now: Date): Date {
 }
 
 /** The health-relevant milestone schedule (vaccines, vet, parasite, sterilisation). */
-const HEALTH_ICONS = ["syringe", "shield", "stethoscope", "scissors"];
-function healthMilestones(now: Date = new Date()) {
-  // Lifetime health schedule (U5): keep it compact — the last 5 done + next 5 due.
-  const health = allMilestones().filter((m) => HEALTH_ICONS.includes(m.icon));
-  const past = health.filter((m) => daysUntil(m.date, now) < 0);
-  const upcoming = health.filter((m) => daysUntil(m.date, now) >= 0);
-  return [...past.slice(-5), ...upcoming.slice(0, 5)];
+const HEALTH_ICONS = ["syringe", "shield", "stethoscope", "scissors", "cake"];
+function healthMilestones() {
+  return MILESTONES.filter((m) => HEALTH_ICONS.includes(m.icon));
 }
 
 function CareTaskRow({ task }: { task: CareTask }) {
@@ -94,9 +87,7 @@ export default function Health() {
     const days: { date: Date; iso: string; label: string; tasks: CareTask[] }[] = [];
     for (let i = 1; i <= 6; i++) {
       const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + i);
-      // The week preview shows date-anchored jobs only — the two everyday
-      // anchors (hydration, paw check) would repeat on all six rows as noise.
-      const tasks = careTasksFor(d).filter((t) => !t.daily);
+      const tasks = careTasksFor(d);
       if (tasks.length > 0)
         days.push({
           date: d,
@@ -108,7 +99,7 @@ export default function Health() {
     return days;
   }, [now]);
 
-  const schedule = useMemo(() => healthMilestones(now), [now]);
+  const schedule = useMemo(() => healthMilestones(), []);
   const parasiteNext = useMemo(() => nextParasiteDose(now), [now]);
   const parasiteLogged = useMemo(
     () =>
@@ -133,11 +124,6 @@ export default function Health() {
   );
 
   const [sheetOpen, setSheetOpen] = useState(false);
-  const [sheetTracker, setSheetTracker] = useState<string>("vaccines");
-  const openSheet = (tracker: string) => {
-    setSheetTracker(tracker);
-    setSheetOpen(true);
-  };
 
   const todayISOstr = isoOf(now);
 
@@ -330,20 +316,12 @@ export default function Health() {
         )}
         <button
           type="button"
-          onClick={() => openSheet("vaccines")}
+          onClick={() => setSheetOpen(true)}
           className="btn-ink mt-3 inline-flex items-center gap-1.5"
         >
           <Plus size={15} /> Log a vet event
         </button>
       </section>
-
-      {/* ===== Medical vault (U3) ===== */}
-      <MedicineCabinet />
-      <PaperTrail />
-      <SymptomLog onLog={() => openSheet("symptom")} />
-
-      {/* ===== Quality of life check-in (U7) ===== */}
-      <QoLCheckIn />
 
       {/* ===== Weight verdict summary ===== */}
       <section className="px-4 mt-7">
@@ -427,10 +405,10 @@ export default function Health() {
       {/* Footer note */}
       <p className="px-5 mt-9 text-center text-[11px] font-body text-muted-foreground leading-relaxed flex items-center justify-center gap-1.5">
         <CalendarDays size={12} className="inline" />
-        Rota: baths every other Mon · nails & ears Mon · sanitary + training review Wed · food + supply check Fri · crate & toy day Sat · photo Sun · teeth Tue/Thu/Sat · parasite dose the 24th.
+        Rota: baths every other Monday, nails & ears Mondays, teeth Tue/Thu/Sat, parasite dose the 24th.
       </p>
 
-      <QuickLogSheet open={sheetOpen} onOpenChange={setSheetOpen} initialTracker={sheetTracker} />
+      <QuickLogSheet open={sheetOpen} onOpenChange={setSheetOpen} initialTracker="vaccines" />
     </PageShell>
   );
 }

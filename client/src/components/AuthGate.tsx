@@ -4,7 +4,7 @@
  * the phone — Marcus, Chesa, or Caretaker (for friends dog-sitting) — and the
  * choice is remembered forever on that device. All data still lives in the
  * Manus cloud (database + S3), synced across devices and fully readable by
- * the Wobbles AI; only the identity label is stored locally.
+ * the Paddington AI; only the identity label is stored locally.
  */
 import { useEffect, useRef, useState } from "react";
 import { useLegacyImport } from "@/hooks/useSyncedData";
@@ -13,9 +13,9 @@ import { ASSETS, WOBBLES } from "@/content/wobbles";
 import { ChevronRight } from "lucide-react";
 
 const PROFILE_TAGLINE: Record<Profile, string> = {
-  Marcus: "Wobbles' dad",
-  Chesa: "Wobbles' mum",
-  Caretaker: "Friends looking after Wobbles",
+  Marcus: "Paddington's dad",
+  Chesa: "Paddington's mum",
+  Caretaker: "Friends looking after Paddington",
 };
 
 function ProfilePicker({ onPick }: { onPick: (p: Profile) => void }) {
@@ -25,7 +25,7 @@ function ProfilePicker({ onPick }: { onPick: (p: Profile) => void }) {
       <div className="relative">
         <img
           src={ASSETS.v2Hero}
-          alt="Gouache illustration of Wobbles the Cavoodle puppy"
+          alt="Gouache illustration of Paddington the Cavoodle puppy"
           className="w-full aspect-[4/5] max-h-[46vh] object-cover object-top"
         />
         <div
@@ -38,10 +38,10 @@ function ProfilePicker({ onPick }: { onPick: (p: Profile) => void }) {
       <div className="px-6 -mt-10 relative z-10 flex-1 flex flex-col">
         <div className="flex items-center gap-2">
           <span className="w-7 h-7 rounded-md border-[1.5px] border-[#C66A3D] text-[#C66A3D] font-display font-bold text-sm flex items-center justify-center bg-[#FFFDF8]">
-            W
+            P
           </span>
           <span className="text-[10px] font-body font-extrabold uppercase tracking-[0.18em] text-[#22364D]/70">
-            Wobbles' Handbook
+            Paddington's Handbook
           </span>
         </div>
         <h1 className="font-display font-semibold text-[2.5rem] leading-[1] text-[#22364D] mt-3">
