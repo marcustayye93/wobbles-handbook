@@ -12,10 +12,12 @@ Last updated: 2026-09-13
 | DOB | 2026-06-26 |
 | 16 weeks | **2026-10-16 (Friday). Never 2026-10-15.** Formula: DOB + 112 days. |
 | Flight | QF51, 2026-09-23, BNE → SIN, Jet Pets |
-| Homecoming | **2026-09-23** (owner lock; ignore 24 Sep in old code) |
+| Homecoming | **2026-09-23** (owner lock; ignore 24 Sep in old code and in Muse day-plans) |
 | Adult weight | ≈ 8 kg (owner lock) |
 | Family | Marcus + Chesa. Caretaker is a handbook profile only. |
-| Home | Woodlands, Singapore, HDB |
+| Other dogs | **Unconfirmed.** Do not treat Shiro as a resident Woodlands dog unless Marcus locks it. |
+| Home | Woodlands, Singapore, HDB. One licensed dog per HDB flat; Cavoodles qualify. |
+| Import | Australia is AVS Schedule I (rabies-free): **no rabies jab, no quarantine**. PALS licence before AVS import licence. |
 | Breeder | The Doghouse QLD, Charmaine |
 | Litter | Boy 3, English Tails |
 | Parents | Addie (red Toy Poodle-type mum, curly, ~6.5 kg); Hughie (Blenheim Cavalier dad, ~7.5–8 kg) |
