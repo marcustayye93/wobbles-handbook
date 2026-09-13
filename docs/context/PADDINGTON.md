@@ -32,10 +32,11 @@ Call him **Paddington**. Nickname **Paddy** is fine. Never Wobbles, never "the p
 | Age math | Days since 2026-06-26. Weeks = floor(days/7) | Guessing |
 | 16 weeks | **Friday 16 October 2026** = DOB + 112 days | **Never 15 Oct 2026** |
 | Flight | **QF51, 23 September 2026**, BNE → SIN with Jet Pets | A different flight number or date |
-| Homecoming | **23 September 2026** (owner lock) | 24 September as canonical homecoming |
+| Homecoming | **23 September 2026** (owner lock) | 24 September as canonical homecoming or as Day 0 of a day-by-day plan |
 | Adult weight | **≈ 8 kg**, owner-locked | Guaranteeing a different number |
 | Family | Marcus and Chesa. Caretaker is a third handbook profile only | Extra owners |
-| Home | Woodlands, Singapore — HDB flat; park next door; Woodlands Waterfront nearby | House/yard as default |
+| Other dogs | Unconfirmed. Shiro is **not** locked as a household dog | Building a resident-dog intro plan as if Shiro lives in the flat |
+| Home | Woodlands, Singapore — HDB flat; park next door; Woodlands Waterfront nearby. One licensed dog per HDB. | House/yard as default; a second HDB dog without a lock |
 | Breeder | The Doghouse QLD — Charmaine (Charmaine Botha), Moreton Bay / Caboolture QLD | A different breeder |
 | Litter | Boy 3 — English Tails litter | Invented litter mates' names as fact |
 | Parents | Mum **Addie** (red Toy Poodle-type, curly, ~6.5 kg). Dad **Hughie** (Blenheim Cavalier, ~7.5–8 kg). Paddington looks more like dad | Invented parents |
@@ -83,7 +84,14 @@ RightPaw listing (historical): The Doghouse QLD / Theodore Cavoodles on RightPaw
 - **Chesa** — wife. Home most days; sometimes office Tuesday/Thursday.
 - **Caretaker** — handbook profile for when someone else is looking after him. Use the Caretaker Guide voice: safety first, confirmed details only, mark unknowns.
 - Flat life: tiles and wood, lift, neighbours, tropical heat and humidity, air-con. Park immediately next door — **look at, do not use as off-lead ground** until cleared.
-- Import stack: AVS import permit, PALS dog licence, microchip + vaccine paperwork, Jet Pets on QF51 23 Sep 2026. AVS minimum export age is 12 weeks; he flies at 12 weeks 5 days.
+- **Import stack (order matters):**
+  1. Free **AVS Pet Ownership Course** first (required before PALS).
+  2. **PALS** dog licence via Singpass **before** the import licence. Puppy under 5 months is **S$15/year**. One licensed dog per HDB flat; Cavoodles qualify.
+  3. **AVS import licence** ~S$50, valid **90 days**, applied after the PALS number exists (Jet Pets can file it).
+  4. Australian export: accredited vet + DAFF permit. Jet Pets end-to-end. AVS minimum export age 12 weeks; he flies at 12 weeks 5 days on QF51 23 Sep 2026.
+- Australia is AVS **Schedule I** (rabies-free): **no rabies jab, no Singapore quarantine stay.** He still clears Changi animal inspection.
+- **Insurance:** sort day-one cover. Most policies have a 14–30 day waiting period — do not assume he is covered on landing day unless the policy is already running.
+- **Shiro:** Muse heard Shiro described as “your dog” at a Novena outing on 12 Sep 2026. **Not locked.** Do not write a resident-dog introduction plan unless Marcus confirms Shiro lives in the Woodlands flat.
 
 Do not add Google / X sign-in to any product advice. Family-code access only.
 
@@ -161,11 +169,30 @@ Little boys lift a leg later. Not yet.
 
 ## First days home (from 23 Sep)
 
+Any older Muse / handbook day-by-day that starts on **24 Sep** is drift. Day 0 is **23 Sep 2026**.
+
 Keep him in the flat. No walks. No visitors for the decompression bubble (about the first 3 days). Quiet voices, gentle handling, hand-feeding, his travel blanket.
+
+**Changi pickup kit:** carrier, towel, water, wipes, spare car pads. He clears animal inspection and comes home the same day — no quarantine stay.
+
+**Flat safety:** mesh the windows (HDB fall risk). First weekly weigh-in on the kitchen scale after landing.
+
+**First SG vet visit** (target ~28 Sep): confirm chip and vaccine papers; start a monthly combined preventive — NexGard Spectra / Simparica Trio chew, or a vet-chosen spot-on. Repeat on a fixed calendar day.
 
 He will look for littermates and Charmaine's older dogs. He will transfer that bond to the people who feed and care for him.
 
 Socialisation window after landing is short — only about four weeks until 16 Oct. From roughly day 4, **carry** him on outings (sights, sounds, surfaces) using the handbook 100 Things list. Feet stay off public ground until the 16-week core + vet nod.
+
+### Go-home shopping (still stands after the B2K sale)
+
+Charmaine confirms the exact food brand/protein before you stock 2–3 weeks of it. Also:
+
+- Tiny soft pea-sized training treats + treat pouch
+- Puppy-safe edible chews — **no rawhide**
+- Puppy pads in bulk; enzyme cleaner; poo bags + dispenser; pet wipes; dental chews
+- Treat grab box if offered
+- Kong stuffing: plain **puppy-safe** peanut butter (no xylitol) plus the family frozen-Kong recipes already locked
+- Plan: **three frozen Kongs ready on night one**
 
 ---
 
@@ -256,14 +283,16 @@ Bad: "Your 15 October booster…" / "Wobbles…" / "Cavoodles don't shed…" / "
 - Neutering decision (discuss ~6 months, not decided)
 - Individual food allergy confirmation (none seen in litter)
 - Doghouse training-program launch (not open)
+- **Shiro** — outing mention only; not a locked housemate
+- Whether pet insurance is already bound (needed before landing because of waiting periods)
 
 ---
 
 ## Quick care card (Caretaker)
 
 1. Name: Paddington. Male toy Cavoodle, red parti fleece.
-2. Born 26 Jun 2026. Home from 23 Sep 2026.
-3. No public grass until 16-week shot on/after 16 Oct 2026 **and** vet says yes.
+2. Born 26 Jun 2026. Home from **23 Sep 2026** (not 24 Sep).
+3. No public grass until 16-week shot on/after 16 Oct 2026 **and** vet says yes. Windows meshed. No second-dog intro plan unless Marcus locks Shiro.
 4. Toilet: metal grid + pad. Every 30 minutes. No scolding.
 5. Food: his fresh food and/or Royal Canin. Water always. Food up at night.
 6. Crate is optional den, door open. Pen when unsupervised.
