@@ -15,8 +15,8 @@ Last updated: 2026-09-13
 | Homecoming | **2026-09-23** (owner lock; ignore 24 Sep in old code and in Muse day-plans) |
 | Adult weight | ≈ 8 kg (owner lock) |
 | Family | Marcus + Chesa. Caretaker is a handbook profile only. |
-| Other dogs | **Unconfirmed.** Do not treat Shiro as a resident Woodlands dog unless Marcus locks it. |
-| Home | Woodlands, Singapore, HDB. One licensed dog per HDB flat; Cavoodles qualify. |
+| Other dogs | **Shiro** — family Japanese Spitz, ~11 years old. Lives with Marcus’s parents in their landed house. Territorial, short temper, poorly socialised. **Not** a Woodlands HDB housemate. Frequent visits; intros must be managed. |
+| Home | Woodlands, Singapore, HDB. One licensed dog per HDB flat; Cavoodles qualify. Paddington is the flat dog. |
 | Import | Australia is AVS Schedule I (rabies-free): **no rabies jab, no quarantine**. PALS licence before AVS import licence. |
 | Breeder | The Doghouse QLD, Charmaine |
 | Litter | Boy 3, English Tails |
