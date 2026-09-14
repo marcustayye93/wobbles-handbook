@@ -13,8 +13,21 @@
  * All Paddington constants are duplicated (small + stable) rather than
  * imported from client code, keeping the server bundle clean.
  */
+import fs from "node:fs";
+import path from "node:path";
 import { invokeLLM, type Message } from "./_core/llm";
 import type { AiMemoryRow } from "../drizzle/schema";
+
+function readContextFile(name: string): string {
+  for (const p of [
+    path.join(process.cwd(), "docs/context", name),
+    "/home/workdir/artifacts/" + name,
+  ]) {
+    try { if (fs.existsSync(p)) return fs.readFileSync(p, "utf8"); } catch {}
+  }
+  return "";
+}
+
 
 /* ---------------- Paddington constants (server copy) ---------------- */
 
@@ -25,7 +38,7 @@ export const WOBBLES_PROFILE = {
   colour: "red parti (Blenheim) \u2014 rich red patches on white, fleece coat",
   sex: "male",
   dob: "2026-06-26",
-  homecoming: "2026-09-24",
+  homecoming: "2026-09-23",
   expectedAdultWeight: "about 8 kg",
   breeder:
     "The Doghouse QLD (Charmaine), Moreton Bay region, Queensland \u2014 RightPaw-verified, raises litters with Puppy Culture + Early Neurological Stimulation",
@@ -36,7 +49,7 @@ export const WOBBLES_PROFILE = {
   relocation:
     "Flying from Brisbane to Singapore with Jet Pets on 23 Sep 2026, landing/homecoming 24 Sep (AVS requires 12 weeks minimum age at export — he flies at 12w5d). Needs import permit, PALS dog licence, and microchip/vaccination paperwork.",
   vaccinations:
-    "Dose 1 (Protech C3, batch 4964023A, expiry 21 Apr 2027): administered 7 Aug 2026 by Dr Ayana Lowe BVSc(Hons)BSc at Fetch a Vet Pty Ltd (mobile vet, North Lakes QLD 4509, QLD reg 5810). Weight at vaccination: 1.6 kg. Microchip 900164002411316 implanted same day (between shoulder blades). Booster due 21 Aug 2026 (dose 2). Dose 3 expected ~8 Sep 2026. Fully protected ~22 Sep, a day or two before the flight. Ask the SG vet at the first visit (~28 Sep) about a 16-week booster since dose 3 is at ~10.5 weeks.",
+    "Dose 1 (Protech C3, batch 4964023A, expiry 21 Apr 2027): administered 7 Aug 2026 by Dr Ayana Lowe BVSc(Hons)BSc at Fetch a Vet Pty Ltd (mobile vet, North Lakes QLD 4509, QLD reg 5810). Weight at vaccination: 1.6 kg. Microchip 900164002411316 implanted same day (between shoulder blades). Booster due 21 Aug 2026 (dose 2). Dose 3 expected ~4 Sep 2026. Fully protected ~22 Sep, a day or two before the flight. Ask the SG vet at the first visit (~24 Sep) about a 16-week booster since dose 3 is at ~10.5 weeks.",
 } as const;
 
 /* ---------------- Age + stage (server-side, deterministic) ---------------- */
@@ -77,7 +90,7 @@ export function currentStage(now: Date = new Date()): string {
   if (toHome > 0) {
     if (age.weeks < 8)
       return `${age.weeks} weeks old, still with his litter at the breeder in Queensland (${toHome} days until he arrives in Singapore). The breeder handles ENS/enrichment; the family is puppy-proofing and shopping.`;
-    return `${age.weeks} weeks old, still at the breeder in Queensland for export prep (${toHome} days until homecoming on 24 Sep 2026; Protech C3: dose 1 done 7 Aug, dose 2 due 21 Aug, dose 3 ~8 Sep). Admin sprint: AVS import permit, PALS licence, Jet Pets flight 23 Sep.`;
+    return `${age.weeks} weeks old, still at the breeder in Queensland for export prep (${toHome} days until homecoming on 23 Sep 2026; Protech C3: dose 1 done 7 Aug, dose 2 due 21 Aug, dose 3 ~4 Sep). Admin sprint: AVS import permit, PALS licence, Jet Pets flight 23 Sep.`;
   }
   const daysHome = -toHome;
   if (age.weeks < 16) {
@@ -242,6 +255,8 @@ export function buildSystemPrompt(
       ? memoryFacts.map((m) => `- [${m.category}] ${m.fact}`).join("\n")
       : "(nothing recorded yet \u2014 this memory book fills up as the family chats with you)";
 
+  const locked = readContextFile("LOCKED_FACTS.md");
+  const pack = readContextFile("PADDINGTON.md");
   return `You are "Ask Paddington", the private family assistant inside Paddington's Handbook \u2014 a keepsake app Marcus and Chesa use to raise their Cavoodle puppy, Paddington. Today's date is ${now.toISOString().slice(0, 10)}.
 
 ## Paddington's profile (verified facts \u2014 always ground answers in these)
@@ -440,10 +455,26 @@ export async function generateAssistantReply(
     { role: "system", content: buildSystemPrompt(memoryFacts, now) },
     ...recent.map((m) => ({ role: m.role, content: m.content })),
   ];
-  const res = await invokeLLM({ messages, maxTokens: 1400 });
-  const text = contentToText(res.choices[0]?.message?.content).trim();
-  if (!text) throw new Error("Empty reply from the assistant");
-  return text;
+  const lastUser = [...recent].reverse().find((m) => m.role === "user")?.content ?? "";
+  try {
+    const res = await invokeLLM({ messages, maxTokens: 1400, model: process.env.XAI_MODEL || "grok-4.5" });
+    const text = contentToText(res.choices[0]?.message?.content).trim();
+    if (!text) throw new Error("Empty reply from the assistant");
+    return text;
+  } catch (err) {
+    console.warn("[Ask Paddington] model unavailable, using locked facts", err);
+    const age = wobblesAgeServer(now);
+    return [
+      `Ask Paddington is running from locked facts while the model is offline.`,
+      `Paddington is a male toy Cavoodle, red parti / Blenheim, fleece. Born 26 Jun 2026 — ${age.weeks} weeks ${age.remDays} days today.`,
+      `QF51 homecoming 23 Sep 2026. 16 weeks = Friday 16 Oct 2026. Adult weight ≈ 8 kg.`,
+      `Protech C3 7 Aug / 21 Aug / 4 Sep 2026. Dose 3 is not park-cleared. Public grass after ≥16-week SG core on/after 16 Oct plus vet nod.`,
+      `Shiro: family Japanese Spitz ~11 at the parents' landed house. Not a Woodlands housemate. Never unsupervised.`,
+      `Toilet: metal grid over pad, every 30 min, no scolding. Crate: Marukan medium, door open, living-room pen.`,
+      `Not a vet. Emergencies after landing: SingVet Woodlands; after hours Westside Serangoon / VES Whitley.`,
+      lastUser ? `You asked: ${lastUser.slice(0, 280)}` : "",
+    ].filter(Boolean).join("\n");
+  }
 }
 
 /** Title for a new conversation, derived from the first user message. */

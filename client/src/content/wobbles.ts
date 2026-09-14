@@ -60,13 +60,9 @@ export const WOBBLES = {
       "https://rightpaw.com.au/l/the-doghouse-qld-theodore-cavoodles/296a0927-5317-4f69-a9ef-de2a28b688d4",
   },
   /**
-   * Homecoming = landing day in Singapore (24 Sep 2026). He flies BNE → SIN
-   * with Jet Pets on 23 Sep. AVS requires dogs ≥12 weeks at export; he is
-   * still in Queensland until he lands. Date-switch for Home is this field:
-   * pre-homecoming while daysUntil(homecoming) > 0 (through 23 Sep),
-   * week-1 Home from 24 Sep.
+   * Homecoming = QF51 landing day in Singapore (23 Sep 2026). Never 24 Sep.
    */
-  homecoming: "2026-09-24",
+  homecoming: "2026-09-23",
 } as const;
 
 export interface Milestone {
@@ -119,17 +115,17 @@ export const MILESTONES: Milestone[] = [
     icon: "badge-check",
   },
   {
-    date: "2026-09-08",
+    date: "2026-09-04",
     label: "C3 dose 3 (Australia) — not fully vaccinated",
     detail:
-      "Third Protech C3 at the farm on 8 Sep. This is NOT the 16-week core and he is NOT park-cleared. Ground time waits for the ≥16-week booster (~15 Oct) plus a Singapore vet nod. Carry-socialise until then.",
+      "Third Protech C3 at the farm on 4 Sep. This is NOT the 16-week core and he is NOT park-cleared. Ground time waits for the ≥16-week booster (16 Oct) plus a Singapore vet nod. Carry-socialise until then.",
     icon: "syringe",
   },
   {
-    date: "2026-09-24",
-    label: "Homecoming day — lands in Singapore",
+    date: "2026-09-23",
+    label: "Homecoming day — QF51 BNE → SIN",
     detail:
-      "The big day! Paddington flies BNE → SIN on 23 Sep, lands 24 Sep, clears Changi's CAPQ inspection (no quarantine) and comes home to Woodlands with his mum-scented blanket and puppy pack.",
+      "The big day! Paddington flies BNE → SIN on 23 Sep, comes home 23 Sep, clears Changi's CAPQ inspection (no quarantine) and comes home to Woodlands with his mum-scented blanket and puppy pack.",
     icon: "home",
   },
   {
@@ -147,10 +143,10 @@ export const MILESTONES: Milestone[] = [
     icon: "stethoscope",
   },
   {
-    date: "2026-10-15",
+    date: "2026-10-16",
     label: "16-week core booster (Singapore)",
     detail:
-      "The ≥16-week core must land at 16 weeks or older under Singapore guidelines. This — not dose 3 on 8 Sep — is the shot that starts the park clock. Deworming cadence also shifts: monthly until 6 months, then every 3 months.",
+      "The ≥16-week core must land at 16 weeks or older under Singapore guidelines. This — not dose 3 on 4 Sep — is the shot that starts the park clock. Deworming cadence also shifts: monthly until 6 months, then every 3 months.",
     icon: "syringe",
   },
   {
@@ -200,7 +196,7 @@ export function daysUntil(iso: string, now: Date = new Date()) {
   return Math.ceil((target.getTime() - startOfNow.getTime()) / 86400000);
 }
 
-/** True through 23 Sep when homecoming is 24 Sep — Home uses this for the date-switch. */
+/** True through 22 Sep when homecoming is 23 Sep — Home uses this for the date-switch. */
 export function isPreHomecoming(now: Date = new Date()) {
   return daysUntil(WOBBLES.homecoming, now) > 0;
 }

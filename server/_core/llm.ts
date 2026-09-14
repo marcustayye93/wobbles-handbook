@@ -212,15 +212,14 @@ const normalizeToolChoice = (
   return toolChoice;
 };
 
-const resolveApiUrl = () =>
-  ENV.forgeApiUrl && ENV.forgeApiUrl.trim().length > 0
-    ? `${ENV.forgeApiUrl.replace(/\/$/, "")}/v1/chat/completions`
-    : "https://forge.manus.im/v1/chat/completions";
-
+const resolveApiUrl = () => {
+  if (ENV.xaiApiKey) return `${ENV.xaiBaseUrl.replace(/\/$/, "")}/chat/completions`;
+  if (ENV.forgeApiUrl && ENV.forgeApiUrl.trim().length > 0)
+    return `${ENV.forgeApiUrl.replace(/\/$/, "")}/v1/chat/completions`;
+  return "https://api.x.ai/v1/chat/completions";
+};
 const assertApiKey = () => {
-  if (!ENV.forgeApiKey) {
-    throw new Error("OPENAI_API_KEY is not configured");
-  }
+  if (!ENV.forgeApiKey && !ENV.xaiApiKey) throw new Error("XAI_API_KEY is not configured");
 };
 
 const normalizeResponseFormat = ({

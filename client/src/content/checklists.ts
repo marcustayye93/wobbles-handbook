@@ -67,7 +67,7 @@ export const CHECKLISTS: Checklist[] = [
     id: "puppy-arrival",
     title: "Puppy Arrival",
     emoji: "🏡",
-    cadence: "Before 24 Sep 2026",
+    cadence: "Before 23 Sep 2026",
     items: [
       "Crate + divider, set up in a quiet corner",
       "Playpen and/or baby gates",
@@ -160,7 +160,7 @@ export const CHECKLISTS: Checklist[] = [
     emoji: "✈️",
     cadence: "Sep 2026",
     items: [
-      "Jet Pets booked, quote accepted — flight 23/24 Sep 2026 (he flies at 12w5d)",
+      "Jet Pets booked, quote accepted — flight 23 Sep 2026 (he flies at 12w5d)",
       "IATA crate at home early — feed meals in it for weeks",
       "PALS dog licence obtained (needed before import licence)",
       "AVS import licence applied (~S$50, valid 30 days)",

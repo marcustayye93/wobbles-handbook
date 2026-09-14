@@ -35,8 +35,8 @@ Call him **Paddington**. Nickname **Paddy** is fine. Never Wobbles, never "the p
 | Homecoming | **23 September 2026** (owner lock) | 24 September as canonical homecoming or as Day 0 of a day-by-day plan |
 | Adult weight | **≈ 8 kg**, owner-locked | Guaranteeing a different number |
 | Family | Marcus and Chesa. Caretaker is a third handbook profile only | Extra owners |
-| Other dogs | Unconfirmed. Shiro is **not** locked as a household dog | Building a resident-dog intro plan as if Shiro lives in the flat |
-| Home | Woodlands, Singapore — HDB flat; park next door; Woodlands Waterfront nearby. One licensed dog per HDB. | House/yard as default; a second HDB dog without a lock |
+| Other dogs | **Shiro**: family Japanese Spitz, ~11, lives with Marcus’s parents (landed house). Territorial, temper, poorly socialised. Frequent contact with Paddington. Not a Woodlands housemate. | Treating Shiro as Paddington’s flatmate, or as a soft easy companion dog |
+| Home | Woodlands, Singapore — HDB flat; park next door; Woodlands Waterfront nearby. One licensed dog per HDB. Paddington is the flat dog. | House/yard as default; two dogs in the HDB |
 | Breeder | The Doghouse QLD — Charmaine (Charmaine Botha), Moreton Bay / Caboolture QLD | A different breeder |
 | Litter | Boy 3 — English Tails litter | Invented litter mates' names as fact |
 | Parents | Mum **Addie** (red Toy Poodle-type, curly, ~6.5 kg). Dad **Hughie** (Blenheim Cavalier, ~7.5–8 kg). Paddington looks more like dad | Invented parents |
@@ -91,7 +91,7 @@ RightPaw listing (historical): The Doghouse QLD / Theodore Cavoodles on RightPaw
   4. Australian export: accredited vet + DAFF permit. Jet Pets end-to-end. AVS minimum export age 12 weeks; he flies at 12 weeks 5 days on QF51 23 Sep 2026.
 - Australia is AVS **Schedule I** (rabies-free): **no rabies jab, no Singapore quarantine stay.** He still clears Changi animal inspection.
 - **Insurance:** sort day-one cover. Most policies have a 14–30 day waiting period — do not assume he is covered on landing day unless the policy is already running.
-- **Shiro:** Muse heard Shiro described as “your dog” at a Novena outing on 12 Sep 2026. **Not locked.** Do not write a resident-dog introduction plan unless Marcus confirms Shiro lives in the Woodlands flat.
+- **Shiro (locked):** Family Japanese Spitz, about **11 years old**. Lives with Marcus’s **mum and dad in their landed house**, not in the Woodlands HDB. Territorial, has a temper, not well socialised. Novena outing 12 Sep 2026. Paddington and Shiro will see each other a lot (family visits), so a **managed introduction plan** is required — they do **not** share a home day to day. HDB one-dog rule is unaffected.
 
 Do not add Google / X sign-in to any product advice. Family-code access only.
 
@@ -182,6 +182,22 @@ Keep him in the flat. No walks. No visitors for the decompression bubble (about 
 He will look for littermates and Charmaine's older dogs. He will transfer that bond to the people who feed and care for him.
 
 Socialisation window after landing is short — only about four weeks until 16 Oct. From roughly day 4, **carry** him on outings (sights, sounds, surfaces) using the handbook 100 Things list. Feet stay off public ground until the 16-week core + vet nod.
+
+### Shiro (family dog, not a housemate)
+
+Shiro is a family Japanese Spitz, about 11. He lives with Marcus’s parents in a **landed house**. He is territorial, has a temper, and is not well socialised. Paddington lives in Woodlands. They will still see each other often, so getting along is the goal — not cohabitation.
+
+Rules for Muse / Ask / Caretaker:
+
+- Do not treat Shiro as the Woodlands second dog. One HDB licence = Paddington.
+- First meetings **after** Paddington’s decompression bubble (not Day 0–3), and not in Shiro’s core territory if you can help it. Neutral outdoor space beats the parents’ doorway.
+- Paddington on-body or in arms / behind a barrier at first. Shiro on lead, handled by someone he trusts (usually the parents).
+- Short, boring, parallel presence. No face-to-face “say hello” forcing. No shared food, toys, or doorway squeezes.
+- Watch Shiro for hard stare, freeze, growl, snap. End the session early on any of those. A good first meeting is uneventful.
+- Never leave them unsupervised. Never leave Paddington on the ground in Shiro’s house until many calm sessions have stacked.
+- If anyone is unsure, a force-free trainer who has seen both dogs beats a handbook paragraph. Do not diagnose Shiro or promise they will be friends.
+
+This is a long project. An 11-year-old territorial Spitz does not flip because a puppy is cute.
 
 ### Go-home shopping (still stands after the B2K sale)
 
@@ -283,7 +299,8 @@ Bad: "Your 15 October booster…" / "Wobbles…" / "Cavoodles don't shed…" / "
 - Neutering decision (discuss ~6 months, not decided)
 - Individual food allergy confirmation (none seen in litter)
 - Doghouse training-program launch (not open)
-- **Shiro** — outing mention only; not a locked housemate
+- How Shiro will actually be introduced (location, who holds whom, first date) — plan exists as rules below; the first session is not booked
+- Whether Shiro is vaccinated / tolerant of puppies on any given day — read the dog in front of you, do not assume
 - Whether pet insurance is already bound (needed before landing because of waiting periods)
 
 ---
@@ -292,7 +309,7 @@ Bad: "Your 15 October booster…" / "Wobbles…" / "Cavoodles don't shed…" / "
 
 1. Name: Paddington. Male toy Cavoodle, red parti fleece.
 2. Born 26 Jun 2026. Home from **23 Sep 2026** (not 24 Sep).
-3. No public grass until 16-week shot on/after 16 Oct 2026 **and** vet says yes. Windows meshed. No second-dog intro plan unless Marcus locks Shiro.
+3. No public grass until 16-week shot on/after 16 Oct 2026 **and** vet says yes. Windows meshed. Shiro lives at the parents’ landed house — never unsupervised with Paddington.
 4. Toilet: metal grid + pad. Every 30 minutes. No scolding.
 5. Food: his fresh food and/or Royal Canin. Water always. Food up at night.
 6. Crate is optional den, door open. Pen when unsupervised.

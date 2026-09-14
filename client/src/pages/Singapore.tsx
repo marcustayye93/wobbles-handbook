@@ -2,7 +2,7 @@
  * Redesign v2 — "Keepsake Field Guide" Road to Singapore.
  * v2 gouache cover, ink navy headings, sienna phase labels.
  * Hero, key-facts cards, phase-grouped step timeline, tropical life tips.
- * C3 dose 3 on 8 Sep is NOT full vaccination; landing is 24 Sep.
+ * C3 dose 3 on 4 Sep is NOT full vaccination; landing is 24 Sep.
  */
 import { PageShell, PageHeader, PawDivider, Eyebrow } from "@/components/AppShell";
 import { CHAPTER_COVERS } from "@/content/wobbles";
@@ -27,7 +27,7 @@ const ICONS: Record<string, LucideIcon> = {
 
 export default function Singapore() {
   const toFlight = daysUntil("2026-09-23");
-  const toLand = daysUntil("2026-09-24");
+  const toLand = daysUntil("2026-09-23");
 
   const phases: { phase: string; steps: typeof SG_STEPS }[] = [];
   for (const s of SG_STEPS) {
@@ -38,7 +38,7 @@ export default function Singapore() {
 
   return (
     <PageShell>
-      <PageHeader title="Road to Singapore" subtitle="BNE → SIN, lands 24 Sep" emoji="✈️" />
+      <PageHeader title="Road to Singapore" subtitle="BNE → SIN, home 23 Sep" emoji="✈️" />
 
       <div className="px-5 pt-4">
         <div className="relative rounded-3xl overflow-hidden">
@@ -57,7 +57,7 @@ export default function Singapore() {
         <p className="text-sm text-muted-foreground leading-relaxed mt-4">
           The family moves to Singapore in <strong className="text-foreground">September 2026</strong>, with
           Paddington flying on <strong className="text-foreground">23 September</strong> and landing{" "}
-          <strong className="text-foreground">24 September</strong> via{" "}
+          <strong className="text-foreground">23 September</strong> via{" "}
           <strong className="text-foreground">Jet Pets</strong>. He is still in Queensland until then.
           Great news: because Australia is rabies-free, this is one of the easiest international pet
           moves in the world — <strong className="text-foreground">no rabies shots, no quarantine</strong>.

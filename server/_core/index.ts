@@ -9,6 +9,8 @@ import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { weeklyDigestHandler } from "../scheduled";
+import { readSession } from "../familyAuth";
+import { readPhotoBlob, getPhotoById } from "../householdStore";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -37,6 +39,19 @@ async function startServer() {
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   registerStorageProxy(app);
   registerOAuthRoutes(app);
+  app.get("/api/photos/:id/:kind?", (req, res) => {
+    if (!readSession(req)) { res.status(401).json({ error: "Family code required" }); return; }
+    const id = Number(req.params.id);
+    if (!Number.isFinite(id)) { res.status(400).end(); return; }
+    const row = getPhotoById(id);
+    if (!row) { res.status(404).end(); return; }
+    const kind = req.params.kind === "thumb" ? "thumb" : "original";
+    const blob = readPhotoBlob(id, kind) || readPhotoBlob(id, "original");
+    if (!blob) { res.status(404).end(); return; }
+    res.setHeader("Content-Type", row.mimeType || "image/jpeg");
+    res.setHeader("Cache-Control", "private, max-age=86400");
+    res.send(blob);
+  });
   // tRPC API
   app.use(
     "/api/trpc",

@@ -3,7 +3,9 @@ import { z } from "zod";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
-import { familyProcedure } from "./family";
+import { FAMILY_PROFILES, familyProcedure } from "./family";
+import { clearSessionCookie, codeMatches, readSession, setSessionCookie } from "./familyAuth";
+import * as store from "./householdStore";
 import {
   conversationTitle,
   distillMemory,
@@ -11,7 +13,6 @@ import {
   type ChatTurn,
 } from "./aiChat";
 import * as db from "./db";
-import { storagePut } from "./storage";
 
 /**
  * Paddington's Handbook — household-shared API.
@@ -32,14 +33,30 @@ export const appRouter = router({
   // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
   system: systemRouter,
   auth: router({
-    me: publicProcedure.query(opts => opts.ctx.user),
+    me: publicProcedure.query(({ ctx }) => {
+      const session = readSession(ctx.req);
+      return session
+        ? { authenticated: true as const, profile: session.profile }
+        : { authenticated: false as const, profile: null };
+    }),
+    login: publicProcedure
+      .input(z.object({ code: z.string().min(1).max(64), profile: z.enum(FAMILY_PROFILES) }))
+      .mutation(({ ctx, input }) => {
+        if (!codeMatches(input.code)) throw new Error("That family code is not right");
+        const secure = ctx.req.protocol === "https" || ctx.req.headers["x-forwarded-proto"] === "https";
+        setSessionCookie(ctx.res, { ok: true, profile: input.profile, iat: Date.now() }, secure);
+        return { success: true as const, profile: input.profile };
+      }),
     logout: publicProcedure.mutation(({ ctx }) => {
       const cookieOptions = getSessionCookieOptions(ctx.req);
       ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
-      return {
-        success: true,
-      } as const;
+      const secure = ctx.req.protocol === "https" || ctx.req.headers["x-forwarded-proto"] === "https";
+      clearSessionCookie(ctx.res, secure);
+      return { success: true } as const;
     }),
+  }),
+  household: router({
+    counts: familyProcedure.query(() => store.counts()),
   }),
 
   trackers: router({
@@ -158,16 +175,19 @@ export const appRouter = router({
           throw new Error("Photo too large after decoding (max 5 MB)");
         }
         const safeName = input.fileName.replace(/[^\w.\-]+/g, "_").slice(-80);
-        const { key, url } = await storagePut(`wobbles-photos/${safeName}`, buffer, input.mimeType);
-        const id = await db.addPhoto({
-          fileKey: key,
-          url,
+        const id = store.addPhoto({
+          fileKey: `photos/${safeName}`,
+          url: "/api/photos/pending",
           caption: input.caption,
           date: input.date,
           placeId: input.placeId,
           createdBy: ctx.member.id,
           createdByName: ctx.member.name,
+          mimeType: input.mimeType,
         });
+        store.writePhotoBlobs(id, buffer, buffer);
+        const url = `/api/photos/${id}`;
+        store.updatePhotoUrls(id, url, `/api/photos/${id}/thumb`);
         return { id, url } as const;
       }),
 

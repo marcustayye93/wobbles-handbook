@@ -1,8 +1,8 @@
 /*
- * Home — date-switched on WOBBLES.homecoming (landing 24 Sep 2026).
+ * Home — date-switched on WOBBLES.homecoming (homecoming 23 Sep 2026).
  * Pre-homecoming (until 23 Sep): compact hero, countdown + irreversible admin,
  * logging demoted. Empty logs are the truth. Not a 7am logger.
- * Week-1 (from 24 Sep): decompression days 1–3, three logs only (weight /
+ * Week-1 (from 23 Sep): decompression days 1–3, three logs only (weight /
  * toilet / sleep), book SingVet, carry-socialise, park after ≥16-week core.
  */
 import { useMemo, useRef, useState } from "react";
@@ -41,17 +41,17 @@ const ADMIN_ITEMS = [
   {
     emoji: "🛂",
     title: "Import licence is valid 90 days",
-    detail: "Not 30. Time the AVS application against the 24 Sep landing with that 90-day window.",
+    detail: "Not 30. Time the AVS application against the 23 Sep homecoming with that 90-day window.",
   },
   {
     emoji: "💉",
-    title: "C3 dose 3 — 8 Sep",
+    title: "C3 dose 3 — 4 Sep",
     detail: "Third Protech C3 at the farm. That shot is not the 16-week core.",
   },
   {
     emoji: "🚫",
     title: "Not fully vaccinated",
-    detail: "Dose 3 on 8 Sep does not make him fully protected. The ≥16-week core is ~15 Oct.",
+    detail: "Dose 3 on 4 Sep does not make him fully protected. The ≥16-week core is 16 Oct.",
   },
   {
     emoji: "🌳",
@@ -184,7 +184,7 @@ export default function Home() {
             </h1>
             <p className="mt-1.5 text-[12.5px] font-body text-[#5A6B7E] leading-snug">
               {preHome
-                ? "Paddy stays at The Doghouse QLD until he lands 24 Sep. Empty logs are the truth — this is not a 7am logger."
+                ? "Paddy stays at The Doghouse QLD until he home 23 Sep. Empty logs are the truth — this is not a 7am logger."
                 : decompressing
                   ? "Days 1–3: quiet flat, his toilet spot, crate as a den, no visitors."
                   : "Carry-socialise. Book SingVet. Grass waits for the 16-week core and a vet nod."}
@@ -222,10 +222,10 @@ export default function Home() {
                 <p className="font-display font-bold text-[3.1rem] leading-none text-[#B4512E]">{Math.max(0, toHome)}</p>
                 <div className="pb-1">
                   <p className="text-[11px] font-body font-extrabold uppercase tracking-[0.14em] text-[#22364D]">
-                    days to 24 Sep
+                    days to 23 Sep
                   </p>
                   <p className="text-[12.5px] font-body text-[#5A6B7E] leading-snug mt-0.5">
-                    Jet Pets flies 23 Sep · he lands the 24th · still in QLD until then.
+                    QF51 Jet Pets BNE → SIN · homecoming is 23 Sep · still in QLD until then.
                   </p>
                 </div>
               </div>
@@ -283,7 +283,7 @@ export default function Home() {
                 </ul>
               ) : (
                 <div className="mt-1 space-y-2 text-[13px] font-body text-[#33475C] leading-snug">
-                  <p>Carry-socialise: arms, not paws, until the 16-week core (~15 Oct) and a SingVet nod.</p>
+                  <p>Carry-socialise: arms, not paws, until the 16-week core (16 Oct) and a SingVet nod.</p>
                   <p>Ground and park wait. Book SingVet if you have not already.</p>
                 </div>
               )}

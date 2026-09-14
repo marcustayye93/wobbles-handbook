@@ -28,6 +28,7 @@ import Health from "@/pages/Health";
 import Journey from "@/pages/Journey";
 import TrickDetail from "@/pages/TrickDetail";
 import Ask from "@/pages/Ask";
+import ImportPhotos from "@/pages/ImportPhotos";
 import NotFound from "@/pages/NotFound";
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -47,6 +48,7 @@ function Router() {
       <Route path="/trackers" component={TrackersHub} />
       <Route path="/trackers/:id" component={TrackerPage} />
       <Route path="/memories" component={Memories} />
+      <Route path="/import" component={ImportPhotos} />
       <Route path="/growth" component={Growth} />
       <Route path="/health" component={Health} />
       <Route path="/journey" component={Journey} />

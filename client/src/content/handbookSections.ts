@@ -12,13 +12,13 @@ export const SECTIONS: Section[] = [
     slug: "first-day",
     title: "The First Day & Night",
     emoji: "🏡",
-    tagline: "Homecoming is 24 September 2026 — here's exactly how to nail it",
+    tagline: "Homecoming is 23 September 2026 — here's exactly how to nail it",
     readMins: 8,
     hero: ASSETS.heroFirstDay,
     blocks: [
       {
         type: "p",
-        text: "Paddington comes home at nearly 13 weeks old on Thursday 24 September 2026, flying with Jet Pets on the 23rd — Singapore's AVS rules mean puppies can only be imported from 12 weeks of age, so he spends his first three months with his litter at The Doghouse QLD. He'll arrive with his puppy pack: a blanket carrying his mum's scent, his puppy passport, microchip and vaccination records (all three Protech C3 shots done in Australia). The first 48 hours set the tone for everything — but they don't have to be perfect, just calm. Remember he's also just flown 7+ hours from Brisbane, so day one is about rest, not introductions.",
+        text: "Paddington comes home at nearly 13 weeks old on Wednesday 23 September 2026, flying QF51 with Jet Pets the same day — Singapore's AVS rules mean puppies can only be imported from 12 weeks of age, so he spends his first three months with his litter at The Doghouse QLD. He'll arrive with his puppy pack: a blanket carrying his mum's scent, his puppy passport, microchip and vaccination records (all three Protech C3 shots done in Australia). The first 48 hours set the tone for everything — but they don't have to be perfect, just calm. Remember he's also just flown 7+ hours from Brisbane, so day one is about rest, not introductions.",
       },
       { type: "h", text: "Before he arrives" },
       {
@@ -626,7 +626,7 @@ export const SECTIONS: Section[] = [
       {
         type: "tip",
         title: "The monthly preventive habit — for life",
-        text: "One combined monthly preventive (a chew like NexGard Spectra or Simparica Trio, or a spot-on drip like Revolution Plus) covers ticks, fleas AND heartworm in a single dose — and it starts at homecoming (24 Sep 2026, logged in his calendar). In Singapore this never pauses: heartworm mosquitoes and tropical ticks are active all 12 months, so pick a memorable date (the 24th) and re-dose every month, forever. Log each dose in the Health tracker.",
+        text: "One combined monthly preventive (a chew like NexGard Spectra or Simparica Trio, or a spot-on drip like Revolution Plus) covers ticks, fleas AND heartworm in a single dose — and it starts at the first SG vet visit after 23 Sep 2026. In Singapore this never pauses: heartworm mosquitoes and tropical ticks are active all 12 months, so pick a fixed calendar day and re-dose every month, forever. Log each dose in the Health tracker.",
       },
     ],
   },

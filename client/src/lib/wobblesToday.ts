@@ -2,7 +2,7 @@
  * Keepsake Field Guide — "Paddington Today" daily engine (v2).
  * Stage-aware guidance (focus / expect / training) computed from age,
  * PLUS a date-deterministic daily layer. Date-switch on WOBBLES.homecoming
- * (landing 24 Sep 2026). He is not fully vaccinated / park-cleared at landing.
+ * (homecoming 23 Sep 2026). He is not fully vaccinated / park-cleared at landing.
  */
 import { WOBBLES, wobblesAge, daysUntil } from "@/content/wobbles";
 import {
@@ -68,8 +68,8 @@ export function wobblesToday(now: Date = new Date()): TodayStage {
     return {
       stage: "With the breeder — export prep (8–12 weeks)",
       title: "Growing Up at the Farm",
-      text: `${age.weeks} weeks old and still at The Doghouse QLD until he lands 24 Sep. C3 dose 3 is 8 Sep — that is NOT full vaccination and he is NOT park-cleared. ${toHome} days until landing: PALS before the import licence (valid 90 days, not 30), then Jet Pets confirmation, then the flat.`,
-      focus: "PALS first, then import licence (90 days); C3 dose 3 on 8 Sep is not the 16-week core",
+      text: `${age.weeks} weeks old and still at The Doghouse QLD until he home 23 Sep. C3 dose 3 is 4 Sep — that is NOT full vaccination and he is NOT park-cleared. ${toHome} days until landing: PALS before the import licence (valid 90 days, not 30), then Jet Pets confirmation, then the flat.`,
+      focus: "PALS first, then import licence (90 days); C3 dose 3 on 4 Sep is not the 16-week core",
       expect: "The breeder handles the Australian C3 course and enrichment — ask for photo updates and the vaccination record",
       training: "Train yourselves: agree the house rules, cue words and the first-72-hours plan",
       link: "/singapore",
@@ -82,7 +82,7 @@ export function wobblesToday(now: Date = new Date()): TodayStage {
       return {
         stage: "Just landed — decompression bubble",
         title: "Welcome Home, Paddington",
-        text: `He's here! Days 1–3 are the decompression bubble: quiet flat, toilet spot, crate as a den, no visitors. No outings — just toilet trips, naps, gentle play and letting him learn that this is home. Carry-socialise from day 4. Ground/park wait for the ≥16-week core (~15 Oct) plus a vet nod.`,
+        text: `He's here! Days 1–3 are the decompression bubble: quiet flat, toilet spot, crate as a den, no visitors. No outings — just toilet trips, naps, gentle play and letting him learn that this is home. Carry-socialise from day 4. Ground/park wait for the ≥16-week core (16 Oct) plus a vet nod.`,
         focus: "Quiet flat, toilet-spot repetition, name + hand-feeding, long naps",
         expect: "Jet-lag tired, some whining at night, toilet accidents — all normal after a big flight",
         training: "Nothing formal — just reward calm, say his name, hand-feed part of each meal",
@@ -92,7 +92,7 @@ export function wobblesToday(now: Date = new Date()): TodayStage {
     return {
       stage: "Socialisation sprint — window closing",
       title: "Four Weeks to Make Count",
-      text: `${age.weeks} weeks — he arrived at nearly 13 weeks and the socialisation window closes around 16, so these first weeks ARE the sprint. Carry-socialise: people, surfaces, sounds, gentle handling in your arms. He is NOT park-cleared until the ≥16-week core (~15 Oct) plus a Singapore vet nod. Book SingVet.`,
+      text: `${age.weeks} weeks — he arrived at nearly 13 weeks and the socialisation window closes around 16, so these first weeks ARE the sprint. Carry-socialise: people, surfaces, sounds, gentle handling in your arms. He is NOT park-cleared until the ≥16-week core (16 Oct) plus a Singapore vet nod. Book SingVet.`,
       focus: "Carry-socialise; book SingVet; one or two new ticks a day. No public grass yet.",
       expect: "Growing confidence, testing boundaries, teething begins",
       training: "Day-1 skills all start now: name, sit, crate love, recall games — under 5 minutes a session",

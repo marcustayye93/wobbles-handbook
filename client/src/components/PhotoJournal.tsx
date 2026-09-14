@@ -17,6 +17,7 @@ import { groupPhotosByMonth } from "@/lib/photoGroups";
 import PhotoLightbox from "@/components/PhotoLightbox";
 import { Camera, Loader2, Plus } from "lucide-react";
 import { toast } from "sonner";
+import { Link } from "wouter";
 
 const INK = "#22364D";
 const SIENNA = "#C66A3D";
@@ -141,9 +142,9 @@ export default function PhotoJournal() {
     <section>
       <div className="flex items-baseline justify-between">
         <Eyebrow>The photo journal</Eyebrow>
-        <span className="text-[10px] font-body font-bold text-muted-foreground">
-          {(photos ?? []).length > 0 ? `${photos!.length} photo${photos!.length === 1 ? "" : "s"}` : ""}
-        </span>
+        <Link href="/import" className="text-[11px] font-body font-extrabold text-[#B4512E]">
+          Import Camera Roll
+        </Link>
       </div>
 
       <input

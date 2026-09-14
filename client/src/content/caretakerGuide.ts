@@ -39,17 +39,17 @@ export const CORE_DUTIES: { emoji: string; title: string; text: string }[] = [
   {
     emoji: "🛡️",
     title: "Keep him safe",
-    text: "Paddington stays at your house for the stay. Keep doors, gates and balconies closed, keep anything chewable or toxic out of reach, and never leave him unsupervised outdoors.",
+    text: "He lives in the Woodlands HDB with Marcus and Chesa. Mesh windows. First 3 days home from 23 Sep: flat only, no Shiro meeting. Shiro lives at the parents' landed house — never unsupervised together.",
   },
   {
     emoji: "💧",
     title: "Water & food, always",
-    text: "Fresh water available at all times (we provide the bowl). Feed his own kibble only — measured meals on his schedule, no human food, no other brands.",
+    text: "Fresh water always. His fresh food and/or Royal Canin. Food up at night. Do not invent a gram amount.",
   },
   {
     emoji: "🐾",
     title: "At least one walk a day",
-    text: "Minimum one daily walk to burn energy — a tired Cavoodle is a well-behaved Cavoodle. Keep him on-leash at all times outside.",
+    text: "Metal grid over a pee pad every 30 minutes. No scolding. No public grass until the ≥16-week SG core on/after Friday 16 Oct plus a vet nod.",
   },
 ];
 

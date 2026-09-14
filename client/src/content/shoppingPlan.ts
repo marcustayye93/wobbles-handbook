@@ -1,7 +1,7 @@
 /*
  * Pre-homecoming shopping countdown — week-by-week purchase plan.
  *
- * Sequences everything the flat needs before Paddington lands on 24 Sep 2026
+ * Sequences everything the flat needs before Paddington lands on 23 Sep 2026
  * (flies with Jet Pets on 23 Sep at 12w5d — past the AVS 12-week minimum). Ordering logic:
  *   - Big, slow-to-ship, needs-practice items first (IATA crate, pen, setup)
  *   - Admin with lead times mid-plan (insurance quotes, vet shortlist, PALS)
@@ -32,11 +32,11 @@ export interface ShoppingWeek {
   items: ShoppingItem[];
 }
 
-export const HOMECOMING_ISO = "2026-09-24";
+export const HOMECOMING_ISO = "2026-09-23";
 
 /**
  * Weeks run Monday–Sunday. Week 1 starts Mon 20 Jul 2026 (the plan's launch
- * week) and the final stretch ends on homecoming Thursday 24 Sep 2026.
+ * week) and the final stretch ends on homecoming Thursday 23 Sep 2026.
  */
 export const SHOPPING_WEEKS: ShoppingWeek[] = [
   {
@@ -267,7 +267,7 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
       {
         id: "import-licence",
         label: "Apply for the AVS import licence (valid 90 days — after PALS)",
-        why: "Valid 90 days, not 30. Apply after the PALS licence number is in; this week still covers the 24 Sep landing with margin.",
+        why: "Valid 90 days, not 30. Apply after the PALS licence number is in; this week still covers the 23 Sep homecoming with margin.",
         emoji: "🛂",
       },
     ],
@@ -308,9 +308,9 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
   {
     id: "w9",
     start: "2026-09-14",
-    end: "2026-09-24",
+    end: "2026-09-23",
     title: "Final stretch — perishables & landing prep",
-    theme: "The last-minute fresh stuff, then set the stage. He flies Wednesday 23rd and lands Thursday 24th.",
+    theme: "The last-minute fresh stuff, then set the stage. He flies Wednesday 23rd and comes home Wednesday 23rd.",
     emoji: "🏁",
     items: [
       {
@@ -368,7 +368,7 @@ export function toISODate(d: Date): string {
   return `${y}-${m}-${day}`;
 }
 
-/** "20–26 Jul" / "14–18 Sep" style compact range label */
+/** "20–26 Jul" / "14–14 Sep" style compact range label */
 export function weekRangeLabel(week: ShoppingWeek): string {
   const s = new Date(week.start + "T00:00:00");
   const e = new Date(week.end + "T00:00:00");
