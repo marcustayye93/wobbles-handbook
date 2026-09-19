@@ -28,29 +28,36 @@ describe("weekly household schedule", () => {
 });
 
 describe("care rota", () => {
-  it("puts bath on alternate Mondays anchored to 2026-09-28", () => {
-    expect(careTasksFor(d("2026-09-28")).map((t) => t.id)).toContain("bath");
-    expect(careTasksFor(d("2026-10-05")).map((t) => t.id)).not.toContain("bath");
-    expect(careTasksFor(d("2026-10-12")).map((t) => t.id)).toContain("bath");
+  it("is silent before homecoming — no teeth/nails/bath while he is in Queensland", () => {
+    expect(careTasksFor(d("2026-09-19"))).toEqual([]);
+    expect(careTasksFor(d("2026-09-22"))).toEqual([]);
   });
 
-  it("always includes nails + ears on Mondays, never on other days", () => {
-    const mon = careTasksFor(d("2026-09-28")).map((t) => t.id);
+  it("puts bath on alternate Mondays anchored to 2026-10-05, not day 5", () => {
+    expect(careTasksFor(d("2026-09-28")).map((t) => t.id)).not.toContain("bath");
+    expect(careTasksFor(d("2026-10-05")).map((t) => t.id)).toContain("bath");
+    expect(careTasksFor(d("2026-10-12")).map((t) => t.id)).not.toContain("bath");
+    expect(careTasksFor(d("2026-10-19")).map((t) => t.id)).toContain("bath");
+  });
+
+  it("always includes nails + ears on Mondays after landing, never on other days", () => {
+    const mon = careTasksFor(d("2026-10-05")).map((t) => t.id);
     expect(mon).toEqual(expect.arrayContaining(["nails", "ears"]));
-    expect(careTasksFor(d("2026-09-02")).map((t) => t.id)).not.toContain("nails");
+    expect(careTasksFor(d("2026-10-06")).map((t) => t.id)).not.toContain("nails");
   });
 
-  it("fires the parasite dose on the 24th of any month (homecoming-day anchor)", () => {
+  it("fires the parasite dose on the 24th of any month after landing", () => {
     expect(careTasksFor(d("2026-10-24")).map((t) => t.id)).toContain("parasite");
     expect(careTasksFor(d("2026-11-24")).map((t) => t.id)).toContain("parasite");
     expect(careTasksFor(d("2026-10-18")).map((t) => t.id)).not.toContain("parasite");
+    expect(careTasksFor(d("2026-08-24")).map((t) => t.id)).not.toContain("parasite");
   });
 
-  it("schedules teeth on Tue/Thu/Sat", () => {
-    expect(careTasksFor(d("2026-09-01")).map((t) => t.id)).toContain("teeth"); // Tue
-    expect(careTasksFor(d("2026-09-03")).map((t) => t.id)).toContain("teeth"); // Thu
-    expect(careTasksFor(d("2026-09-05")).map((t) => t.id)).toContain("teeth"); // Sat
-    expect(careTasksFor(d("2026-09-02")).map((t) => t.id)).not.toContain("teeth"); // Wed
+  it("schedules teeth on Tue/Thu/Sat after landing", () => {
+    expect(careTasksFor(d("2026-09-29")).map((t) => t.id)).toContain("teeth"); // Tue
+    expect(careTasksFor(d("2026-10-01")).map((t) => t.id)).toContain("teeth"); // Thu
+    expect(careTasksFor(d("2026-10-03")).map((t) => t.id)).toContain("teeth"); // Sat
+    expect(careTasksFor(d("2026-09-30")).map((t) => t.id)).not.toContain("teeth"); // Wed
   });
 });
 
@@ -73,7 +80,7 @@ describe("rotating activity ideas", () => {
     expect(new Set(titles).size).toBeGreaterThanOrEqual(5);
   });
 
-  it("serves prep ideas pre-homecoming", () => {
+  it("serves prep ideas pre-homecoming, never a big-park day", () => {
     const idea = activityFor(d("2026-08-01"), true);
     expect([
       "Prep mission",
@@ -83,6 +90,14 @@ describe("rotating activity ideas", () => {
       "Den dry-run",
       "Scout the route",
     ]).toContain(idea.title);
+    expect(idea.title).not.toMatch(/park|dog-run/i);
+  });
+
+  it("weekend ideas before 16 Oct are carry/indoor, not dog-run", () => {
+    const sat = activityFor(d("2026-09-26"), false); // first Saturday home
+    expect(["Carry-adventure", "Milestone photo shoot", "Frozen KONG craft", "Hide-and-seek", "Settle-on-mat practice", "Café training mission"]).toContain(sat.title);
+    expect(sat.title).not.toBe("Big-park expedition");
+    expect(sat.title).not.toBe("Dog-run morning");
   });
 
   it("bonus idea differs from the main idea", () => {
@@ -92,11 +107,16 @@ describe("rotating activity ideas", () => {
 });
 
 describe("park night rhythm", () => {
-  it("alternates days anchored to 2026-09-25", () => {
-    expect(isParkNight(d("2026-09-25"))).toBe(true);
-    expect(isParkNight(d("2026-09-26"))).toBe(false);
-    expect(isParkNight(d("2026-09-27"))).toBe(true);
-    expect(isParkNight(d("2026-09-23"))).toBe(false); // before anchor
+  it("does not start on 25 Sep (decompression day 3)", () => {
+    expect(isParkNight(d("2026-09-25"))).toBe(false);
+    expect(isParkNight(d("2026-09-23"))).toBe(false);
+    expect(isParkNight(d("2026-10-16"))).toBe(false);
+  });
+
+  it("alternates days from 30 Oct (after 16-week core plus vet nod)", () => {
+    expect(isParkNight(d("2026-10-30"))).toBe(true);
+    expect(isParkNight(d("2026-10-31"))).toBe(false);
+    expect(isParkNight(d("2026-11-01"))).toBe(true);
   });
 });
 

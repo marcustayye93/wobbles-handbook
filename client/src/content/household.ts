@@ -19,6 +19,32 @@ export const FAMILY: Person[] = [
   { id: "chesa", name: "Chesa", emoji: "👩🏻" },
 ];
 
+export const HOMECOMING_ISO = "2026-09-23";
+/** 16-week core. Public grass still needs a SingVet nod after this date. */
+export const CORE_16W_ISO = "2026-10-16";
+/** First bath Monday — 12 days home, not day 5. */
+export const FIRST_BATH_MONDAY = "2026-10-05";
+/** First park-night after the 16-week core plus a vet nod. */
+export const PARK_NIGHT_ANCHOR = "2026-10-30";
+
+function startOfLocalDay(date: Date): Date {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}
+
+function onOrAfter(iso: string, date: Date): boolean {
+  return startOfLocalDay(date).getTime() >= new Date(iso + "T00:00:00").getTime();
+}
+
+/** True from homecoming day 23 Sep. */
+export function hasLanded(date: Date): boolean {
+  return onOrAfter(HOMECOMING_ISO, date);
+}
+
+/** True from the 16-week core. Labels still say wait for the SingVet nod. */
+export function groundWalksAllowed(date: Date): boolean {
+  return onOrAfter(CORE_16W_ISO, date);
+}
+
 /* ---------------- Weekly schedule ----------------
  * Marcus: WFH Mon + Fri, office Tue/Wed/Thu, weekends home.
  * Chesa:  home most days; office sometimes on Tue and Thu.
@@ -84,12 +110,26 @@ export const WEEK_PLAN: DayPlan[] = [
     label: "Saturday",
     marcus: "home",
     chesa: "home",
-    note: "Flexible weekend day — errands with Paddington carried along, or a bigger park by car.",
+    note: "Flexible weekend day — errands. Big-park / dog-run only after the 16 Oct core plus a SingVet nod.",
   },
 ];
 
 export function dayPlanFor(date: Date): DayPlan {
-  return WEEK_PLAN[date.getDay()];
+  const base = WEEK_PLAN[date.getDay()];
+  if (!hasLanded(date)) {
+    if (base.dow === 6)
+      return { ...base, note: "He is still in Queensland — kit list, crate dry-run, no puppy on errands." };
+    if (base.dow === 0)
+      return { ...base, note: "Paddington focus day for the humans — handbook and shopping, not a park day." };
+    return { ...base, note: `${base.note} He is not home yet — no puppy care tasks today.` };
+  }
+  if (!groundWalksAllowed(date) && (base.dow === 0 || base.dow === 6)) {
+    return {
+      ...base,
+      note: "Weekend at home — carry-adventures only. Public grass waits for Friday 16 Oct plus a SingVet nod.",
+    };
+  }
+  return base;
 }
 
 /* ---------------- Care rota ----------------
@@ -110,14 +150,15 @@ export interface CareTask {
 }
 
 /** ISO week index used for fortnight alternation, anchored so the first
- * Monday after homecoming (2026-09-28) is a bath Monday. */
+ * bath Monday is 5 Oct 2026 (12 days home), not day 5. */
 function fortnightIndex(date: Date): number {
-  const anchor = new Date("2026-09-28T00:00:00"); // first bath Monday
+  const anchor = new Date(FIRST_BATH_MONDAY + "T00:00:00");
   const days = Math.floor((date.getTime() - anchor.getTime()) / 86400000);
   return Math.floor(days / 7);
 }
 
 export function careTasksFor(date: Date): CareTask[] {
+  if (!hasLanded(date)) return [];
   const dow = date.getDay();
   const dom = date.getDate();
   const out: CareTask[] = [];
@@ -227,7 +268,17 @@ const OFFICE_IDEAS: ActivityIdea[] = [
   { emoji: "🦴", title: "Long-chew wind-down", text: "A safe long-lasting chew after dinner — chewing is self-soothing after a stimulating day apart." },
 ];
 
-/** Weekend-specific bigger adventures (layered on top for Sat/Sun) */
+/** Weekend before park-cleared: carry / indoor only. No dog-run or big-park. */
+const WEEKEND_PRECLEAR_IDEAS: ActivityIdea[] = [
+  { emoji: "🚌", title: "Carry-adventure", text: "Carry him somewhere genuinely new — a different block, a lift with strangers, the wet market's edge. Paws stay off public grass." },
+  { emoji: "📸", title: "Milestone photo shoot", text: "Same spot, same blanket, every few weeks — future-you will treasure the growth series. Add it to Memories." },
+  { emoji: "🍧", title: "Frozen KONG craft", text: "Stuff a KONG with soaked kibble and freeze it for tonight — tropical-weather enrichment that doubles as teething relief." },
+  { emoji: "🫣", title: "Hide-and-seek", text: "One of you holds him, the other hides behind a door — then call once. Builds recall AND makes you the best game in the flat." },
+  { emoji: "🧘", title: "Settle-on-mat practice", text: "Practise 'go to mat' while you both work/read — calm is a skill. Reward quietly every time he chooses the mat." },
+  { emoji: "☕", title: "Café training mission", text: "A pet-friendly café: he practises settling on a mat under the table, carried in. Ten minutes is a win. No ground time." },
+];
+
+/** Weekend-specific bigger adventures (only after 16 Oct + vet nod). */
 const WEEKEND_IDEAS: ActivityIdea[] = [
   { emoji: "🚗", title: "Big-park expedition", text: "Drive to a bigger park this weekend — new smells for him, proper walk for you. Bring water and go before 10am." },
   { emoji: "🏞️", title: "Dog-run morning", text: "Once he's fully vaccinated: Woodlands Waterfront dog run, early slot when it's cool and the regulars are friendly." },
@@ -258,7 +309,9 @@ function pick<T>(pool: T[], date: Date, salt = 0): T {
 export function activityFor(date: Date, homecomingFuture: boolean): ActivityIdea {
   if (homecomingFuture) return pick(PREP_IDEAS, date);
   const dow = date.getDay();
-  if (dow === 0 || dow === 6) return pick(WEEKEND_IDEAS, date, 3);
+  if (dow === 0 || dow === 6) {
+    return pick(groundWalksAllowed(date) ? WEEKEND_IDEAS : WEEKEND_PRECLEAR_IDEAS, date, 3);
+  }
   const plan = dayPlanFor(date);
   const officeDay = plan.marcus === "office";
   return officeDay ? pick(OFFICE_IDEAS, date, 1) : pick(HOME_IDEAS, date, 2);
@@ -275,10 +328,11 @@ export function bonusActivityFor(date: Date, homecomingFuture: boolean): Activit
 }
 
 /* ---------------- Park-night rhythm ----------------
- * 7pm park socialisation every other day, anchored to homecoming.
+ * 7pm park socialisation every other day, only after the 16-week core
+ * plus a vet nod. Anchor is 30 Oct, not 25 Sep (decompression day 3).
  */
 export function isParkNight(date: Date): boolean {
-  const anchor = new Date("2026-09-25T00:00:00"); // first park night, day after homecoming
+  const anchor = new Date(PARK_NIGHT_ANCHOR + "T00:00:00");
   const days = Math.floor((date.getTime() - anchor.getTime()) / 86400000);
   return days >= 0 && days % 2 === 0;
 }

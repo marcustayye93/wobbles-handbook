@@ -64,9 +64,9 @@ describe("WEEK1_CARE_ACTIONS", () => {
 });
 
 describe("defaultOptionFor — time-of-day smarts", () => {
-  it("walk: morning before noon, evening after", () => {
-    expect(defaultOptionFor("walk", 8)).toBe("Morning walk");
-    expect(defaultOptionFor("walk", 18)).toBe("Evening walk");
+  it("walk: carry-outing until the 16 Oct core, not a morning grass walk", () => {
+    expect(defaultOptionFor("walk", 8)).toBe("Carry outing (pre-vax)");
+    expect(defaultOptionFor("walk", 18)).toBe("Carry outing (pre-vax)");
   });
 
   it("meal: breakfast / lunch / dinner windows", () => {

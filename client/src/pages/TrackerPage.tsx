@@ -6,7 +6,7 @@
 import { useMemo, useState } from "react";
 import { useParams } from "wouter";
 import { PageShell, PageHeader, PawDivider, Eyebrow } from "@/components/AppShell";
-import { getTracker } from "@/lib/trackers";
+import { getTracker, trackerOptionChoices } from "@/lib/trackers";
 import { useTrackerEntries, useAddTrackerEntry, useRemoveTrackerEntry } from "@/hooks/useSyncedData";
 import { todayISO, nowHM, friendlyDate } from "@/lib/dates";
 import { Button } from "@/components/ui/button";
@@ -55,6 +55,7 @@ export default function TrackerPage() {
 
   if (!meta) return <NotFound />;
   const f = meta.fields;
+  const optionChoices = trackerOptionChoices(meta);
 
   const addEntry = () => {
     if (f.value && value !== "") {
@@ -144,13 +145,13 @@ export default function TrackerPage() {
               )}
             </div>
 
-            {f.options && (
+            {optionChoices.length > 0 && (
               <div className="mt-3">
                 <span className="text-[10px] font-body font-extrabold uppercase tracking-wide text-muted-foreground">
-                  {f.options.label}
+                  {f.options?.label}
                 </span>
                 <div className="flex flex-wrap gap-1.5 mt-1.5">
-                  {f.options.choices.map((c) => (
+                  {optionChoices.map((c) => (
                     <button
                       key={c}
                       onClick={() => setOption(c)}

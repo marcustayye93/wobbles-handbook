@@ -11,7 +11,8 @@
 import { useRef } from "react";
 import { useAddTrackerEntry, useRemoveTrackerEntry, useTrackerFeed } from "@/hooks/useSyncedData";
 import { todayISO, nowHM } from "@/lib/dates";
-import { getTracker } from "@/lib/trackers";
+import { getTracker, WALK_CARRY } from "@/lib/trackers";
+import { groundWalksAllowed } from "@/content/household";
 import { toast } from "sonner";
 
 export interface CareAction {
@@ -29,7 +30,8 @@ export const CARE_ACTIONS: CareAction[] = [
     trackerId: "walk",
     label: "Walk",
     emoji: "🐾",
-    defaultOption: (h) => (h < 12 ? "Morning walk" : "Evening walk"),
+    defaultOption: (h) =>
+      groundWalksAllowed(new Date()) ? (h < 12 ? "Morning walk" : "Evening walk") : WALK_CARRY,
   },
   {
     trackerId: "feeding",

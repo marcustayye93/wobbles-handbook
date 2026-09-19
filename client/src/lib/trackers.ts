@@ -4,6 +4,8 @@
  */
 // (storage moved to server — see hooks/useSyncedData.ts)
 
+import { groundWalksAllowed } from "@/content/household";
+
 export interface TrackerEntry {
   id: string; // unique id
   date: string; // ISO yyyy-mm-dd
@@ -106,10 +108,10 @@ export const TRACKERS: TrackerMeta[] = [
     group: "daily",
     empty: "Strolls & sniffaris",
     intro:
-      "Puppy rule of thumb: ~5 minutes of structured walking per month of age, up to twice a day — but sniffing time is free. Log each walk so the 7:15am and evening outings actually happen, whoever is home.",
+      "Until the 16 Oct core plus a SingVet nod, log carry-outings only — no Morning walk, Evening walk, or Park visit. After clearance, sniffing time still beats a long march.",
     fields: {
       time: true,
-      options: { label: "Walk", choices: ["Morning walk", "Evening walk", "Sniffari / potter", "Park visit", "Carry outing (pre-vax)"] },
+      options: { label: "Walk", choices: ["Carry outing (pre-vax)", "Sniffari / potter (indoors)", "Morning walk", "Evening walk", "Park visit"] },
       value: { label: "Duration", unit: "min", min: 1, max: 120, step: 1 },
       note: true,
     },
@@ -328,6 +330,21 @@ export const TRACKERS: TrackerMeta[] = [
 
 export function getTracker(id: string): TrackerMeta | undefined {
   return TRACKERS.find((t) => t.id === id);
+}
+
+export const WALK_CARRY = "Carry outing (pre-vax)";
+
+/** Walk log choices: ground walks hidden until the 16 Oct core. */
+export function walkChoices(now: Date = new Date()): string[] {
+  if (groundWalksAllowed(now)) {
+    return [WALK_CARRY, "Morning walk", "Evening walk", "Sniffari / potter", "Park visit"];
+  }
+  return [WALK_CARRY, "Sniffari / potter (indoors)"];
+}
+
+export function trackerOptionChoices(meta: TrackerMeta, now: Date = new Date()): string[] {
+  if (meta.id === "walk") return walkChoices(now);
+  return meta.fields.options?.choices ?? [];
 }
 
 /** Ordered groups for the hub: routine first, then health, then development. */

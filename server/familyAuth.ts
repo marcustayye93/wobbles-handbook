@@ -4,7 +4,11 @@ import { FAMILY_PROFILES, type FamilyProfile } from "./family";
 
 export const FAMILY_COOKIE = "paddington_family";
 export const FAMILY_CODE = (process.env.FAMILY_CODE || "HELLOTHERE").trim();
-const SECRET = process.env.FAMILY_SESSION_SECRET || "paddington-family-handbook-preview";
+/** Prefer env; do not publish a new session secret in the repo. */
+const SECRET =
+  process.env.FAMILY_SESSION_SECRET ||
+  process.env.JWT_SECRET ||
+  "paddington-family-handbook-preview";
 export type FamilySession = { ok: true; profile: FamilyProfile; iat: number };
 
 function sign(payload: string) { return createHmac("sha256", SECRET).update(payload).digest("base64url"); }

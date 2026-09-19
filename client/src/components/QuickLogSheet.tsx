@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { TRACKERS, getTracker } from "@/lib/trackers";
+import { TRACKERS, getTracker, trackerOptionChoices } from "@/lib/trackers";
 import { useAddTrackerEntry } from "@/hooks/useSyncedData";
 import { todayISO, nowHM } from "@/lib/dates";
 import { cn } from "@/lib/utils";
@@ -41,7 +41,8 @@ export default function QuickLogSheet({ open, onOpenChange, initialTracker }: Pr
       setDate(todayISO());
       setTime(nowHM());
       setValue("");
-      setOption(id ? (getTracker(id)?.fields.options?.choices[0] ?? "") : "");
+      const t = id ? getTracker(id) : undefined;
+      setOption(t ? (trackerOptionChoices(t)[0] ?? "") : "");
       setNote("");
     }
   }, [open, initialTracker]);
@@ -51,7 +52,8 @@ export default function QuickLogSheet({ open, onOpenChange, initialTracker }: Pr
 
   const pick = (id: string) => {
     setTrackerId(id);
-    setOption(getTracker(id)?.fields.options?.choices[0] ?? "");
+    const t = getTracker(id);
+    setOption(t ? (trackerOptionChoices(t)[0] ?? "") : "");
     setValue("");
     setNote("");
   };
@@ -161,7 +163,7 @@ export default function QuickLogSheet({ open, onOpenChange, initialTracker }: Pr
                   {f.options.label}
                 </span>
                 <div className="flex flex-wrap gap-1.5 mt-1.5">
-                  {f.options.choices.map((c) => (
+                  {(meta ? trackerOptionChoices(meta) : f.options.choices).map((c) => (
                     <button
                       key={c}
                       onClick={() => setOption(c)}
