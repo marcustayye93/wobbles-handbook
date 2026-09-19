@@ -1,4 +1,4 @@
-import { ART_FACE, ART_HERO } from "./localArt";
+import { ART_FACE, ART_GROOM, ART_HERO, ART_PEEK, ART_SLEEP } from "./localArt";
 
 /*
  * Storybook Picture-Book theme — content data.
@@ -9,24 +9,24 @@ import { ART_FACE, ART_HERO } from "./localArt";
 export const ASSETS = {
   icon: ART_FACE,
   adultRendering: ART_HERO,
-  heroGrooming: ART_HERO,
+  heroGrooming: ART_GROOM,
   heroSingapore: ART_HERO,
   heroFirstDay: ART_HERO,
   photoFace: ART_FACE,
   photoNewborn: ART_FACE,
   v2Hero: ART_HERO,
-  v2SpotBed: ART_HERO,
-  v2SpotPeek: ART_FACE,
-  v2SpotHighfive: ART_HERO,
+  v2SpotBed: ART_SLEEP,
+  v2SpotPeek: ART_PEEK,
+  v2SpotHighfive: ART_FACE,
   v2ChMemories: ART_HERO,
 } as const;
 
 /** v2 chapter cover illustrations, keyed by section slug */
 export const CHAPTER_COVERS: Record<string, string> = {
   "coat-science": ART_HERO,
-  "first-day": ART_HERO,
+  "first-day": ART_SLEEP,
   parenting: ART_HERO,
-  "grooming-masterclass": ART_HERO,
+  "grooming-masterclass": ART_GROOM,
   "grooming-psychology": ART_HERO,
   "haircut-styles": ART_HERO,
   "daily-hacks": ART_HERO,

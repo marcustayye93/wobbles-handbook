@@ -195,8 +195,9 @@ export default function Home() {
         <div className="relative mt-3 fade-up" style={{ animationDelay: "80ms" }}>
           <img
             src={ASSETS.v2Hero}
-            alt="Gouache illustration of Paddington the red-parti Cavoodle puppy on a navy blanket"
-            className="w-full aspect-[2/1] max-h-[168px] object-cover object-top"
+            alt="Gouache of Paddington the red-parti Cavoodle in a pink gingham bandana"
+            className="w-full aspect-[2/1] max-h-[168px] object-cover object-[center_16%]"
+            style={{ objectPosition: "center 16%" }}
           />
           <div
             className="absolute inset-x-0 bottom-0 h-10"

@@ -6,6 +6,13 @@
 import { useMemo } from "react";
 import { PageShell, Eyebrow, PawDivider } from "@/components/AppShell";
 import { ASSETS, MILESTONES, daysUntil, formatDate, wobblesAge } from "@/content/wobbles";
+import {
+  ART_GRASS_CLOSE,
+  ART_GRASS_WIDE,
+  ART_GROOM,
+  ART_HELD,
+  ART_SCALE,
+} from "@/content/localArt";
 import { TRACKERS } from "@/lib/trackers";
 import { useTrackerFeed, rowToEntry, type TrackerRow } from "@/hooks/useSyncedData";
 import { cn } from "@/lib/utils";
@@ -18,6 +25,14 @@ import {
 const INK = "#22364D";
 const SIENNA = "#C66A3D";
 const MOSS = "#7B8C6A";
+
+const FARM_PHOTOS: { src: string; alt: string }[] = [
+  { src: ART_GRASS_CLOSE, alt: "Paddington sitting in the grass at The Doghouse QLD" },
+  { src: ART_GRASS_WIDE, alt: "Paddington on the farm lawn" },
+  { src: ART_GROOM, alt: "Paddington on the grooming table" },
+  { src: ART_HELD, alt: "Paddington being held at the farm" },
+  { src: ART_SCALE, alt: "Paddington's markings — the scale reading 888.8 is not a weight" },
+];
 
 const ICONS: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
   star: Star,
@@ -104,6 +119,24 @@ export default function Memories() {
       <div className="px-5 pt-6">
         {/* family-shared photo journal */}
         <PhotoJournal />
+
+        <PawDivider />
+
+        <Eyebrow>From the farm</Eyebrow>
+        <div className="mt-3 grid grid-cols-2 gap-2 mb-2">
+          {FARM_PHOTOS.map((p) => (
+            <figure key={p.src} className="sticker-card overflow-hidden p-0">
+              <img
+                src={p.src}
+                alt={p.alt}
+                className="w-full aspect-square object-cover object-[center_30%]"
+              />
+            </figure>
+          ))}
+        </div>
+        <p className="text-[11px] font-body text-muted-foreground leading-snug mb-6">
+          Real Paddy at The Doghouse QLD. The scale photo is markings only — 888.8 is not a weight.
+        </p>
 
         <PawDivider />
 

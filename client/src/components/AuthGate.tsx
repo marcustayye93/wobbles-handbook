@@ -29,8 +29,13 @@ function FamilyCodeGate({ onUnlocked }: { onUnlocked: (profile: Profile) => void
   return (
     <div className="phone-shell paper-grain min-h-screen flex flex-col">
       <div className="relative">
-        <img src={ASSETS.v2Hero} alt="" className="w-full aspect-[4/5] max-h-[46vh] object-cover object-top"
-          onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
+        <img
+          src={ASSETS.v2Hero}
+          alt="Paddington sitting in a pink gingham bandana"
+          className="w-full aspect-[4/5] max-h-[46vh] object-cover object-[center_30%]"
+          style={{ objectPosition: "center 30%" }}
+          onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+        />
         <div className="absolute inset-x-0 bottom-0 h-24" style={{ background: "linear-gradient(to bottom, transparent, #F8F3EB)" }} />
       </div>
       <form onSubmit={submit} className="px-6 -mt-10 relative z-10 flex-1 flex flex-col">

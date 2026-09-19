@@ -52,7 +52,7 @@ export default function About() {
               className="w-full aspect-square object-cover rounded-3xl border-2 border-card shadow-sm rotate-[0.8deg]"
             />
             <span className="absolute bottom-2 left-2 bg-card/92 px-2 py-1 rounded-full text-[10px] font-extrabold border border-border">
-              Newborn
+              Wave
             </span>
           </div>
           <div className="relative flex-1">
@@ -62,12 +62,12 @@ export default function About() {
               className="w-full aspect-square object-cover rounded-3xl border-2 border-card shadow-sm -rotate-[0.8deg]"
             />
             <span className="absolute bottom-2 left-2 bg-card/92 px-2 py-1 rounded-full text-[10px] font-extrabold border border-border">
-              Adult (AI guess)
+              Bandana sit
             </span>
           </div>
         </div>
         <p className="text-[11px] text-muted-foreground text-center mt-2 italic">
-          Sketches of Paddington for now — real photos coming once he's home. Right: an AI-imagined grown-up Paddington.
+          Picture-book Paddington — farm photos live in Memories. Right: the bandana-sit gouache, not an adult guess.
         </p>
       </div>
 
