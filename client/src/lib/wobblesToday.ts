@@ -27,6 +27,7 @@ import {
   currentWeek as currentShoppingWeek,
   overdueItems as overdueShoppingItems,
 } from "@/content/shoppingPlan";
+import { socialMissionFor, type SocialMission } from "@/content/socialMissions";
 
 export interface TodayStage {
   stage: string;
@@ -142,6 +143,7 @@ export interface DailyBrief {
   activity: ActivityIdea;
   parkNight: boolean;
   reminders: OneOffReminder[];
+  mission: SocialMission | null;
 }
 
 function presenceLabel(p: "home" | "office" | "maybe-office"): string {
@@ -167,6 +169,7 @@ export function todaysBrief(
     activity: activityFor(now, homecomingFuture),
     parkNight: !homecomingFuture && age.weeks >= 16 && isParkNight(now),
     reminders: settings ? remindersFor(now, settings) : [],
+    mission: socialMissionFor(now),
   };
 }
 

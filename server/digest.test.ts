@@ -117,6 +117,19 @@ describe("composeDigest", () => {
     // 2026-06-26 → 2026-07-20 = 24 days = 3w 3d
     expect(d.title).toContain("3w 3d");
   });
+
+  it("always includes a socialisation scorecard pointing at 100 Things", () => {
+    const empty = composeDigest([], [], WINDOW);
+    expect(empty.content).toMatch(/Socialisation scorecard: 0 experiences/);
+    expect(empty.content).toMatch(/100 Things/);
+    const withSocial = composeDigest(
+      [row({ trackerId: "social", date: "2026-07-19", option: "New person" })],
+      [],
+      WINDOW,
+    );
+    expect(withSocial.content).toMatch(/Socialisation scorecard: 1 experience/);
+    expect(withSocial.content).toMatch(/100-things/);
+  });
 });
 
 /* ------------------------------------------------------------------ */

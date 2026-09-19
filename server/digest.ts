@@ -161,6 +161,17 @@ export function composeDigest(
   }
 
   lines.push("");
+  if (social === 0) {
+    lines.push(
+      "Socialisation scorecard: 0 experiences logged this week. Open 100 Things (/handbook/100-things) and pick one tiny carry-outing. The window is short.",
+    );
+  } else {
+    lines.push(
+      `Socialisation scorecard: ${social} experience${social === 1 ? "" : "s"} logged this week. Open 100 Things (/handbook/100-things) to see what else the window is for.`,
+    );
+  }
+
+  lines.push("");
   lines.push("Open Paddington's Handbook → Trackers for the full picture.");
 
   return {

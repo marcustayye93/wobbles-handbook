@@ -350,7 +350,7 @@ const HOME_IDEAS: ActivityIdea[] = [
   { emoji: "🫣", title: "Hide-and-seek", text: "One of you holds him, the other hides behind a door — then call once. Builds recall AND makes you the best game in the flat." },
   { emoji: "🍧", title: "Frozen KONG craft", text: "Stuff a KONG with soaked kibble and freeze it for tonight — tropical-weather enrichment that doubles as teething relief." },
   { emoji: "🎓", title: "Trick of the week", text: "Pick one party trick (spin, paw, touch) and do three 2-minute sessions today. Tiny sessions, big results." },
-  { emoji: "🛋️", title: "Chill-together reward", text: "After the evening walk, deliberate calm cuddle time on the floor at his level — bonding is training too." },
+  { emoji: "🛋️", title: "Chill-together reward", text: "After his last pad trip, deliberate calm cuddle time on the floor at his level. Bonding is training too." },
 ];
 
 /** Office-leaning days (Tue–Thu) — alone-time skills + low-effort enrichment */
@@ -360,7 +360,7 @@ const OFFICE_IDEAS: ActivityIdea[] = [
   { emoji: "⏱️", title: "Alone-time reps", text: "Whoever's home: three fake departures today (keys, shoes, out 2–5 min, back, no fuss). Separation practice in tiny doses." },
   { emoji: "🧩", title: "Puzzle-feeder dinner", text: "Tonight's dinner goes in the puzzle feeder or a rolled towel — an office day should still end with a brain workout." },
   { emoji: "📹", title: "Puppy-cam check", text: "Peek at the camera at lunch: is he sleeping (great) or pacing (shorten tomorrow's alone stretch)? Data beats guilt." },
-  { emoji: "🌆", title: "Lobby-bench social", text: "After the evening walk, 5 minutes on the void-deck bench watching Woodlands go by — passive socialisation, zero effort." },
+  { emoji: "🌆", title: "Lobby-bench social", text: "Five minutes on the void-deck bench with him on your lap, watching Woodlands go by. Paws stay off the ground until the 16 Oct core plus a SingVet nod." },
   { emoji: "🦴", title: "Long-chew wind-down", text: "A safe long-lasting chew after dinner — chewing is self-soothing after a stimulating day apart." },
 ];
 
@@ -406,7 +406,8 @@ export function activityFor(date: Date, homecomingFuture: boolean): ActivityIdea
   if (homecomingFuture) return pick(PREP_IDEAS, date);
   const dow = date.getDay();
   if (dow === 0 || dow === 6) {
-    return pick(groundWalksAllowed(date) ? WEEKEND_IDEAS : WEEKEND_PRECLEAR_IDEAS, date, 3);
+    const groundWeekend = date.getTime() >= new Date(PARK_NIGHT_ANCHOR + "T00:00:00").getTime();
+    return pick(groundWeekend ? WEEKEND_IDEAS : WEEKEND_PRECLEAR_IDEAS, date, 3);
   }
   const plan = dayPlanFor(date);
   const officeDay = plan.marcus === "office";

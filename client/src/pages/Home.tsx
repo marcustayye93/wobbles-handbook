@@ -12,6 +12,7 @@ import SyncIndicator from "@/components/SyncIndicator";
 import QuickLogSheet from "@/components/QuickLogSheet";
 import TodayTimeline, { useDayFeed } from "@/components/TodayTimeline";
 import CareRow, { WEEK1_CARE_ACTIONS } from "@/components/CareRow";
+import SocialMissionCard from "@/components/SocialMissionCard";
 import SearchDialog from "@/components/SearchDialog";
 import { wobblesToday, todaysNudges, todaysBrief } from "@/lib/wobblesToday";
 import HouseholdSettingsSheet from "@/components/HouseholdSettingsSheet";
@@ -445,6 +446,8 @@ export default function Home() {
           </div>
         )}
       </section>
+
+      {brief.mission && <SocialMissionCard mission={brief.mission} />}
 
       {/* ===== Paddington Today ===== */}
       <section className="relative z-10 px-4 mt-6">

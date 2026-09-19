@@ -12,6 +12,12 @@ import {
   WEEK_PLAN,
 } from "../client/src/content/household";
 import { todaysBrief, todaysNudges, wobblesToday } from "../client/src/lib/wobblesToday";
+import {
+  socialMissionFor,
+  PRECLEAR_MISSIONS,
+  ALL_GROUND_MISSIONS,
+  missionCategoriesIn,
+} from "../client/src/content/socialMissions";
 
 const d = (iso: string) => new Date(iso + "T09:00:00");
 
@@ -143,6 +149,21 @@ describe("rotating activity ideas", () => {
     expect(sat.title).not.toBe("Dog-run morning");
   });
 
+  it("weekend ideas stay carry-only through the 16 Oct core until the nod window (30 Oct)", () => {
+    const sat = activityFor(d("2026-10-17"), false);
+    expect(sat.title).not.toBe("Big-park expedition");
+    expect(sat.title).not.toBe("Dog-run morning");
+    expect(sat.text.toLowerCase()).not.toMatch(/dog run|off-leash|public grass/);
+  });
+
+  it("office lobby-bench never suggests an evening walk on the ground", () => {
+    const tue = activityFor(d("2026-09-29"), false); // Tuesday after landing
+    if (tue.title === "Lobby-bench social") {
+      expect(tue.text).toMatch(/Paws stay off the ground/);
+      expect(tue.text).not.toMatch(/evening walk/);
+    }
+  });
+
   it("bonus idea differs from the main idea", () => {
     const date = d("2026-09-09");
     expect(bonusActivityFor(date, false).title).not.toBe(activityFor(date, false).title);
@@ -206,5 +227,58 @@ describe("wobblesToday stage layer accepts a date", () => {
     expect(wobblesToday(d("2026-08-01")).stage.toLowerCase()).toContain("litter"); // 5w old
     expect(wobblesToday(d("2026-08-25")).stage.toLowerCase()).toContain("breeder"); // ~8.5w old
     expect(wobblesToday(d("2026-12-01")).stage).toContain("Junior");
+  });
+});
+
+describe("daily socialisation missions", () => {
+  it("is absent before homecoming and present every day from 23 Sep until the core", () => {
+    expect(socialMissionFor(d("2026-09-22"))).toBeNull();
+    for (let i = 0; i < 24; i++) {
+      const day = new Date("2026-09-23T09:00:00");
+      day.setDate(day.getDate() + i);
+      expect(socialMissionFor(day), day.toISOString()).not.toBeNull();
+    }
+  });
+
+  it("is deterministic: the same date always returns the same mission", () => {
+    const a = socialMissionFor(d("2026-09-27"));
+    const b = socialMissionFor(d("2026-09-27"));
+    expect(a?.id).toBe(b?.id);
+    expect(a?.title).toBe(b?.title);
+  });
+
+  it("covers all five pre-clearance categories in the pool", () => {
+    const cats = missionCategoriesIn(PRECLEAR_MISSIONS);
+    expect(cats).toEqual(expect.arrayContaining(["carry", "people", "noise", "car", "handling"]));
+  });
+
+  it("gives every pre-clearance mission a duration, bring-list, numbered steps, and safety with whys", () => {
+    for (const m of PRECLEAR_MISSIONS) {
+      expect(m.minutes).toBeGreaterThanOrEqual(5);
+      expect(m.bring.length).toBeGreaterThan(0);
+      expect(m.steps.length).toBeGreaterThanOrEqual(3);
+      const safety = m.safety.join(" ");
+      expect(safety).toMatch(/parvo/i);
+      expect(safety).toMatch(/strange dogs/i);
+      expect(safety).toMatch(/pee spots/i);
+      expect(safety).toMatch(/circle of hands/i);
+      expect(safety).toMatch(/two seconds/i);
+    }
+  });
+
+  it("switches to ground-based missions on/after 16 Oct, still labelled as needing the nod", () => {
+    const m = socialMissionFor(d("2026-10-16"));
+    expect(m).not.toBeNull();
+    expect(m!.category).toBe("ground");
+    expect(m!.safety.join(" ")).toMatch(/SingVet nod/);
+    for (const g of ALL_GROUND_MISSIONS) {
+      expect(g.category).toBe("ground");
+      expect(g.safety.join(" ")).toMatch(/SingVet nod/);
+    }
+  });
+
+  it("attaches today's mission to the daily brief after landing", () => {
+    expect(todaysBrief(d("2026-09-22")).mission).toBeNull();
+    expect(todaysBrief(d("2026-09-26")).mission?.title.length).toBeGreaterThan(0);
   });
 });
