@@ -102,7 +102,14 @@ export default function Home() {
     defaultSettings(),
   );
   const settings = useMemo(() => normalizeSettings(rawSettings), [rawSettings]);
-  const brief = useMemo(() => todaysBrief(new Date(), settings), [settings]);
+  const desexed = useMemo(
+    () => rows.some((r) => r.trackerId === "vaccines" && r.option === "Desexing"),
+    [rows],
+  );
+  const brief = useMemo(
+    () => todaysBrief(new Date(), settings, { desexed }),
+    [settings, desexed],
+  );
   const entriesFor = useMemo(
     () => (id: string) => rows.filter((r) => r.trackerId === id).map(rowToEntry),
     [rows],

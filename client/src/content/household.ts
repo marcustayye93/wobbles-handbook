@@ -157,7 +157,23 @@ function fortnightIndex(date: Date): number {
   return Math.floor(days / 7);
 }
 
-export function careTasksFor(date: Date): CareTask[] {
+export interface CareRotaContext {
+  /** True once a Health tracker "Desexing" event is logged. */
+  desexed?: boolean;
+}
+
+function yearMonth(date: Date): { y: number; m: number; d: number } {
+  return { y: date.getFullYear(), m: date.getMonth() + 1, d: date.getDate() };
+}
+
+/** Whole calendar days from `date` until ISO yyyy-mm-dd (negative if past). */
+function daysUntilIso(iso: string, date: Date): number {
+  const a = startOfLocalDay(date).getTime();
+  const b = new Date(iso + "T00:00:00").getTime();
+  return Math.round((b - a) / 86400000);
+}
+
+export function careTasksFor(date: Date, ctx: CareRotaContext = {}): CareTask[] {
   if (!hasLanded(date)) return [];
   const dow = date.getDay();
   const dom = date.getDate();
@@ -217,6 +233,86 @@ export function careTasksFor(date: Date): CareTask[] {
       link: "/handbook/daily-hacks",
       owner: "chesa",
     });
+
+  const { y, m } = yearMonth(date);
+  const untilCore = daysUntilIso(CORE_16W_ISO, date);
+
+  // 16-week core: the seven days before Friday 16 Oct 2026.
+  if (untilCore >= 1 && untilCore <= 7) {
+    out.push({
+      id: "core-16w",
+      emoji: "💉",
+      label: "16-week core this week — book SingVet",
+      detail:
+        "Friday 16 Oct 2026 is the ≥16-week core. The vet confirms the exact vaccine. Dose 3 on 4 Sep is not this shot and is not park-cleared.",
+      link: "/health",
+      owner: "both",
+    });
+  }
+
+  // Annual C3 booster: every October from 2027 (12 months after the 16 Oct 2026 core).
+  if (m === 10 && y >= 2027) {
+    out.push({
+      id: "annual-booster",
+      emoji: "💉",
+      label: "Annual C3 booster due — book SingVet",
+      detail:
+        "First adult booster is Oct 2027, then every October. The vet confirms the exact vaccine and whether the schedule is annual or triennial — the app does not.",
+      link: "/health",
+      owner: "both",
+    });
+  }
+
+  // Blood panels: annual every June from 2027; twice-yearly (Jun + Dec) from his 8th birthday, Jun 2034.
+  if (m === 6 && y >= 2027) {
+    const senior = y >= 2034;
+    out.push({
+      id: senior ? "blood-senior" : "blood-annual",
+      emoji: "🩸",
+      label: senior
+        ? "Senior blood panel due (twice-yearly)"
+        : "Annual comprehensive blood panel due",
+      detail:
+        "Full blood count + biochemistry. Early detection is the point — log the results in the Health tracker. The vet confirms timing; this is not a prescription.",
+      link: "/health",
+      owner: "both",
+    });
+  }
+  if (m === 12 && y >= 2034) {
+    out.push({
+      id: "blood-senior",
+      emoji: "🩸",
+      label: "Senior blood panel due (twice-yearly)",
+      detail:
+        "Full blood count + biochemistry. Early detection is the point — log the results in the Health tracker. The vet confirms timing; this is not a prescription.",
+      link: "/health",
+      owner: "both",
+    });
+  }
+
+  // Neutering: discuss in Dec 2026 (6 months). Then monthly until a Desexing log exists.
+  if (!ctx.desexed && m === 12 && y === 2026) {
+    out.push({
+      id: "neuter-discuss",
+      emoji: "✂️",
+      label: "Discuss neutering timing with SingVet",
+      detail:
+        "For a toy breed (~8 kg adult) the typical window is 6–9 months after the full vaccination course; the vet confirms the exact date. Pre-anaesthetic bloods at the procedure are the baseline panel everything later is compared against.",
+      link: "/health",
+      owner: "both",
+    });
+  }
+  if (!ctx.desexed && y >= 2027) {
+    out.push({
+      id: "neuter-followup",
+      emoji: "✂️",
+      label: "Neutering not yet logged — confirm the date with SingVet",
+      detail:
+        "Log a Desexing event in the Health tracker when it is done. The vet confirms timing — the app does not set a surgery date. Pre-anaesthetic bloods at the procedure are his baseline panel.",
+      link: "/health",
+      owner: "both",
+    });
+  }
 
   return out;
 }

@@ -81,13 +81,17 @@ export default function Health() {
 
   const verdict = useMemo(() => growthVerdict(weightEntries), [weightEntries]);
 
-  const dueToday = useMemo(() => careTasksFor(now), [now]);
+  const desexed = useMemo(
+    () => vaccineEntries.some((e) => e.option === "Desexing"),
+    [vaccineEntries],
+  );
+  const dueToday = useMemo(() => careTasksFor(now, { desexed }), [now, desexed]);
   // Next 6 days after today, grouped by day (rota preview)
   const week = useMemo(() => {
     const days: { date: Date; iso: string; label: string; tasks: CareTask[] }[] = [];
     for (let i = 1; i <= 6; i++) {
       const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + i);
-      const tasks = careTasksFor(d);
+      const tasks = careTasksFor(d, { desexed });
       if (tasks.length > 0)
         days.push({
           date: d,
@@ -97,7 +101,7 @@ export default function Health() {
         });
     }
     return days;
-  }, [now]);
+  }, [now, desexed]);
 
   const schedule = useMemo(() => healthMilestones(), []);
   const parasiteNext = useMemo(() => nextParasiteDose(now), [now]);

@@ -59,6 +59,49 @@ describe("care rota", () => {
     expect(careTasksFor(d("2026-10-03")).map((t) => t.id)).toContain("teeth"); // Sat
     expect(careTasksFor(d("2026-09-30")).map((t) => t.id)).not.toContain("teeth"); // Wed
   });
+
+  it("fires the 16-week core reminder the week before 16 Oct 2026, not as an annual booster", () => {
+    expect(careTasksFor(d("2026-10-09")).map((t) => t.id)).toContain("core-16w");
+    expect(careTasksFor(d("2026-10-15")).map((t) => t.id)).toContain("core-16w");
+    expect(careTasksFor(d("2026-10-08")).map((t) => t.id)).not.toContain("core-16w");
+    expect(careTasksFor(d("2026-10-16")).map((t) => t.id)).not.toContain("core-16w");
+    expect(careTasksFor(d("2026-10-10")).map((t) => t.id)).not.toContain("annual-booster");
+  });
+
+  it("fires the annual C3 booster in Oct 2027 and Oct 2028 but not Oct 2026", () => {
+    expect(careTasksFor(d("2026-10-05")).map((t) => t.id)).not.toContain("annual-booster");
+    expect(careTasksFor(d("2027-10-01")).map((t) => t.id)).toContain("annual-booster");
+    expect(careTasksFor(d("2027-10-31")).map((t) => t.id)).toContain("annual-booster");
+    expect(careTasksFor(d("2028-10-15")).map((t) => t.id)).toContain("annual-booster");
+    expect(careTasksFor(d("2027-09-30")).map((t) => t.id)).not.toContain("annual-booster");
+  });
+
+  it("fires blood panels in Jun 2027, and Jun+Dec 2034, but not Jun 2026", () => {
+    expect(careTasksFor(d("2026-06-26")).map((t) => t.id)).not.toContain("blood-annual");
+    expect(careTasksFor(d("2027-06-01")).map((t) => t.id)).toContain("blood-annual");
+    expect(careTasksFor(d("2027-06-01")).find((t) => t.id === "blood-annual")?.detail).toMatch(
+      /Full blood count \+ biochemistry/,
+    );
+    expect(careTasksFor(d("2033-12-01")).map((t) => t.id)).not.toContain("blood-senior");
+    expect(careTasksFor(d("2034-06-15")).map((t) => t.id)).toContain("blood-senior");
+    expect(careTasksFor(d("2034-12-01")).map((t) => t.id)).toContain("blood-senior");
+  });
+
+  it("fires the neutering discussion in Dec 2026", () => {
+    expect(careTasksFor(d("2026-12-01")).map((t) => t.id)).toContain("neuter-discuss");
+    expect(careTasksFor(d("2026-12-26")).map((t) => t.id)).toContain("neuter-discuss");
+    expect(careTasksFor(d("2026-11-30")).map((t) => t.id)).not.toContain("neuter-discuss");
+  });
+
+  it("stops neutering follow-ups once a Desexing entry exists", () => {
+    expect(careTasksFor(d("2027-01-01")).map((t) => t.id)).toContain("neuter-followup");
+    expect(careTasksFor(d("2027-01-01"), { desexed: true }).map((t) => t.id)).not.toContain(
+      "neuter-followup",
+    );
+    expect(careTasksFor(d("2026-12-01"), { desexed: true }).map((t) => t.id)).not.toContain(
+      "neuter-discuss",
+    );
+  });
 });
 
 describe("rotating activity ideas", () => {

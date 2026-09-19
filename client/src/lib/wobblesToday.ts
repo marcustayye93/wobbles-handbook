@@ -12,6 +12,7 @@ import {
   isParkNight,
   type DayPlan,
   type CareTask,
+  type CareRotaContext,
   type ActivityIdea,
 } from "@/content/household";
 import {
@@ -147,7 +148,11 @@ function presenceLabel(p: "home" | "office" | "maybe-office"): string {
   return p === "home" ? "home" : p === "office" ? "office" : "maybe office";
 }
 
-export function todaysBrief(now: Date = new Date(), settings?: HouseholdSettings): DailyBrief {
+export function todaysBrief(
+  now: Date = new Date(),
+  settings?: HouseholdSettings,
+  careCtx: CareRotaContext = {},
+): DailyBrief {
   const plan = settings ? dayPlanWithSettings(now, settings) : dayPlanFor(now);
   const homecomingFuture = daysUntil(WOBBLES.homecoming, now) > 0;
   const age = wobblesAge(now);
@@ -158,7 +163,7 @@ export function todaysBrief(now: Date = new Date(), settings?: HouseholdSettings
   return {
     plan,
     whoHome,
-    care: careTasksFor(now),
+    care: careTasksFor(now, careCtx),
     activity: activityFor(now, homecomingFuture),
     parkNight: !homecomingFuture && age.weeks >= 16 && isParkNight(now),
     reminders: settings ? remindersFor(now, settings) : [],
@@ -226,7 +231,9 @@ export function todaysNudges(
     return out.slice(0, 4);
   }
 
-  for (const task of careTasksFor(now)) {
+  for (const task of careTasksFor(now, {
+    desexed: entriesByTracker("vaccines").some((e) => e.option === "Desexing"),
+  })) {
     if (task.id === "teeth") continue;
     out.push({
       id: `care-${task.id}`,
