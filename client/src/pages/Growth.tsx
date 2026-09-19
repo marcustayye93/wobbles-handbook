@@ -1,7 +1,7 @@
 /*
  * Growth tab — Paddington's growth yardstick and life timeline.
  * Top: full-life weight chart (8w → 60w). BLUE line = expected weight for a
- * toy Cavoodle peaking at ≈6 kg (with a soft expected band). ORANGE line =
+ * toy Cavoodle peaking at ≈8 kg (with a soft expected band). ORANGE line =
  * Paddington's actual weigh-ins snapped onto the same axis. With no weigh-ins yet,
  * only the blue yardstick shows.
  * Below: on-track verdict card, quick "log a weigh-in" access, current age
@@ -84,7 +84,7 @@ export default function Growth() {
 
   return (
     <PageShell className="pb-28">
-      <PageHeader title="Growth" subtitle="His yardstick to ≈6 kg" emoji="📈" />
+      <PageHeader title="Growth" subtitle="His yardstick to ≈8 kg" emoji="📈" />
 
       {/* ===== Age card ===== */}
       <section className="px-4 mt-4">
@@ -190,7 +190,7 @@ export default function Growth() {
           {/* legend */}
           <div className="flex items-center gap-4 mt-2">
             <span className="inline-flex items-center gap-1.5 text-[10px] font-body font-extrabold text-[#3E6B9E]">
-              <span className="w-4 h-0.5 rounded-full" style={{ background: BLUE }} /> Expected (≈6 kg adult)
+              <span className="w-4 h-0.5 rounded-full" style={{ background: BLUE }} /> Expected (≈8 kg adult)
             </span>
             {hasWeighIns && (
               <span className="inline-flex items-center gap-1.5 text-[10px] font-body font-extrabold" style={{ color: ORANGE }}>

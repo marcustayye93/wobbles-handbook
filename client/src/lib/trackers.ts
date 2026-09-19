@@ -43,7 +43,7 @@ export const TRACKERS: TrackerMeta[] = [
     group: "health",
     empty: "Weekly weigh-ins",
     intro:
-      "Weigh weekly as a puppy (hold him on bathroom scales, subtract yourself), then monthly as an adult. Toy Cavoodles typically land around 4–7 kg full-grown; Paddington is expected to peak at ≈6 kg.",
+      "Weigh weekly as a puppy (hold him on bathroom scales, subtract yourself), then monthly as an adult. Paddington's adult weight is locked at ≈ 8 kg — not 6 kg.",
     fields: {
       value: { label: "Weight", unit: "kg", min: 0.2, max: 20, step: 0.05 },
       note: true,
@@ -82,18 +82,18 @@ export const TRACKERS: TrackerMeta[] = [
     group: "daily",
     empty: "Pad, outside & accidents",
     intro:
-      "Apartment life at Blk 587 means two legal toilets: the pad at home and the grass outside. Log every wee and poo — pad or outside — plus any accidents, for the first 2–3 weeks. Patterns jump out (after meals, after naps, after play) and you'll pre-empt instead of clean up.",
+      "Apartment life at Blk 587: the pad at home is the toilet until the 16 Oct core plus a Singapore vet nod. Log every wee and poo — pad or accident — for the first 2–3 weeks. Patterns jump out (after meals, after naps, after play) and you'll pre-empt instead of clean up. Public grass is not a win yet.",
     fields: {
       time: true,
       options: {
         label: "What happened",
-        choices: ["Wee on pad ✅", "Wee outside ✅", "Poo on pad ✅", "Poo outside ✅", "Wee accident", "Poo accident"],
+        choices: ["Wee on pad ✅", "Poo on pad ✅", "Wee accident", "Poo accident", "Wee carried (not public grass)", "Poo carried (not public grass)"],
       },
       note: true,
     },
     tips: [
-      "Pad AND outside both count as wins — reward within 2 seconds of finishing, at the spot, from your pocket.",
-      "The 7:15am walk is the anchor: carry him straight from the crate to the lift to the grass — no floor time in between, or the wee happens in the lift lobby.",
+      "Pad hits are the wins until he is park-cleared — reward within 2 seconds of finishing, at the spot, from your pocket.",
+      "Until the 16 Oct core plus a vet nod, do not run him to public grass. Carry-socialise is fine; the 7:15am grass walk waits.",
       "Keep the pad in ONE fixed spot (service yard or bathroom works well in an HDB flat) — moving it resets his map.",
       "A young puppy needs a toilet break roughly every 30–60 minutes when awake, plus after every meal, nap and play session.",
       "Accidents are YOUR data, not his fault. Clean with enzymatic cleaner; never punish.",
@@ -208,7 +208,7 @@ export const TRACKERS: TrackerMeta[] = [
     group: "health",
     empty: "Shots, worming & vet visits",
     intro:
-      "Paddington's breeder's vet uses Protech C3, booked with the rest of his litter: 11 Aug, 25 Aug and 8 Sep 2026 — all three shots done in Australia before export, so he's fully protected ~22 Sep, a day or two before the flight. Log everything here, since AVS wants the full history for the Singapore paperwork.",
+      "Paddington's Protech C3 course is locked: dose 1 on 7 Aug, dose 2 on 21 Aug, dose 3 on 4 Sep 2026 — all in Australia. Dose 3 is NOT the 16-week core and he is NOT park-cleared at landing. Public grass waits for the Friday 16 Oct core plus a Singapore vet nod. Log everything here — AVS wants the full history.",
     fields: {
       options: {
         label: "Event",
@@ -227,7 +227,7 @@ export const TRACKERS: TrackerMeta[] = [
     tips: [
       "Keep every vaccination certificate — AVS in Singapore wants the full history with the microchip number on each record.",
       "Puppy worming: typically every 2 weeks till 12 weeks, monthly till 6 months, then per vet advice.",
-      "His C3 course finished at 10.5 weeks (8 Sep) — ask the SG vet at the first visit about a 16-week booster, which many vets recommend when the last dose was before 16 weeks.",
+      "Dose 3 on 4 Sep is not full protection. Book the ≥16-week core on Friday 16 Oct with SingVet, then wait for the vet's nod before public grass.",
     ],
   },
   {

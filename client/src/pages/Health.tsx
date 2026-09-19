@@ -208,8 +208,8 @@ export default function Health() {
               {parasiteLogged
                 ? `Last dose logged ${formatDate(parasiteLogged.date)} (${parasiteLogged.option}).`
                 : homecomingFuture
-                  ? "Starts at the first Singapore vet visit — then the 24th of every month, forever."
-                  : "No dose logged yet — the rota expects one every 24th of the month."}
+                  ? "Starts at the first Singapore vet visit (~28 Sep). The repeat date is set by the vet — not locked as the 24th."
+                  : "No dose logged yet — the repeat calendar day is set at the first SG vet visit, not locked as the 24th."}
             </p>
           </div>
           <p className="shrink-0 text-center">
@@ -405,7 +405,7 @@ export default function Health() {
       {/* Footer note */}
       <p className="px-5 mt-9 text-center text-[11px] font-body text-muted-foreground leading-relaxed flex items-center justify-center gap-1.5">
         <CalendarDays size={12} className="inline" />
-        Rota: baths every other Monday, nails & ears Mondays, teeth Tue/Thu/Sat, parasite dose the 24th.
+        Rota: baths every other Monday, nails & ears Mondays, teeth Tue/Thu/Sat. Parasite date is set by the vet.
       </p>
 
       <QuickLogSheet open={sheetOpen} onOpenChange={setSheetOpen} initialTracker="vaccines" />

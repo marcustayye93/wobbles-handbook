@@ -1,8 +1,8 @@
 /*
  * Growth band — expected weight range (kg) by age for a toy Cavoodle
- * expected to peak at ≈6 kg as an adult (family estimate for Paddington).
+ * expected to peak at ≈8 kg as an adult (owner lock for Paddington).
  * Points compiled from toy Cavoodle / toy-poodle-cross growth charts and
- * scaled to a 6 kg adult; interpolated linearly between anchors.
+ * scaled to an 8 kg adult; interpolated linearly between anchors.
  *
  * Pure functions only — unit-tested in server/growthBand.test.ts.
  */
@@ -14,17 +14,17 @@ export interface BandPoint {
   max: number; // kg
 }
 
-/** Expected weight band (kg) by age in weeks for a ≈6 kg-adult toy Cavoodle. */
+/** Expected weight band (kg) by age in weeks for a ≈8 kg-adult toy Cavoodle. */
 export const GROWTH_BAND: BandPoint[] = [
-  { weeks: 8, min: 0.9, max: 1.6 },
-  { weeks: 12, min: 1.4, max: 2.4 },
-  { weeks: 16, min: 1.9, max: 3.2 },
-  { weeks: 20, min: 2.4, max: 3.9 },
-  { weeks: 26, min: 3.0, max: 4.7 },
-  { weeks: 34, min: 3.7, max: 5.4 },
-  { weeks: 42, min: 4.1, max: 5.8 },
-  { weeks: 52, min: 4.4, max: 6.2 },
-  { weeks: 60, min: 4.5, max: 6.3 },
+  { weeks: 8, min: 1.2, max: 2.13 },
+  { weeks: 12, min: 1.87, max: 3.2 },
+  { weeks: 16, min: 2.53, max: 4.27 },
+  { weeks: 20, min: 3.2, max: 5.2 },
+  { weeks: 26, min: 4.0, max: 6.27 },
+  { weeks: 34, min: 4.93, max: 7.2 },
+  { weeks: 42, min: 5.47, max: 7.73 },
+  { weeks: 52, min: 5.87, max: 8.27 },
+  { weeks: 60, min: 6.0, max: 8.4 },
 ];
 
 /** Linear interpolation of the band at an exact age in weeks (clamped at ends). */
@@ -96,7 +96,7 @@ export function growthVerdict(
   const bandLabel = `${band.min.toFixed(1)}–${band.max.toFixed(1)} kg`;
   const text =
     status === "on-track"
-      ? `${kg.toFixed(2)} kg sits inside the expected ${bandLabel} for his age — on track for a toy Cavoodle heading to ≈6 kg.`
+      ? `${kg.toFixed(2)} kg sits inside the expected ${bandLabel} for his age — on track for a toy Cavoodle heading to ≈8 kg.`
       : status === "below"
         ? `${kg.toFixed(2)} kg is under the expected ${bandLabel} for his age. One light reading isn't a panic — but if the next weigh-in is also low, mention it to the vet.`
         : `${kg.toFixed(2)} kg is above the expected ${bandLabel} for his age. Recount daily calories including training treats, and check body condition (ribs easy to feel).`;

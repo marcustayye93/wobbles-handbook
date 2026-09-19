@@ -2,7 +2,7 @@
  * Redesign v2 — "Keepsake Field Guide" Road to Singapore.
  * v2 gouache cover, ink navy headings, sienna phase labels.
  * Hero, key-facts cards, phase-grouped step timeline, tropical life tips.
- * C3 dose 3 on 4 Sep is NOT full vaccination; landing is 24 Sep.
+ * C3 dose 3 on 4 Sep is NOT full vaccination; landing is 23 Sep.
  */
 import { PageShell, PageHeader, PawDivider, Eyebrow } from "@/components/AppShell";
 import { CHAPTER_COVERS } from "@/content/wobbles";
@@ -50,7 +50,7 @@ export default function Singapore() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#22364D]/70 via-transparent to-transparent" aria-hidden />
           {toLand > 0 && (
             <span className="absolute bottom-3 left-3 bg-[#FFFDF8]/92 backdrop-blur px-3 py-1.5 rounded-full text-xs font-extrabold text-[#22364D]">
-              ✈️ Lands in {toLand} days (24 Sep) · flies {toFlight > 0 ? toFlight : 0}d
+              ✈️ Lands in {toLand} days (23 Sep) · flies {toFlight > 0 ? toFlight : 0}d
             </span>
           )}
         </div>

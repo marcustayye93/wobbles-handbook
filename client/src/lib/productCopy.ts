@@ -1,7 +1,7 @@
 /**
- * Locked product copy. Kills: Revolution Plus, ENS % framing is handled in
- * StoryBlocks, 5-min-per-month walk-as-science, fully-protected / park-cleared
- * around 22 Sep, import licence "valid 30 days".
+ * Locked product copy. Kills: Revolution Plus, 5-min-per-month walk-as-science,
+ * fully-protected / park-cleared around 22 Sep, import licence "valid 30 days",
+ * the old 11/25 Aug + 8 Sep C3 dates, and 15 Oct as 16 weeks.
  */
 export function fixProductCopy(text: string): string {
   return text
@@ -13,21 +13,25 @@ export function fixProductCopy(text: string): string {
     )
     .replace(
       /11 Aug, 25 Aug and 8 Sep 2026 — all three shots done in Australia before export, so he's fully protected ~22 Sep, a day or two before the flight/,
-      "C3 dose 3 is 8 Sep in Australia. That is NOT the 16-week core — he is NOT fully vaccinated and NOT park-cleared at landing",
+      "Protech C3 on 7 Aug / 21 Aug / 4 Sep 2026. Dose 3 is NOT the 16-week core — he is NOT fully vaccinated and NOT park-cleared at landing",
     )
     .replace(
       /His Protech C3 course finishes on 8 Sep in Australia, so he lands fully protected \(immunity ~22 Sep, two weeks after dose 3\)\. Still, hold off on public ground until the first SG vet visit \(~28 Sep\) confirms he's clear — and ask the vet about a 16-week booster, since his third dose was given at 10\.5 weeks\./,
-      "C3 dose 3 is 8 Sep in Australia — he is NOT fully vaccinated and NOT park-cleared. Carry-socialise. Ground and park wait for the ≥16-week core (~15 Oct) plus a Singapore vet nod.",
+      "C3 dose 3 is 4 Sep in Australia — he is NOT fully vaccinated and NOT park-cleared. Carry-socialise. Ground and park wait for the ≥16-week core on Friday 16 Oct plus a Singapore vet nod.",
     )
     .replace(
       /Once the SG vet signs off at the first visit \(~28 Sep — his Protech C3 course finished back on 8 Sep\)/,
-      "Once the ≥16-week core (~15 Oct) is done and the Singapore vet nods",
+      "Once the ≥16-week core (Friday 16 Oct) is done and the Singapore vet nods",
     )
     .replace(/\bvalid for 30 days\b/g, "valid for 90 days")
     .replace(/\bvalid 30 days\b/g, "valid 90 days")
     .replace(/only valid 30 days/g, "valid 90 days")
     .replace(
       /His C3 course finished at 10\.5 weeks \(8 Sep\) — ask the SG vet at the first visit about a 16-week booster, which many vets recommend when the last dose was before 16 weeks\./,
-      "Dose 3 on 8 Sep is not full protection. Book the ≥16-week core (~15 Oct) with SingVet, then wait for the vet's nod before public grass.",
-    );
+      "Dose 3 on 4 Sep is not full protection. Book the ≥16-week core on Friday 16 Oct with SingVet, then wait for the vet's nod before public grass.",
+    )
+    .replace(/C3 dose 3 is 8 Sep/g, "C3 dose 3 is 4 Sep")
+    .replace(/Dose 3 on 8 Sep/g, "Dose 3 on 4 Sep")
+    .replace(/≥16-week core \(~15 Oct\)/g, "≥16-week core (Friday 16 Oct)")
+    .replace(/core \(~15 Oct\)/g, "core (Friday 16 Oct)");
 }

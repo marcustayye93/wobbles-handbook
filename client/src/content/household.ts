@@ -94,8 +94,9 @@ export function dayPlanFor(date: Date): DayPlan {
 
 /* ---------------- Care rota ----------------
  * Recurring, date-deterministic care tasks. Bath is every other Monday
- * anchored to homecoming week; nails weekly on Mondays; parasite dose on
- * the 24th monthly (homecoming date); teeth a few times a week; ears weekly.
+ * anchored to homecoming week; nails weekly on Mondays; parasite dose is a
+ * placeholder on the 24th until the vet sets the real calendar day; teeth a
+ * few times a week; ears weekly.
  */
 
 export interface CareTask {
@@ -157,9 +158,9 @@ export function careTasksFor(date: Date): CareTask[] {
     out.push({
       id: "parasite",
       emoji: "🛡️",
-      label: "Monthly parasite dose today (the 24th)",
+      label: "Parasite dose reminder (vet sets the real date)",
       detail:
-        "Heartworm + tick + flea preventive chew or spot-on. Log it in the Health tracker so the family knows it's done.",
+        "Placeholder on the 24th until SingVet sets the calendar day at the first visit (~28 Sep). Log the real dose in Health.",
       link: "/trackers/health",
       owner: "both",
     });

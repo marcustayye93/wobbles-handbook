@@ -67,7 +67,7 @@ export const SECTIONS: Section[] = [
         type: "table",
         headers: ["Time", "What happens"],
         rows: [
-          ["7:15–7:30 am", "Morning toilet walk — just after sunrise, coolest part of the day. Carry him from the crate to the lift to the grass (no lobby floor time), wee/poo, praise, home. Then breakfast → pad break → short play → nap"],
+          ["7:15–7:30 am", "Morning toilet on the pad until he is park-cleared. After Friday 16 Oct plus a vet nod: carry crate → lift → grass (no lobby floor), wee/poo, praise, home. Then breakfast → pad break → short play → nap"],
           ["Midday", "Pad break → lunch (3 meals/day under ~14–18 weeks) → pad break → play → long nap"],
           ["Afternoon", "Pad break → gentle exploring or handling practice → nap. Skip pavement outings 10am–5pm — Singapore pavement gets paw-burning hot"],
           ["~5 pm", "Dinner — roughly 4 hours before bedtime so he can empty out"],
@@ -78,7 +78,7 @@ export const SECTIONS: Section[] = [
       {
         type: "warn",
         title: "No public walks yet",
-        text: "His Protech C3 course finishes on 8 Sep in Australia, so he lands fully protected (immunity ~22 Sep, two weeks after dose 3). Still, hold off on public ground until the first SG vet visit (~28 Sep) confirms he's clear — and ask the vet about a 16-week booster, since his third dose was given at 10.5 weeks. Until then, carry him outside: being carried around Woodlands, to the shops, past the playground is brilliant socialisation with zero parvo risk. The 7:15am toilet walk works too — carry him to one clean patch of grass, same spot every time.",
+        text: "C3 dose 3 is 4 Sep in Australia — he is NOT fully vaccinated and NOT park-cleared. Carry-socialise. Ground and park wait for the ≥16-week core on Friday 16 Oct plus a Singapore vet nod. Until then, carry him outside: being carried around Woodlands, to the shops, past the playground is brilliant socialisation with zero parvo risk. Do not run him on public grass for a 7:15am toilet walk until that nod.",
       },
       { type: "h", text: "Surviving the first night" },
       {
@@ -177,7 +177,7 @@ export const SECTIONS: Section[] = [
       {
         type: "tip",
         title: "Your one job before 16 October",
-        text: "The socialisation window is the single highest-leverage project of Paddington's entire life. Aim for daily, brief, positive exposures: people of all kinds, surfaces, sounds, handling, car rides — and since home is an HDB flat in Woodlands, prioritise lifts, void decks, corridor noise, traffic and the MRT rumble. Once the SG vet signs off at the first visit (~28 Sep — his Protech C3 course finished back on 8 Sep), the 7pm every-other-day park sessions take over: the small park next to the block for the walkable nights, and Woodlands Waterfront Park's dog run (a short drive away, open 24/7 with sea views) when you want off-leash play with other dogs. Positive, brief, and puppy-chooses. Never flood him.",
+        text: "The socialisation window is the single highest-leverage project of Paddington's entire life. Aim for daily, brief, positive exposures: people of all kinds, surfaces, sounds, handling, car rides — and since home is an HDB flat in Woodlands, prioritise lifts, void decks, corridor noise, traffic and the MRT rumble. Once the ≥16-week core (Friday 16 Oct) is done and the Singapore vet nods, the 7pm every-other-day park sessions take over: the small park next to the block for the walkable nights, and Woodlands Waterfront Park's dog run (a short drive away, open 24/7 with sea views) when you want off-leash play with other dogs. Positive, brief, and puppy-chooses. Never flood him.",
       },
     ],
   },

@@ -23,45 +23,45 @@ describe("GROWTH_BAND anchors", () => {
     }
   });
 
-  it("tops out around the ≈6 kg expected adult weight", () => {
+  it("tops out around the ≈8 kg expected adult weight", () => {
     const last = GROWTH_BAND[GROWTH_BAND.length - 1];
-    expect(last.min).toBe(4.5);
-    expect(last.max).toBe(6.3);
-    // 6 kg peak sits inside the adult band
-    expect(last.min).toBeLessThanOrEqual(6);
-    expect(last.max).toBeGreaterThanOrEqual(6);
+    expect(last.min).toBe(6.0);
+    expect(last.max).toBe(8.4);
+    // 8 kg peak sits inside the adult band
+    expect(last.min).toBeLessThanOrEqual(8);
+    expect(last.max).toBeGreaterThanOrEqual(8);
   });
 });
 
 describe("expectedBandAt", () => {
   it("clamps below the first anchor", () => {
-    expect(expectedBandAt(4)).toEqual({ min: 0.9, max: 1.6 });
+    expect(expectedBandAt(4)).toEqual({ min: 1.2, max: 2.13 });
   });
 
   it("clamps above the last anchor", () => {
-    expect(expectedBandAt(120)).toEqual({ min: 4.5, max: 6.3 });
+    expect(expectedBandAt(120)).toEqual({ min: 6.0, max: 8.4 });
   });
 
   it("returns exact values at anchors", () => {
-    expect(expectedBandAt(16)).toEqual({ min: 1.9, max: 3.2 });
+    expect(expectedBandAt(16)).toEqual({ min: 2.53, max: 4.27 });
   });
 
   it("interpolates linearly between anchors", () => {
-    // halfway between wk8 (0.9–1.6) and wk12 (1.4–2.4) → wk10 = 1.15–2.0
+    // halfway between wk8 (1.2–2.13) and wk12 (1.87–3.2) → wk10 = 1.535–2.665
     const b = expectedBandAt(10);
-    expect(b.min).toBeCloseTo(1.15, 5);
-    expect(b.max).toBeCloseTo(2.0, 5);
+    expect(b.min).toBeCloseTo(1.535, 5);
+    expect(b.max).toBeCloseTo(2.665, 5);
   });
 });
 
 describe("expectedWeightAt", () => {
   it("is the band midline", () => {
-    // wk16 band 1.9–3.2 → midline 2.55
-    expect(expectedWeightAt(16)).toBeCloseTo(2.55, 5);
+    // wk16 band 2.53–4.27 → midline 3.4
+    expect(expectedWeightAt(16)).toBeCloseTo(3.4, 5);
   });
 
-  it("approaches ≈5.4 kg midline as an adult (6 kg peak inside band)", () => {
-    expect(expectedWeightAt(60)).toBeCloseTo(5.4, 5);
+  it("approaches ≈7.2 kg midline as an adult (8 kg peak inside band)", () => {
+    expect(expectedWeightAt(60)).toBeCloseTo(7.2, 5);
   });
 });
 
@@ -96,8 +96,8 @@ describe("growthVerdict", () => {
   });
 
   it("says on-track for a mid-band weight", () => {
-    // wk12 band is 1.4–2.4 → 1.9 is mid-band
-    const v = growthVerdict([{ date: at(12), value: 1.9 }], DOB);
+    // wk12 band is 1.87–3.2 → 2.5 is mid-band
+    const v = growthVerdict([{ date: at(12), value: 2.5 }], DOB);
     expect(v?.status).toBe("on-track");
     expect(v?.text).toContain("on track");
   });
@@ -113,8 +113,8 @@ describe("growthVerdict", () => {
   });
 
   it("gives borderline readings the grace margin (no flapping)", () => {
-    // wk12 band is 1.4–2.4, width 1.0 → grace 0.1; 1.35 is within grace of 1.4
-    const v = growthVerdict([{ date: at(12), value: 1.35 }], DOB);
+    // wk12 band is 1.87–3.2, width 1.33 → grace 0.1; 1.80 is within grace of 1.87
+    const v = growthVerdict([{ date: at(12), value: 1.8 }], DOB);
     expect(v?.status).toBe("on-track");
   });
 
@@ -122,12 +122,12 @@ describe("growthVerdict", () => {
     const v = growthVerdict(
       [
         { date: at(10), value: 0.8 }, // older, low
-        { date: at(14), value: 2.3 }, // latest, mid-band (wk14 ≈ 1.65–2.8)
+        { date: at(14), value: 3.1 }, // latest, mid-band (wk14 ≈ 2.2–3.735)
       ],
       DOB,
     );
     expect(v?.status).toBe("on-track");
-    expect(v?.kg).toBe(2.3);
+    expect(v?.kg).toBe(3.1);
   });
 
   it("ignores entries without a numeric value", () => {

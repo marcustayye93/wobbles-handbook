@@ -69,7 +69,7 @@ export default function HandbookIndex() {
                     The First Day & Night
                   </h2>
                   <p className="text-[11px] font-body text-muted-foreground mt-1 leading-relaxed">
-                    Landing 24 Sep — decompression, toilet spot, crate as den. Not a logger.
+                    Landing 23 Sep — decompression, toilet spot, crate as den. Not a logger.
                   </p>
                 </div>
                 <ChevronRight size={17} className="text-muted-foreground shrink-0" />
@@ -87,7 +87,7 @@ export default function HandbookIndex() {
                   PALS, then the import licence
                 </p>
                 <p className="text-[11px] font-body text-muted-foreground mt-0.5">
-                  Licence is valid 90 days, not 30. C3 dose 3 on 8 Sep is not full vaccination.
+                  Licence is valid 90 days, not 30. C3 dose 3 on 4 Sep is not full vaccination.
                 </p>
               </div>
               <ChevronRight size={17} className="text-muted-foreground shrink-0" />
@@ -104,7 +104,7 @@ export default function HandbookIndex() {
                   This week's shopping countdown
                 </p>
                 <p className="text-[11px] font-body text-muted-foreground mt-0.5">
-                  Big things first — the week-by-week kit list to 24 Sep.
+                  Big things first — the week-by-week kit list to 23 Sep.
                 </p>
               </div>
               <ChevronRight size={17} className="text-muted-foreground shrink-0" />
