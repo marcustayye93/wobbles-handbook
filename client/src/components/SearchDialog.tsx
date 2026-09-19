@@ -119,6 +119,16 @@ function buildIndex(): SearchDoc[] {
     });
   }
 
+  docs.push({
+    id: "dogs-friendly",
+    group: "Dog-friendly",
+    emoji: "🐕",
+    title: "Dog-friendly places",
+    snippet: "Dog runs, beaches, parks, cafes and malls. After 16 Oct plus a vet nod.",
+    haystack: "dog-friendly dog run beach park cafe mall leash sentosa woodlands",
+    link: "/dogs",
+  });
+
   return docs;
 }
 
@@ -131,7 +141,7 @@ export default function SearchDialog({ open, onOpenChange }: Props) {
   const [, navigate] = useLocation();
   const docs = useMemo(buildIndex, []);
   const groups = useMemo(() => {
-    const order = ["Handbook chapters", "Checklists", "100 Things", "Singapore move"];
+    const order = ["Handbook chapters", "Checklists", "100 Things", "Singapore move", "Dog-friendly"];
     return order.map((g) => ({ name: g, docs: docs.filter((d) => d.group === g) }));
   }, [docs]);
 

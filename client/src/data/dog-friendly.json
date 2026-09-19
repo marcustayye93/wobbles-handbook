@@ -1,0 +1,447 @@
+{
+  "count": 22,
+  "generatedAt": "2026-09-19T14:17:08+00:00",
+  "places": [
+    {
+      "address": "Bishan-Ang Mo Kio Park",
+      "id": "dog-run-bishan-amk",
+      "kind": "dog-run",
+      "leash": "off-leash",
+      "name": "Bishan-Ang Mo Kio Park Dog Run",
+      "notes": "Fenced off-leash run in the middle of the park, free, open 24/7. Two pens (small/medium and large) with water points on site. Busy on weekend mornings; go early or late to dodge the heat.",
+      "observedDate": "2026-09-19",
+      "sourceUrls": [
+        "https://www.nparks.gov.sg/visit/parks/park-detail/bishan-ang-mo-kio-park",
+        "https://isomer-user-content.by.gov.sg/30/e6897201-9546-4d89-ba17-f169980fea5a/Dog%20Run%20Etiquette%20and%20User%20Safety%20%28QR%20Code%20information%29.pdf"
+      ],
+      "travel": {
+        "lat": 1.3649,
+        "lng": 103.8867,
+        "nearestMrt": "Bishan",
+        "region": "Bishan",
+        "zone": "C"
+      }
+    },
+    {
+      "address": "West Coast Park",
+      "id": "dog-run-west-coast",
+      "kind": "dog-run",
+      "leash": "off-leash",
+      "name": "West Coast Park Dog Run",
+      "notes": "Big fenced run (~22,000 sqm, the largest NParks run), popular with big-dog owners. Shaded benches, water taps, and a dog-wash kiosk nearby. Free, open 24/7. Pair it with a leashed walk along the park promenade after.",
+      "observedDate": "2026-09-19",
+      "sourceUrls": [
+        "https://www.nparks.gov.sg/visit/parks/park-detail/west-coast-park",
+        "https://www.straitstimes.com/singapore/all-may-apply-to-use-nparks-dog-runs"
+      ],
+      "travel": {
+        "lat": 1.293,
+        "lng": 103.7672,
+        "nearestMrt": "Haw Par Villa",
+        "region": "West Coast",
+        "zone": "W"
+      }
+    },
+    {
+      "address": "Parkland Green, East Coast Parkway",
+      "id": "dog-run-east-coast",
+      "kind": "dog-run",
+      "leash": "off-leash",
+      "name": "East Coast Park Dog Run (Parkland Green)",
+      "notes": "Fenced run (~2,000 sqm) a short walk from the beach. Do the run first, then a leashed stroll on the sand. Opening hours unverified (sources conflict), free entry. A weekly Bark and Bond dog social runs Wednesday evenings.",
+      "observedDate": "2026-09-19",
+      "sourceUrls": [
+        "https://mothership.sg/2020/11/dog-run-bird-perch-east-coast-park/",
+        "https://www.eventbrite.com/e/bark-bond-weekly-dog-social-east-coast-park-tickets-1996971423284"
+      ],
+      "travel": {
+        "lat": 1.3012,
+        "lng": 103.9123,
+        "nearestMrt": "Bedok",
+        "region": "East Coast",
+        "zone": "E"
+      }
+    },
+    {
+      "address": "Palawan Beach Walk, Sentosa",
+      "id": "dog-run-palawan",
+      "kind": "dog-run",
+      "leash": "off-leash",
+      "name": "Sentosa Palawan Dog Run",
+      "notes": "Fenced run right by Palawan Beach, with water points and agility modules. Combine off-leash time with a leashed beach walk; weekday mornings are quietest. Opening hours approximate (roughly 9am to 9pm daily). No aggressive dogs, no food in the run, supervise at all times; children under 12 not advised. Special-breed requirements are referenced but not published.",
+      "observedDate": "2026-09-19",
+      "sourceUrls": [
+        "https://www.shangri-la.com/en/landing/the-palawan-at-sentosa/",
+        "https://www.tripadvisor.co.za/Attraction_Review-g294265-d27434437-Reviews-The_Palawan_Dog_Run-Singapore.html"
+      ],
+      "travel": {
+        "lat": 1.2494,
+        "lng": 103.8225,
+        "nearestMrt": "HarbourFront",
+        "region": "Sentosa",
+        "zone": "S"
+      }
+    },
+    {
+      "address": "Clementi Woods Park, West Coast Road",
+      "id": "dog-run-clementi-woods",
+      "kind": "dog-run",
+      "leash": "off-leash",
+      "name": "Clementi Woods Dog Run",
+      "notes": "Quieter, shaded run (~4,000 sqm) on sloped terrain, free, open 24/7. Water point and benches on site. A good low-key option if the big runs feel like too much for a first outing.",
+      "observedDate": "2026-09-19",
+      "sourceUrls": [
+        "https://thehoneycombers.com/singapore/dog-runs-parks-singapore/",
+        "https://www.top-rated.online/countries/Singapore/cities/Jurong+East/@dog_park/our-rank"
+      ],
+      "travel": {
+        "lat": 1.3097,
+        "lng": 103.7669,
+        "nearestMrt": "Clementi",
+        "region": "Clementi",
+        "zone": "W"
+      }
+    },
+    {
+      "address": "Sembawang Park, Sembawang Road",
+      "id": "dog-run-sembawang",
+      "kind": "dog-run",
+      "leash": "off-leash",
+      "name": "Sembawang Park Dog Run",
+      "notes": "Fenced off-leash run near the end of Sembawang Road. Free, open 24/7. No water point or lighting on site, so bring your own water. Location approximate.",
+      "observedDate": "2026-09-19",
+      "sourceUrls": [
+        "https://www.nparks.gov.sg/visit/parks/park-detail/sembawang-park/",
+        "https://thehoneycombers.com/singapore/dog-runs-parks-singapore/"
+      ],
+      "travel": {
+        "coordsApproximate": true,
+        "lat": 1.459,
+        "lng": 103.8328,
+        "nearestMrt": "Sembawang",
+        "region": "Sembawang",
+        "zone": "N"
+      }
+    },
+    {
+      "address": "Tanjong Beach Walk, Sentosa",
+      "id": "beach-tanjong",
+      "kind": "beach",
+      "leash": "leashed",
+      "name": "Tanjong Beach, Sentosa",
+      "notes": "Dogs allowed, leashed at all times per the official Tanjong Beach Club venue policy (outdoor sections only; dogs must stay leashed and off the furniture). The sand is unfenced, so recall matters. No off-leash area on the beach itself.",
+      "observedDate": "2026-09-19",
+      "sourceUrls": [
+        "http://www.tanjongbeachclub.com/venue-policy",
+        "https://www.sentosa.com.sg/en/get-inspired/sentosa-guides/best-restaurants-to-dine-with-family"
+      ],
+      "travel": {
+        "lat": 1.2448,
+        "lng": 103.8235,
+        "nearestMrt": "HarbourFront",
+        "region": "Sentosa",
+        "zone": "S"
+      }
+    },
+    {
+      "address": "Palawan Beach Walk, Sentosa",
+      "id": "beach-palawan",
+      "kind": "beach",
+      "leash": "leashed",
+      "name": "Palawan Beach, Sentosa",
+      "notes": "Leashed beach walks next to the fenced dog run. Dogs on leash per the official Sentosa FAQ; off-leash only inside the dog run. Zone bans apply around ticketed event spaces.",
+      "observedDate": "2026-09-19",
+      "sourceUrls": [
+        "https://abigbigworld.sentosa.com.sg/faq.html",
+        "https://www.sentosa.com.sg/en/things-to-do/attractions/palawan-beach"
+      ],
+      "travel": {
+        "lat": 1.25,
+        "lng": 103.8188,
+        "nearestMrt": "HarbourFront",
+        "region": "Sentosa",
+        "zone": "S"
+      }
+    },
+    {
+      "address": "Changi Beach Park",
+      "id": "beach-changi",
+      "kind": "beach",
+      "leash": "leashed",
+      "name": "Changi Beach Park",
+      "notes": "Long, quiet beach, open 24h, free. Good for a calm leashed walk away from the weekend crowds. No dog run in the park.",
+      "observedDate": "2026-09-19",
+      "sourceUrls": [
+        "https://www.nparks.gov.sg/visit/parks/park-detail/changi-beach-park/",
+        "https://www.nparks.gov.sg/visit/when-visiting-parks/etiquette/nature-parks-reserve-dos-donts"
+      ],
+      "travel": {
+        "lat": 1.3915,
+        "lng": 104.005,
+        "nearestMrt": "Pasir Ris",
+        "region": "Changi",
+        "zone": "E"
+      }
+    },
+    {
+      "address": "Singapore Botanic Gardens",
+      "id": "park-botanic",
+      "kind": "park",
+      "leash": "leashed",
+      "name": "Singapore Botanic Gardens",
+      "notes": "Dogs welcome on leash across most outdoor areas. Off-limits to dogs: National Orchid Garden, Rain Forest, Learning Forest boardwalk and elevated walkways, Healing Garden, Foliage Garden, Evolution Garden, Ethnobotany Garden, Jacob Ballas Children's Garden, Mingxin Foundation Rambler's Ridge, and COMO Adventure Grove at Gallop Extension. Specified breeds must be muzzled; clean up after your dog.",
+      "observedDate": "2026-09-19",
+      "sourceUrls": [
+        "https://isomer-user-content.by.gov.sg/152/cd974f03-13f5-43f0-a60a-81f5e56398d5/Terms%20and%20Conditions%202022a.pdf",
+        "https://www.ostrichtrails.com/asia/singapore/singapore-botanic-gardens-walk/"
+      ],
+      "travel": {
+        "lat": 1.3136,
+        "lng": 103.8159,
+        "nearestMrt": "Botanic Gardens",
+        "region": "Tanglin",
+        "zone": "C"
+      }
+    },
+    {
+      "address": "Sembawang Park",
+      "id": "park-sembawang",
+      "kind": "park",
+      "leash": "leashed",
+      "name": "Sembawang Park",
+      "notes": "Beach park with shaded paths. Leashed walks; a calm alternative to the east-coast crowds, and close to Woodlands. The park also has a fenced off-leash dog run, listed as its own entry.",
+      "observedDate": "2026-09-19",
+      "sourceUrls": [
+        "https://www.nparks.gov.sg/visit/parks/park-detail/sembawang-park/",
+        "https://thehoneycombers.com/singapore/dog-runs-parks-singapore/"
+      ],
+      "travel": {
+        "lat": 1.4578,
+        "lng": 103.8324,
+        "nearestMrt": "Sembawang",
+        "region": "Sembawang",
+        "zone": "N"
+      }
+    },
+    {
+      "address": "Coney Island Park",
+      "id": "park-coney",
+      "kind": "park",
+      "leash": "leashed",
+      "name": "Coney Island Park",
+      "notes": "Rustic trails and beaches; leashed dogs allowed per NParks. Check on-site signage, keep to trails, and watch for stray dogs and wildlife. Bring water; facilities are minimal.",
+      "observedDate": "2026-09-19",
+      "sourceUrls": [
+        "https://www.nparks.gov.sg/visit/parks/park-detail/coney-island-park",
+        "https://www.nparks.gov.sg/visit/when-visiting-parks/etiquette"
+      ],
+      "travel": {
+        "lat": 1.4097,
+        "lng": 103.9218,
+        "nearestMrt": "Punggol",
+        "region": "Punggol",
+        "zone": "N"
+      }
+    },
+    {
+      "address": "Northshore Plaza II, 418 Northshore Drive",
+      "id": "cafe-creamier",
+      "kind": "cafe",
+      "leash": "leashed",
+      "name": "Creamier @ Northshore Plaza II",
+      "notes": "Famous for dog-friendly icy treats; pup cups confirmed on the brand's own posts (Jan 2026). Outdoor seating for dogs is likely but not re-confirmed in 2026, so check on arrival.",
+      "observedDate": "2026-09-19",
+      "sourceUrls": [
+        "https://www.foodyas.com/SG/Singapore/103991212754455/Creamier-Handcrafted-Ice-Cream-and-Coffee",
+        "https://mart.grab.com/sg/en/merchant/creamier-handcrafted-ice-cream-coffee-northshore-plaza-ii/4-C3CJEJEALA3XLE"
+      ],
+      "travel": {
+        "lat": 1.411,
+        "lng": 103.9066,
+        "nearestMrt": "Punggol",
+        "region": "Punggol",
+        "zone": "N"
+      }
+    },
+    {
+      "address": "HortPark, 33 Hyderabad Road",
+      "id": "cafe-canopy",
+      "kind": "cafe",
+      "leash": "leashed",
+      "name": "Canopy @ HortPark",
+      "notes": "Garden setting, dog-friendly alfresco only; indoor dining with dogs is not established. Walk the park trails before brunch. Water bowls are mentioned in older reviews but are not guaranteed.",
+      "observedDate": "2026-09-19",
+      "sourceUrls": [
+        "https://urbandogowner.com/places/canopy-hortpark",
+        "https://wanderlog.com/place/details/1253328"
+      ],
+      "travel": {
+        "lat": 1.2799,
+        "lng": 103.7995,
+        "nearestMrt": "Labrador Park",
+        "region": "Alexandra",
+        "zone": "S"
+      }
+    },
+    {
+      "address": "511 Upper Jurong Road",
+      "id": "cafe-surrey-hills",
+      "kind": "cafe",
+      "leash": "leashed",
+      "name": "Surrey Hills Grocer",
+      "notes": "Grocer-cafe with a dog-friendly outdoor area, mostly outdoor and sheltered seating. Staff offer water bowls, and animal-friendly ice cream is on the menu. A good pit stop on the way to the west-side parks.",
+      "observedDate": "2026-09-19",
+      "sourceUrls": [
+        "https://www.lemon8-app.com/discover/surreys%20caf%C3%A3%C2%A9%20juice%20bar?region=sg",
+        "https://wanderlog.com/place/details/5057367/surrey-hills-grocer-ion-orchard"
+      ],
+      "travel": {
+        "lat": 1.3329,
+        "lng": 103.6926,
+        "nearestMrt": "Pioneer",
+        "region": "Jurong",
+        "zone": "W"
+      }
+    },
+    {
+      "address": "2 Park Lane, Seletar Aerospace Park",
+      "id": "cafe-wheelers",
+      "kind": "cafe",
+      "leash": "leashed",
+      "name": "Wheeler's Estate",
+      "notes": "Big lawn, very dog-welcome; dogs allowed inside and outside (Jun 2026). Outdoor seating across the estate; a destination brunch with the dog. Water bowls not officially confirmed.",
+      "observedDate": "2026-09-19",
+      "sourceUrls": [
+        "https://www.top-rated.online/cities/Seletar/place/p/6306855/Wheeler%27s+Estate",
+        "https://petfriendly.sg/listing/wheelers-estate/"
+      ],
+      "travel": {
+        "lat": 1.3915,
+        "lng": 103.8798,
+        "region": "Seletar",
+        "zone": "N"
+      }
+    },
+    {
+      "address": "7 Holland Village Way",
+      "id": "mall-one-holland",
+      "kind": "mall",
+      "leash": "leashed",
+      "name": "One Holland Village",
+      "notes": "Open courtyards and alfresco cafes. Pet lifts, pet drinking fountains and water coolers, and leash hooks around the mall. Dogs on leash; cats in carriers.",
+      "observedDate": "2026-09-19",
+      "sourceUrls": [
+        "https://mothership.sg/2023/12/one-holland-village/",
+        "https://thesmartlocal.com/read/one-holland-village/"
+      ],
+      "travel": {
+        "lat": 1.3108,
+        "lng": 103.7949,
+        "nearestMrt": "Holland Village",
+        "region": "Holland Village",
+        "zone": "C"
+      }
+    },
+    {
+      "address": "1 Vista Exchange Green",
+      "id": "mall-star-vista",
+      "kind": "mall",
+      "leash": "leashed",
+      "name": "The Star Vista",
+      "notes": "Open-air mall with wide walkways. Dogs leashed in common areas; pet rules in dining areas vary by outlet, with some requiring pets in strollers or carriers.",
+      "observedDate": "2026-09-19",
+      "sourceUrls": [
+        "https://checkin.sg/c/1647999241",
+        "https://www.traveloka.com/en-sg/explore/activities/pet-friendly-mall-singapore-ta/1002476"
+      ],
+      "travel": {
+        "lat": 1.3056,
+        "lng": 103.7889,
+        "nearestMrt": "Buona Vista",
+        "region": "Buona Vista",
+        "zone": "W"
+      }
+    },
+    {
+      "address": "163 Tanglin Road",
+      "id": "mall-tanglin",
+      "kind": "mall",
+      "leash": "off-leash",
+      "name": "Tanglin Mall",
+      "notes": "Has a Pet Garden where dogs can play off-leash. Leashed elsewhere in the mall; near the Botanic Gardens for a combined outing. A Pet Lovers Centre outlet and pet-friendly alfresco dining on site.",
+      "observedDate": "2026-09-19",
+      "sourceUrls": [
+        "https://sethlui.com/best-pet-friendly-mall-guide-singapore/",
+        "https://www.dogs.sg/post/pet-friendly-malls-neighborhood-in-singapore-a-practical-guide-for-pet-owners"
+      ],
+      "travel": {
+        "lat": 1.3047,
+        "lng": 103.8135,
+        "nearestMrt": "Orchard Boulevard",
+        "region": "Tanglin",
+        "zone": "C"
+      }
+    },
+    {
+      "address": "23 Serangoon Central",
+      "id": "mall-nex",
+      "kind": "mall",
+      "leash": "leashed",
+      "name": "NEX",
+      "notes": "Rooftop K9 Park on the SkyGarden, Singapore's first dog park integrated in a mall, with agility equipment and zones for all sizes. Dogs limited to the K9 Park and SkyGarden zone via designated Lifts 1 and 2; not welcome in other areas of the mall.",
+      "observedDate": "2026-09-19",
+      "sourceUrls": [
+        "https://www.readkong.com/page/pgim-real-estate-secures-s-900-million-green-loan-from-dbs-6985257",
+        "https://blog.petloverscentre.com/pet-friendly-malls-singapore/"
+      ],
+      "travel": {
+        "lat": 1.3509,
+        "lng": 103.8714,
+        "nearestMrt": "Serangoon",
+        "region": "Serangoon",
+        "zone": "N"
+      }
+    },
+    {
+      "address": "83 Punggol Central",
+      "id": "mall-waterway",
+      "kind": "mall",
+      "leash": "leashed",
+      "name": "Waterway Point",
+      "notes": "Leashed pets welcome on designated pet paths leading to The Pet Safari store. Note: the waterfront promenade is public NParks space, not a mall pet zone.",
+      "observedDate": "2026-09-19",
+      "sourceUrls": [
+        "https://blog.petloverscentre.com/pet-friendly-malls-singapore/",
+        "https://discoveringtrips.com/punggol-waterway-park-singapore/"
+      ],
+      "travel": {
+        "lat": 1.4126,
+        "lng": 103.9044,
+        "nearestMrt": "Punggol",
+        "region": "Punggol",
+        "zone": "N"
+      }
+    },
+    {
+      "address": "1 HarbourFront Walk",
+      "id": "mall-vivocity",
+      "kind": "mall",
+      "leash": "leashed",
+      "name": "VivoCity",
+      "notes": "Rooftop Sky Park and harbourfront strolls; designated Pet Relief Area at Level 3 Sky Park (waste disposal, dogs leashed). Dogs leashed at all times outdoors; no off-leash provision anywhere. All pets indoors must be handcarried, in a carrier, or in a pet stroller (open-top prams require leash or restraint). Dedicated pet lift at Lobby H to The Pet Safari, Level 3.",
+      "observedDate": "2026-09-19",
+      "sourceUrls": [
+        "https://d3nse58ioth0yc.cloudfront.net/wp/VivoCity-Pet-Policy.pdf",
+        "https://blog.petloverscentre.com/pet-friendly-malls-singapore/"
+      ],
+      "travel": {
+        "lat": 1.2644,
+        "lng": 103.822,
+        "nearestMrt": "HarbourFront",
+        "region": "HarbourFront",
+        "zone": "S"
+      }
+    }
+  ],
+  "sourceNote": "Curated and verified against official and current sources, Sep 2026. Rules and arrangements change; verify before visiting. Dogs must be kept on a leash in public places (no prescribed length in law), except inside fenced dog runs; dogs are not allowed in nature parks or reserves. Leash violations can carry a fine of up to S$5,000 under the Animals and Birds (Licensing and Control of Cats and Dogs) Rules 2024."
+}

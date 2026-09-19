@@ -2,7 +2,7 @@
  * Redesign v2 — "Keepsake Field Guide" app shell.
  * Paper #F8F3EB bg w/ grain, ivory cards, Ink Navy #22364D nav bar + CTAs,
  * Burnt Sienna #C66A3D active/eyebrow accents, Cormorant Garamond display.
- * Bottom nav matches live grok.me: Home / Logs / Photos / Guides / Ask.
+ * Bottom nav: Home / Logs / Photos / Guides / Dogs / Ask.
  * Growth, Health and Journey live under Home → "His record".
  */
 import { Link, useLocation } from "wouter";
@@ -13,6 +13,7 @@ import {
   Camera,
   ChevronLeft,
   PawPrint,
+  MapPin,
   Sparkles,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -24,6 +25,7 @@ const TABS = [
   { href: "/trackers", label: "Logs", icon: ClipboardList },
   { href: "/memories", label: "Photos", icon: Camera },
   { href: "/handbook", label: "Guides", icon: BookOpen },
+  { href: "/dogs", label: "Dogs", icon: MapPin },
   { href: "/ask", label: "Ask", icon: Sparkles },
 ] as const;
 
@@ -46,7 +48,7 @@ export function BottomNav() {
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
     >
       <div className="mx-3 mb-2.5 rounded-[26px] bg-[#22364D] shadow-[0_10px_30px_rgba(34,54,77,0.35)]">
-        <div className="grid grid-cols-5 py-1.5 px-1">
+        <div className="grid grid-cols-6 py-1.5 px-0.5">
           {TABS.map((t) => {
             const active = isTabActive(t.href, loc);
             const Icon = t.icon;
@@ -62,7 +64,7 @@ export function BottomNav() {
                 <Icon size={18} strokeWidth={active ? 2.4 : 1.9} />
                 <span
                   className={cn(
-                    "text-[11px] leading-none tracking-[0.04em]",
+                    "text-[10px] leading-none tracking-[0.03em]",
                     active ? "font-extrabold" : "font-semibold",
                   )}
                 >

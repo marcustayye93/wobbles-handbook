@@ -28,8 +28,10 @@ import Health from "@/pages/Health";
 import Journey from "@/pages/Journey";
 import TrickDetail from "@/pages/TrickDetail";
 import Ask from "@/pages/Ask";
+import DogFriendly from "@/pages/DogFriendly";
 import ImportPhotos from "@/pages/ImportPhotos";
 import NotFound from "@/pages/NotFound";
+import HashDogsRedirect from "@/components/HashDogsRedirect";
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
@@ -54,6 +56,7 @@ function Router() {
       <Route path="/journey" component={Journey} />
       <Route path="/journey/tricks/:id" component={TrickDetail} />
       <Route path="/ask" component={Ask} />
+      <Route path="/dogs" component={DogFriendly} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>
@@ -67,6 +70,7 @@ export default function App() {
         <TooltipProvider>
           <Toaster position="top-center" />
           <OfflineBanner />
+          <HashDogsRedirect />
           <AuthGate>
             <Router />
           </AuthGate>
