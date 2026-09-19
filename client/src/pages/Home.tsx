@@ -184,7 +184,7 @@ export default function Home() {
             </h1>
             <p className="mt-1.5 text-[12.5px] font-body text-[#5A6B7E] leading-snug">
               {preHome
-                ? "Paddy stays at The Doghouse QLD until he home 23 Sep. Empty logs are the truth — this is not a 7am logger."
+                ? "Paddy stays at The Doghouse QLD until he comes home 23 Sep. Empty logs are the truth — this is not a 7am logger."
                 : decompressing
                   ? "Days 1–3: quiet flat, his toilet spot, crate as a den, no visitors."
                   : "Carry-socialise. Book SingVet. Grass waits for the 16-week core and a vet nod."}
@@ -196,13 +196,7 @@ export default function Home() {
           <img
             src={ASSETS.v2Hero}
             alt="Gouache of Paddington the red-parti Cavoodle in a pink gingham bandana"
-            className="w-full aspect-[2/1] max-h-[168px] object-cover object-[center_16%]"
-            style={{ objectPosition: "center 16%" }}
-          />
-          <div
-            className="absolute inset-x-0 bottom-0 h-10"
-            style={{ background: "linear-gradient(to bottom, transparent, #F8F3EB)" }}
-            aria-hidden
+            className="w-full aspect-[3/4] max-h-[52vh] object-contain object-center"
           />
           <span className="absolute top-2.5 right-3 bg-[#FFFDF8]/90 backdrop-blur px-2.5 py-1 rounded-full text-[11px] font-body font-extrabold text-[#22364D] border border-[#E5DAC8] shadow-sm">
             <PawPrint size={11} className="inline -mt-0.5 mr-1 text-[#C66A3D]" />
@@ -214,7 +208,7 @@ export default function Home() {
       {preHome ? (
         <>
           {/* Countdown — the lead, not a taped corner card */}
-          <section className="relative z-10 px-4 -mt-6">
+          <section className="relative z-10 px-4 mt-3">
             <div className="keepsake-card relative p-5 fade-up" style={{ animationDelay: "120ms" }}>
               <span className="absolute -top-3 left-4 bg-[#B4512E] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
                 Until he lands
@@ -271,7 +265,7 @@ export default function Home() {
       ) : (
         <>
           {/* Week-1 lead: decompression or carry-socialise */}
-          <section className="relative z-10 px-4 -mt-6">
+          <section className="relative z-10 px-4 mt-3">
             <div className="keepsake-card relative p-5 fade-up" style={{ animationDelay: "120ms" }}>
               <span className="absolute -top-3 left-4 bg-[#B4512E] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
                 {decompressing ? `Day ${homeDays + 1} · decompression` : "Week one at home"}

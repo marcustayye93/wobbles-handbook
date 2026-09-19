@@ -180,4 +180,16 @@ describe("lockedFactsReply", () => {
     expect(reply).toMatch(/not.*park-cleared/i);
     expect(reply).toMatch(/16 Oct/);
   });
+
+  it("answers the fourth vaccination as 16 Oct at SingVet, not a C3 recap", () => {
+    const reply = lockedFactsReply(
+      "When is Paddington scheduled for his fourth vaccination in the SingVet clinic? When should that be?",
+      preHome,
+    );
+    expect(reply).toMatch(/Friday 16 October 2026/);
+    expect(reply).toMatch(/SingVet/);
+    expect(reply).toMatch(/not\*\* the fourth vaccination/i);
+    expect(reply).not.toMatch(/Vaccines — locked dates/);
+    expect(reply.indexOf("16 October")).toBeLessThan(reply.indexOf("7 Aug") === -1 ? Infinity : reply.indexOf("7 Aug"));
+  });
 });

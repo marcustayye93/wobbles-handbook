@@ -539,6 +539,41 @@ function scheduleReply(now: Date): string {
   ].join("\n");
 }
 
+function vaccineReply(question: string): string {
+  const s = question.toLowerCase();
+  const asksFourth =
+    /\b(fourth|4th|4rd)\b/.test(s) ||
+    /\b(booster|core shot|16[- ]week|sixteen[- ]week)\b/.test(s) ||
+    (/\bsingvet\b/.test(s) && /\b(vaccin|shot|jab|dose)\b/.test(s));
+
+  if (asksFourth) {
+    return [
+      `**His fourth vaccination is the Singapore ≥16-week core on Friday 16 October 2026, booked at SingVet Woodlands.**`,
+      ``,
+      `That is the shot — not a fourth C3 in Australia. The three Queensland doses were 7 Aug, 21 Aug and 4 Sep. Dose 3 is **not** park-cleared.`,
+      `The first Singapore vet visit (~**28 Sep**) is for chip, papers and the parasite plan. It is **not** the fourth vaccination.`,
+      `Book the core **on or after Friday 16 Oct**. Then wait for SingVet's nod before public grass.`,
+    ].join("\n");
+  }
+
+  if (/\b(grass|park[\s-]*clear|when can he (go|walk|run))\b/.test(s)) {
+    return [
+      `**Not until Friday 16 Oct 2026, plus a SingVet nod.**`,
+      ``,
+      `C3 dose 3 on 4 Sep in Queensland is not park-cleared. Carry-socialise until the ≥16-week core, then wait for the vet.`,
+    ].join("\n");
+  }
+
+  return [
+    `**Three C3s in Australia, then the Singapore core.**`,
+    ``,
+    `- Dose 1: **7 Aug**. Dose 2: **21 Aug**. Dose 3: **4 Sep** (QLD). Dose 3 is not park-cleared.`,
+    `- Fourth vaccination = Singapore ≥16-week core on **Friday 16 Oct 2026** at SingVet. Never 15 Oct.`,
+    `- First SingVet visit ~**28 Sep** is paperwork, not that fourth shot.`,
+    `- Public grass only after the core plus the vet's nod.`,
+  ].join("\n");
+}
+
 export function lockedFactsReply(question: string, now: Date = new Date()): string {
   const intent = classifyAskIntent(question);
   const age = wobblesAgeServer(now);
@@ -564,14 +599,7 @@ export function lockedFactsReply(question: string, now: Date = new Date()): stri
         `From about day 4, carry-socialise. Ground time waits for the 16-week core on **Friday 16 Oct** plus a SingVet nod.`,
       ].join("\n");
     case "vaccines":
-      return [
-        `**Vaccines — locked dates.**`,
-        ``,
-        `- C3 dose 1: **7 Aug 2026**. Dose 2: **21 Aug**. Dose 3: **4 Sep** (QLD).`,
-        `- Dose 3 is **not** park-cleared and **not** the 16-week core.`,
-        `- Singapore ≥16-week core: **Friday 16 Oct 2026** (never 15 Oct). Then a vet nod before public grass.`,
-        `- Carry him until that nod. First SG vet visit target ~28 Sep, SingVet Woodlands.`,
-      ].join("\n");
+      return vaccineReply(question);
     case "shiro":
       return [
         `**Shiro is not a Woodlands housemate.**`,
@@ -664,7 +692,7 @@ export async function generateAssistantReply(
   ];
   const lastUser = [...recent].reverse().find((m) => m.role === "user")?.content ?? "";
   try {
-    const res = await invokeLLM({ messages, maxTokens: 1400, model: process.env.XAI_MODEL || "grok-4.5" });
+    const res = await invokeLLM({ messages, maxTokens: 1400 });
     const text = contentToText(res.choices[0]?.message?.content).trim();
     if (!text) throw new Error("Empty reply from the assistant");
     return text;
