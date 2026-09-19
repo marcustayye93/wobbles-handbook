@@ -9,8 +9,10 @@ import type { AiMemoryRow } from "../drizzle/schema";
 import {
   buildSystemPrompt,
   buildPaddingtonContext,
+  classifyAskIntent,
   conversationTitle,
   dedupeNewFacts,
+  lockedFactsReply,
   parseDistillResponse,
 } from "./aiChat";
 
@@ -138,5 +140,44 @@ describe("dedupeNewFacts", () => {
   it("drops overlong facts", () => {
     const kept = dedupeNewFacts([{ fact: "x".repeat(600), category: "other" }], []);
     expect(kept).toEqual([]);
+  });
+});
+
+describe("classifyAskIntent", () => {
+  it("treats 'Full schedule please' as a schedule question", () => {
+    expect(classifyAskIntent("Full schedule please")).toBe("schedule");
+  });
+
+  it("classifies Shiro, vaccines, and flight separately", () => {
+    expect(classifyAskIntent("When can he meet Shiro?")).toBe("shiro");
+    expect(classifyAskIntent("Is dose 3 park-cleared?")).toBe("vaccines");
+    expect(classifyAskIntent("What time is QF51?")).toBe("flight");
+  });
+});
+
+describe("lockedFactsReply", () => {
+  const preHome = new Date("2026-09-19T02:00:00Z");
+
+  it("answers a schedule ask with the 23 Sep plan, not a fact-sheet dump", () => {
+    const reply = lockedFactsReply("Full schedule please", preHome);
+    expect(reply).not.toMatch(/model is offline/i);
+    expect(reply).not.toMatch(/You asked:/);
+    expect(reply).toMatch(/23 Sep/);
+    expect(reply).toMatch(/QF51/);
+    expect(reply).toMatch(/First 3 days/);
+    expect(reply).toMatch(/16 Oct/);
+    expect(reply).not.toMatch(/24 Sep/);
+  });
+
+  it("keeps Shiro as the parents' dog, not a Woodlands housemate", () => {
+    const reply = lockedFactsReply("What's the plan with Shiro?", preHome);
+    expect(reply).toMatch(/not a Woodlands housemate/i);
+    expect(reply).toMatch(/landed house/i);
+  });
+
+  it("does not treat C3 dose 3 as park-cleared", () => {
+    const reply = lockedFactsReply("When can he go on the grass?", preHome);
+    expect(reply).toMatch(/not.*park-cleared/i);
+    expect(reply).toMatch(/16 Oct/);
   });
 });

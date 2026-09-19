@@ -27,11 +27,34 @@ import { cn } from "@/lib/utils";
 
 /** Starter prompts shown on an empty chat */
 const STARTERS = [
+  "Full schedule please",
   "What should we pack for his flight from Brisbane?",
-  "How long can a young puppy hold his bladder?",
   "How do we puppy-proof an HDB flat?",
-  "What's the best brushing routine for a fleece coat?",
+  "What's the plan with Shiro?",
 ];
+
+const ASK_CONVO_KEY = "paddington-ask-conversation";
+
+function readSavedAsk(): number | "new" | null {
+  try {
+    const raw = localStorage.getItem(ASK_CONVO_KEY);
+    if (raw === "new") return "new";
+    const n = Number(raw);
+    return Number.isFinite(n) && n > 0 ? n : null;
+  } catch {
+    return null;
+  }
+}
+
+function writeSavedAsk(id: number | "new" | null) {
+  try {
+    if (id === "new") localStorage.setItem(ASK_CONVO_KEY, "new");
+    else if (typeof id === "number" && id > 0) localStorage.setItem(ASK_CONVO_KEY, String(id));
+    else localStorage.removeItem(ASK_CONVO_KEY);
+  } catch {
+    /* private mode */
+  }
+}
 
 const CATEGORY_EMOJI: Record<string, string> = {
   health: "🩺",
@@ -55,7 +78,10 @@ export default function Ask() {
   const { profile } = useProfile();
   const utils = trpc.useUtils();
 
-  const [conversationId, setConversationId] = useState<number | null>(null);
+  const [conversationId, setConversationId] = useState<number | null>(() => {
+    const saved = readSavedAsk();
+    return typeof saved === "number" ? saved : null;
+  });
   const [draft, setDraft] = useState("");
   const [optimistic, setOptimistic] = useState<LocalMsg[]>([]);
   const [historyOpen, setHistoryOpen] = useState(false);
@@ -65,14 +91,32 @@ export default function Ask() {
     { conversationId: conversationId ?? 0 },
     { enabled: conversationId != null },
   );
-  const conversationsQuery = trpc.ai.conversations.useQuery(undefined, {
-    enabled: historyOpen,
-  });
+  const conversationsQuery = trpc.ai.conversations.useQuery();
   const memoryQuery = trpc.ai.memory.useQuery(undefined, { enabled: memoryOpen });
+
+  useEffect(() => {
+    if (conversationId != null) writeSavedAsk(conversationId);
+  }, [conversationId]);
+
+  useEffect(() => {
+    const list = conversationsQuery.data;
+    if (!list) return;
+    if (conversationId != null) {
+      if (!list.some((c) => c.id === conversationId)) {
+        const next = list[0]?.id ?? null;
+        setConversationId(next);
+        writeSavedAsk(next ?? "new");
+      }
+      return;
+    }
+    if (readSavedAsk() === "new") return;
+    if (list[0]) setConversationId(list[0].id);
+  }, [conversationsQuery.data, conversationId]);
 
   const send = trpc.ai.send.useMutation({
     onSuccess: (res) => {
       setConversationId(res.conversationId);
+      writeSavedAsk(res.conversationId);
       setOptimistic([]);
       utils.ai.messages.invalidate({ conversationId: res.conversationId });
       utils.ai.conversations.invalidate();
@@ -128,6 +172,7 @@ export default function Ask() {
     setConversationId(null);
     setOptimistic([]);
     setDraft("");
+    writeSavedAsk("new");
   };
 
   const openConversation = (id: number) => {
@@ -190,7 +235,16 @@ export default function Ask() {
                     aria-label="Delete conversation"
                     onClick={() => {
                       deleteConvo.mutate({ conversationId: c.id });
-                      if (conversationId === c.id) startNew();
+                      if (conversationId === c.id) {
+                        const rest = (conversationsQuery.data ?? []).filter((x) => x.id !== c.id);
+                        if (rest[0]) {
+                          setConversationId(rest[0].id);
+                          writeSavedAsk(rest[0].id);
+                          setOptimistic([]);
+                        } else {
+                          startNew();
+                        }
+                      }
                     }}
                     className="shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-muted-foreground hover:text-[#B4512E] press-scale"
                   >
@@ -252,7 +306,7 @@ export default function Ask() {
 
       {/* Thread */}
       <div className="px-4 pt-4 pb-40 space-y-3">
-        {thread.length === 0 && !busy && (
+        {thread.length === 0 && !busy && conversationId == null && (
           <div className="pt-6">
             <div className="keepsake-card relative p-5 text-center">
               <span className="tape" aria-hidden />
@@ -261,8 +315,7 @@ export default function Ask() {
                 Ask me anything about Paddington
               </h2>
               <p className="text-[12.5px] font-body text-[#5A6B7E] leading-relaxed mt-1.5">
-                I know his breed, age, coat and the move to Singapore — and I remember what you tell me, so my
-                answers get more personal over time. Every conversation is saved for both of you.
+                I know his age, the 23 Sep flight, the first days home, and the Woodlands rhythm — and every chat stays here for both of you.
               </p>
             </div>
             <Eyebrow className="mt-6 mb-2.5">Try asking</Eyebrow>

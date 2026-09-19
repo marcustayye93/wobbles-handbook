@@ -47,9 +47,9 @@ export const WOBBLES_PROFILE = {
   family:
     "Marcus (WFH Mon + Fri, office Tue\u2013Thu) and Chesa (home most days, sometimes office Tue/Thu). Monday is grooming day; Sunday is the Paddington focus day.",
   relocation:
-    "Flying from Brisbane to Singapore with Jet Pets on 23 Sep 2026, landing/homecoming 24 Sep (AVS requires 12 weeks minimum age at export — he flies at 12w5d). Needs import permit, PALS dog licence, and microchip/vaccination paperwork.",
+    "Flying QF51 BNE \u2192 SIN with Jet Pets on 23 Sep 2026, same-day homecoming in Woodlands (AVS 12-week minimum; he flies at 12w5d). Collect Caboolture Mon 21 Sep; board Eagle Farm 21\u201323 Sep. Mitchville Relopet delivers to Blk 587 after Changi, about 2\u20134h after landing. Needs PALS dog licence before the AVS import licence, plus microchip/vaccination paperwork.",
   vaccinations:
-    "Dose 1 (Protech C3, batch 4964023A, expiry 21 Apr 2027): administered 7 Aug 2026 by Dr Ayana Lowe BVSc(Hons)BSc at Fetch a Vet Pty Ltd (mobile vet, North Lakes QLD 4509, QLD reg 5810). Weight at vaccination: 1.6 kg. Microchip 900164002411316 implanted same day (between shoulder blades). Booster due 21 Aug 2026 (dose 2). Dose 3 expected ~4 Sep 2026. Fully protected ~22 Sep, a day or two before the flight. Ask the SG vet at the first visit (~24 Sep) about a 16-week booster since dose 3 is at ~10.5 weeks.",
+    "Protech C3: dose 1 on 7 Aug 2026 (batch 4964023A, Dr Ayana Lowe, Fetch a Vet North Lakes; weight 1.6 kg; microchip 900164002411316). Dose 2 on 21 Aug 2026. Dose 3 on 4 Sep 2026 in Queensland. Dose 3 is NOT the 16-week core and he is NOT park-cleared. Singapore \u226516-week core on or after Friday 16 Oct 2026, then a Singapore vet nod before public grass. First SG vet visit target ~28 Sep (SingVet Woodlands).",
 } as const;
 
 /* ---------------- Age + stage (server-side, deterministic) ---------------- */
@@ -270,6 +270,8 @@ ${memoryBlock}
 
 ## How to answer
 - Be warm, practical and concise \u2014 you are talking to first-time puppy parents on their phones. Prefer short paragraphs or tight bullet lists; use markdown.
+- **Answer the question first.** Never dump a locked-facts sheet. Never say the model is offline. Never echo "You asked:".
+- For "schedule / full day / routine" questions: give a timed plan for today and the next relevant days (homecoming, first 3 days home, daily rhythm, vaccines/park). Do not recap his breed.
 - Always tailor advice to Paddington specifically: his exact age today, toy-Cavoodle size, fleece coat, HDB-flat life in Woodlands, Singapore climate (hot, humid, thunderstorms), and the family's weekly rhythm.
 - Use the memory book: if the family told you something before (his weight, what treat works, a quirk), build on it rather than asking again.
 - If a question needs information you don't have (e.g. his current weight and none is in memory), give the general answer for his age/breed and ask one short follow-up question.
@@ -422,6 +424,211 @@ export async function distillMemory(
   }
 }
 
+/* ---------------- Offline / locked-facts answers ---------------- */
+
+function isoDate(d: Date): string {
+  return d.toISOString().slice(0, 10);
+}
+
+function fmtDay(iso: string): string {
+  return new Date(iso + "T12:00:00").toLocaleDateString("en-SG", {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+  });
+}
+
+export type AskIntent =
+  | "schedule"
+  | "shiro"
+  | "vaccines"
+  | "toilet"
+  | "crate"
+  | "flight"
+  | "firstdays"
+  | "food"
+  | "vet"
+  | "groom"
+  | "general";
+
+export function classifyAskIntent(question: string): AskIntent {
+  const s = question.toLowerCase();
+  if (/\bshiro\b/.test(s)) return "shiro";
+  if (/\b(flight|qf51|jet pets|homecoming|changi|landing|arrive|caboolture|eagle farm)\b/.test(s)) return "flight";
+  if (/(vaccin|\bc3\b|park[\s-]*clear|grass|16[- ]week|sixteen week)/.test(s)) return "vaccines";
+  if (/\b(toilet|pee pad|wee|poo|potty)\b/.test(s)) return "toilet";
+  if (/\b(crate|playpen|safe pen|marukan|den)\b/.test(s)) return "crate";
+  if (/\b(first days?|decompress|no visitors|quiet days)\b/.test(s)) return "firstdays";
+  if (/\b(food|feed|eat|kibble|kong|chicken|appetite)\b/.test(s)) return "food";
+  if (/\b(vet|emergency|poison|toxin|vomit|seizure|collapse|heatstroke)\b/.test(s)) return "vet";
+  if (/\b(groom|brush|bath|nails|ears|coat)\b/.test(s)) return "groom";
+  if (/\b(schedule|timetable|routine|full day|day plan|calendar|full schedule)\b/.test(s)) return "schedule";
+  return "general";
+}
+
+function scheduleReply(now: Date): string {
+  const age = wobblesAgeServer(now);
+  const toHome = daysUntilHomecoming(now);
+  const today = isoDate(now);
+  const ageLine = age.born
+    ? `${age.weeks} weeks ${age.remDays} day${age.remDays === 1 ? "" : "s"} old today (${fmtDay(today)}).`
+    : "Not born yet.";
+
+  if (toHome > 0) {
+    return [
+      `**Paddington's schedule from today**`,
+      ``,
+      `He is still at The Doghouse QLD — ${ageLine} **${toHome} day${toHome === 1 ? "" : "s"}** until he lands.`,
+      ``,
+      `### Until he flies`,
+      `- **${fmtDay("2026-09-21")} (Mon 21 Sep)** — collect him at Caboolture. Then board at Eagle Farm 21–23 Sep.`,
+      `- **${fmtDay("2026-09-23")} (Wed 23 Sep)** — homecoming. QF51 Jet Pets, BNE 11:05 → SIN 17:25. Same-day Woodlands delivery to Blk 587 #12-54 via Mitchville Relopet (+65 6482 0084), about 2–4 hours after arrival. No quarantine.`,
+      ``,
+      `### First 3 days home (23–25 Sep)`,
+      `- Flat only. Decompression. Toilet spot, crate as a den, hand-feeding, long naps.`,
+      `- **No visitors. No Shiro meeting. No public grass.**`,
+      `- Carry to the pad / metal grid every ~30 minutes. No scolding.`,
+      ``,
+      `### Daily rhythm once the bubble lifts (from ~day 4)`,
+      `- **7:15–7:30am** — carry crate → lift → grass (no lobby floor). Breakfast, pad, short play, nap.`,
+      `- Loop: play 15–30 min → toilet → nap 45 min–2 h → toilet. He sleeps 18–20 hours.`,
+      `- Skip pavement **10am–5pm** (Singapore heat). Dinner ~5pm. Evening after **7pm**.`,
+      `- Carry-socialise. Ground/park waits for the **16-week core on Friday 16 Oct** plus a SingVet nod.`,
+      ``,
+      `### Your week`,
+      `- **Sun** — Paddington focus day (both home).`,
+      `- **Mon** — both home, grooming day (Marcus WFH).`,
+      `- **Tue–Thu** — Marcus office; Chesa home / maybe-office.`,
+      `- **Fri** — Marcus WFH. **Sat** — flexible.`,
+      ``,
+      `Book SingVet around **28 Sep**. C3 dose 3 on 4 Sep is **not** park-cleared.`,
+    ].join("\n");
+  }
+
+  const daysHome = -toHome;
+  if (daysHome <= 3) {
+    return [
+      `**Quiet days home — day ${daysHome + 1}**`,
+      ``,
+      `${ageLine} He landed 23 Sep. This is the decompression bubble.`,
+      ``,
+      `- Stay in the flat. Toilet on the metal-grid pad every ~30 min. No scolding.`,
+      `- Crate door open (Marukan medium, living-room pen). Hand-feed. Long naps.`,
+      `- **No visitors. No Shiro. No public grass.**`,
+      `- From day 4: carry-socialise. Book SingVet (~28 Sep).`,
+      `- Park / public ground only after **Friday 16 Oct** core plus a vet nod.`,
+      ``,
+      `Daily loop: play 15–30 min → toilet → nap → toilet. Sleep 18–20 hours. Skip hot pavement 10am–5pm.`,
+    ].join("\n");
+  }
+
+  const parkOpen = age.weeks >= 16;
+  return [
+    `**This week's rhythm for Paddington**`,
+    ``,
+    ageLine,
+    ``,
+    `- **7:15–7:30am** toilet (carry until he is park-cleared). Breakfast → pad → short play → nap.`,
+    `- Loop all day: play → toilet → nap → toilet. Dinner ~5pm. Evening after 7pm.`,
+    `- Skip pavement 10am–5pm.`,
+    parkOpen
+      ? `- 16-week core is in. Public grass only with the Singapore vet's nod.`
+      : `- **Not park-cleared.** 16-week core is **Friday 16 Oct 2026**, then a SingVet nod. Carry-socialise until then.`,
+    `- **Sun** focus day. **Mon** grooming. Marcus office Tue–Thu, WFH Mon+Fri.`,
+    `- Shiro lives at the parents' landed house — managed intros, never unsupervised, not a Woodlands housemate.`,
+  ].join("\n");
+}
+
+export function lockedFactsReply(question: string, now: Date = new Date()): string {
+  const intent = classifyAskIntent(question);
+  const age = wobblesAgeServer(now);
+  const ageLine = `${age.weeks} weeks ${age.remDays} day${age.remDays === 1 ? "" : "s"}`;
+
+  switch (intent) {
+    case "schedule":
+      return scheduleReply(now);
+    case "flight":
+      return [
+        `**QF51 is Wednesday 23 September 2026.**`,
+        ``,
+        `- Jet Pets, BNE **11:05** → SIN **17:25**. Homecoming is the same day — not 24 Sep.`,
+        `- Collect Caboolture **Mon 21 Sep**. Board Eagle Farm 21–23 Sep.`,
+        `- Mitchville Relopet (+65 6482 0084) brings him to Blk 587 #12-54 about 2–4 hours after landing. No quarantine.`,
+        `- First 3 days home: flat only, no Shiro, no public grass.`,
+      ].join("\n");
+    case "firstdays":
+      return [
+        `**Days 1–3 home (from 23 Sep) are the decompression bubble.**`,
+        ``,
+        `Quiet flat, toilet spot, crate as a den, hand-feeding, long naps. No visitors. No Shiro meeting. No public grass.`,
+        `From about day 4, carry-socialise. Ground time waits for the 16-week core on **Friday 16 Oct** plus a SingVet nod.`,
+      ].join("\n");
+    case "vaccines":
+      return [
+        `**Vaccines — locked dates.**`,
+        ``,
+        `- C3 dose 1: **7 Aug 2026**. Dose 2: **21 Aug**. Dose 3: **4 Sep** (QLD).`,
+        `- Dose 3 is **not** park-cleared and **not** the 16-week core.`,
+        `- Singapore ≥16-week core: **Friday 16 Oct 2026** (never 15 Oct). Then a vet nod before public grass.`,
+        `- Carry him until that nod. First SG vet visit target ~28 Sep, SingVet Woodlands.`,
+      ].join("\n");
+    case "shiro":
+      return [
+        `**Shiro is not a Woodlands housemate.**`,
+        ``,
+        `He is the family's Japanese Spitz, about 11, at Marcus's parents' landed house. Territorial, short temper, not well socialised.`,
+        `No meeting in the first 3 days home. After that: short, boring, managed intros — Paddington held or behind a barrier, Shiro on lead, never unsupervised. One HDB licence = Paddington only.`,
+      ].join("\n");
+    case "toilet":
+      return [
+        `**Toilet: metal grid over a pad, every ~30 minutes, no scolding.**`,
+        ``,
+        `Charmaine's method — hardware-store grid so he can't chew the pad. Same texture every time.`,
+        `After naps, play, and meals, take him to the spot. Accidents: paper-towel the wee onto the pad so the pad smells right. He is a baby.`,
+        `Until the 16 Oct core + vet nod, public grass is carry-only.`,
+      ].join("\n");
+    case "crate":
+      return [
+        `**Marukan medium crate, door open, inside the living-room pen.**`,
+        ``,
+        `He chooses the crate — never forced in. Travel blanket and a cooling mat inside. Cover two sides, leave one open for Singapore airflow.`,
+        `Pen is for overnight and unsupervised stretches. Out of the pen whenever someone is home and can watch him. Not in the bedroom at night.`,
+      ].join("\n");
+    case "food":
+      return [
+        `**Keep the breeder food for at least the first 2 weeks.** Confirm the exact brand/protein with Charmaine before stocking.`,
+        ``,
+        `Appetite often dips 1–2 weeks after the move — stress, not a crisis. Hand-feed boiled chicken or his usual food to bond. Remove food at night so nights stay quieter.`,
+        `Cavoodles here are not treated as overeaters. No rawhide. Three frozen Kongs ready for night one.`,
+      ].join("\n");
+    case "vet":
+      return [
+        `I'm not a vet. For toxin, collapse, breathing trouble, seizures, repeated vomiting/diarrhoea, or a young puppy off food 24h+, go now.`,
+        ``,
+        `- After landing: **SingVet Woodlands**.`,
+        `- After hours: Westside Serangoon / **VES Whitley**.`,
+        `First planned SG visit ~28 Sep: chip, papers, year-round parasite preventive.`,
+      ].join("\n");
+    case "groom":
+      return [
+        `**Monday is grooming day.** Fleece mats — brush before water.`,
+        ``,
+        `Daily 1-minute handling (teeth, ears, paws) beats a monthly battle. Trim paw hair so he doesn't slip on tiles (joints fuse at 18 months).`,
+        `Singapore heat: shorter body, teddy face. First full spa once he has settled, not on landing night.`,
+      ].join("\n");
+    default:
+      return [
+        `Paddington is a male toy Cavoodle, red parti / Blenheim, fleece — **${ageLine}** today.`,
+        ``,
+        daysUntilHomecoming(now) > 0
+          ? `He is still in Queensland. **QF51 homecoming is Wednesday 23 Sep** (not 24 Sep). First 3 days home: flat only, no Shiro, no public grass.`
+          : `He is home in Woodlands. First 3 days were decompression. Public grass waits for **Friday 16 Oct** plus a SingVet nod.`,
+        ``,
+        `Ask me for the **full schedule**, flight, vaccines, toilet, crate, or Shiro and I'll go straight to the plan — I won't dump a fact sheet.`,
+      ].join("\n");
+  }
+}
+
 /* ---------------- Chat reply ---------------- */
 
 /** Extract plain text from an invokeLLM content payload. */
@@ -462,18 +669,8 @@ export async function generateAssistantReply(
     if (!text) throw new Error("Empty reply from the assistant");
     return text;
   } catch (err) {
-    console.warn("[Ask Paddington] model unavailable, using locked facts", err);
-    const age = wobblesAgeServer(now);
-    return [
-      `Ask Paddington is running from locked facts while the model is offline.`,
-      `Paddington is a male toy Cavoodle, red parti / Blenheim, fleece. Born 26 Jun 2026 — ${age.weeks} weeks ${age.remDays} days today.`,
-      `QF51 homecoming 23 Sep 2026. 16 weeks = Friday 16 Oct 2026. Adult weight ≈ 8 kg.`,
-      `Protech C3 7 Aug / 21 Aug / 4 Sep 2026. Dose 3 is not park-cleared. Public grass after ≥16-week SG core on/after 16 Oct plus vet nod.`,
-      `Shiro: family Japanese Spitz ~11 at the parents' landed house. Not a Woodlands housemate. Never unsupervised.`,
-      `Toilet: metal grid over pad, every 30 min, no scolding. Crate: Marukan medium, door open, living-room pen.`,
-      `Not a vet. Emergencies after landing: SingVet Woodlands; after hours Westside Serangoon / VES Whitley.`,
-      lastUser ? `You asked: ${lastUser.slice(0, 280)}` : "",
-    ].filter(Boolean).join("\n");
+    console.warn("[Ask Paddington] model unavailable, using locked-facts answer", err);
+    return lockedFactsReply(lastUser, now);
   }
 }
 
