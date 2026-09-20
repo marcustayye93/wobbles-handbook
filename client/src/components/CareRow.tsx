@@ -9,6 +9,7 @@
  * opens the picker. Week-1 home (from landing) only shows weight / toilet / sleep.
  */
 import { useRef } from "react";
+import { MoreHorizontal } from "lucide-react";
 import { useAddTrackerEntry, useRemoveTrackerEntry, useTrackerFeed } from "@/hooks/useSyncedData";
 import { todayISO, nowHM } from "@/lib/dates";
 import { getTracker, WALK_CARRY } from "@/lib/trackers";
@@ -167,31 +168,43 @@ export default function CareRow({
       {actions.map((a) => {
         const n = countToday(a.trackerId);
         return (
-          <button
+          <div
             key={a.trackerId}
-            type="button"
-            onClick={() => oneTap(a)}
-            onPointerDown={() => startPress(a.trackerId)}
-            onPointerUp={cancelPress}
-            onPointerLeave={cancelPress}
-            onContextMenu={(e) => e.preventDefault()}
-            aria-label={
-              a.requireChoice || !a.defaultOption
-                ? `Log ${a.label} (choose details)`
-                : `Log ${a.label} now (hold for details)`
-            }
-            className="relative flex flex-col items-center gap-1 pt-3 pb-2.5 rounded-2xl bg-[#FFFDF8] border border-[#E5DAC8] shadow-sm press-scale select-none touch-manipulation min-h-[44px]"
+            className="relative flex flex-col items-center rounded-2xl bg-[#FFFDF8] border border-[#E5DAC8] shadow-sm min-h-[44px]"
           >
             {n > 0 && (
-              <span className="absolute top-1.5 right-1.5 min-w-[16px] h-4 px-1 rounded-full bg-[#B4512E] text-[#FFFDF8] text-[9px] font-body font-extrabold flex items-center justify-center leading-none">
+              <span className="absolute top-1.5 right-1.5 min-w-[16px] h-4 px-1 rounded-full bg-[#B4512E] text-[#FFFDF8] text-[9px] font-body font-extrabold flex items-center justify-center leading-none z-10">
                 {n}
               </span>
             )}
-            <span className="text-[19px] leading-none">{a.emoji}</span>
-            <span className="text-[11px] font-body font-extrabold uppercase tracking-wide text-[#22364D]">
-              {a.label}
-            </span>
-          </button>
+            <button
+              type="button"
+              onClick={() => oneTap(a)}
+              onPointerDown={() => startPress(a.trackerId)}
+              onPointerUp={cancelPress}
+              onPointerLeave={cancelPress}
+              onContextMenu={(e) => e.preventDefault()}
+              aria-label={
+                a.requireChoice || !a.defaultOption
+                  ? `Log ${a.label} (choose details)`
+                  : `Log ${a.label} now (hold for details)`
+              }
+              className="flex flex-col items-center gap-1 pt-3 pb-6 px-1 w-full press-scale select-none touch-manipulation min-h-[44px]"
+            >
+              <span className="text-[19px] leading-none">{a.emoji}</span>
+              <span className="text-[11px] font-body font-extrabold uppercase tracking-wide text-[#22364D]">
+                {a.label}
+              </span>
+            </button>
+            <button
+              type="button"
+              aria-label={`${a.label} details`}
+              onClick={() => onDetails(a.trackerId)}
+              className="absolute bottom-0.5 right-0.5 w-8 h-8 rounded-full flex items-center justify-center text-[#5A6B7E] press-scale"
+            >
+              <MoreHorizontal size={16} />
+            </button>
+          </div>
         );
       })}
     </div>

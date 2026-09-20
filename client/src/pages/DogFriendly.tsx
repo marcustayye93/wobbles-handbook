@@ -56,7 +56,7 @@ export default function DogFriendly() {
 
       <section className="px-4 mt-4">
         <div className="keepsake-card p-4">
-          <p className="text-[9px] font-body font-extrabold uppercase tracking-[0.14em] text-[#B4512E]">
+          <p className="text-[11px] font-body font-extrabold uppercase tracking-[0.14em] text-[#B4512E]">
             Leash rule
           </p>
           <p className="text-[12.5px] font-body text-[#33475C] leading-snug mt-1.5">{LEASH_BLURB}</p>
@@ -92,10 +92,12 @@ export default function DogFriendly() {
 
       <section className="px-4 mt-3 pb-4 space-y-2.5">
         <p className="px-1 text-[11px] font-body font-bold text-[#5A6B7E]">
-          {rows.length} place{rows.length === 1 ? "" : "s"}
+          {rows.length} {rows.length === 1 ? "place" : "places"}
         </p>
-        {rows.map(({ place, km }) => (
-          <article key={place.id} className="keepsake-card p-4">
+        {rows.map(({ place, km }) => {
+          const href = place.sourceUrls[0];
+          const inner = (
+            <>
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0">
                 <h2 className="font-display font-semibold text-[1.2rem] leading-tight text-[#22364D]">
@@ -108,7 +110,7 @@ export default function DogFriendly() {
               </div>
               <span
                 className={cn(
-                  "shrink-0 text-[9px] font-body font-extrabold uppercase tracking-[0.12em] px-2 py-1 rounded-full",
+                  "shrink-0 text-[11px] font-body font-extrabold uppercase tracking-[0.12em] px-2 py-1 rounded-full",
                   place.leash === "off-leash"
                     ? "bg-[#6B7C5A] text-[#FFFDF8]"
                     : "bg-[#22364D]/10 text-[#22364D]",
@@ -139,21 +141,29 @@ export default function DogFriendly() {
                 Nearest MRT: {place.travel.nearestMrt}
               </p>
             )}
-            <div className="mt-2.5 flex flex-wrap gap-x-3 gap-y-1">
-              {place.sourceUrls.map((url) => (
-                <a
-                  key={url}
-                  href={url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-[11px] font-body font-extrabold text-[#B4512E]"
-                >
-                  Verified Sep 2026
-                </a>
-              ))}
-            </div>
-          </article>
-        ))}
+            {href && (
+              <p className="mt-2.5 text-[11px] font-body font-extrabold text-[#B4512E]">
+                Verified Sep 2026
+              </p>
+            )}
+            </>
+          );
+          return href ? (
+            <a
+              key={place.id}
+              href={href}
+              target="_blank"
+              rel="noreferrer"
+              className="keepsake-card p-4 block press-scale"
+            >
+              {inner}
+            </a>
+          ) : (
+            <article key={place.id} className="keepsake-card p-4">
+              {inner}
+            </article>
+          );
+        })}
         {rows.length === 0 && (
           <p className="text-[13px] font-body text-[#5A6B7E] px-1 py-6">
             Nothing matches that search. Try a neighbourhood or a category like cafe.
@@ -178,7 +188,7 @@ function FilterChip({
       type="button"
       onClick={onClick}
       className={cn(
-        "shrink-0 px-3 h-8 rounded-full text-[11px] font-body font-extrabold press-scale",
+        "shrink-0 px-3 min-h-11 h-11 rounded-full text-[11px] font-body font-extrabold press-scale",
         active ? "bg-[#22364D] text-[#FFFDF8]" : "bg-[#FFFDF8] text-[#22364D] border border-[#E5DAC8]",
       )}
     >

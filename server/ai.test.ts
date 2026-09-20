@@ -14,6 +14,9 @@ import {
   dedupeNewFacts,
   lockedFactsReply,
   parseDistillResponse,
+  wobblesAgeServer,
+  contentToText,
+  singaporeTodayIso,
 } from "./aiChat";
 
 const mem = (id: number, fact: string, category = "other"): AiMemoryRow =>
@@ -152,6 +155,28 @@ describe("classifyAskIntent", () => {
     expect(classifyAskIntent("When can he meet Shiro?")).toBe("shiro");
     expect(classifyAskIntent("Is dose 3 park-cleared?")).toBe("vaccines");
     expect(classifyAskIntent("What time is QF51?")).toBe("flight");
+  });
+});
+
+describe("wobblesAgeServer — Singapore calendar", () => {
+  it("matches Home age just after Singapore midnight (not UTC yesterday)", () => {
+    // 20 Sep 2026 00:30 SGT = 19 Sep 16:30 UTC. Host-TZ math would be 12w 1d.
+    const justAfterMidnightSgt = new Date("2026-09-19T16:30:00.000Z");
+    expect(singaporeTodayIso(justAfterMidnightSgt)).toBe("2026-09-20");
+    const age = wobblesAgeServer(justAfterMidnightSgt);
+    expect(age).toMatchObject({ born: true, weeks: 12, remDays: 2 });
+  });
+});
+
+describe("contentToText", () => {
+  it("joins array parts with line breaks, not commas", () => {
+    const text = contentToText([
+      { text: "Quiet flat." },
+      { text: "Toilet spot." },
+      { text: "No visitors." },
+    ]);
+    expect(text).toBe("Quiet flat.\nToilet spot.\nNo visitors.");
+    expect(text).not.toMatch(/,/);
   });
 });
 

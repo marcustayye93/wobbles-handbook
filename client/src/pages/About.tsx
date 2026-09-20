@@ -5,7 +5,7 @@
  * milestone timeline, and the AI rendering of adult Paddington.
  */
 import { PageShell, PageHeader, PawDivider } from "@/components/AppShell";
-import { ASSETS, WOBBLES, MILESTONES, wobblesAge, formatDate, daysUntil } from "@/content/wobbles";
+import { ASSETS, WOBBLES, MILESTONES, wobblesAge, formatDate, formatDateLong, daysUntil } from "@/content/wobbles";
 import { Star, Hand, Syringe, Home, Plane, Users, Scissors, Cake, Heart, Shield, BadgeCheck, Trees, Stethoscope } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -19,7 +19,7 @@ const MICONS: Record<string, LucideIcon> = {
 const FACTS: { label: string; value: string }[] = [
   { label: "Pedigree name", value: WOBBLES.pedigreeName },
   { label: "Litter", value: WOBBLES.litterId },
-  { label: "Born", value: formatDate(WOBBLES.dob) },
+  { label: "Born", value: formatDateLong(WOBBLES.dob) },
   { label: "Sex", value: WOBBLES.sex },
   { label: "Size", value: `${WOBBLES.size} (${WOBBLES.expectedAdultWeight} adult)` },
   { label: "Coat", value: WOBBLES.coat },

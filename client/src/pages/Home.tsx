@@ -28,6 +28,7 @@ import {
   wobblesAge,
   daysUntil,
   formatDate,
+  formatDateLong,
   isPreHomecoming,
   daysHome,
 } from "@/content/wobbles";
@@ -216,7 +217,7 @@ export default function Home() {
       {/* Quick log — highest-touch panel, always on Home */}
       <section className="px-4 mt-3">
         <div className="keepsake-card relative p-3.5 fade-up" style={{ animationDelay: "100ms" }}>
-          <span className="absolute -top-3 left-4 bg-[#22364D] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
+          <span className="absolute -top-3 left-4 bg-[#22364D] text-[#FFFDF8] text-[11px] font-body font-extrabold uppercase tracking-[0.12em] px-2.5 py-1">
             Log now
           </span>
           <p className="mt-1 mb-2 text-[11px] font-body text-muted-foreground text-center">
@@ -231,7 +232,7 @@ export default function Home() {
           {/* Countdown — the lead, not a taped corner card */}
           <section className="relative z-10 px-4 mt-3">
             <div className="keepsake-card relative p-5 fade-up" style={{ animationDelay: "120ms" }}>
-              <span className="absolute -top-3 left-4 bg-[#B4512E] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
+              <span className="absolute -top-3 left-4 bg-[#B4512E] text-[#FFFDF8] text-[11px] font-body font-extrabold uppercase tracking-[0.12em] px-2.5 py-1">
                 Until he lands
               </span>
               <div className="flex items-end gap-3 mt-1">
@@ -251,7 +252,7 @@ export default function Home() {
           {/* Before he lands */}
           <section className="px-4 mt-3">
             <div className="keepsake-card relative p-5 fade-up" style={{ animationDelay: "160ms" }}>
-              <span className="absolute -top-3 left-4 bg-[#22364D] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
+              <span className="absolute -top-3 left-4 bg-[#22364D] text-[#FFFDF8] text-[11px] font-body font-extrabold uppercase tracking-[0.12em] px-2.5 py-1">
                 Before he lands
               </span>
               <ul className="mt-1 space-y-3">
@@ -288,7 +289,7 @@ export default function Home() {
           {/* Week-1 lead: decompression or carry-socialise */}
           <section className="relative z-10 px-4 mt-3">
             <div className="keepsake-card relative p-5 fade-up" style={{ animationDelay: "120ms" }}>
-              <span className="absolute -top-3 left-4 bg-[#B4512E] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
+              <span className="absolute -top-3 left-4 bg-[#B4512E] text-[#FFFDF8] text-[11px] font-body font-extrabold uppercase tracking-[0.12em] px-2.5 py-1">
                 {decompressing ? `Day ${homeDays + 1} · decompression` : "Week one at home"}
               </span>
               {decompressing ? (
@@ -333,10 +334,10 @@ export default function Home() {
       {/* ===== Due today — admin/rota, not a fake care logger ===== */}
       <section className="relative z-10 px-4 mt-3">
         <div className="keepsake-card relative p-5 fade-up" style={{ animationDelay: "200ms" }}>
-          <span className="absolute -top-3 left-4 bg-[#B4512E] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
+          <span className="absolute -top-3 left-4 bg-[#B4512E] text-[#FFFDF8] text-[11px] font-body font-extrabold uppercase tracking-[0.12em] px-2.5 py-1">
             Due today · {brief.plan.label}
           </span>
-          <p className="mt-1 text-[10px] font-body font-extrabold uppercase tracking-[0.14em] text-[#6B7C5A]">
+          <p className="mt-1 text-[11px] font-body font-extrabold uppercase tracking-[0.14em] text-[#6B7C5A]">
             {brief.whoHome}
             {brief.parkNight && " · 🏞️ park night 7pm"}
           </p>
@@ -371,7 +372,7 @@ export default function Home() {
                   >
                     {r.person && (
                       <span
-                        className={`mr-1.5 text-[9px] font-extrabold uppercase tracking-[0.1em] ${
+                        className={`mr-1.5 text-[11px] font-extrabold uppercase tracking-[0.1em] ${
                           r.done ? "text-muted-foreground" : "text-[#B4512E]"
                         }`}
                       >
@@ -399,7 +400,7 @@ export default function Home() {
                     <span className="block text-[12.5px] font-body font-bold text-[#22364D] leading-snug">
                       {c.label}
                       {c.owner !== "both" && (
-                        <span className="ml-1.5 text-[9px] font-extrabold uppercase tracking-[0.1em] text-[#B4512E]">
+                        <span className="ml-1.5 text-[11px] font-extrabold uppercase tracking-[0.1em] text-[#B4512E]">
                           {c.owner === "marcus" ? "Marcus" : "Chesa"}
                         </span>
                       )}
@@ -420,7 +421,7 @@ export default function Home() {
                   <span className="text-[16px] shrink-0">{n.emoji}</span>
                   <span className="min-w-0 flex-1 text-[12.5px] font-body font-bold text-[#22364D] leading-snug">
                     {n.person && (
-                      <span className="mr-1.5 text-[9px] font-extrabold uppercase tracking-[0.1em] text-[#B4512E] align-middle">
+                      <span className="mr-1.5 text-[11px] font-extrabold uppercase tracking-[0.1em] text-[#B4512E] align-middle">
                         {n.person}
                       </span>
                     )}
@@ -452,12 +453,12 @@ export default function Home() {
       {/* ===== Paddington Today ===== */}
       <section className="relative z-10 px-4 mt-6">
         <div className="keepsake-card relative p-5 fade-up" style={{ animationDelay: "230ms" }}>
-          <span className="absolute -top-3 left-4 bg-[#22364D] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
+          <span className="absolute -top-3 left-4 bg-[#22364D] text-[#FFFDF8] text-[11px] font-body font-extrabold uppercase tracking-[0.12em] px-2.5 py-1">
             Paddington today
           </span>
           <div className="flex items-start gap-3 mt-1">
             <div className="min-w-0 flex-1">
-              <p className="text-[10px] font-body font-extrabold uppercase tracking-[0.14em] text-[#6B7C5A]">
+              <p className="text-[11px] font-body font-extrabold uppercase tracking-[0.14em] text-[#6B7C5A]">
                 {today.stage}
               </p>
               <h2 className="font-display font-semibold text-[1.65rem] leading-tight text-[#22364D] mt-0.5">
@@ -475,7 +476,7 @@ export default function Home() {
               ["Training", today.training],
             ].map(([k, v]) => (
               <div key={k} className="flex gap-2.5 items-baseline">
-                <dt className="shrink-0 w-[86px] text-[9px] font-body font-extrabold uppercase tracking-[0.12em] text-[#B4512E]">
+                <dt className="shrink-0 w-[86px] text-[11px] font-body font-extrabold uppercase tracking-[0.12em] text-[#B4512E]">
                   {k}
                 </dt>
                 <dd className="text-[12.5px] font-body text-[#33475C] leading-snug">{v}</dd>
@@ -568,7 +569,7 @@ export default function Home() {
       </section>
 
       <p className="px-5 mt-9 text-center text-[11px] font-body text-muted-foreground leading-relaxed">
-        Made with love for {WOBBLES.name} ({WOBBLES.pedigreeName}), born {formatDate(WOBBLES.dob)}.
+        Made with love for {WOBBLES.name}, born {formatDateLong(WOBBLES.dob)}.
       </p>
 
       <QuickLogSheet open={sheetOpen} onOpenChange={setSheetOpen} initialTracker={sheetTracker} />

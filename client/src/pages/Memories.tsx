@@ -3,7 +3,7 @@
  * Full-bleed gouache cover, serif title, milestone timeline from MILESTONES,
  * and the live family-shared photo journal (uploads synced via the server).
  */
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { PageShell, Eyebrow, PawDivider } from "@/components/AppShell";
 import { ASSETS, MILESTONES, daysUntil, formatDate, wobblesAge } from "@/content/wobbles";
 import {
@@ -92,6 +92,7 @@ export default function Memories() {
   const age = wobblesAge();
   const { rows } = useTrackerFeed();
   const firsts = useMemo(() => computeFirsts(rows), [rows]);
+  const [expandedFirsts, setExpandedFirsts] = useState<Record<string, boolean>>({});
 
   return (
     <PageShell>
@@ -146,7 +147,14 @@ export default function Memories() {
             <Eyebrow>Logged firsts</Eyebrow>
             <div className="mt-3 space-y-2 mb-6">
               {firsts.map((f) => (
-                <div key={f.trackerId} className="sticker-card px-4 py-3 flex items-center gap-3">
+                <button
+                  key={f.trackerId}
+                  type="button"
+                  onClick={() =>
+                    setExpandedFirsts((s) => ({ ...s, [f.trackerId]: !s[f.trackerId] }))
+                  }
+                  className="sticker-card px-4 py-3 flex items-center gap-3 w-full text-left press-scale"
+                >
                   <span className="w-9 h-9 rounded-full bg-[#22364D]/6 flex items-center justify-center text-[16px] shrink-0">
                     {f.emoji}
                   </span>
@@ -154,11 +162,16 @@ export default function Memories() {
                     <p className="font-body font-bold text-[13px] leading-snug" style={{ color: INK }}>
                       {f.title}
                     </p>
-                    <p className="text-[11px] font-body text-muted-foreground truncate mt-0.5">
+                    <p
+                      className={cn(
+                        "text-[11px] font-body text-muted-foreground mt-0.5",
+                        expandedFirsts[f.trackerId] ? "whitespace-normal" : "truncate",
+                      )}
+                    >
                       {formatDate(f.date)} · {f.summary}
                     </p>
                   </div>
-                </div>
+                </button>
               ))}
             </div>
           </>
@@ -173,7 +186,7 @@ export default function Memories() {
             className="absolute left-[17px] top-2 bottom-2 border-l-2 border-dashed"
             style={{ borderColor: "rgba(34,54,77,0.18)" }}
           />
-          {MILESTONES.map((m) => {
+          {[...MILESTONES].sort((a, b) => b.date.localeCompare(a.date) || a.label.localeCompare(b.label)).map((m) => {
             const Icon = ICONS[m.icon] ?? PawPrint;
             const dUntil = daysUntil(m.date);
             const past = dUntil < 0;
@@ -198,7 +211,7 @@ export default function Memories() {
                   <Icon size={15} />
                 </span>
                 <div className="sticker-card px-4 py-3">
-                  <p className="text-[10px] font-body font-extrabold uppercase tracking-[0.12em]" style={{ color: SIENNA }}>
+                  <p className="text-[11px] font-body font-extrabold uppercase tracking-[0.12em]" style={{ color: SIENNA }}>
                     {formatDate(m.date)} · {when}
                   </p>
                   <p className="font-body font-bold text-[14px] mt-0.5" style={{ color: INK }}>

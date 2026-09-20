@@ -23,7 +23,7 @@ import { PageShell, PageHeader, Eyebrow } from "@/components/AppShell";
 import QuickLogSheet from "@/components/QuickLogSheet";
 import { useTrackerEntries } from "@/hooks/useSyncedData";
 import { growthCurveSeries, growthVerdict, ageWeeksOn } from "@/lib/growthBand";
-import { WOBBLES, MILESTONES, wobblesAge, daysUntil, formatDate } from "@/content/wobbles";
+import { WOBBLES, MILESTONES, wobblesAge, daysUntil, formatDate, formatDateLong } from "@/content/wobbles";
 import { cn } from "@/lib/utils";
 import {
   Scale,
@@ -97,7 +97,7 @@ export default function Growth() {
               {age.born ? `${age.weeks} weeks ${age.remDays} days old` : "Not born yet"}
             </p>
             <p className="text-[11.5px] font-body text-muted-foreground mt-0.5">
-              Born {formatDate(WOBBLES.dob)} · expected adult weight {WOBBLES.expectedAdultWeight}
+              Born {formatDateLong(WOBBLES.dob)} · expected adult weight {WOBBLES.expectedAdultWeight}
             </p>
           </div>
           {latest && (

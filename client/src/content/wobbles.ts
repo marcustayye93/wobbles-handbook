@@ -86,20 +86,42 @@ export const MILESTONES: Milestone[] = [
   { date: "2027-06-26", label: "First birthday + first adult booster (52 weeks)", detail: "Paddington turns one! Singapore guidelines call for the first adult core booster at 52 weeks — then annually. Adult coat should be fully in, near his adult weight of about 8 kg.", icon: "cake" },
 ];
 
+const MONTH_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const MONTH_LONG = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
+];
+
+/** Calendar Y-M-D in Asia/Singapore, never the host timezone. */
+export function ymdSingapore(now: Date = new Date()): { y: number; m: number; d: number } {
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Singapore",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(now);
+  const n = (type: string) => Number(parts.find((p) => p.type === type)?.value);
+  return { y: n("year"), m: n("month"), d: n("day") };
+}
+
+/** Whole calendar days from an ISO date to Singapore today (negative if future). */
+export function calendarDaysSince(iso: string, now: Date = new Date()): number {
+  const [by, bm, bd] = iso.split("-").map(Number);
+  const t = ymdSingapore(now);
+  return Math.round((Date.UTC(t.y, t.m - 1, t.d) - Date.UTC(by, bm - 1, bd)) / 86400000);
+}
+
 export function wobblesAge(now: Date = new Date()) {
-  const dob = new Date(WOBBLES.dob + "T00:00:00");
-  const ms = now.getTime() - dob.getTime();
-  const days = Math.floor(ms / 86400000);
+  const days = calendarDaysSince(WOBBLES.dob, now);
+  if (days < 0) return { days: 0, weeks: 0, remDays: 0, months: 0, born: false };
   const weeks = Math.floor(days / 7);
   const remDays = days - weeks * 7;
   const months = Math.floor(days / 30.44);
-  return { days, weeks, remDays, months, born: ms >= 0 };
+  return { days, weeks, remDays, months, born: true };
 }
 
 export function daysUntil(iso: string, now: Date = new Date()) {
-  const target = new Date(iso + "T00:00:00");
-  const startOfNow = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  return Math.ceil((target.getTime() - startOfNow.getTime()) / 86400000);
+  return -calendarDaysSince(iso, now);
 }
 
 export function isPreHomecoming(now: Date = new Date()) {
@@ -110,10 +132,16 @@ export function daysHome(now: Date = new Date()) {
   return -daysUntil(WOBBLES.homecoming, now);
 }
 
+/** Timezone-safe "26 Jun 2026". Never uses Date parsing. */
 export function formatDate(iso: string) {
-  return new Date(iso + "T00:00:00").toLocaleDateString("en-AU", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  });
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
+  if (!m) return iso;
+  return `${Number(m[3])} ${MONTH_SHORT[Number(m[2]) - 1]} ${m[1]}`;
+}
+
+/** Timezone-safe "26 June 2026" for the birth date and similar. */
+export function formatDateLong(iso: string) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
+  if (!m) return iso;
+  return `${Number(m[3])} ${MONTH_LONG[Number(m[2]) - 1]} ${m[1]}`;
 }

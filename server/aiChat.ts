@@ -62,10 +62,30 @@ export interface PaddingtonAge {
   months: number;
 }
 
+function ymdSingapore(now: Date): { y: number; m: number; d: number } {
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Singapore",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(now);
+  const n = (type: string) => Number(parts.find((p) => p.type === type)?.value);
+  return { y: n("year"), m: n("month"), d: n("day") };
+}
+
+function calendarDaysSince(iso: string, now: Date): number {
+  const [by, bm, bd] = iso.split("-").map(Number);
+  const t = ymdSingapore(now);
+  return Math.round((Date.UTC(t.y, t.m - 1, t.d) - Date.UTC(by, bm - 1, bd)) / 86400000);
+}
+
+export function singaporeTodayIso(now: Date = new Date()): string {
+  const t = ymdSingapore(now);
+  return `${t.y}-${String(t.m).padStart(2, "0")}-${String(t.d).padStart(2, "0")}`;
+}
+
 export function wobblesAgeServer(now: Date = new Date()): PaddingtonAge {
-  const dob = new Date(WOBBLES_PROFILE.dob + "T12:00:00");
-  const ms = new Date(now).setHours(12, 0, 0, 0) - dob.getTime();
-  const days = Math.floor(ms / 86400000);
+  const days = calendarDaysSince(WOBBLES_PROFILE.dob, now);
   if (days < 0) return { born: false, days: 0, weeks: 0, remDays: 0, months: 0 };
   return {
     born: true,
@@ -77,9 +97,7 @@ export function wobblesAgeServer(now: Date = new Date()): PaddingtonAge {
 }
 
 export function daysUntilHomecoming(now: Date = new Date()): number {
-  const target = new Date(WOBBLES_PROFILE.homecoming + "T12:00:00").getTime();
-  const today = new Date(now).setHours(12, 0, 0, 0);
-  return Math.round((target - today) / 86400000);
+  return -calendarDaysSince(WOBBLES_PROFILE.homecoming, now);
 }
 
 /** Compact life-stage line matching the app's stage engine. */
@@ -257,7 +275,7 @@ export function buildSystemPrompt(
 
   const locked = readContextFile("LOCKED_FACTS.md");
   const pack = readContextFile("PADDINGTON.md");
-  return `You are "Ask Paddington", the private family assistant inside Paddington's Handbook \u2014 a keepsake app Marcus and Chesa use to raise their Cavoodle puppy, Paddington. Today's date is ${now.toISOString().slice(0, 10)}.
+  return `You are "Ask Paddington", the private family assistant inside Paddington's Handbook \u2014 a keepsake app Marcus and Chesa use to raise their Cavoodle puppy, Paddington. Today's date is ${singaporeTodayIso(now)}.
 
 ## Paddington's profile (verified facts \u2014 always ground answers in these)
 ${buildPaddingtonContext(now)}
@@ -667,7 +685,7 @@ export function contentToText(raw: unknown): string {
       .map((p) =>
         typeof p === "string" ? p : p && typeof p === "object" && "text" in p ? String(p.text) : "",
       )
-      .join("");
+      .join("\n");
   }
   return "";
 }

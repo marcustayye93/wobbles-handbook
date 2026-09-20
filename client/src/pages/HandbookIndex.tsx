@@ -14,12 +14,33 @@ import { CHAPTER_COVERS } from "@/content/wobbles";
 import { ChevronRight, Clock, Printer, ListChecks, Plane, Award, Search, GraduationCap, Scissors, ShoppingCart, HeartHandshake, Shield } from "lucide-react";
 import { tbcCount } from "@/content/caretakerGuide";
 import { useSharedState } from "@/hooks/useSyncedData";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import SearchDialog from "@/components/SearchDialog";
 
 /** Reading progress map: slug -> 0..1, synced for the family (written by SectionReader) */
+export function sanitizeReadProgress(
+  raw: Record<string, number> | undefined,
+  slugs: string[],
+): Record<string, number> {
+  const src = raw ?? {};
+  if (slugs.length === 0) return src;
+  const allFull = slugs.every((s) => (src[s] ?? 0) >= 0.99);
+  if (allFull && slugs.some((s) => s in src)) return {};
+  return src;
+}
+
 export function useReadProgress() {
-  return useSharedState<Record<string, number>>("readProgress", {});
+  const [progress, setProgress] = useSharedState<Record<string, number>>("readProgress", {});
+  const slugs = useMemo(() => SECTIONS.map((s) => s.slug), []);
+  const sanitized = useMemo(() => sanitizeReadProgress(progress, slugs), [progress, slugs]);
+  const needsWipe =
+    slugs.length > 0 &&
+    slugs.every((s) => (progress[s] ?? 0) >= 0.99) &&
+    slugs.some((s) => s in progress);
+  useEffect(() => {
+    if (needsWipe) setProgress({});
+  }, [needsWipe, setProgress]);
+  return [sanitized, setProgress] as const;
 }
 
 export default function HandbookIndex() {
@@ -57,7 +78,7 @@ export default function HandbookIndex() {
           <Eyebrow className="px-1">This week</Eyebrow>
           <Link href="/handbook/first-day" className="block press-scale fade-up">
             <div className="keepsake-card relative p-4.5">
-              <span className="absolute -top-3 left-4 bg-[#B4512E] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
+              <span className="absolute -top-3 left-4 bg-[#B4512E] text-[#FFFDF8] text-[11px] font-body font-extrabold uppercase tracking-[0.12em] px-2.5 py-1">
                 Start here
               </span>
               <div className="flex items-center gap-3.5 mt-1">
@@ -274,7 +295,7 @@ export default function HandbookIndex() {
           {/* Caretaker — travel handover, not this week's START HERE */}
           <Link href="/handbook/caretaker" className="block press-scale">
             <div className="keepsake-card relative p-4.5">
-              <span className="absolute -top-3 left-4 bg-[#22364D] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
+              <span className="absolute -top-3 left-4 bg-[#22364D] text-[#FFFDF8] text-[11px] font-body font-extrabold uppercase tracking-[0.12em] px-2.5 py-1">
                 When we travel
               </span>
               <div className="flex items-center gap-3.5 mt-1">

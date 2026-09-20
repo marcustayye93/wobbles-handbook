@@ -40,22 +40,29 @@ export function monthAgeLabel(dates: string[]): string {
   const min = Math.min(...weeks);
   const max = Math.max(...weeks);
   if (max < 0) return "before Paddington was born";
-  const fmt = (w: number) => (w >= 52 ? `${Math.floor(w / 52)}y ${w % 52}w` : `${w}w`);
+  const wk = (w: number) => `${w} wk${w === 1 ? "" : "s"}`;
+  const fmt = (w: number) => (w >= 52 ? `${Math.floor(w / 52)}y ${wk(w % 52)}` : wk(w));
   const lo = Math.max(0, min);
   return lo === max ? `${fmt(max)} old` : `${fmt(lo)}–${fmt(max)} old`;
 }
 
 /**
- * Group photos (assumed roughly newest-first) into month buckets, preserving
- * order within each bucket. Output order follows first appearance, so the
- * newest month comes first. Malformed dates fall into an "Undated" bucket at
- * the end.
+ * Group photos newest-first by month. Dates within a month are sorted
+ * newest first (then by id). Malformed dates fall into an "Undated" bucket
+ * at the end.
  */
 export function groupPhotosByMonth<T extends GroupablePhoto>(photos: T[]): PhotoMonthGroup<T>[] {
   const buckets = new Map<string, T[]>();
   const undated: T[] = [];
 
-  for (const p of photos) {
+  const sorted = [...photos].sort((a, b) => {
+    const ad = a.date ?? "";
+    const bd = b.date ?? "";
+    if (ad !== bd) return bd.localeCompare(ad);
+    return b.id - a.id;
+  });
+
+  for (const p of sorted) {
     const m = /^(\d{4})-(\d{2})/.exec(p.date ?? "");
     if (!m) {
       undated.push(p);
@@ -67,7 +74,9 @@ export function groupPhotosByMonth<T extends GroupablePhoto>(photos: T[]): Photo
     else buckets.set(key, [p]);
   }
 
-  const groups: PhotoMonthGroup<T>[] = Array.from(buckets.entries()).map(([key, list]: [string, T[]]) => {
+  const keys = [...buckets.keys()].sort((a, b) => b.localeCompare(a));
+  const groups: PhotoMonthGroup<T>[] = keys.map((key) => {
+    const list = buckets.get(key)!;
     const [y, mo] = key.split("-").map(Number);
     return {
       key,

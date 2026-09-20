@@ -5,14 +5,14 @@
  * tRPC — every phone sees the new entry instantly through the shared cache.
  */
 import { useEffect, useState } from "react";
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
+import { Drawer, DrawerClose, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { TRACKERS, getTracker, trackerOptionChoices } from "@/lib/trackers";
 import { useAddTrackerEntry } from "@/hooks/useSyncedData";
 import { todayISO, nowHM } from "@/lib/dates";
 import { cn } from "@/lib/utils";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, X } from "lucide-react";
 import { toast } from "sonner";
 
 const INK = "#22364D";
@@ -86,14 +86,14 @@ export default function QuickLogSheet({ open, onOpenChange, initialTracker }: Pr
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent className="bg-[#FFFDF8]">
-        <DrawerHeader className="pb-1">
-          <DrawerTitle className="font-display text-[1.5rem] text-[#22364D] flex items-center gap-2">
+        <DrawerHeader className="pb-1 relative">
+          <DrawerTitle className="font-display text-[1.5rem] text-[#22364D] flex items-center gap-2 pr-12">
             {meta ? (
               <>
                 <button
                   onClick={() => setTrackerId(null)}
                   aria-label="Back to tracker list"
-                  className="w-8 h-8 -ml-1 rounded-full bg-[#F8F3EB] flex items-center justify-center press-scale"
+                  className="w-11 h-11 -ml-1 rounded-full bg-[#F8F3EB] flex items-center justify-center press-scale"
                 >
                   <ChevronLeft size={18} />
                 </button>
@@ -105,6 +105,12 @@ export default function QuickLogSheet({ open, onOpenChange, initialTracker }: Pr
               "What are we logging?"
             )}
           </DrawerTitle>
+          <DrawerClose
+            aria-label="Close"
+            className="absolute top-2 right-3 w-11 h-11 rounded-full bg-[#F8F3EB] flex items-center justify-center press-scale text-[#22364D]"
+          >
+            <X size={18} />
+          </DrawerClose>
         </DrawerHeader>
 
         {!meta ? (
@@ -168,7 +174,7 @@ export default function QuickLogSheet({ open, onOpenChange, initialTracker }: Pr
                       key={c}
                       onClick={() => setOption(c)}
                       className={cn(
-                        "px-3 py-1.5 rounded-full text-xs font-body font-bold border press-scale transition-colors",
+                        "min-h-11 px-3 py-2 rounded-full text-xs font-body font-bold border press-scale transition-colors",
                         option === c ? "text-[#FFFDF8] border-transparent" : "bg-background border-border text-foreground/70",
                       )}
                       style={option === c ? { backgroundColor: INK } : undefined}

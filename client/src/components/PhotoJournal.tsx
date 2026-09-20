@@ -89,6 +89,7 @@ export default function PhotoJournal() {
   // Track the *photo id* (not index) so optimistic deletes / refetch reorders
   // can't leave the lightbox pointing at the wrong photo.
   const [viewerId, setViewerId] = useState<number | null>(null);
+  const [expandedCaptions, setExpandedCaptions] = useState<Record<number, boolean>>({});
 
   const pick = (f: File | undefined) => {
     if (!f) return;
@@ -194,36 +195,50 @@ export default function PhotoJournal() {
                 <h3 className="font-display font-semibold text-[1.15rem]" style={{ color: INK }}>
                   {g.label}
                 </h3>
-                <span className="text-[10px] font-body font-extrabold uppercase tracking-[0.1em]" style={{ color: SIENNA }}>
+                <span className="text-[11px] font-body font-extrabold uppercase tracking-[0.1em]" style={{ color: SIENNA }}>
                   {g.ageLabel}
                 </span>
-                <span className="ml-auto text-[10px] font-body font-bold text-muted-foreground">
-                  {g.photos.length} photo{g.photos.length === 1 ? "" : "s"}
+                <span className="ml-auto text-[11px] font-body font-bold text-muted-foreground">
+                  {g.photos.length} {g.photos.length === 1 ? "photo" : "photos"}
                 </span>
               </div>
               <div className="mt-1.5 grid grid-cols-2 gap-3">
                 {g.photos.map((p, i) => (
-                  <button
+                  <div
                     key={p.id}
-                    onClick={() => setViewerId(p.id)}
-                    className="keepsake-card p-2 pb-3 text-left press-scale"
+                    className="keepsake-card p-2 pb-3 text-left"
                     style={{ transform: `rotate(${i % 2 === 0 ? -1 : 1.2}deg)` }}
                   >
-                    <img
-                      src={p.url}
-                      alt={p.caption ?? "Paddington photo"}
-                      loading="lazy"
-                      className="w-full aspect-square object-cover rounded-[6px] bg-[#22364D]/5"
-                    />
-                    <p className="text-[10px] font-body font-extrabold uppercase tracking-[0.1em] mt-2 px-1" style={{ color: SIENNA }}>
-                      {formatDate(p.date)}
-                    </p>
-                    {p.caption && (
-                      <p className="text-[12px] font-body font-bold leading-snug px-1 mt-0.5 line-clamp-2" style={{ color: INK }}>
-                        {p.caption}
+                    <button
+                      type="button"
+                      onClick={() => setViewerId(p.id)}
+                      className="w-full text-left press-scale"
+                    >
+                      <img
+                        src={p.url}
+                        alt={p.caption ?? "Paddington photo"}
+                        loading="lazy"
+                        className="w-full aspect-square object-cover rounded-[6px] bg-[#22364D]/5"
+                      />
+                      <p className="text-[11px] font-body font-extrabold uppercase tracking-[0.1em] mt-2 px-1" style={{ color: SIENNA }}>
+                        {formatDate(p.date)}
                       </p>
+                    </button>
+                    {p.caption && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setExpandedCaptions((s) => ({ ...s, [p.id]: !s[p.id] }))
+                        }
+                        className="text-[12px] font-body font-bold leading-snug px-1 mt-0.5 text-left w-full"
+                        style={{ color: INK }}
+                      >
+                        <span className={expandedCaptions[p.id] ? "" : "line-clamp-2"}>
+                          {p.caption}
+                        </span>
+                      </button>
                     )}
-                  </button>
+                  </div>
                 ))}
               </div>
             </div>

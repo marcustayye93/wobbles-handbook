@@ -1,7 +1,7 @@
 /*
  * PawFab — floating paw quick-log button, present on every page.
- * Sits just above the bottom nav pill, right side. Opens the shared
- * QuickLogSheet (tracker grid → mini form → saves to the family server).
+ * Docked inside the phone column (max-w-md), just above the bottom nav,
+ * with a visible "Log" label. Opens the shared QuickLogSheet.
  */
 import { useState } from "react";
 import { PawPrint } from "lucide-react";
@@ -11,15 +11,20 @@ export default function PawFab() {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        aria-label="Quick log — open the logging sheet"
-        className="fixed z-40 right-4 w-14 h-14 rounded-full bg-[#B4512E] text-[#FFFDF8] flex items-center justify-center shadow-[0_8px_24px_rgba(180,81,46,0.45)] press-scale print:hidden"
+      <div
+        className="fixed inset-x-0 mx-auto w-full max-w-md z-40 pointer-events-none print:hidden"
         style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 88px)" }}
       >
-        <PawPrint size={24} strokeWidth={2.2} />
-      </button>
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          aria-label="Quick log — open the logging sheet"
+          className="pointer-events-auto absolute right-4 bottom-0 h-12 pl-3.5 pr-4 rounded-full bg-[#B4512E] text-[#FFFDF8] flex items-center gap-1.5 shadow-[0_8px_24px_rgba(180,81,46,0.45)] press-scale"
+        >
+          <PawPrint size={20} strokeWidth={2.2} />
+          <span className="text-[13px] font-body font-extrabold">Log</span>
+        </button>
+      </div>
       <QuickLogSheet open={open} onOpenChange={setOpen} />
     </>
   );

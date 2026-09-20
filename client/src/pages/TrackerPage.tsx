@@ -156,7 +156,7 @@ export default function TrackerPage() {
                       key={c}
                       onClick={() => setOption(c)}
                       className={cn(
-                        "px-3 py-1.5 rounded-full text-xs font-body font-bold border press-scale transition-colors",
+                        "min-h-11 px-3 py-2 rounded-full text-xs font-body font-bold border press-scale transition-colors",
                         option === c
                           ? "text-[#FFFDF8] border-transparent"
                           : "bg-background border-border text-foreground/70",

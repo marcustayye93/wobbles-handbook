@@ -34,11 +34,12 @@ export default function SectionReader() {
       raf = requestAnimationFrame(() => {
         const h = document.documentElement;
         const max = h.scrollHeight - h.clientHeight;
-        const p = max > 0 ? Math.min(1, h.scrollTop / max) : 0;
+        // Unscrollable mount (max ≈ 0) used to persist 100%. Only count
+        // real reading on a page that can actually scroll.
+        const p = max > 24 ? Math.min(1, h.scrollTop / max) : 0;
         setProgress(p);
-        // Persist the furthest point reached (rounded to 5%)
         const rounded = Math.round(p * 20) / 20;
-        if (rounded > maxSeen) {
+        if (rounded > 0 && rounded > maxSeen) {
           maxSeen = rounded;
           setSaved({ ...savedRef.current, [slug]: rounded });
         }
@@ -122,7 +123,7 @@ export default function SectionReader() {
 
         {/* Title block over the cover */}
         <div className="absolute inset-x-0 top-16 px-6">
-          <p className="text-[10px] font-body font-extrabold uppercase tracking-[0.22em] text-[#E8935C] drop-shadow">
+          <p className="text-[11px] font-body font-extrabold uppercase tracking-[0.22em] text-[#E8935C] drop-shadow">
             Chapter {idx + 1}
           </p>
           <h1 className="font-display font-semibold text-[2.5rem] leading-[1.02] text-[#FFFDF8] mt-1.5 drop-shadow-md">
@@ -156,7 +157,7 @@ export default function SectionReader() {
         <div className="grid grid-cols-2 gap-2.5 pb-4">
           {prev ? (
             <Link href={`/handbook/${prev.slug}`} className="sticker-card px-3.5 py-3 press-scale">
-              <p className="text-[9px] font-body font-extrabold uppercase tracking-[0.14em] text-muted-foreground flex items-center gap-1">
+              <p className="text-[11px] font-body font-extrabold uppercase tracking-[0.14em] text-muted-foreground flex items-center gap-1">
                 <ChevronLeft size={11} /> Previous
               </p>
               <p className="font-body font-bold text-[13px] leading-snug mt-1 text-[#22364D]">{prev.title}</p>
@@ -166,7 +167,7 @@ export default function SectionReader() {
           )}
           {next ? (
             <Link href={`/handbook/${next.slug}`} className="sticker-card px-3.5 py-3 press-scale text-right">
-              <p className="text-[9px] font-body font-extrabold uppercase tracking-[0.14em] text-muted-foreground flex items-center gap-1 justify-end">
+              <p className="text-[11px] font-body font-extrabold uppercase tracking-[0.14em] text-muted-foreground flex items-center gap-1 justify-end">
                 Next <ChevronRight size={11} />
               </p>
               <p className="font-body font-bold text-[13px] leading-snug mt-1 text-[#22364D]">{next.title}</p>

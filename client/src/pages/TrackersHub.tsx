@@ -117,13 +117,19 @@ export default function TrackersHub() {
         })}
       </div>
 
-      <button
+      <div
+        className="fixed inset-x-0 mx-auto w-full max-w-md z-40 pointer-events-none print:hidden"
+        style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 88px)" }}
+      >
+        <button
           onClick={() => quickAdd(null)}
           aria-label="Quick log"
-          className="fixed bottom-24 right-5 z-40 w-14 h-14 rounded-full bg-[#22364D] text-[#FFFDF8] flex items-center justify-center shadow-[0_10px_28px_rgba(34,54,77,0.4)] press-scale"
+          className="pointer-events-auto absolute right-4 bottom-0 h-12 pl-3.5 pr-4 rounded-full bg-[#22364D] text-[#FFFDF8] flex items-center gap-1.5 shadow-[0_10px_28px_rgba(34,54,77,0.4)] press-scale"
         >
-          <Plus size={26} />
+          <Plus size={20} />
+          <span className="text-[13px] font-body font-extrabold">Log</span>
         </button>
+      </div>
 
       <QuickLogSheet open={sheetOpen} onOpenChange={setSheetOpen} initialTracker={sheetTracker} />
     </PageShell>

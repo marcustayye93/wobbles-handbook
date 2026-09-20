@@ -70,7 +70,7 @@ export function wobblesToday(now: Date = new Date()): TodayStage {
     return {
       stage: "With the breeder — export prep (8–12 weeks)",
       title: "Growing Up at the Farm",
-      text: `${age.weeks} weeks old and still at The Doghouse QLD until he home 23 Sep. C3 dose 3 is 4 Sep — that is NOT full vaccination and he is NOT park-cleared. ${toHome} days until landing: PALS before the import licence (valid 90 days, not 30), then Jet Pets confirmation, then the flat.`,
+      text: `${age.weeks} weeks old and still at The Doghouse QLD until he comes home 23 Sep. C3 dose 3 is 4 Sep — that is NOT full vaccination and he is NOT park-cleared. ${toHome} days until landing: PALS before the import licence (valid 90 days, not 30), then Jet Pets confirmation, then the flat.`,
       focus: "PALS first, then import licence (90 days); C3 dose 3 on 4 Sep is not the 16-week core",
       expect: "The breeder handles the Australian C3 course and enrichment — ask for photo updates and the vaccination record",
       training: "Train yourselves: agree the house rules, cue words and the first-72-hours plan",

@@ -204,7 +204,7 @@
   /* Eyebrow label — letterspaced sienna small caps */
   .eyebrow {
     font-family: "Nunito Sans", ui-sans-serif, sans-serif;
-    font-size: 0.72rem;
+    font-size: 0.8125rem;
     font-weight: 800;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -312,3 +312,20 @@
     }
   }
 }
+
+/* Ask answers — keep fallback/offline text from collapsing into a comma wall */
+.ai-answer p + p {
+  margin-top: 0.6em;
+}
+.ai-answer ul,
+.ai-answer ol {
+  margin: 0.55em 0;
+  padding-left: 1.15em;
+}
+.ai-answer li + li {
+  margin-top: 0.28em;
+}
+.ai-answer strong {
+  font-weight: 800;
+}
+

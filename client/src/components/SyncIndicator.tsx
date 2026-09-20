@@ -34,7 +34,7 @@ export default function SyncIndicator({ className = "" }: { className?: string }
   if (!online) {
     return (
       <span
-        className={`inline-flex items-center gap-1 text-[9px] font-body font-extrabold uppercase tracking-[0.12em] text-[#8A6A4F] ${className}`}
+        className={`inline-flex items-center gap-1 text-[11px] font-body font-extrabold uppercase tracking-[0.12em] text-[#8A6A4F] ${className}`}
         role="status"
       >
         <WifiOff size={10} /> Offline
@@ -44,7 +44,7 @@ export default function SyncIndicator({ className = "" }: { className?: string }
   if (busy) {
     return (
       <span
-        className={`inline-flex items-center gap-1 text-[9px] font-body font-extrabold uppercase tracking-[0.12em] text-[#8A6A4F] ${className}`}
+        className={`inline-flex items-center gap-1 text-[11px] font-body font-extrabold uppercase tracking-[0.12em] text-[#8A6A4F] ${className}`}
         role="status"
       >
         <RefreshCw size={10} className="animate-spin" /> Syncing
@@ -54,7 +54,7 @@ export default function SyncIndicator({ className = "" }: { className?: string }
   if (showSaved) {
     return (
       <span
-        className={`inline-flex items-center gap-1 text-[9px] font-body font-extrabold uppercase tracking-[0.12em] text-[#6B7C5A] ${className}`}
+        className={`inline-flex items-center gap-1 text-[11px] font-body font-extrabold uppercase tracking-[0.12em] text-[#6B7C5A] ${className}`}
         role="status"
       >
         <Check size={10} /> Saved

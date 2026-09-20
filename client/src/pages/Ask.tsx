@@ -24,6 +24,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { WOBBLES, formatDateLong, wobblesAge } from "@/content/wobbles";
 
 /** Starter prompts shown on an empty chat */
 const STARTERS = [
@@ -77,6 +78,7 @@ interface LocalMsg {
 export default function Ask() {
   const { profile } = useProfile();
   const utils = trpc.useUtils();
+  const age = wobblesAge();
 
   const [conversationId, setConversationId] = useState<number | null>(() => {
     const saved = readSavedAsk();
@@ -185,6 +187,13 @@ export default function Ask() {
     <PageShell className="pb-0" hideNav>
       <PageHeader title="Ask Paddington" subtitle="Puppy questions, answered for him" back="/" emoji="✨" />
 
+      {/* Live age — recomputed on every load so locked facts cannot go stale */}
+      <p className="px-5 pt-2 text-[11px] font-body font-extrabold uppercase tracking-[0.12em] text-[#C66A3D]">
+        {age.born ? `${age.weeks}w ${age.remDays}d old` : "coming soon"}
+        {" · born "}
+        {formatDateLong(WOBBLES.dob)}
+      </p>
+
       {/* Toolbar: new chat / history / memory */}
       <div className="px-4 pt-3 flex items-center gap-2">
         <button
@@ -286,7 +295,7 @@ export default function Ask() {
                   <span className="text-[15px] shrink-0 mt-0.5">{CATEGORY_EMOJI[m.category] ?? "📌"}</span>
                   <div className="min-w-0 flex-1">
                     <p className="font-body text-[12.5px] text-[#33475C] leading-snug">{m.fact}</p>
-                    <p className="text-[9px] font-body font-extrabold uppercase tracking-[0.12em] text-[#C66A3D] mt-1">
+                    <p className="text-[11px] font-body font-extrabold uppercase tracking-[0.12em] text-[#C66A3D] mt-1">
                       {m.category}
                     </p>
                   </div>
@@ -304,8 +313,11 @@ export default function Ask() {
         </Sheet>
       </div>
 
-      {/* Thread */}
-      <div className="px-4 pt-4 pb-40 space-y-3">
+      {/* Thread — extra bottom space so the last line sits above the composer */}
+      <div
+        className="px-4 pt-4 space-y-3"
+        style={{ paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 8.5rem)" }}
+      >
         {thread.length === 0 && !busy && conversationId == null && (
           <div className="pt-6">
             <div className="keepsake-card relative p-5 text-center">
@@ -339,7 +351,7 @@ export default function Ask() {
             {m.role === "user" ? (
               <div className="max-w-[85%] rounded-2xl rounded-br-md bg-[#22364D] text-[#F8F3EB] px-4 py-2.5 shadow-sm">
                 {m.authorName && (
-                  <p className="text-[9px] font-body font-extrabold uppercase tracking-[0.12em] text-[#8FA0B5] mb-0.5">
+                  <p className="text-[11px] font-body font-extrabold uppercase tracking-[0.12em] text-[#8FA0B5] mb-0.5">
                     {m.authorName}
                   </p>
                 )}
@@ -347,10 +359,10 @@ export default function Ask() {
               </div>
             ) : (
               <div className="max-w-[92%] keepsake-card px-4 py-3">
-                <p className="text-[9px] font-body font-extrabold uppercase tracking-[0.14em] text-[#C66A3D] mb-1 flex items-center gap-1">
+                <p className="text-[11px] font-body font-extrabold uppercase tracking-[0.14em] text-[#C66A3D] mb-1 flex items-center gap-1">
                   <Sparkles size={10} /> Ask Paddington
                 </p>
-                <div className="ai-answer text-[13.5px] font-body text-[#33475C] leading-relaxed">
+                <div className="ai-answer text-[13.5px] font-body text-[#33475C] leading-relaxed whitespace-pre-wrap">
                   <Streamdown>{m.content}</Streamdown>
                 </div>
               </div>

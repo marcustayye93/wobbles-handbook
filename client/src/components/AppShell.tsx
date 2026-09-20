@@ -89,7 +89,7 @@ export function PageShell({
   return (
     <div className="phone-shell paper-grain">
       <main
-        className={cn(className, hideNav ? "pb-6" : "safe-bottom")}
+        className={cn(hideNav ? "pb-6" : "safe-bottom", className)}
         style={
           hideNav
             ? undefined

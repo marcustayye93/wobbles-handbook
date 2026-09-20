@@ -27,11 +27,12 @@ describe("groupPhotosByMonth", () => {
     expect(groups[1].photos.map((x) => x.id)).toEqual([2, 1]);
   });
 
-  it("keeps within-month order exactly as given", () => {
-    const photos = [p(9, "2026-07-31"), p(8, "2026-07-01"), p(7, "2026-07-15")];
+  it("sorts 28 Aug before 21 Aug (newest first)", () => {
+    const photos = [p(1, "2026-08-21"), p(2, "2026-08-28"), p(3, "2026-08-21")];
     const groups = groupPhotosByMonth(photos);
     expect(groups).toHaveLength(1);
-    expect(groups[0].photos.map((x) => x.id)).toEqual([9, 8, 7]);
+    expect(groups[0].photos.map((x) => x.date)).toEqual(["2026-08-28", "2026-08-21", "2026-08-21"]);
+    expect(groups[0].photos.map((x) => x.id)).toEqual([2, 3, 1]);
   });
 
   it("puts malformed dates into a trailing Undated bucket", () => {
@@ -57,17 +58,17 @@ describe("monthAgeLabel", () => {
 
   it("shows a single age when all photos share a week", () => {
     // 2026-07-10 is exactly 2w0d after dob 2026-06-26 → week 2
-    expect(monthAgeLabel(["2026-07-10", "2026-07-11"])).toBe("2w old");
+    expect(monthAgeLabel(["2026-07-10", "2026-07-11"])).toBe("2 wks old");
   });
 
   it("shows a range when photos span several weeks", () => {
     // 2026-07-03 → week 1; 2026-07-31 → week 5
-    expect(monthAgeLabel(["2026-07-31", "2026-07-03"])).toBe("1w–5w old");
+    expect(monthAgeLabel(["2026-07-31", "2026-07-03"])).toBe("1 wk–5 wks old");
   });
 
   it("clamps pre-birth dates to 0w when mixed with post-birth dates", () => {
     // 2026-06-20 is before dob (negative week); 2026-06-28 → week 0
-    expect(monthAgeLabel(["2026-06-28", "2026-06-20"])).toBe("0w old");
+    expect(monthAgeLabel(["2026-06-28", "2026-06-20"])).toBe("0 wks old");
   });
 
   it("labels months entirely before birth", () => {
@@ -76,6 +77,6 @@ describe("monthAgeLabel", () => {
 
   it("switches to years+weeks format after the first birthday", () => {
     // 2027-07-02 is 53 weeks and 1 day after 2026-06-26 → week 53 → 1y 1w
-    expect(monthAgeLabel(["2027-07-02"])).toBe("1y 1w old");
+    expect(monthAgeLabel(["2027-07-02"])).toBe("1y 1 wk old");
   });
 });
