@@ -1,7 +1,27 @@
 {
-  "count": 22,
-  "generatedAt": "2026-09-19T14:17:08+00:00",
+  "count": 24,
+  "generatedAt": "2026-09-20T05:40:00+00:00",
   "places": [
+    {
+      "address": "Admiralty Road West",
+      "id": "dog-run-woodlands-waterfront",
+      "kind": "dog-run",
+      "leash": "off-leash",
+      "name": "Woodlands Waterfront Park Dog Run",
+      "notes": "Fenced off-leash run in Woodlands Waterfront Park, the closest NParks run to home. About 600 sqm of grass with views over the Straits of Johor. Free, open 24/7. Breezy in the evening. A water point is mentioned in some guides but is not confirmed on the NParks park page, so bring water. Pair with a leashed walk on the waterfront promenade and jetty. Do not feed the monkeys.",
+      "observedDate": "2026-09-20",
+      "sourceUrls": [
+        "https://www.nparks.gov.sg/visit/parks/park-detail/woodlands-waterfront-park",
+        "https://www.dogs.sg/dog-run-parks"
+      ],
+      "travel": {
+        "lat": 1.4527,
+        "lng": 103.7786,
+        "nearestMrt": "Woodlands North",
+        "region": "Woodlands",
+        "zone": "N"
+      }
+    },
     {
       "address": "Bishan-Ang Mo Kio Park",
       "id": "dog-run-bishan-amk",
@@ -439,6 +459,27 @@
         "lng": 103.822,
         "nearestMrt": "HarbourFront",
         "region": "HarbourFront",
+        "zone": "S"
+      }
+    },
+    {
+      "address": "11A Pulau Seringat, Singapore 099556",
+      "id": "stay-tiny-away-lazarus",
+      "kind": "staycation",
+      "leash": "leashed",
+      "name": "Tiny Away Escape, Lazarus Island",
+      "notes": "Five tiny houses on Lazarus Island / Pulau Seringat. Pet-friendly units (1900, 1960, 2000, 2017) take up to two pets. S$30 per pet per stay; pets off the sofa and bed; a pet bed and bowl are provided. Ferry from Marina South Pier or Sentosa Cove; dogs leashed onboard, no extra ferry fare on Marina South Ferries. Public-place leash law still applies on the island; this is not a fenced NParks run. No shops on the beach side; bring water and food. Wildlife (monkeys, snakes) is possible. Bookings accepted until 31 Jan 2027; the cabins wind down after that. Too much for a young puppy; after 16 Oct plus a SingVet nod at the earliest.",
+      "observedDate": "2026-09-20",
+      "sourceUrls": [
+        "https://www.escapeatlazarus.com/",
+        "https://cnalifestyle.channelnewsasia.com/travel/tiny-away-escape-lazarus-island-closing-580841"
+      ],
+      "travel": {
+        "coordsApproximate": true,
+        "lat": 1.2275,
+        "lng": 103.8528,
+        "nearestMrt": "Marina South Pier",
+        "region": "Lazarus Island",
         "zone": "S"
       }
     }
