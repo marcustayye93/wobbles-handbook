@@ -4,7 +4,16 @@
  */
 import dataset from "@/data/dog-friendly.json";
 
-export type PlaceKind = "dog-run" | "beach" | "park" | "cafe" | "mall" | "staycation" | "hotel" | "ferry";
+export type PlaceKind =
+  | "dog-run"
+  | "beach"
+  | "park"
+  | "cafe"
+  | "mall"
+  | "staycation"
+  | "hotel"
+  | "ferry"
+  | "hawker";
 export type LeashRule = "off-leash" | "leashed";
 
 export interface DogFriendlyPlace {
@@ -24,6 +33,8 @@ export interface DogFriendlyPlace {
   };
   sourceUrls: string[];
   observedDate: string;
+  /** Indoor only if he rides in a carrier, stroller or soft cage. */
+  softCage?: boolean;
 }
 
 export const KIND_LABEL: Record<PlaceKind, string> = {
@@ -35,10 +46,14 @@ export const KIND_LABEL: Record<PlaceKind, string> = {
   staycation: "staycation",
   hotel: "hotel",
   ferry: "ferry",
+  hawker: "hawker",
 };
 
 export const LEASH_BLURB =
   "Dogs must be kept on a leash in public places (no prescribed length in law), except inside fenced dog runs. Leash violations can carry a fine of up to S$5,000 under the Animals and Birds (Licensing and Control of Cats and Dogs) Rules 2024.";
+
+export const HAWKER_BLURB =
+  "Hawker centres and their outdoor seats are officially off-limits to pets. The hawker cards below are owner sightings only, not permission. Staff can turn you away. A soft cage is for carrying him, not a pass to sit at a stall.";
 
 export const PLANNING_BLURB =
   "Planning for later. Paddington should only visit these places after his 16-week core on Friday 16 Oct 2026 plus SingVet's clearance. Not for this week.";
@@ -76,7 +91,8 @@ export function searchDogPlaces(
   const q = query.trim().toLowerCase();
   if (!q) return places;
   return places.filter((p) => {
-    const hay = `${p.name} ${p.travel.region} ${KIND_LABEL[p.kind]} ${p.kind}`.toLowerCase();
+    const hay =
+      `${p.name} ${p.travel.region} ${KIND_LABEL[p.kind]} ${p.kind} ${p.notes} ${p.softCage ? "soft cage carrier stroller pram" : ""}`.toLowerCase();
     return hay.includes(q);
   });
 }

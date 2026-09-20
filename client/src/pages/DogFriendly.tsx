@@ -9,6 +9,7 @@ import {
   KIND_LABEL,
   LEASH_BLURB,
   PLANNING_BLURB,
+  HAWKER_BLURB,
   searchDogPlaces,
   withDistances,
   formatKm,
@@ -17,17 +18,29 @@ import {
 import { Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const KINDS: PlaceKind[] = ["dog-run", "beach", "park", "cafe", "mall", "staycation", "hotel", "ferry"];
+const KINDS: PlaceKind[] = [
+  "dog-run",
+  "beach",
+  "park",
+  "cafe",
+  "mall",
+  "staycation",
+  "hotel",
+  "ferry",
+  "hawker",
+];
 
 export default function DogFriendly() {
   const [query, setQuery] = useState("");
   const [kind, setKind] = useState<PlaceKind | "all">("all");
+  const [softOnly, setSoftOnly] = useState(false);
 
   const rows = useMemo(() => {
-    const found = searchDogPlaces(DOG_FRIENDLY_PLACES, query);
-    const filtered = kind === "all" ? found : found.filter((p) => p.kind === kind);
-    return withDistances(filtered, null);
-  }, [query, kind]);
+    let found = searchDogPlaces(DOG_FRIENDLY_PLACES, query);
+    if (kind !== "all") found = found.filter((p) => p.kind === kind);
+    if (softOnly) found = found.filter((p) => p.softCage);
+    return withDistances(found, null);
+  }, [query, kind, softOnly]);
 
   return (
     <PageShell>
@@ -47,6 +60,7 @@ export default function DogFriendly() {
             Leash rule
           </p>
           <p className="text-[12.5px] font-body text-[#33475C] leading-snug mt-1.5">{LEASH_BLURB}</p>
+          <p className="text-[12.5px] font-body text-[#33475C] leading-snug mt-2">{HAWKER_BLURB}</p>
         </div>
       </section>
 
@@ -57,7 +71,7 @@ export default function DogFriendly() {
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search name, area, or category"
+            placeholder="Search name, area, soft cage, or hawker"
             className="w-full h-11 pl-9 pr-3 rounded-2xl bg-[#FFFDF8] border border-[#E5DAC8] text-[13px] font-body text-[#22364D] placeholder:text-[#5A6B7E]/70 outline-none focus:border-[#C66A3D]"
           />
         </label>
@@ -70,6 +84,9 @@ export default function DogFriendly() {
               {KIND_LABEL[k]}
             </FilterChip>
           ))}
+          <FilterChip active={softOnly} onClick={() => setSoftOnly((v) => !v)}>
+            Soft cage
+          </FilterChip>
         </div>
       </section>
 
@@ -100,6 +117,16 @@ export default function DogFriendly() {
                 {place.leash === "off-leash" ? "Off-leash" : "Leashed"}
               </span>
             </div>
+            {place.softCage && (
+              <p className="text-[11px] font-body font-extrabold text-[#B4512E] mt-1.5">
+                Soft cage, carrier or stroller indoors
+              </p>
+            )}
+            {place.kind === "hawker" && (
+              <p className="text-[11px] font-body font-extrabold text-[#B4512E] mt-1">
+                Officially not allowed. Sighting only.
+              </p>
+            )}
             <p className="text-[12.5px] font-body text-[#33475C] leading-snug mt-2">{place.notes}</p>
             <p className="text-[11px] font-body text-[#5A6B7E] mt-1.5">{place.address}</p>
             {place.travel.coordsApproximate && (

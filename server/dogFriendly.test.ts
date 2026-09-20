@@ -23,7 +23,17 @@ describe("dog-friendly dataset", () => {
     );
     const kinds = new Set(DOG_FRIENDLY_PLACES.map((p) => p.kind));
     expect([...kinds]).toEqual(
-      expect.arrayContaining(["dog-run", "beach", "park", "cafe", "mall", "staycation", "hotel", "ferry"]),
+      expect.arrayContaining([
+        "dog-run",
+        "beach",
+        "park",
+        "cafe",
+        "mall",
+        "staycation",
+        "hotel",
+        "ferry",
+        "hawker",
+      ]),
     );
     const creamier = DOG_FRIENDLY_PLACES.find((p) => p.id === "cafe-creamier");
     expect(creamier?.notes).toMatch(/reported closed/i);
@@ -31,6 +41,18 @@ describe("dog-friendly dataset", () => {
     expect(waterfront?.notes).toMatch(/fence gaps/);
     const cabin = DOG_FRIENDLY_PLACES.find((p) => p.id === "stay-tiny-away-lazarus");
     expect(cabin?.notes).toContain("31 Jan 2027");
+  });
+
+  it("flags hawker sightings as unofficial and marks soft-cage indoor spots", () => {
+    const hawker = DOG_FRIENDLY_PLACES.filter((p) => p.kind === "hawker");
+    expect(hawker.length).toBeGreaterThanOrEqual(2);
+    expect(hawker.every((p) => /off-limits|not allowed|officially/i.test(p.notes))).toBe(true);
+    expect(DOG_FRIENDLY_PLACES.filter((p) => p.kind === "hotel").length).toBeGreaterThanOrEqual(12);
+    const cage = DOG_FRIENDLY_PLACES.filter((p) => p.softCage);
+    expect(cage.map((p) => p.id)).toEqual(
+      expect.arrayContaining(["mall-vivocity", "mall-waterway", "cafe-maison-garden"]),
+    );
+    expect(searchDogPlaces(DOG_FRIENDLY_PLACES, "soft cage").length).toBeGreaterThan(0);
   });
 
   it("marks Sembawang Park Dog Run as approximate", () => {
@@ -49,7 +71,7 @@ describe("dog-friendly dataset", () => {
 describe("search and distance", () => {
   it("searches name, region, and category", () => {
     expect(searchDogPlaces(DOG_FRIENDLY_PLACES, "sentosa").length).toBeGreaterThan(0);
-    expect(searchDogPlaces(DOG_FRIENDLY_PLACES, "cafe").every((p) => p.kind === "cafe")).toBe(true);
+    expect(searchDogPlaces(DOG_FRIENDLY_PLACES, "cafe").some((p) => p.kind === "cafe")).toBe(true);
     expect(searchDogPlaces(DOG_FRIENDLY_PLACES, "punggol").some((p) => p.travel.region === "Punggol")).toBe(
       true,
     );

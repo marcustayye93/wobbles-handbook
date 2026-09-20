@@ -1,6 +1,6 @@
 {
-  "count": 49,
-  "generatedAt": "2026-09-20T06:10:00+00:00",
+  "count": 65,
+  "generatedAt": "2026-09-20T06:30:00+00:00",
   "places": [
     {
       "address": "Admiralty Road West",
@@ -589,7 +589,7 @@
       "kind": "mall",
       "leash": "leashed",
       "name": "One Holland Village",
-      "notes": "Open courtyards and alfresco cafes. Pet lifts, pet drinking fountains and water coolers, and leash hooks around the mall. Dogs on leash; cats in carriers. Official pet-friendly store list updated 11 Jul 2026; some stores require a carrier or stroller.",
+      "notes": "Open courtyards and alfresco cafes. Pet lifts, pet drinking fountains and water coolers, and leash hooks around the mall. Dogs on leash; cats in carriers. Official pet-friendly store list updated 11 Jul 2026; some stores require a carrier or stroller. Some stores require a carrier or stroller. Bring the soft cage for indoor shops.",
       "observedDate": "2026-09-20",
       "sourceUrls": [
         "https://mothership.sg/2023/12/one-holland-village/",
@@ -601,7 +601,8 @@
         "nearestMrt": "Holland Village",
         "region": "Holland Village",
         "zone": "C"
-      }
+      },
+      "softCage": true
     },
     {
       "address": "1 Vista Exchange Green",
@@ -609,7 +610,7 @@
       "kind": "mall",
       "leash": "leashed",
       "name": "The Star Vista",
-      "notes": "Open-air mall with wide walkways. Dogs leashed in common areas; pet rules in dining areas vary by outlet, with some requiring pets in strollers or carriers.",
+      "notes": "Open-air mall with wide walkways. Dogs leashed in common areas; pet rules in dining areas vary by outlet, with some requiring pets in strollers or carriers. Some dining outlets require pets in strollers or carriers. Bring the soft cage.",
       "observedDate": "2026-09-19",
       "sourceUrls": [
         "https://checkin.sg/c/1647999241",
@@ -621,7 +622,8 @@
         "nearestMrt": "Buona Vista",
         "region": "Buona Vista",
         "zone": "W"
-      }
+      },
+      "softCage": true
     },
     {
       "address": "163 Tanglin Road",
@@ -649,7 +651,7 @@
       "kind": "mall",
       "leash": "leashed",
       "name": "NEX",
-      "notes": "Rooftop K9 Park on the SkyGarden, Singapore's first dog park integrated in a mall, with agility equipment and zones for all sizes. Dogs limited to the K9 Park and SkyGarden zone via designated Lifts 1 and 2; not welcome in other areas of the mall.",
+      "notes": "Rooftop K9 Park on the SkyGarden, Singapore's first dog park integrated in a mall, with agility equipment and zones for all sizes. Dogs limited to the K9 Park and SkyGarden zone via designated Lifts 1 and 2; not welcome in other areas of the mall. Dogs are limited to the K9 Park and SkyGarden via Lifts 1 and 2. Not a roam-the-mall carrier trip.",
       "observedDate": "2026-09-19",
       "sourceUrls": [
         "https://www.readkong.com/page/pgim-real-estate-secures-s-900-million-green-loan-from-dbs-6985257",
@@ -661,7 +663,8 @@
         "nearestMrt": "Serangoon",
         "region": "Serangoon",
         "zone": "N"
-      }
+      },
+      "softCage": true
     },
     {
       "address": "83 Punggol Central",
@@ -669,7 +672,7 @@
       "kind": "mall",
       "leash": "leashed",
       "name": "Waterway Point",
-      "notes": "Leashed pets welcome on designated pet paths leading to The Pet Safari store. Note: the waterfront promenade is public NParks space, not a mall pet zone.",
+      "notes": "Leashed pets welcome on designated pet paths leading to The Pet Safari store. Note: the waterfront promenade is public NParks space, not a mall pet zone. Small dogs are typically in a pram or stroller on the pet path. Bring the soft cage.",
       "observedDate": "2026-09-19",
       "sourceUrls": [
         "https://blog.petloverscentre.com/pet-friendly-malls-singapore/",
@@ -681,7 +684,8 @@
         "nearestMrt": "Punggol",
         "region": "Punggol",
         "zone": "N"
-      }
+      },
+      "softCage": true
     },
     {
       "address": "1 HarbourFront Walk",
@@ -689,7 +693,7 @@
       "kind": "mall",
       "leash": "leashed",
       "name": "VivoCity",
-      "notes": "Rooftop Sky Park and harbourfront strolls; designated Pet Relief Area at Level 3 Sky Park (waste disposal, dogs leashed). Dogs leashed at all times outdoors; no off-leash provision anywhere. All pets indoors must be handcarried, in a carrier, or in a pet stroller (open-top prams require leash or restraint). Dedicated pet lift at Lobby H to The Pet Safari, Level 3.",
+      "notes": "Rooftop Sky Park and harbourfront strolls; designated Pet Relief Area at Level 3 Sky Park (waste disposal, dogs leashed). Dogs leashed at all times outdoors; no off-leash provision anywhere. All pets indoors must be handcarried, in a carrier, or in a pet stroller (open-top prams require leash or restraint). Dedicated pet lift at Lobby H to The Pet Safari, Level 3. A small dog can ride in a soft cage, carrier or pet stroller indoors.",
       "observedDate": "2026-09-19",
       "sourceUrls": [
         "https://d3nse58ioth0yc.cloudfront.net/wp/VivoCity-Pet-Policy.pdf",
@@ -701,7 +705,8 @@
         "nearestMrt": "HarbourFront",
         "region": "HarbourFront",
         "zone": "S"
-      }
+      },
+      "softCage": true
     },
     {
       "address": "11A Pulau Seringat, Singapore 099556",
@@ -982,6 +987,331 @@
         "nearestMrt": "HarbourFront",
         "region": "Sentosa",
         "zone": "S",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "hawker-punggol-coast",
+      "kind": "hawker",
+      "leash": "leashed",
+      "name": "Punggol Coast Hawker Centre",
+      "address": "Punggol Coast, near Punggol Coast MRT",
+      "notes": "Owner sightings of dogs at outdoor seats May and Sep 2026. Hawker centres and their outdoor refreshment areas remain officially off-limits to pets (SFA, from 1 Jan 2025). This is tolerated outdoors only, staff discretion, not a rule. Do not take this as permission. If turned away, tabao and sit at a park bench. Soft cage or stroller may help at the door and is not a guarantee.",
+      "sourceUrls": [
+        "https://www.sfa.gov.sg/",
+        "https://mothership.sg/2024/12/sfa-pets-outdoor-dining-areas/"
+      ],
+      "softCage": true,
+      "travel": {
+        "lat": 1.414,
+        "lng": 103.911,
+        "nearestMrt": "Punggol Coast",
+        "region": "Punggol",
+        "zone": "N",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "hawker-changi-village",
+      "kind": "hawker",
+      "leash": "leashed",
+      "name": "Changi Village Hawker Centre",
+      "address": "Changi Village",
+      "notes": "Dogs seen at outdoor seats in the Sep 2026 social sweep. Hawker centres remain officially off-limits to pets. Tolerated outdoors only, staff discretion. Soft cage or stroller is for carrying him in, not a pass to sit at a stall.",
+      "sourceUrls": [
+        "https://www.sfa.gov.sg/"
+      ],
+      "softCage": true,
+      "travel": {
+        "lat": 1.389,
+        "lng": 103.988,
+        "nearestMrt": "Pasir Ris",
+        "region": "Changi",
+        "zone": "E",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "cafe-maison-garden",
+      "kind": "cafe",
+      "leash": "leashed",
+      "name": "Maison Garden",
+      "address": "13 Dempsey Road",
+      "notes": "Dogs indoors only in a pram or carrier. Leashed dogs use sheltered alfresco seating. Clear stated policy from a single 2026 source; call ahead. This is a proper soft-cage indoor option.",
+      "sourceUrls": [
+        "https://wanderlog.com/"
+      ],
+      "softCage": true,
+      "travel": {
+        "lat": 1.304,
+        "lng": 103.81,
+        "nearestMrt": "Botanic Gardens",
+        "region": "Dempsey",
+        "zone": "C",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "mall-great-world",
+      "kind": "mall",
+      "leash": "leashed",
+      "name": "Great World",
+      "address": "1 Kim Seng Promenade",
+      "notes": "CapitaLand listed it as pet-friendly in Nov 2025. Mall-wide policy not verified in 2026. Bring a soft cage or stroller for indoor floors and confirm at the information counter.",
+      "sourceUrls": [
+        "https://www.greatworld.com.sg/"
+      ],
+      "softCage": true,
+      "travel": {
+        "lat": 1.2935,
+        "lng": 103.8317,
+        "nearestMrt": "Great World",
+        "region": "River Valley",
+        "zone": "C",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "hotel-sofitel-sentosa",
+      "kind": "hotel",
+      "leash": "leashed",
+      "name": "Sofitel Singapore Sentosa",
+      "address": "2 Bukit Manis Road, Sentosa",
+      "notes": "Staycation with dog. No pet size limit per 2025 sources. Owner stays Jul and Sep 2026. Confirm current terms at booking. Pets are not allowed on the cable car, Sentosa Express, Sentosa buses, beach trams, or the Sentosa Boardwalk. Drive, walk the scenic paths, or use a pet-friendly private hire.",
+      "sourceUrls": [
+        "https://www.sofitel-singapore-sentosa.com/"
+      ],
+      "travel": {
+        "lat": 1.247,
+        "lng": 103.83,
+        "nearestMrt": "HarbourFront",
+        "region": "Sentosa",
+        "zone": "S",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "hotel-capella-sentosa",
+      "kind": "hotel",
+      "leash": "leashed",
+      "name": "Capella Singapore",
+      "address": "1 The Knolls, Sentosa",
+      "notes": "2026 secondary sources say pets up to about 15 kg; older sources said 6 kg. Reconfirm the weight cap at booking. An ~8 kg Cavoodle only fits if the 15 kg figure is current. Pets are not allowed on the cable car, Sentosa Express, Sentosa buses, beach trams, or the Sentosa Boardwalk. Drive, walk the scenic paths, or use a pet-friendly private hire.",
+      "sourceUrls": [
+        "https://www.capellahotels.com/en/capella-singapore"
+      ],
+      "travel": {
+        "lat": 1.249,
+        "lng": 103.824,
+        "nearestMrt": "HarbourFront",
+        "region": "Sentosa",
+        "zone": "S",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "hotel-raffles-sentosa",
+      "kind": "hotel",
+      "leash": "leashed",
+      "name": "Raffles Sentosa Singapore",
+      "address": "1 Bukit Manis Road, Sentosa",
+      "notes": "Owner visit Sep 2026. Official weight and access policy not verified. Confirm at booking. Pets are not allowed on the cable car, Sentosa Express, Sentosa buses, beach trams, or the Sentosa Boardwalk. Drive, walk the scenic paths, or use a pet-friendly private hire.",
+      "sourceUrls": [
+        "https://www.raffles.com/sentosa/"
+      ],
+      "travel": {
+        "lat": 1.251,
+        "lng": 103.825,
+        "nearestMrt": "HarbourFront",
+        "region": "Sentosa",
+        "zone": "S",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "hotel-intercontinental-bugis",
+      "kind": "hotel",
+      "leash": "leashed",
+      "name": "InterContinental Singapore",
+      "address": "80 Middle Road",
+      "notes": "City staycation. 2026 secondary sources: up to two dogs, combined 30 kg. No 2026 owner proof isolated. Confirm package directly.",
+      "sourceUrls": [
+        "https://www.ihg.com/intercontinental/hotels/us/en/singapore/sinha/hoteldetail"
+      ],
+      "travel": {
+        "lat": 1.299,
+        "lng": 103.856,
+        "nearestMrt": "Bugis",
+        "region": "Bugis",
+        "zone": "C",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "hotel-four-seasons",
+      "kind": "hotel",
+      "leash": "leashed",
+      "name": "Four Seasons Hotel Singapore",
+      "address": "190 Orchard Boulevard",
+      "notes": "City staycation. 2026 secondary sources say dogs around 11.3 to 11.5 kg. An ~8 kg Cavoodle fits with margin. No 2026 owner proof. Confirm directly.",
+      "sourceUrls": [
+        "https://www.fourseasons.com/singapore/"
+      ],
+      "travel": {
+        "lat": 1.305,
+        "lng": 103.831,
+        "nearestMrt": "Orchard",
+        "region": "Orchard",
+        "zone": "C",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "hotel-conrad-orchard",
+      "kind": "hotel",
+      "leash": "leashed",
+      "name": "Conrad Singapore Orchard",
+      "address": "1 Cuscaden Road",
+      "notes": "Up to two pets, max 17 kg each per 2026 secondary sources. Confirm directly. No 2026 owner proof isolated.",
+      "sourceUrls": [
+        "https://www.hilton.com/en/hotels/sinoci-conrad-singapore-orchard/"
+      ],
+      "travel": {
+        "lat": 1.305,
+        "lng": 103.825,
+        "nearestMrt": "Orchard",
+        "region": "Orchard",
+        "zone": "C",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "hotel-artyzen",
+      "kind": "hotel",
+      "leash": "leashed",
+      "name": "Artyzen Singapore",
+      "address": "9 Cuscaden Road",
+      "notes": "Dec 2025 source reported no size or weight limit. No owner proof. Reconfirm current policy before booking.",
+      "sourceUrls": [
+        "https://www.artyzen.com/en/hotels/singapore/"
+      ],
+      "travel": {
+        "lat": 1.306,
+        "lng": 103.825,
+        "nearestMrt": "Orchard",
+        "region": "Orchard",
+        "zone": "C",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "hotel-standard-sg",
+      "kind": "hotel",
+      "leash": "leashed",
+      "name": "The Standard, Singapore",
+      "address": "12 Orange Grove Road",
+      "notes": "Two small-to-medium dogs, combined 25 kg per 2026 secondary sources. An ~8 kg Cavoodle fits. Confirm directly.",
+      "sourceUrls": [
+        "https://www.standardhotels.com/singapore"
+      ],
+      "travel": {
+        "lat": 1.307,
+        "lng": 103.83,
+        "nearestMrt": "Orchard",
+        "region": "Orchard",
+        "zone": "C",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "hotel-indigo-katong",
+      "kind": "hotel",
+      "leash": "leashed",
+      "name": "Hotel Indigo Singapore Katong",
+      "address": "86 East Coast Road",
+      "notes": "One dog up to exactly 8 kg per 2026 secondary sources. Weigh him and confirm before booking. Borderline for an adult Cavoodle.",
+      "sourceUrls": [
+        "https://www.ihg.com/hotelindigo/hotels/us/en/singapore/sinkt/hoteldetail"
+      ],
+      "travel": {
+        "lat": 1.305,
+        "lng": 103.905,
+        "nearestMrt": "Marine Parade",
+        "region": "Katong",
+        "zone": "E",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "hotel-qt-sg",
+      "kind": "hotel",
+      "leash": "leashed",
+      "name": "QT Singapore",
+      "address": "35 Robinson Road",
+      "notes": "Repeated owner proof Aug 2026. Exact current fee and weight cap need direct confirmation.",
+      "sourceUrls": [
+        "https://www.qthotels.com/singapore/"
+      ],
+      "travel": {
+        "lat": 1.281,
+        "lng": 103.851,
+        "nearestMrt": "Raffles Place",
+        "region": "CBD",
+        "zone": "C",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "hotel-mett-sg",
+      "kind": "hotel",
+      "leash": "leashed",
+      "name": "METT Singapore",
+      "address": "186 Telok Ayer Street",
+      "notes": "Owner proof Sep 2026. Cleaning fee reported inconsistently (S$150 vs S$180). No verified weight cap. Confirm directly.",
+      "sourceUrls": [
+        "https://www.mett.com.sg/"
+      ],
+      "travel": {
+        "lat": 1.276,
+        "lng": 103.847,
+        "nearestMrt": "Tanjong Pagar",
+        "region": "Telok Ayer",
+        "zone": "C",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "hotel-paradox-sg",
+      "kind": "hotel",
+      "leash": "leashed",
+      "name": "Paradox Singapore Merchant Court",
+      "address": "1 Merchant Road",
+      "notes": "Owner visit Aug 2026. Official weight and access policy not verified. Confirm at booking.",
+      "sourceUrls": [
+        "https://www.paradoxhotels.com/"
+      ],
+      "travel": {
+        "lat": 1.288,
+        "lng": 103.847,
+        "nearestMrt": "Clarke Quay",
+        "region": "Clarke Quay",
+        "zone": "C",
         "coordsApproximate": true
       },
       "observedDate": "2026-09-20"
