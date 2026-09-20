@@ -44,7 +44,7 @@ export const SG_STEPS: SgStep[] = [
     title: "Get his Singapore dog licence (PALS)",
     timing: "Before the import licence — this week",
     detail:
-      "Every dog in Singapore must be licensed with AVS via the PALS portal — and you need the licence number BEFORE you can apply for the import permit. This is the next irreversible admin.",
+      "Every dog in Singapore must be licensed with AVS via the PALS portal — and you need the licence number BEFORE you can apply for the import permit.",
     icon: "badge",
   },
   {

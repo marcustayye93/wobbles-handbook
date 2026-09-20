@@ -248,11 +248,11 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Next irreversible admin */}
+          {/* Before he lands */}
           <section className="px-4 mt-3">
             <div className="keepsake-card relative p-5 fade-up" style={{ animationDelay: "160ms" }}>
               <span className="absolute -top-3 left-4 bg-[#22364D] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
-                Next irreversible admin
+                Before he lands
               </span>
               <ul className="mt-1 space-y-3">
                 {ADMIN_ITEMS.map((item) => (
