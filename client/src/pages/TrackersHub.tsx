@@ -51,7 +51,7 @@ export default function TrackersHub() {
   };
 
   return (
-    <PageShell hideFab={preHome}>
+    <PageShell hideFab>
       <header className="relative px-5 pt-9 pb-1 overflow-hidden">
         <div className="flex items-center justify-between">
           <Eyebrow>Logs</Eyebrow>
@@ -62,7 +62,7 @@ export default function TrackersHub() {
         </h1>
         <p className="relative z-10 text-[13px] font-body text-muted-foreground mt-2 leading-relaxed max-w-[230px]">
           {preHome
-            ? "Empty logs are the truth until he lands. Little logs, big patterns — synced for the whole family."
+            ? "Log farm updates, weight from the breeder, anything you want in the book before he lands. Little logs, big patterns."
             : "Little logs, big patterns. Synced live for the whole family."}
         </p>
         <img
@@ -102,15 +102,13 @@ export default function TrackersHub() {
                       </span>
                       <ChevronRight size={16} className="text-muted-foreground shrink-0" />
                     </Link>
-                    {!preHome && (
-                      <button
+                    <button
                         onClick={() => quickAdd(t.id)}
                         aria-label={`Quick log ${t.title}`}
                         className="w-11 h-11 rounded-full bg-[#C66A3D]/10 text-[#B4512E] flex items-center justify-center shrink-0 press-scale"
                       >
                         <Plus size={16} />
                       </button>
-                    )}
                   </div>
                 ))}
               </div>
@@ -119,15 +117,13 @@ export default function TrackersHub() {
         })}
       </div>
 
-      {!preHome && (
-        <button
+      <button
           onClick={() => quickAdd(null)}
           aria-label="Quick log"
           className="fixed bottom-24 right-5 z-40 w-14 h-14 rounded-full bg-[#22364D] text-[#FFFDF8] flex items-center justify-center shadow-[0_10px_28px_rgba(34,54,77,0.4)] press-scale"
         >
           <Plus size={26} />
         </button>
-      )}
 
       <QuickLogSheet open={sheetOpen} onOpenChange={setSheetOpen} initialTracker={sheetTracker} />
     </PageShell>

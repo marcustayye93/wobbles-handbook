@@ -1,9 +1,9 @@
 /*
  * Home — date-switched on WOBBLES.homecoming (homecoming 23 Sep 2026).
- * Pre-homecoming (until 23 Sep): compact hero, countdown + irreversible admin,
- * logging demoted. Empty logs are the truth. Not a 7am logger.
- * Week-1 (from 23 Sep): decompression days 1–3, three logs only (weight /
- * toilet / sleep), book SingVet, carry-socialise, park after ≥16-week core.
+ * Quick-log CareRow is always first: Walk / Meal / Toilet / Sleep / Shower.
+ * Pre-homecoming: countdown + landing admin under that.
+ * Week-1: decompression days 1–3, book SingVet, carry-socialise, park after
+ * the 16-week core.
  */
 import { useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
@@ -11,7 +11,7 @@ import { PageShell, Eyebrow } from "@/components/AppShell";
 import SyncIndicator from "@/components/SyncIndicator";
 import QuickLogSheet from "@/components/QuickLogSheet";
 import TodayTimeline, { useDayFeed } from "@/components/TodayTimeline";
-import CareRow, { WEEK1_CARE_ACTIONS } from "@/components/CareRow";
+import CareRow from "@/components/CareRow";
 import SocialMissionCard from "@/components/SocialMissionCard";
 import SearchDialog from "@/components/SearchDialog";
 import { wobblesToday, todaysNudges, todaysBrief } from "@/lib/wobblesToday";
@@ -192,7 +192,7 @@ export default function Home() {
             </h1>
             <p className="mt-1.5 text-[12.5px] font-body text-[#5A6B7E] leading-snug">
               {preHome
-                ? "Paddy stays at The Doghouse QLD until he comes home 23 Sep. Empty logs are the truth — this is not a 7am logger."
+                ? "Paddy stays at The Doghouse QLD until he comes home 23 Sep. Tap below to log anything that happens today."
                 : decompressing
                   ? "Days 1–3: quiet flat, his toilet spot, crate as a den, no visitors."
                   : "Carry-socialise. Book SingVet. Grass waits for the 16-week core and a vet nod."}
@@ -210,6 +210,19 @@ export default function Home() {
             <PawPrint size={11} className="inline -mt-0.5 mr-1 text-[#C66A3D]" />
             {age.born ? `${age.weeks}w ${age.remDays}d old` : "coming soon"}
           </span>
+        </div>
+      </section>
+
+      {/* Quick log — highest-touch panel, always on Home */}
+      <section className="px-4 mt-3">
+        <div className="keepsake-card relative p-3.5 fade-up" style={{ animationDelay: "100ms" }}>
+          <span className="absolute -top-3 left-4 bg-[#22364D] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
+            Log now
+          </span>
+          <p className="mt-1 mb-2 text-[11px] font-body text-muted-foreground text-center">
+            Tap to log. Long-press for details. Toilet always asks what happened.
+          </p>
+          <CareRow onDetails={(id) => quickLog(id)} />
         </div>
       </section>
 
@@ -293,19 +306,6 @@ export default function Home() {
               <Link href="/handbook/first-day" className="btn-ink mt-4 inline-flex">
                 First-day guide <ArrowRight size={15} />
               </Link>
-            </div>
-          </section>
-
-          {/* Three logs only — after the lead, never empty theatre */}
-          <section className="px-4 mt-3">
-            <div className="keepsake-card relative p-3.5 fade-up" style={{ animationDelay: "170ms" }}>
-              <span className="absolute -top-3 left-4 bg-[#22364D] text-[#FFFDF8] text-[9px] font-body font-extrabold uppercase tracking-[0.16em] px-2.5 py-1">
-                Week-1 logs
-              </span>
-              <p className="mt-1 mb-2 text-[11px] font-body text-muted-foreground text-center">
-                Weight, toilet, sleep. Toilet asks what happened — it will not invent “wee on pad”.
-              </p>
-              <CareRow onDetails={(id) => quickLog(id)} actions={WEEK1_CARE_ACTIONS} />
             </div>
           </section>
 
@@ -521,14 +521,6 @@ export default function Home() {
             </Link>
           </div>
           <TodayTimeline dateISO={todayISO()} />
-        </section>
-      )}
-
-      {preHome && (
-        <section className="px-4 mt-6">
-          <p className="text-center text-[11.5px] font-body text-muted-foreground leading-relaxed px-2">
-            Logging waits until he is home. Empty logs are the truth.
-          </p>
         </section>
       )}
 

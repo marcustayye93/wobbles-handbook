@@ -18,7 +18,6 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import PawFab from "@/components/PawFab";
-import { WOBBLES, daysUntil } from "@/content/wobbles";
 
 const TABS = [
   { href: "/", label: "Home", icon: Home },
@@ -34,10 +33,6 @@ function isTabActive(href: string, loc: string) {
   if (href === "/handbook")
     return loc.startsWith("/handbook") || loc.startsWith("/training") || loc.startsWith("/grooming");
   return loc.startsWith(href);
-}
-
-function preHomecoming() {
-  return daysUntil(WOBBLES.homecoming) > 0;
 }
 
 export function BottomNav() {
@@ -90,7 +85,7 @@ export function PageShell({
   hideNav?: boolean;
   hideFab?: boolean;
 }) {
-  const hideTheFab = hideFab || preHomecoming();
+  const hideTheFab = hideFab;
   return (
     <div className="phone-shell paper-grain">
       <main
