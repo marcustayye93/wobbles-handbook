@@ -4,7 +4,7 @@
  */
 import dataset from "@/data/dog-friendly.json";
 
-export type PlaceKind = "dog-run" | "beach" | "park" | "cafe" | "mall" | "staycation";
+export type PlaceKind = "dog-run" | "beach" | "park" | "cafe" | "mall" | "staycation" | "hotel" | "ferry";
 export type LeashRule = "off-leash" | "leashed";
 
 export interface DogFriendlyPlace {
@@ -33,6 +33,8 @@ export const KIND_LABEL: Record<PlaceKind, string> = {
   cafe: "cafe",
   mall: "mall",
   staycation: "staycation",
+  hotel: "hotel",
+  ferry: "ferry",
 };
 
 export const LEASH_BLURB =

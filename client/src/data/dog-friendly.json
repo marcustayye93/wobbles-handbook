@@ -1,6 +1,6 @@
 {
-  "count": 24,
-  "generatedAt": "2026-09-20T05:40:00+00:00",
+  "count": 49,
+  "generatedAt": "2026-09-20T06:10:00+00:00",
   "places": [
     {
       "address": "Admiralty Road West",
@@ -8,7 +8,7 @@
       "kind": "dog-run",
       "leash": "off-leash",
       "name": "Woodlands Waterfront Park Dog Run",
-      "notes": "Fenced off-leash run in Woodlands Waterfront Park, the closest NParks run to home. About 600 sqm of grass with views over the Straits of Johor. Free, open 24/7. Breezy in the evening. A water point is mentioned in some guides but is not confirmed on the NParks park page, so bring water. Pair with a leashed walk on the waterfront promenade and jetty. Do not feed the monkeys.",
+      "notes": "Fenced off-leash run in Woodlands Waterfront Park, the closest NParks run to home. About 600 sqm of grass with views over the Straits of Johor. Free, open 24/7. Breezy in the evening. A water point is mentioned in some guides but is not confirmed on the NParks park page, so bring water. Pair with a leashed walk on the waterfront promenade and jetty. Do not feed the monkeys. A reviewer reported fence gaps large enough for a small dog and sharp wet grass. Inspect the fence before letting him off leash.",
       "observedDate": "2026-09-20",
       "sourceUrls": [
         "https://www.nparks.gov.sg/visit/parks/park-detail/woodlands-waterfront-park",
@@ -23,13 +23,254 @@
       }
     },
     {
+      "id": "dog-run-bukit-canberra",
+      "kind": "dog-run",
+      "leash": "off-leash",
+      "name": "Bukit Canberra Dog Run",
+      "address": "Level 3, Bukit Canberra, 21 Canberra Link",
+      "notes": "Fenced rooftop run at Bukit Canberra, opened 20 Jul 2025. Managed by SportSG / ActiveSG, not NParks. Closest dedicated run to Woodlands after Waterfront. Limited shade; water point not verified. Check lift access rules before going with a puppy.",
+      "sourceUrls": [
+        "https://mothership.sg/2025/07/bukit-canberra-dog-run/",
+        "https://www.instagram.com/"
+      ],
+      "travel": {
+        "lat": 1.4452,
+        "lng": 103.8295,
+        "nearestMrt": "Canberra",
+        "region": "Sembawang",
+        "zone": "N",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "dog-run-yishun",
+      "kind": "dog-run",
+      "leash": "off-leash",
+      "name": "Yishun Park Dog Run",
+      "address": "Yishun Park, near Yishun Central and Yishun Ave 11 (Hopea Entrance)",
+      "notes": "Two small double-gated fenced enclosures. Suits a small puppy's first run. Bring water and poo bags; the nearest water point is a walk away. Triangular, smaller than most runs.",
+      "sourceUrls": [
+        "https://www.nparks.gov.sg/visit/parks/park-detail/yishun-park"
+      ],
+      "travel": {
+        "lat": 1.4274,
+        "lng": 103.8408,
+        "nearestMrt": "Yishun",
+        "region": "Yishun",
+        "zone": "N",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "dog-run-rockridge",
+      "kind": "dog-run",
+      "leash": "off-leash",
+      "name": "Rockridge Park Dog Run",
+      "address": "Yishun Street 51",
+      "notes": "Fenced run opened 22 Nov 2025. Still in active use as of a 15 Sep 2026 community Reel. Owner reported wet soil and mud after rain. Avoid after heavy rain.",
+      "sourceUrls": [
+        "https://www.instagram.com/mochitan_maltichon/"
+      ],
+      "travel": {
+        "lat": 1.4185,
+        "lng": 103.8432,
+        "nearestMrt": "Yishun",
+        "region": "Yishun",
+        "zone": "N",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "park-lower-seletar",
+      "kind": "park",
+      "leash": "leashed",
+      "name": "Lower Seletar Reservoir Park",
+      "address": "Yishun Avenue 1",
+      "notes": "Leashed family outing near the reservoir. Featured in 2026 dog-friendly roundups. Possible monkeys. Thin on direct owner social proof. Heat. Not a fenced run.",
+      "sourceUrls": [
+        "https://www.nparks.gov.sg/visit/parks/park-detail/lower-seletar-reservoir-park"
+      ],
+      "travel": {
+        "lat": 1.401,
+        "lng": 103.837,
+        "nearestMrt": "Khatib",
+        "region": "Yishun",
+        "zone": "N",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "park-woodlands-east",
+      "kind": "park",
+      "leash": "leashed",
+      "name": "Woodlands Town Park East",
+      "address": "Woodlands Town Park East",
+      "notes": "Hyper-local leashed walk, not a destination. Shown with dogs Jul 2026. No fenced run. Public-place leash law applies.",
+      "sourceUrls": [
+        "https://www.nparks.gov.sg/visit/parks/park-detail/woodlands-town-park-east"
+      ],
+      "travel": {
+        "lat": 1.4368,
+        "lng": 103.7935,
+        "nearestMrt": "Woodlands",
+        "region": "Woodlands",
+        "zone": "N",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "park-marsiling",
+      "kind": "park",
+      "leash": "leashed",
+      "name": "Marsiling Park",
+      "address": "Marsiling Park",
+      "notes": "Leashed neighbourhood walk. Owner walk dated 20 Aug 2026. No fenced run.",
+      "sourceUrls": [
+        "https://www.nparks.gov.sg/visit/parks/park-detail/marsiling-park"
+      ],
+      "travel": {
+        "lat": 1.438,
+        "lng": 103.771,
+        "nearestMrt": "Marsiling",
+        "region": "Woodlands",
+        "zone": "N",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "cafe-merle-lentor",
+      "kind": "cafe",
+      "leash": "leashed",
+      "name": "Merle and Co",
+      "address": "Lentor Modern, above Lentor MRT",
+      "notes": "Pet-friendly cafe named after the owner's dog. Owner visit Jan 2026; HungryGoWhere feature Jun 2026. Indoor versus outdoor seating for dogs is not stated; mall indoor rules may apply. Re-check on arrival.",
+      "sourceUrls": [
+        "https://www.hungrygowhere.com/"
+      ],
+      "travel": {
+        "lat": 1.3847,
+        "lng": 103.8365,
+        "nearestMrt": "Lentor",
+        "region": "Lentor",
+        "zone": "N",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "cafe-urban-hideout",
+      "kind": "cafe",
+      "leash": "leashed",
+      "name": "The Urban Hideout",
+      "address": "60 Springside Walk, #01-05 The Brooks I",
+      "notes": "Indoor pet-friendly cafe; a pet menu is mentioned. Owner visit 15 Sep 2026. Policies can change; re-check before visiting.",
+      "sourceUrls": [
+        "https://www.instagram.com/yoda_leia_chihuahuas/"
+      ],
+      "travel": {
+        "lat": 1.4435,
+        "lng": 103.819,
+        "nearestMrt": "Springleaf",
+        "region": "Springside",
+        "zone": "N",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "dog-run-sengkang-riverside",
+      "kind": "dog-run",
+      "leash": "off-leash",
+      "name": "Sengkang Riverside Park Dog Run",
+      "address": "Sengkang Riverside Park, Anchorvale Street",
+      "notes": "Fenced run listed on Google Places with recent reviews. No official NParks page text found, so treat as likely. Nearby wetlands mean mosquitoes are likely.",
+      "sourceUrls": [
+        "https://www.nparks.gov.sg/visit/parks/park-detail/sengkang-riverside-park"
+      ],
+      "travel": {
+        "lat": 1.3905,
+        "lng": 103.8888,
+        "nearestMrt": "Sengkang",
+        "region": "Sengkang",
+        "zone": "N",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "dog-run-rivervale-shores",
+      "kind": "dog-run",
+      "leash": "off-leash",
+      "name": "Rivervale Shores Dog Run",
+      "address": "Rivervale Shores, Sengkang",
+      "notes": "Community fenced run opened 19 Jul 2025 by Sengkang Town Council. Not NParks. Designated operating hours apply; confirm current hours with Sengkang Town Council before visiting.",
+      "sourceUrls": [
+        "https://mothership.sg/2025/07/sengkang-rivervale-shores-dog-run/"
+      ],
+      "travel": {
+        "lat": 1.389,
+        "lng": 103.901,
+        "nearestMrt": "Sengkang",
+        "region": "Sengkang",
+        "zone": "N",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "dog-run-punggol-waterway",
+      "kind": "dog-run",
+      "leash": "off-leash",
+      "name": "Punggol Waterway Park Dog Run",
+      "address": "Punggol Waterway Park, near Nibong LRT",
+      "notes": "NParks fenced run. Older listings report a water point inside; not confirmed current. No direct 2026 owner visit post isolated. Leashed waterway walks after.",
+      "sourceUrls": [
+        "https://www.nparks.gov.sg/visit/parks/park-detail/punggol-waterway-park"
+      ],
+      "travel": {
+        "lat": 1.411,
+        "lng": 103.9044,
+        "nearestMrt": "Punggol",
+        "region": "Punggol",
+        "zone": "N",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "dog-run-punggol-park",
+      "kind": "dog-run",
+      "leash": "off-leash",
+      "name": "Punggol Park Dog Run",
+      "address": "Punggol Park, near 471B Upper Serangoon Crescent",
+      "notes": "Fenced run. Dogs shown running there in Sep 2026. Facilities not verified.",
+      "sourceUrls": [
+        "https://www.nparks.gov.sg/visit/parks/park-detail/punggol-park"
+      ],
+      "travel": {
+        "lat": 1.377,
+        "lng": 103.909,
+        "nearestMrt": "Kovan",
+        "region": "Punggol",
+        "zone": "N",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
       "address": "Bishan-Ang Mo Kio Park",
       "id": "dog-run-bishan-amk",
       "kind": "dog-run",
       "leash": "off-leash",
       "name": "Bishan-Ang Mo Kio Park Dog Run",
-      "notes": "Fenced off-leash run in the middle of the park, free, open 24/7. Two pens (small/medium and large) with water points on site. Busy on weekend mornings; go early or late to dodge the heat.",
-      "observedDate": "2026-09-19",
+      "notes": "Fenced off-leash run in the middle of the park, free, open 24/7. Two pens (small/medium and large) with water points on site. Busy on weekend mornings; go early or late to dodge the heat. Improvement works had an expected completion of 6 Jan 2026; reopening was not explicitly confirmed in the Sep 2026 sweep. Check NParks before visiting.",
+      "observedDate": "2026-09-20",
       "sourceUrls": [
         "https://www.nparks.gov.sg/visit/parks/park-detail/bishan-ang-mo-kio-park",
         "https://isomer-user-content.by.gov.sg/30/e6897201-9546-4d89-ba17-f169980fea5a/Dog%20Run%20Etiquette%20and%20User%20Safety%20%28QR%20Code%20information%29.pdf"
@@ -48,8 +289,8 @@
       "kind": "dog-run",
       "leash": "off-leash",
       "name": "West Coast Park Dog Run",
-      "notes": "Big fenced run (~22,000 sqm, the largest NParks run), popular with big-dog owners. Shaded benches, water taps, and a dog-wash kiosk nearby. Free, open 24/7. Pair it with a leashed walk along the park promenade after.",
-      "observedDate": "2026-09-19",
+      "notes": "Big fenced run (~22,000 sqm, the largest NParks run), popular with big-dog owners. Shaded benches, water taps, and a dog-wash kiosk nearby. Free, open 24/7. Pair it with a leashed walk along the park promenade after. 2025 improvement works should have ended; confirm current status before a trip.",
+      "observedDate": "2026-09-20",
       "sourceUrls": [
         "https://www.nparks.gov.sg/visit/parks/park-detail/west-coast-park",
         "https://www.straitstimes.com/singapore/all-may-apply-to-use-nparks-dog-runs"
@@ -88,8 +329,8 @@
       "kind": "dog-run",
       "leash": "off-leash",
       "name": "Sentosa Palawan Dog Run",
-      "notes": "Fenced run right by Palawan Beach, with water points and agility modules. Combine off-leash time with a leashed beach walk; weekday mornings are quietest. Opening hours approximate (roughly 9am to 9pm daily). No aggressive dogs, no food in the run, supervise at all times; children under 12 not advised. Special-breed requirements are referenced but not published.",
-      "observedDate": "2026-09-19",
+      "notes": "Fenced run right by Palawan Beach, with water points and agility modules. Combine off-leash time with a leashed beach walk; weekday mornings are quietest. Opening hours approximate (roughly 9am to 9pm daily). No aggressive dogs, no food in the run, supervise at all times; children under 12 not advised. Special-breed requirements are referenced but not published. Pets are not allowed on the cable car, Sentosa Express, Sentosa buses, beach trams, or the Sentosa Boardwalk. Drive, walk the scenic paths, or use a pet-friendly private hire.",
+      "observedDate": "2026-09-20",
       "sourceUrls": [
         "https://www.shangri-la.com/en/landing/the-palawan-at-sentosa/",
         "https://www.tripadvisor.co.za/Attraction_Review-g294265-d27434437-Reviews-The_Palawan_Dog_Run-Singapore.html"
@@ -128,8 +369,8 @@
       "kind": "dog-run",
       "leash": "off-leash",
       "name": "Sembawang Park Dog Run",
-      "notes": "Fenced off-leash run near the end of Sembawang Road. Free, open 24/7. No water point or lighting on site, so bring your own water. Location approximate.",
-      "observedDate": "2026-09-19",
+      "notes": "Fenced off-leash run near the end of Sembawang Road. Free, open 24/7. No water point or lighting on site, so bring your own water. Location approximate. Secondary sources report a slope, little shade and no water point. Steep staircase access is unfriendly to a small puppy. Bring water.",
+      "observedDate": "2026-09-20",
       "sourceUrls": [
         "https://www.nparks.gov.sg/visit/parks/park-detail/sembawang-park/",
         "https://thehoneycombers.com/singapore/dog-runs-parks-singapore/"
@@ -149,8 +390,8 @@
       "kind": "beach",
       "leash": "leashed",
       "name": "Tanjong Beach, Sentosa",
-      "notes": "Dogs allowed, leashed at all times per the official Tanjong Beach Club venue policy (outdoor sections only; dogs must stay leashed and off the furniture). The sand is unfenced, so recall matters. No off-leash area on the beach itself.",
-      "observedDate": "2026-09-19",
+      "notes": "Dogs allowed, leashed at all times per the official Tanjong Beach Club venue policy (outdoor sections only; dogs must stay leashed and off the furniture). The sand is unfenced, so recall matters. No off-leash area on the beach itself. The beach club operator has changed; alfresco pet access appears to continue but reconfirm before a visit. Check water quality before any swimming. Pets are not allowed on the cable car, Sentosa Express, Sentosa buses, beach trams, or the Sentosa Boardwalk. Drive, walk the scenic paths, or use a pet-friendly private hire.",
+      "observedDate": "2026-09-20",
       "sourceUrls": [
         "http://www.tanjongbeachclub.com/venue-policy",
         "https://www.sentosa.com.sg/en/get-inspired/sentosa-guides/best-restaurants-to-dine-with-family"
@@ -169,8 +410,8 @@
       "kind": "beach",
       "leash": "leashed",
       "name": "Palawan Beach, Sentosa",
-      "notes": "Leashed beach walks next to the fenced dog run. Dogs on leash per the official Sentosa FAQ; off-leash only inside the dog run. Zone bans apply around ticketed event spaces.",
-      "observedDate": "2026-09-19",
+      "notes": "Leashed beach walks next to the fenced dog run. Dogs on leash per the official Sentosa FAQ; off-leash only inside the dog run. Zone bans apply around ticketed event spaces. Pets are not allowed on the cable car, Sentosa Express, Sentosa buses, beach trams, or the Sentosa Boardwalk. Drive, walk the scenic paths, or use a pet-friendly private hire.",
+      "observedDate": "2026-09-20",
       "sourceUrls": [
         "https://abigbigworld.sentosa.com.sg/faq.html",
         "https://www.sentosa.com.sg/en/things-to-do/attractions/palawan-beach"
@@ -269,8 +510,8 @@
       "kind": "cafe",
       "leash": "leashed",
       "name": "Creamier @ Northshore Plaza II",
-      "notes": "Famous for dog-friendly icy treats; pup cups confirmed on the brand's own posts (Jan 2026). Outdoor seating for dogs is likely but not re-confirmed in 2026, so check on arrival.",
-      "observedDate": "2026-09-19",
+      "notes": "Famous for dog-friendly icy treats; pup cups confirmed on the brand's own posts (Jan 2026). Outdoor seating for dogs is likely but not re-confirmed in 2026, so check on arrival. PawWhere reported its last day as 31 Aug 2026. Treat as reported closed until a walk-by confirms. Do not plan a trip here without checking.",
+      "observedDate": "2026-09-20",
       "sourceUrls": [
         "https://www.foodyas.com/SG/Singapore/103991212754455/Creamier-Handcrafted-Ice-Cream-and-Coffee",
         "https://mart.grab.com/sg/en/merchant/creamier-handcrafted-ice-cream-coffee-northshore-plaza-ii/4-C3CJEJEALA3XLE"
@@ -289,8 +530,8 @@
       "kind": "cafe",
       "leash": "leashed",
       "name": "Canopy @ HortPark",
-      "notes": "Garden setting, dog-friendly alfresco only; indoor dining with dogs is not established. Walk the park trails before brunch. Water bowls are mentioned in older reviews but are not guaranteed.",
-      "observedDate": "2026-09-19",
+      "notes": "Garden setting, dog-friendly alfresco only; indoor dining with dogs is not established. Walk the park trails before brunch. Water bowls are mentioned in older reviews but are not guaranteed. No 2025 or 2026 owner-visit proof was found in the Sep 2026 sweep. Re-check before going.",
+      "observedDate": "2026-09-20",
       "sourceUrls": [
         "https://urbandogowner.com/places/canopy-hortpark",
         "https://wanderlog.com/place/details/1253328"
@@ -329,8 +570,8 @@
       "kind": "cafe",
       "leash": "leashed",
       "name": "Wheeler's Estate",
-      "notes": "Big lawn, very dog-welcome; dogs allowed inside and outside (Jun 2026). Outdoor seating across the estate; a destination brunch with the dog. Water bowls not officially confirmed.",
-      "observedDate": "2026-09-19",
+      "notes": "Big lawn, very dog-welcome; dogs allowed inside and outside (Jun 2026). Outdoor seating across the estate; a destination brunch with the dog. Water bowls not officially confirmed. No 2025 or 2026 owner-visit proof was found in the Sep 2026 sweep. Re-check before going.",
+      "observedDate": "2026-09-20",
       "sourceUrls": [
         "https://www.top-rated.online/cities/Seletar/place/p/6306855/Wheeler%27s+Estate",
         "https://petfriendly.sg/listing/wheelers-estate/"
@@ -348,8 +589,8 @@
       "kind": "mall",
       "leash": "leashed",
       "name": "One Holland Village",
-      "notes": "Open courtyards and alfresco cafes. Pet lifts, pet drinking fountains and water coolers, and leash hooks around the mall. Dogs on leash; cats in carriers.",
-      "observedDate": "2026-09-19",
+      "notes": "Open courtyards and alfresco cafes. Pet lifts, pet drinking fountains and water coolers, and leash hooks around the mall. Dogs on leash; cats in carriers. Official pet-friendly store list updated 11 Jul 2026; some stores require a carrier or stroller.",
+      "observedDate": "2026-09-20",
       "sourceUrls": [
         "https://mothership.sg/2023/12/one-holland-village/",
         "https://thesmartlocal.com/read/one-holland-village/"
@@ -468,7 +709,7 @@
       "kind": "staycation",
       "leash": "leashed",
       "name": "Tiny Away Escape, Lazarus Island",
-      "notes": "Five tiny houses on Lazarus Island / Pulau Seringat. Pet-friendly units (1900, 1960, 2000, 2017) take up to two pets. S$30 per pet per stay; pets off the sofa and bed; a pet bed and bowl are provided. Ferry from Marina South Pier or Sentosa Cove; dogs leashed onboard, no extra ferry fare on Marina South Ferries. Public-place leash law still applies on the island; this is not a fenced NParks run. No shops on the beach side; bring water and food. Wildlife (monkeys, snakes) is possible. Bookings accepted until 31 Jan 2027; the cabins wind down after that. Too much for a young puppy; after 16 Oct plus a SingVet nod at the earliest.",
+      "notes": "Five tiny houses on Lazarus Island / Pulau Seringat. Pet-friendly units (1900, 1960, 2000, 2017) take up to two pets. S$30 per pet per stay; pets off the sofa and bed; a pet bed and bowl are provided. Ferry from Marina South Pier or Sentosa Cove; dogs leashed onboard, no extra ferry fare on Marina South Ferries. Public-place leash law still applies on the island; this is not a fenced NParks run. No shops on the beach side; bring water and food. Wildlife (monkeys, snakes) is possible. Bookings accepted until 31 Jan 2027; the cabins wind down after that. Too much for a young puppy; after 16 Oct plus a SingVet nod at the earliest. Four of five cabins were pet-friendly per Jul 2026 owner posts. The island concession concludes 30 Mar 2027. The St John's / Lazarus day ferry is a separate outing from this cabin stay.",
       "observedDate": "2026-09-20",
       "sourceUrls": [
         "https://www.escapeatlazarus.com/",
@@ -482,7 +723,269 @@
         "region": "Lazarus Island",
         "zone": "S"
       }
+    },
+    {
+      "id": "dog-run-jurong-lake",
+      "kind": "dog-run",
+      "leash": "off-leash",
+      "name": "Jurong Lake Gardens Dog Run",
+      "address": "Jurong Lake Gardens, Yuan Ching Road",
+      "notes": "About 2,200 sqm fenced run with grassy mounds. Multiple 2026 owner visits, latest 20 Sep 2026. Water point nearby rather than inside per one 2026 guide. Hours not confirmed.",
+      "sourceUrls": [
+        "https://www.nparks.gov.sg/visit/parks/park-detail/jurong-lake-gardens"
+      ],
+      "travel": {
+        "lat": 1.34,
+        "lng": 103.727,
+        "nearestMrt": "Lakeside",
+        "region": "Jurong",
+        "zone": "W",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "dog-run-pasir-ris",
+      "kind": "dog-run",
+      "leash": "off-leash",
+      "name": "Pasir Ris Park Dog Run",
+      "address": "Pasir Ris Park, 125 Pasir Ris Road, near Carpark E (Area 4)",
+      "notes": "About 800 sqm fenced run with a water point inside per listings. NParks park page updated 27 Jan 2026. Reviewers warn of ants and muddy puddles after rain.",
+      "sourceUrls": [
+        "https://www.nparks.gov.sg/visit/parks/park-detail/pasir-ris-park"
+      ],
+      "travel": {
+        "lat": 1.381,
+        "lng": 103.95,
+        "nearestMrt": "Pasir Ris",
+        "region": "Pasir Ris",
+        "zone": "E",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "dog-run-tiong-bahru-park",
+      "kind": "dog-run",
+      "leash": "off-leash",
+      "name": "Tiong Bahru Park Dog Run",
+      "address": "Tiong Bahru Park, 1 Henderson Road",
+      "notes": "NParks describes a shaded, spacious fenced run (page updated 27 Jan 2026). Older user reports mention mud, ants and occasional snakes (anecdotal). Hours not stated.",
+      "sourceUrls": [
+        "https://www.nparks.gov.sg/visit/parks/park-detail/tiong-bahru-park"
+      ],
+      "travel": {
+        "lat": 1.286,
+        "lng": 103.823,
+        "nearestMrt": "Tiong Bahru",
+        "region": "Tiong Bahru",
+        "zone": "S",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "dog-run-katong",
+      "kind": "dog-run",
+      "leash": "off-leash",
+      "name": "Katong Park Dog Run",
+      "address": "Katong Park, 59 Fort Road",
+      "notes": "NParks enclosed dog run (page updated 27 Jan 2026). Hours not confirmed. Older sources mention agility obstacles and benches.",
+      "sourceUrls": [
+        "https://www.nparks.gov.sg/visit/parks/park-detail/katong-park"
+      ],
+      "travel": {
+        "lat": 1.296,
+        "lng": 103.886,
+        "nearestMrt": "Katong Park",
+        "region": "Katong",
+        "zone": "E",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "dog-run-amk-west",
+      "kind": "dog-run",
+      "leash": "off-leash",
+      "name": "Ang Mo Kio Town Garden West Dog Run",
+      "address": "10 Ang Mo Kio Street 12",
+      "notes": "Fenced run, usually less crowded than Bishan. No water points or benches reported. The park is on a hillock with steep slopes; watch a small puppy.",
+      "sourceUrls": [
+        "https://www.nparks.gov.sg/visit/parks/park-detail/ang-mo-kio-town-garden-west"
+      ],
+      "travel": {
+        "lat": 1.375,
+        "lng": 103.845,
+        "nearestMrt": "Ang Mo Kio",
+        "region": "Ang Mo Kio",
+        "zone": "C",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "dog-run-bedok-town",
+      "kind": "dog-run",
+      "leash": "off-leash",
+      "name": "Bedok Town Park Dog Run",
+      "address": "Bedok Town Park, Bedok North Avenue 3",
+      "notes": "NParks fenced run. NParks explicitly states there is no water point. Bring water.",
+      "sourceUrls": [
+        "https://www.nparks.gov.sg/visit/parks/park-detail/bedok-town-park"
+      ],
+      "travel": {
+        "lat": 1.328,
+        "lng": 103.932,
+        "nearestMrt": "Bedok",
+        "region": "Bedok",
+        "zone": "E",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "dog-run-bukit-gombak",
+      "kind": "dog-run",
+      "leash": "off-leash",
+      "name": "Bukit Gombak Park Dog Run",
+      "address": "Bukit Gombak Park, enter via Bukit Batok West Avenue 5",
+      "notes": "About 480 sqm fenced run on sloped terrain. No water point per a 2026 guide. Bring water.",
+      "sourceUrls": [
+        "https://www.nparks.gov.sg/visit/parks/park-detail/bukit-gombak-park"
+      ],
+      "travel": {
+        "lat": 1.371,
+        "lng": 103.752,
+        "nearestMrt": "Bukit Gombak",
+        "region": "Bukit Batok",
+        "zone": "W",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "cafe-tembusu",
+      "kind": "cafe",
+      "leash": "leashed",
+      "name": "Tembusu at Ginger Garden",
+      "address": "1 Cluny Road, Ginger Garden, Singapore Botanic Gardens",
+      "notes": "Dedicated pet section with a separate entrance, which solves the gardens' restricted-zone problem. Most interior garden zones remain dog-restricted. Owner visit Sep 2026.",
+      "sourceUrls": [
+        "https://www.nparks.gov.sg/sbg"
+      ],
+      "travel": {
+        "lat": 1.3136,
+        "lng": 103.8159,
+        "nearestMrt": "Botanic Gardens",
+        "region": "Tanglin",
+        "zone": "C",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "hotel-oasia-sentosa",
+      "kind": "hotel",
+      "leash": "leashed",
+      "name": "Oasia Resort Sentosa",
+      "address": "23 Beach View, Sentosa",
+      "notes": "Paw-fect Retreat: one dog up to 15 kg per room, second dog for a fee, includes in-room dining and pet bed. An ~8 kg Cavoodle fits the published cap. Owner proof through 19 Sep 2026. Confirm package terms at booking. Pets are not allowed on the cable car, Sentosa Express, Sentosa buses, beach trams, or the Sentosa Boardwalk. Drive, walk the scenic paths, or use a pet-friendly private hire.",
+      "sourceUrls": [
+        "https://www.oasiahotels.com/",
+        "https://www.sentosa.com.sg/en/getting-around/"
+      ],
+      "travel": {
+        "lat": 1.256,
+        "lng": 103.822,
+        "nearestMrt": "HarbourFront",
+        "region": "Sentosa",
+        "zone": "S",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "hotel-amara-sentosa",
+      "kind": "hotel",
+      "leash": "leashed",
+      "name": "Amara Sanctuary Resort Sentosa",
+      "address": "1 Larkhill Road, Sentosa",
+      "notes": "Dogs of all sizes allowed per Apr 2025 release, up to two per room. Owner stays May and Sep 2026. Free-roaming peacocks and birds on the grounds; supervise. Confirm current terms at booking. Pets are not allowed on the cable car, Sentosa Express, Sentosa buses, beach trams, or the Sentosa Boardwalk. Drive, walk the scenic paths, or use a pet-friendly private hire.",
+      "sourceUrls": [
+        "https://singapore.amarahotels.com/amara-sanctuary-resort-sentosa"
+      ],
+      "travel": {
+        "lat": 1.252,
+        "lng": 103.822,
+        "nearestMrt": "HarbourFront",
+        "region": "Sentosa",
+        "zone": "S",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "hotel-hiex-novena",
+      "kind": "hotel",
+      "leash": "leashed",
+      "name": "Holiday Inn Express Novena",
+      "address": "201 Balestier Road",
+      "notes": "Dogs and cats up to 25 kg per 2026 listings. Owner visit 16 Sep 2026. One of the closer mainstream staycations to Woodlands. Official terms not verified in this sweep; confirm at booking.",
+      "sourceUrls": [
+        "https://www.ihg.com/holidayinnexpress/hotels/us/en/singapore/sinvn/hoteldetail"
+      ],
+      "travel": {
+        "lat": 1.326,
+        "lng": 103.85,
+        "nearestMrt": "Novena",
+        "region": "Novena",
+        "zone": "C",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "ferry-st-johns-lazarus",
+      "kind": "ferry",
+      "leash": "leashed",
+      "name": "St John's and Lazarus day ferry",
+      "address": "Marina South Pier or HarbourFront, ferry to St John's and Lazarus",
+      "notes": "Singapore Island Cruise's St John's page (updated Jun 2026) allows 1 to 2 pets, leashed and under control, no carrier required. A third-party listing contradicts the operator page; reconfirm with the selected operator at booking. Leash law applies on the islands. Heat, limited shade, bring all water and food. Sparse return schedules. Distinct from the Tiny Away cabin stay.",
+      "sourceUrls": [
+        "https://islandcruise.com.sg/",
+        "https://www.sla.gov.sg/properties/management-of-state-land-and-properties/visiting-the-sla-managed-islands/"
+      ],
+      "travel": {
+        "lat": 1.221,
+        "lng": 103.855,
+        "nearestMrt": "Marina South Pier",
+        "region": "Southern Islands",
+        "zone": "S",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
+    },
+    {
+      "id": "ferry-royal-albatross",
+      "kind": "ferry",
+      "leash": "leashed",
+      "name": "Royal Albatross dog cruise",
+      "address": "Boards at Resorts World Sentosa",
+      "notes": "Official dog-cruise page (Sep 2026): S$30 for dogs under 10 kg, includes a dog meal and onboard grass toilet. An ~8 kg Cavoodle fits. Motion sickness and heat are real risks. Sailing dates sell out. Reconfirm sailing and price before booking.",
+      "sourceUrls": [
+        "https://tallship.com.sg/events/dog-cruise"
+      ],
+      "travel": {
+        "lat": 1.254,
+        "lng": 103.822,
+        "nearestMrt": "HarbourFront",
+        "region": "Sentosa",
+        "zone": "S",
+        "coordsApproximate": true
+      },
+      "observedDate": "2026-09-20"
     }
   ],
-  "sourceNote": "Curated and verified against official and current sources, Sep 2026. Rules and arrangements change; verify before visiting. Dogs must be kept on a leash in public places (no prescribed length in law), except inside fenced dog runs; dogs are not allowed in nature parks or reserves. Leash violations can carry a fine of up to S$5,000 under the Animals and Birds (Licensing and Control of Cats and Dogs) Rules 2024."
+  "sourceNote": "Curated Sep 2026 from official pages plus Facebook/Instagram owner posts. Rules change; verify before visiting. Off-leash only inside fenced runs. Hawker centres remain off-limits to pets. Not for Paddington until 16 Oct 2026 plus a SingVet nod."
 }

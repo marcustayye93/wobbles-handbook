@@ -17,7 +17,7 @@ import {
 import { Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const KINDS: PlaceKind[] = ["dog-run", "beach", "park", "cafe", "mall", "staycation"];
+const KINDS: PlaceKind[] = ["dog-run", "beach", "park", "cafe", "mall", "staycation", "hotel", "ferry"];
 
 export default function DogFriendly() {
   const [query, setQuery] = useState("");

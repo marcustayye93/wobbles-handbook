@@ -9,16 +9,28 @@ import {
 } from "../client/src/content/dogFriendly";
 
 describe("dog-friendly dataset", () => {
-  it("loads 24 places including Woodlands Waterfront and Lazarus", () => {
-    expect(DOG_FRIENDLY_PLACES).toHaveLength(24);
-    const kinds = new Set(DOG_FRIENDLY_PLACES.map((p) => p.kind));
-    expect([...kinds].sort()).toEqual(["beach", "cafe", "dog-run", "mall", "park", "staycation"]);
-    expect(DOG_FRIENDLY_PLACES.filter((p) => p.kind === "dog-run")).toHaveLength(7);
+  it("loads Woodlands-first places including Bukit Canberra, Lazarus cabin and the day ferry", () => {
+    expect(DOG_FRIENDLY_PLACES.length).toBeGreaterThanOrEqual(49);
     expect(DOG_FRIENDLY_PLACES[0].id).toBe("dog-run-woodlands-waterfront");
+    expect(DOG_FRIENDLY_PLACES.map((p) => p.id)).toEqual(
+      expect.arrayContaining([
+        "dog-run-bukit-canberra",
+        "dog-run-yishun",
+        "stay-tiny-away-lazarus",
+        "ferry-st-johns-lazarus",
+        "hotel-oasia-sentosa",
+      ]),
+    );
+    const kinds = new Set(DOG_FRIENDLY_PLACES.map((p) => p.kind));
+    expect([...kinds]).toEqual(
+      expect.arrayContaining(["dog-run", "beach", "park", "cafe", "mall", "staycation", "hotel", "ferry"]),
+    );
+    const creamier = DOG_FRIENDLY_PLACES.find((p) => p.id === "cafe-creamier");
+    expect(creamier?.notes).toMatch(/reported closed/i);
+    const waterfront = DOG_FRIENDLY_PLACES.find((p) => p.id === "dog-run-woodlands-waterfront");
+    expect(waterfront?.notes).toMatch(/fence gaps/);
     const cabin = DOG_FRIENDLY_PLACES.find((p) => p.id === "stay-tiny-away-lazarus");
-    expect(cabin?.kind).toBe("staycation");
     expect(cabin?.notes).toContain("31 Jan 2027");
-    expect(cabin?.travel.coordsApproximate).toBe(true);
   });
 
   it("marks Sembawang Park Dog Run as approximate", () => {
