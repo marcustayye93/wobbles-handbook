@@ -187,30 +187,24 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="mt-3 fade-up" style={{ animationDelay: "40ms" }}>
-            <h1 className="font-display font-semibold text-[2.15rem] leading-[1.02] text-[#22364D]">
-              {preHome ? "Still in Queensland" : decompressing ? "Quiet days home" : "Welcome home"}
-            </h1>
-            <p className="mt-1.5 text-[12.5px] font-body text-[#5A6B7E] leading-snug">
-              {preHome
-                ? "Paddy stays at The Doghouse QLD until he comes home 23 Sep. Tap below to log anything that happens today."
-                : decompressing
-                  ? "Days 1–3: quiet flat, his toilet spot, crate as a den, no visitors."
-                  : "Carry-socialise. Book SingVet. Grass waits for the 16-week core and a vet nod."}
-            </p>
+          <div className="mt-3 fade-up flex items-end justify-between gap-3" style={{ animationDelay: "40ms" }}>
+            <div className="min-w-0">
+              <h1 className="font-display font-semibold text-[2.15rem] leading-[1.02] text-[#22364D]">
+                {preHome ? "Still in Queensland" : decompressing ? "Quiet days home" : "Welcome home"}
+              </h1>
+              <p className="mt-1.5 text-[12.5px] font-body text-[#5A6B7E] leading-snug">
+                {preHome
+                  ? "Paddy stays at The Doghouse QLD until he comes home 23 Sep. Tap below to log anything that happens today."
+                  : decompressing
+                    ? "Days 1–3: quiet flat, his toilet spot, crate as a den, no visitors."
+                    : "Carry-socialise. SingVet is Friday 2 Oct, 4pm. Grass waits for the 16-week core and a vet nod."}
+              </p>
+            </div>
+            <span className="shrink-0 bg-[#FFFDF8] px-2.5 py-1 rounded-full text-[11px] font-body font-extrabold text-[#22364D] border border-[#E5DAC8] shadow-sm">
+              <PawPrint size={11} className="inline -mt-0.5 mr-1 text-[#C66A3D]" />
+              {age.born ? `${age.weeks}w ${age.remDays}d old` : "coming soon"}
+            </span>
           </div>
-        </div>
-
-        <div className="relative mt-3 fade-up" style={{ animationDelay: "80ms" }}>
-          <img
-            src={ASSETS.v2Hero}
-            alt="Gouache of Paddington the red-parti Cavoodle in a pink gingham bandana"
-            className="w-full aspect-[3/4] max-h-[52vh] object-contain object-center"
-          />
-          <span className="absolute top-2.5 right-3 bg-[#FFFDF8]/90 backdrop-blur px-2.5 py-1 rounded-full text-[11px] font-body font-extrabold text-[#22364D] border border-[#E5DAC8] shadow-sm">
-            <PawPrint size={11} className="inline -mt-0.5 mr-1 text-[#C66A3D]" />
-            {age.born ? `${age.weeks}w ${age.remDays}d old` : "coming soon"}
-          </span>
         </div>
       </section>
 
@@ -227,109 +221,6 @@ export default function Home() {
         </div>
       </section>
 
-      {preHome ? (
-        <>
-          {/* Countdown — the lead, not a taped corner card */}
-          <section className="relative z-10 px-4 mt-3">
-            <div className="keepsake-card relative p-5 fade-up" style={{ animationDelay: "120ms" }}>
-              <span className="absolute -top-3 left-4 bg-[#B4512E] text-[#FFFDF8] text-[11px] font-body font-extrabold uppercase tracking-[0.12em] px-2.5 py-1">
-                Until he lands
-              </span>
-              <div className="flex items-end gap-3 mt-1">
-                <p className="font-display font-bold text-[3.1rem] leading-none text-[#B4512E]">{Math.max(0, toHome)}</p>
-                <div className="pb-1">
-                  <p className="text-[11px] font-body font-extrabold uppercase tracking-[0.14em] text-[#22364D]">
-                    days to 23 Sep
-                  </p>
-                  <p className="text-[12.5px] font-body text-[#5A6B7E] leading-snug mt-0.5">
-                    QF51 Jet Pets BNE → SIN · homecoming is 23 Sep · still in QLD until then.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Before he lands */}
-          <section className="px-4 mt-3">
-            <div className="keepsake-card relative p-5 fade-up" style={{ animationDelay: "160ms" }}>
-              <span className="absolute -top-3 left-4 bg-[#22364D] text-[#FFFDF8] text-[11px] font-body font-extrabold uppercase tracking-[0.12em] px-2.5 py-1">
-                Before he lands
-              </span>
-              <ul className="mt-1 space-y-3">
-                {ADMIN_ITEMS.map((item) => (
-                  <li key={item.title} className="flex items-start gap-2.5">
-                    <span className="text-[15px] shrink-0 leading-snug">{item.emoji}</span>
-                    <span className="min-w-0">
-                      <span className="block text-[13px] font-body font-bold text-[#22364D] leading-snug">
-                        {item.title}
-                      </span>
-                      <span className="block text-[11.5px] font-body text-[#5A6B7E] leading-snug mt-0.5">
-                        {item.detail}
-                      </span>
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-4 flex flex-col gap-2">
-                <Link href="/singapore" className="btn-ink inline-flex justify-center">
-                  Road to Singapore <ArrowRight size={15} />
-                </Link>
-                <Link
-                  href="/handbook/shopping"
-                  className="text-center text-[12px] font-body font-extrabold text-[#B4512E] py-2"
-                >
-                  This week's shopping countdown →
-                </Link>
-              </div>
-            </div>
-          </section>
-        </>
-      ) : (
-        <>
-          {/* Week-1 lead: decompression or carry-socialise */}
-          <section className="relative z-10 px-4 mt-3">
-            <div className="keepsake-card relative p-5 fade-up" style={{ animationDelay: "120ms" }}>
-              <span className="absolute -top-3 left-4 bg-[#B4512E] text-[#FFFDF8] text-[11px] font-body font-extrabold uppercase tracking-[0.12em] px-2.5 py-1">
-                {decompressing ? `Day ${homeDays + 1} · decompression` : "Week one at home"}
-              </span>
-              {decompressing ? (
-                <ul className="mt-1 space-y-2 text-[13px] font-body text-[#33475C] leading-snug">
-                  <li>Quiet flat — no visitors.</li>
-                  <li>Show him his toilet spot (pad + downstairs grass, carried).</li>
-                  <li>Crate is a den, not a timeout.</li>
-                </ul>
-              ) : (
-                <div className="mt-1 space-y-2 text-[13px] font-body text-[#33475C] leading-snug">
-                  <p>Carry-socialise: arms, not paws, until the 16-week core (16 Oct) and a SingVet nod.</p>
-                  <p>Ground and park wait. Book SingVet if you have not already.</p>
-                </div>
-              )}
-              <Link href="/handbook/first-day" className="btn-ink mt-4 inline-flex">
-                First-day guide <ArrowRight size={15} />
-              </Link>
-            </div>
-          </section>
-
-          <section className="px-4 mt-3">
-            <Link href="/health" className="block sticker-card px-4 py-3.5 press-scale">
-              <div className="flex items-center gap-3">
-                <span className="shrink-0 w-10 h-10 rounded-full bg-[#22364D]/8 flex items-center justify-center text-[17px]">
-                  🩺
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="block font-body font-bold text-[14px] leading-snug text-[#22364D]">
-                    Book SingVet
-                  </span>
-                  <span className="block text-[11px] font-body text-muted-foreground leading-snug mt-0.5">
-                    First Singapore vet visit — records, parasite plan, and when grass is actually allowed.
-                  </span>
-                </span>
-                <ChevronRight size={16} className="text-muted-foreground shrink-0" />
-              </div>
-            </Link>
-          </section>
-        </>
-      )}
 
       {/* ===== Due today — admin/rota, not a fake care logger ===== */}
       <section className="relative z-10 px-4 mt-3">
@@ -447,6 +338,110 @@ export default function Home() {
           </div>
         )}
       </section>
+
+      {preHome ? (
+        <>
+          {/* Countdown — the lead, not a taped corner card */}
+          <section className="relative z-10 px-4 mt-3">
+            <div className="keepsake-card relative p-5 fade-up" style={{ animationDelay: "120ms" }}>
+              <span className="absolute -top-3 left-4 bg-[#B4512E] text-[#FFFDF8] text-[11px] font-body font-extrabold uppercase tracking-[0.12em] px-2.5 py-1">
+                Until he lands
+              </span>
+              <div className="flex items-end gap-3 mt-1">
+                <p className="font-display font-bold text-[3.1rem] leading-none text-[#B4512E]">{Math.max(0, toHome)}</p>
+                <div className="pb-1">
+                  <p className="text-[11px] font-body font-extrabold uppercase tracking-[0.14em] text-[#22364D]">
+                    days to 23 Sep
+                  </p>
+                  <p className="text-[12.5px] font-body text-[#5A6B7E] leading-snug mt-0.5">
+                    QF51 Jet Pets BNE → SIN · homecoming is 23 Sep · still in QLD until then.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Before he lands */}
+          <section className="px-4 mt-3">
+            <div className="keepsake-card relative p-5 fade-up" style={{ animationDelay: "160ms" }}>
+              <span className="absolute -top-3 left-4 bg-[#22364D] text-[#FFFDF8] text-[11px] font-body font-extrabold uppercase tracking-[0.12em] px-2.5 py-1">
+                Before he lands
+              </span>
+              <ul className="mt-1 space-y-3">
+                {ADMIN_ITEMS.map((item) => (
+                  <li key={item.title} className="flex items-start gap-2.5">
+                    <span className="text-[15px] shrink-0 leading-snug">{item.emoji}</span>
+                    <span className="min-w-0">
+                      <span className="block text-[13px] font-body font-bold text-[#22364D] leading-snug">
+                        {item.title}
+                      </span>
+                      <span className="block text-[11.5px] font-body text-[#5A6B7E] leading-snug mt-0.5">
+                        {item.detail}
+                      </span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-4 flex flex-col gap-2">
+                <Link href="/singapore" className="btn-ink inline-flex justify-center">
+                  Road to Singapore <ArrowRight size={15} />
+                </Link>
+                <Link
+                  href="/handbook/shopping"
+                  className="text-center text-[12px] font-body font-extrabold text-[#B4512E] py-2"
+                >
+                  This week's shopping countdown →
+                </Link>
+              </div>
+            </div>
+          </section>
+        </>
+      ) : (
+        <>
+          {/* Week-1 lead: decompression or carry-socialise */}
+          <section className="relative z-10 px-4 mt-3">
+            <div className="keepsake-card relative p-5 fade-up" style={{ animationDelay: "120ms" }}>
+              <span className="absolute -top-3 left-4 bg-[#B4512E] text-[#FFFDF8] text-[11px] font-body font-extrabold uppercase tracking-[0.12em] px-2.5 py-1">
+                {decompressing ? `Day ${homeDays + 1} · decompression` : "Week one at home"}
+              </span>
+              {decompressing ? (
+                <ul className="mt-1 space-y-2 text-[13px] font-body text-[#33475C] leading-snug">
+                  <li>Quiet flat — no visitors.</li>
+                  <li>Show him his toilet spot (pad + downstairs grass, carried).</li>
+                  <li>Crate is a den, not a timeout.</li>
+                </ul>
+              ) : (
+                <div className="mt-1 space-y-2 text-[13px] font-body text-[#33475C] leading-snug">
+                  <p>Carry-socialise: arms, not paws, until the 16-week core (16 Oct) and a SingVet nod.</p>
+                  <p>SingVet Woodlands is booked for Friday 2 Oct, 4pm. Ground and park still wait.</p>
+                </div>
+              )}
+              <Link href="/handbook/first-day" className="btn-ink mt-4 inline-flex">
+                First-day guide <ArrowRight size={15} />
+              </Link>
+            </div>
+          </section>
+
+          <section className="px-4 mt-3">
+            <Link href="/health" className="block sticker-card px-4 py-3.5 press-scale">
+              <div className="flex items-center gap-3">
+                <span className="shrink-0 w-10 h-10 rounded-full bg-[#22364D]/8 flex items-center justify-center text-[17px]">
+                  🩺
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block font-body font-bold text-[14px] leading-snug text-[#22364D]">
+                    SingVet booked
+                  </span>
+                  <span className="block text-[11px] font-body text-muted-foreground leading-snug mt-0.5">
+                    Friday 2 Oct, 4pm. Chip, papers, parasite plan. Not the 16 Oct core.
+                  </span>
+                </span>
+                <ChevronRight size={16} className="text-muted-foreground shrink-0" />
+              </div>
+            </Link>
+          </section>
+        </>
+      )}
 
       {brief.mission && <SocialMissionCard mission={brief.mission} />}
 

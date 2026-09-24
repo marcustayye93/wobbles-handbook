@@ -217,7 +217,7 @@ export function careTasksFor(date: Date, ctx: CareRotaContext = {}): CareTask[] 
       emoji: "🛡️",
       label: "Parasite dose reminder (vet sets the real date)",
       detail:
-        "Placeholder on the 24th until SingVet sets the calendar day at the first visit (~28 Sep). Log the real dose in Health.",
+        "Placeholder on the 24th until SingVet sets the calendar day at the booked visit on Friday 2 Oct, 4pm. Log the real dose in Health.",
       link: "/trackers/health",
       owner: "both",
     });
@@ -234,7 +234,18 @@ export function careTasksFor(date: Date, ctx: CareRotaContext = {}): CareTask[] 
       owner: "chesa",
     });
 
-  const { y, m } = yearMonth(date);
+  const { y, m, d: day } = yearMonth(date);
+  if (y === 2026 && m === 10 && day === 2)
+    out.push({
+      id: "singvet-first",
+      emoji: "🩺",
+      label: "SingVet Woodlands, 4pm",
+      detail:
+        "Booked Friday 2 Oct 2026 at 4pm. Chip, papers, and the parasite plan. This is not the 16 Oct core, and he is not park-cleared yet.",
+      link: "/health",
+      owner: "both",
+    });
+
   const untilCore = daysUntilIso(CORE_16W_ISO, date);
 
   // 16-week core: the seven days before Friday 16 Oct 2026.

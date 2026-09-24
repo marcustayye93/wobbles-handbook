@@ -52,7 +52,7 @@ Call him **Paddington**. Nickname **Paddy** is fine. Never Wobbles, never "the p
 - Dose 3 is **not** the Singapore 16-week core. He is **not** park-cleared after dose 3.
 - **16-week core / socialisation-window close date:** Friday **16 October 2026**. Book the Singapore ≥16-week booster on or after this date. Never say 15 October.
 - Park / public-ground time only after that core **plus** a Singapore vet nod (often ~1–2 weeks later). Carry-socialise until then.
-- First Singapore vet visit target: around 28 September 2026 (SingVet / Woodlands). Confirm chip, records, start year-round parasite prevention, finish PALS / AVS licence admin.
+- First Singapore vet visit: **booked Friday 2 October 2026, 4pm, SingVet Woodlands**. Confirm chip, records, start year-round parasite prevention, finish PALS / AVS licence admin. This visit is **not** the 16-week core.
 
 ### Age snapshot for Muse (recompute if the user's "today" is later)
 
@@ -177,7 +177,7 @@ Keep him in the flat. No walks. No visitors for the decompression bubble (about 
 
 **Flat safety:** mesh the windows (HDB fall risk). First weekly weigh-in on the kitchen scale after landing.
 
-**First SG vet visit** (target ~28 Sep): confirm chip and vaccine papers; start a monthly combined preventive — NexGard Spectra / Simparica Trio chew, or a vet-chosen spot-on. Repeat on a fixed calendar day.
+**First SG vet visit** (booked Friday 2 Oct 2026, 4pm, SingVet Woodlands): confirm chip and vaccine papers; start a monthly combined preventive. NexGard Spectra / Simparica Trio chew, or a vet-chosen spot-on. Repeat on a fixed calendar day. This visit is not the 16 Oct core.
 
 He will look for littermates and Charmaine's older dogs. He will transfer that bond to the people who feed and care for him.
 

@@ -207,7 +207,7 @@ export const GUIDE_SECTIONS: GuideSection[] = [
     intro: "What's due during the stay, and when to worry.",
     items: [
       { label: "Vaccination status", value: "NOT fully vaccinated. Protech C3: 7 Aug / 21 Aug / 4 Sep in Australia. Dose 3 is not the 16-week core. No public ground until Friday 16 Oct plus a SingVet nod. Card in his folder." },
-      { label: "Monthly parasite preventive", value: "Starts at the first Singapore vet visit (~28 Sep). The repeat calendar day is set by the vet — not locked as the 23rd or 24th. If a dose falls during the stay, we'll hand it over with written instructions." },
+      { label: "Monthly parasite preventive", value: "Starts at the booked SingVet visit on Friday 2 Oct, 4pm. The repeat calendar day is set by the vet, not locked as the 23rd or 24th. If a dose falls during the stay, we'll hand it over with written instructions." },
       { label: "Other medication", value: TBC, note: "None expected — we'll confirm before the handover." },
       { label: "Insurance / payment for vet visits", value: TBC, note: "Policy details or our guarantee to cover any vet bill — call us first unless it's an emergency." },
       { label: "Go to the vet NOW if", value: "Repeated vomiting or diarrhoea, refusing food AND water, lethargy/collapse, difficulty breathing, suspected poisoning, any injury, or a fall from height. Call us on the way — never wait for us to reply first." },

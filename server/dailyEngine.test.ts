@@ -59,6 +59,14 @@ describe("care rota", () => {
     expect(careTasksFor(d("2026-08-24")).map((t) => t.id)).not.toContain("parasite");
   });
 
+  it("puts the booked SingVet visit on Friday 2 Oct 2026 only", () => {
+    const visit = careTasksFor(d("2026-10-02")).find((t) => t.id === "singvet-first");
+    expect(visit?.label).toMatch(/4pm/);
+    expect(visit?.detail).toMatch(/not the 16 Oct core/i);
+    expect(careTasksFor(d("2026-10-01")).map((t) => t.id)).not.toContain("singvet-first");
+    expect(careTasksFor(d("2026-10-03")).map((t) => t.id)).not.toContain("singvet-first");
+  });
+
   it("schedules teeth on Tue/Thu/Sat after landing", () => {
     expect(careTasksFor(d("2026-09-29")).map((t) => t.id)).toContain("teeth"); // Tue
     expect(careTasksFor(d("2026-10-01")).map((t) => t.id)).toContain("teeth"); // Thu

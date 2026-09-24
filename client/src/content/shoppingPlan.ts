@@ -162,8 +162,8 @@ export const SHOPPING_WEEKS: ShoppingWeek[] = [
       },
       {
         id: "vet-shortlist",
-        label: "Choose the Woodlands vet + pre-register, book the first visit (~28 Sep)",
-        why: "Good clinics book out; the first check should happen within days of landing.",
+        label: "First visit booked: SingVet Woodlands, Friday 2 Oct, 4pm",
+        why: "Chip, papers and the parasite plan. This visit is not the 16 Oct core.",
         emoji: "🩺",
       },
       {

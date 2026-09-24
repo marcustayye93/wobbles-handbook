@@ -212,7 +212,7 @@ export default function Health() {
               {parasiteLogged
                 ? `Last dose logged ${formatDate(parasiteLogged.date)} (${parasiteLogged.option}).`
                 : homecomingFuture
-                  ? "Starts at the first Singapore vet visit (~28 Sep). The repeat date is set by the vet — not locked as the 24th."
+                  ? "Starts at the booked SingVet visit on Friday 2 Oct, 4pm. The repeat date is set by the vet, not locked as the 24th."
                   : "No dose logged yet — the repeat calendar day is set at the first SG vet visit, not locked as the 24th."}
             </p>
           </div>

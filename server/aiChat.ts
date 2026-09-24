@@ -49,7 +49,7 @@ export const WOBBLES_PROFILE = {
   relocation:
     "Flying QF51 BNE \u2192 SIN with Jet Pets on 23 Sep 2026, same-day homecoming in Woodlands (AVS 12-week minimum; he flies at 12w5d). Collect Caboolture Mon 21 Sep; board Eagle Farm 21\u201323 Sep. Mitchville Relopet delivers to Blk 587 after Changi, about 2\u20134h after landing. Needs PALS dog licence before the AVS import licence, plus microchip/vaccination paperwork.",
   vaccinations:
-    "Protech C3: dose 1 on 7 Aug 2026 (batch 4964023A, Dr Ayana Lowe, Fetch a Vet North Lakes; weight 1.6 kg; microchip 900164002411316). Dose 2 on 21 Aug 2026. Dose 3 on 4 Sep 2026 in Queensland. Dose 3 is NOT the 16-week core and he is NOT park-cleared. Singapore \u226516-week core on or after Friday 16 Oct 2026, then a Singapore vet nod before public grass. First SG vet visit target ~28 Sep (SingVet Woodlands).",
+    "Protech C3: dose 1 on 7 Aug 2026 (batch 4964023A, Dr Ayana Lowe, Fetch a Vet North Lakes; weight 1.6 kg; microchip 900164002411316). Dose 2 on 21 Aug 2026. Dose 3 on 4 Sep 2026 in Queensland. Dose 3 is NOT the 16-week core and he is NOT park-cleared. Singapore \u226516-week core on or after Friday 16 Oct 2026, then a Singapore vet nod before public grass. First SG vet visit is booked Friday 2 Oct 2026 at 4pm (SingVet Woodlands). That visit is paperwork, not the 16 Oct core.",
 } as const;
 
 /* ---------------- Age + stage (server-side, deterministic) ---------------- */
@@ -519,7 +519,7 @@ function scheduleReply(now: Date): string {
       `- **Tue–Thu** — Marcus office; Chesa home / maybe-office.`,
       `- **Fri** — Marcus WFH. **Sat** — flexible.`,
       ``,
-      `Book SingVet around **28 Sep**. C3 dose 3 on 4 Sep is **not** park-cleared.`,
+      `SingVet Woodlands is booked for **Friday 2 Oct 2026, 4pm**. Chip, papers, parasite plan. That visit is not the 16 Oct core. C3 dose 3 on 4 Sep is **not** park-cleared.`,
     ].join("\n");
   }
 
@@ -533,7 +533,7 @@ function scheduleReply(now: Date): string {
       `- Stay in the flat. Toilet on the metal-grid pad every ~30 min. No scolding.`,
       `- Crate door open (Marukan medium, living-room pen). Hand-feed. Long naps.`,
       `- **No visitors. No Shiro. No public grass.**`,
-      `- From day 4: carry-socialise. Book SingVet (~28 Sep).`,
+      `- From day 4: carry-socialise. SingVet Woodlands is booked for **Friday 2 Oct, 4pm** (not the 16 Oct core).`,
       `- Park / public ground only after **Friday 16 Oct** core plus a vet nod.`,
       ``,
       `Daily loop: play 15–30 min → toilet → nap → toilet. Sleep 18–20 hours. Skip hot pavement 10am–5pm.`,
@@ -553,6 +553,7 @@ function scheduleReply(now: Date): string {
       ? `- 16-week core is in. Public grass only with the Singapore vet's nod.`
       : `- **Not park-cleared.** 16-week core is **Friday 16 Oct 2026**, then a SingVet nod. Carry-socialise until then.`,
     `- **Sun** focus day. **Mon** grooming. Marcus office Tue–Thu, WFH Mon+Fri.`,
+    `- SingVet Woodlands is booked for **Friday 2 Oct 2026, 4pm**. Chip, papers, parasite plan. Not the 16 Oct core.`,
     `- Shiro lives at the parents' landed house — managed intros, never unsupervised, not a Woodlands housemate.`,
   ].join("\n");
 }
@@ -569,7 +570,7 @@ function vaccineReply(question: string): string {
       `**His fourth vaccination is the Singapore ≥16-week core on Friday 16 October 2026, booked at SingVet Woodlands.**`,
       ``,
       `That is the shot — not a fourth C3 in Australia. The three Queensland doses were 7 Aug, 21 Aug and 4 Sep. Dose 3 is **not** park-cleared.`,
-      `The first Singapore vet visit (~**28 Sep**) is for chip, papers and the parasite plan. It is **not** the fourth vaccination.`,
+      `The first Singapore vet visit is booked for **Friday 2 October 2026, 4pm** at SingVet Woodlands. Chip, papers and the parasite plan. It is **not** the fourth vaccination.`,
       `Book the core **on or after Friday 16 Oct**. Then wait for SingVet's nod before public grass.`,
     ].join("\n");
   }
@@ -587,7 +588,7 @@ function vaccineReply(question: string): string {
     ``,
     `- Dose 1: **7 Aug**. Dose 2: **21 Aug**. Dose 3: **4 Sep** (QLD). Dose 3 is not park-cleared.`,
     `- Fourth vaccination = Singapore ≥16-week core on **Friday 16 Oct 2026** at SingVet. Never 15 Oct.`,
-    `- First SingVet visit ~**28 Sep** is paperwork, not that fourth shot.`,
+    `- First SingVet visit is booked **Friday 2 Oct 2026, 4pm**. Paperwork, not that fourth shot.`,
     `- Public grass only after the core plus the vet's nod.`,
   ].join("\n");
 }
@@ -653,7 +654,7 @@ export function lockedFactsReply(question: string, now: Date = new Date()): stri
         ``,
         `- After landing: **SingVet Woodlands**.`,
         `- After hours: Westside Serangoon / **VES Whitley**.`,
-        `First planned SG visit ~28 Sep: chip, papers, year-round parasite preventive.`,
+        `First SG visit is booked **Friday 2 Oct 2026, 4pm** at SingVet Woodlands: chip, papers, year-round parasite preventive. Not the 16 Oct core.`,
       ].join("\n");
     case "groom":
       return [

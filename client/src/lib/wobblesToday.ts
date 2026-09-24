@@ -94,7 +94,7 @@ export function wobblesToday(now: Date = new Date()): TodayStage {
     return {
       stage: "Socialisation sprint — window closing",
       title: "Four Weeks to Make Count",
-      text: `${age.weeks} weeks — he arrived at nearly 13 weeks and the socialisation window closes around 16, so these first weeks ARE the sprint. Carry-socialise: people, surfaces, sounds, gentle handling in your arms. He is NOT park-cleared until the ≥16-week core (16 Oct) plus a Singapore vet nod. Book SingVet.`,
+      text: `${age.weeks} weeks — he arrived at nearly 13 weeks and the socialisation window closes around 16, so these first weeks ARE the sprint. Carry-socialise: people, surfaces, sounds, gentle handling in your arms. He is NOT park-cleared until the ≥16-week core (16 Oct) plus a Singapore vet nod. SingVet is booked for Friday 2 Oct, 4pm.`,
       focus: "Carry-socialise; book SingVet; one or two new ticks a day. No public grass yet.",
       expect: "Growing confidence, testing boundaries, teething begins",
       training: "Day-1 skills all start now: name, sit, crate love, recall games — under 5 minutes a session",
