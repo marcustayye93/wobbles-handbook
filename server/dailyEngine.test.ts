@@ -95,8 +95,18 @@ describe("care rota", () => {
     );
     expect(careTasksFor(d("2026-10-08")).map((t) => t.id)).not.toContain("alone-ramp");
     const today = careTasksFor(d("2026-09-24")).find((t) => t.id === "alone-ramp");
+    expect(today?.detail).toMatch(/2 to 3 reps/);
     expect(today?.detail).toMatch(/frozen Kong/);
     expect(today?.detail).toMatch(/do not come back mid-cry/i);
+    expect(careTasksFor(d("2026-09-28")).find((t) => t.id === "alone-ramp")?.detail).toMatch(
+      /2 to 3 reps/,
+    );
+    const tuesday = careTasksFor(d("2026-09-29")).find((t) => t.id === "alone-ramp");
+    expect(tuesday?.detail).toMatch(/One absence today/);
+    expect(tuesday?.detail).not.toMatch(/2 to 3 reps/);
+    expect(careTasksFor(d("2026-10-07")).find((t) => t.id === "alone-ramp")?.detail).toMatch(
+      /One absence today/,
+    );
   });
 
   it("repeats yesterday's alone duration when a rep was a cry", () => {
@@ -108,6 +118,12 @@ describe("care rota", () => {
       aloneLogs: [{ date: "2026-09-26", option: "Calm the whole time 😌" }],
     }).find((t) => t.id === "alone-ramp");
     expect(calm?.label).toBe("Alone time: 30 to 45 minutes");
+    const heldShort = careTasksFor(d("2026-09-29"), {
+      aloneLogs: [{ date: "2026-09-28", option: "Barked / cried" }],
+    }).find((t) => t.id === "alone-ramp");
+    expect(heldShort?.label).toBe("Alone time: 30 to 45 minutes");
+    expect(heldShort?.detail).toMatch(/2 to 3 reps/);
+    expect(heldShort?.detail).not.toMatch(/One absence today/);
   });
 
   it("schedules teeth on Tue/Thu/Sat after landing", () => {

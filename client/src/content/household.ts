@@ -192,31 +192,39 @@ function aloneRampIndex(date: Date): number {
   return Math.round((startOfLocalDay(date).getTime() - start) / 86400000);
 }
 
-function aloneStep(dayIndex: number): { label: string; scene: string } | null {
+function aloneStep(dayIndex: number): { label: string; scene: string; reps: "short" | "one" } | null {
   if (dayIndex < 0 || dayIndex >= ALONE_RAMP_LENGTH) return null;
   if (dayIndex <= 1)
     return {
       label: "5 to 10 minutes",
+      reps: "short",
       scene: "Leave the flat, wait in the corridor, and come back. He learns that you leave and return.",
     };
   if (dayIndex === 2)
-    return { label: "15 to 20 minutes", scene: "Coffee-run length." };
+    return { label: "15 to 20 minutes", reps: "short", scene: "Coffee-run length." };
   if (dayIndex === 3)
-    return { label: "30 to 45 minutes", scene: "A longer quiet stretch." };
+    return { label: "30 to 45 minutes", reps: "short", scene: "A longer quiet stretch." };
   if (dayIndex === 4)
     return {
       label: "30 to 45 minutes",
+      reps: "short",
       scene: "You are working from home, so step out between calls.",
     };
   if (dayIndex <= 6)
     return {
       label: "1 to 1.5 hours",
-      scene: "Do a morning rep and an afternoon rep if Chesa is home.",
+      reps: "one",
+      scene: "If Chesa is home, one quiet stretch. Not a morning rep and an afternoon rep.",
     };
   if (dayIndex <= 8)
-    return { label: "1.5 to 2 hours", scene: "Still 2 to 3 reps, spaced out." };
+    return {
+      label: "1.5 to 2 hours",
+      reps: "one",
+      scene: "One absence at this length.",
+    };
   return {
     label: "2.5 to 3 hours",
+    reps: "one",
     scene: "This is his ceiling for now. Hold here for the rest of week two.",
   };
 }
@@ -235,7 +243,7 @@ export function aloneRampTask(
   if (!scheduledToday) return null;
 
   const start = new Date(ALONE_RAMP_START + "T00:00:00");
-  let held: { label: string; scene: string } | null = null;
+  let held: { label: string; scene: string; reps: "short" | "one" } | null = null;
   let target = scheduledToday;
   let repeated = false;
   for (let i = 0; i <= todayIndex; i++) {
@@ -250,7 +258,7 @@ export function aloneRampTask(
 
   const detail = [
     repeated ? "He cried on a rep, so repeat this duration today. Do not move up." : "",
-    "2 to 3 reps, spaced out.",
+    target.reps === "one" ? "One absence today." : "2 to 3 reps, spaced out.",
     target.scene,
     ALONE_RULES,
   ]
