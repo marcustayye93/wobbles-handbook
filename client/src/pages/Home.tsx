@@ -108,9 +108,16 @@ export default function Home() {
     () => rows.some((r) => r.trackerId === "vaccines" && r.option === "Desexing"),
     [rows],
   );
+  const aloneLogs = useMemo(
+    () =>
+      rows
+        .filter((r) => r.trackerId === "alone")
+        .map((r) => ({ date: r.date, option: r.option })),
+    [rows],
+  );
   const brief = useMemo(
-    () => todaysBrief(new Date(), settings, { desexed }),
-    [settings, desexed],
+    () => todaysBrief(new Date(), settings, { desexed, aloneLogs }),
+    [settings, desexed, aloneLogs],
   );
   const entriesFor = useMemo(
     () => (id: string) => rows.filter((r) => r.trackerId === id).map(rowToEntry),

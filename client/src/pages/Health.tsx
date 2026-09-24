@@ -76,6 +76,7 @@ export default function Health() {
   const homecomingFuture = daysUntil(WOBBLES.homecoming, now) > 0;
 
   const { entries: vaccineEntries, isLoading: vacLoading } = useTrackerEntries("vaccines");
+  const { entries: aloneEntries } = useTrackerEntries("alone");
   const { entries: stoolEntries } = useTrackerEntries("stool");
   const { entries: weightEntries } = useTrackerEntries("weight");
 
@@ -85,13 +86,17 @@ export default function Health() {
     () => vaccineEntries.some((e) => e.option === "Desexing"),
     [vaccineEntries],
   );
-  const dueToday = useMemo(() => careTasksFor(now, { desexed }), [now, desexed]);
+  const aloneLogs = useMemo(
+    () => aloneEntries.map((e) => ({ date: e.date, option: e.option })),
+    [aloneEntries],
+  );
+  const dueToday = useMemo(() => careTasksFor(now, { desexed, aloneLogs }), [now, desexed, aloneLogs]);
   // Next 6 days after today, grouped by day (rota preview)
   const week = useMemo(() => {
     const days: { date: Date; iso: string; label: string; tasks: CareTask[] }[] = [];
     for (let i = 1; i <= 6; i++) {
       const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + i);
-      const tasks = careTasksFor(d, { desexed });
+      const tasks = careTasksFor(d, { desexed, aloneLogs });
       if (tasks.length > 0)
         days.push({
           date: d,
@@ -101,7 +106,7 @@ export default function Health() {
         });
     }
     return days;
-  }, [now, desexed]);
+  }, [now, desexed, aloneLogs]);
 
   const schedule = useMemo(() => healthMilestones(), []);
   const parasiteNext = useMemo(() => nextParasiteDose(now), [now]);

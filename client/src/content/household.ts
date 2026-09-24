@@ -160,6 +160,8 @@ function fortnightIndex(date: Date): number {
 export interface CareRotaContext {
   /** True once a Health tracker "Desexing" event is logged. */
   desexed?: boolean;
+  /** Alone Time logs. A cry holds tomorrow at the same duration. */
+  aloneLogs?: { date: string; option?: string | null }[];
 }
 
 function yearMonth(date: Date): { y: number; m: number; d: number } {
@@ -173,11 +175,106 @@ function daysUntilIso(iso: string, date: Date): number {
   return Math.round((b - a) / 86400000);
 }
 
+function isoLocal(date: Date): string {
+  const { y, m, d } = yearMonth(date);
+  return `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+}
+
+/** Day 1 of the corridor-to-3-hour alone ramp. Today (24 Sep 2026) is day 1. */
+export const ALONE_RAMP_START = "2026-09-24";
+const ALONE_RAMP_LENGTH = 14;
+
+const ALONE_RULES =
+  "Leave a frozen Kong as you walk out, same cue every time. If he cries, do not come back mid-cry. Wait for a quiet moment, then return. Keep departures and arrivals boring. Log each rep in Alone Time.";
+
+function aloneRampIndex(date: Date): number {
+  const start = new Date(ALONE_RAMP_START + "T00:00:00").getTime();
+  return Math.round((startOfLocalDay(date).getTime() - start) / 86400000);
+}
+
+function aloneStep(dayIndex: number): { label: string; scene: string } | null {
+  if (dayIndex < 0 || dayIndex >= ALONE_RAMP_LENGTH) return null;
+  if (dayIndex <= 1)
+    return {
+      label: "5 to 10 minutes",
+      scene: "Leave the flat, wait in the corridor, and come back. He learns that you leave and return.",
+    };
+  if (dayIndex === 2)
+    return { label: "15 to 20 minutes", scene: "Coffee-run length." };
+  if (dayIndex === 3)
+    return { label: "30 to 45 minutes", scene: "A longer quiet stretch." };
+  if (dayIndex === 4)
+    return {
+      label: "30 to 45 minutes",
+      scene: "You are working from home, so step out between calls.",
+    };
+  if (dayIndex <= 6)
+    return {
+      label: "1 to 1.5 hours",
+      scene: "Do a morning rep and an afternoon rep if Chesa is home.",
+    };
+  if (dayIndex <= 8)
+    return { label: "1.5 to 2 hours", scene: "Still 2 to 3 reps, spaced out." };
+  return {
+    label: "2.5 to 3 hours",
+    scene: "This is his ceiling for now. Hold here for the rest of week two.",
+  };
+}
+
+function aloneCried(option: string | null | undefined): boolean {
+  return /cried|distressed/i.test(option ?? "");
+}
+
+/** Planned alone-time rep for this date, held if a recent rep was a cry. */
+export function aloneRampTask(
+  date: Date,
+  logs: { date: string; option?: string | null }[] = [],
+): CareTask | null {
+  const todayIndex = aloneRampIndex(date);
+  const scheduledToday = aloneStep(todayIndex);
+  if (!scheduledToday) return null;
+
+  const start = new Date(ALONE_RAMP_START + "T00:00:00");
+  let held: { label: string; scene: string } | null = null;
+  let target = scheduledToday;
+  let repeated = false;
+  for (let i = 0; i <= todayIndex; i++) {
+    const scheduled = aloneStep(i)!;
+    repeated = held != null;
+    target = held ?? scheduled;
+    if (i === todayIndex) break;
+    const day = new Date(start.getFullYear(), start.getMonth(), start.getDate() + i);
+    const cried = logs.some((l) => l.date === isoLocal(day) && aloneCried(l.option));
+    held = cried ? target : null;
+  }
+
+  const detail = [
+    repeated ? "He cried on a rep, so repeat this duration today. Do not move up." : "",
+    "2 to 3 reps, spaced out.",
+    target.scene,
+    ALONE_RULES,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  return {
+    id: "alone-ramp",
+    emoji: "🏠",
+    label: `Alone time: ${target.label}`,
+    detail,
+    link: "/trackers/alone",
+    owner: "both",
+  };
+}
+
 export function careTasksFor(date: Date, ctx: CareRotaContext = {}): CareTask[] {
   if (!hasLanded(date)) return [];
   const dow = date.getDay();
   const dom = date.getDate();
   const out: CareTask[] = [];
+
+  const alone = aloneRampTask(date, ctx.aloneLogs ?? []);
+  if (alone) out.push(alone);
 
   if (dow === 1) {
     const bathWeek = fortnightIndex(date) % 2 === 0;

@@ -236,6 +236,7 @@ export function todaysNudges(
 
   for (const task of careTasksFor(now, {
     desexed: entriesByTracker("vaccines").some((e) => e.option === "Desexing"),
+    aloneLogs: entriesByTracker("alone").map((e) => ({ date: e.date, option: e.option })),
   })) {
     if (task.id === "teeth") continue;
     out.push({

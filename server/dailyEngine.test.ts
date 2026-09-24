@@ -67,6 +67,49 @@ describe("care rota", () => {
     expect(careTasksFor(d("2026-10-03")).map((t) => t.id)).not.toContain("singvet-first");
   });
 
+  it("ramps alone time from 24 Sep (day 1) and stops after 7 Oct", () => {
+    expect(careTasksFor(d("2026-09-23")).map((t) => t.id)).not.toContain("alone-ramp");
+    expect(careTasksFor(d("2026-09-24")).find((t) => t.id === "alone-ramp")?.label).toBe(
+      "Alone time: 5 to 10 minutes",
+    );
+    expect(careTasksFor(d("2026-09-25")).find((t) => t.id === "alone-ramp")?.label).toBe(
+      "Alone time: 5 to 10 minutes",
+    );
+    expect(careTasksFor(d("2026-09-26")).find((t) => t.id === "alone-ramp")?.detail).toMatch(
+      /Coffee-run/,
+    );
+    expect(careTasksFor(d("2026-09-28")).find((t) => t.id === "alone-ramp")?.detail).toMatch(
+      /working from home/,
+    );
+    expect(careTasksFor(d("2026-09-29")).find((t) => t.id === "alone-ramp")?.label).toBe(
+      "Alone time: 1 to 1.5 hours",
+    );
+    expect(careTasksFor(d("2026-10-02")).find((t) => t.id === "alone-ramp")?.label).toBe(
+      "Alone time: 1.5 to 2 hours",
+    );
+    expect(careTasksFor(d("2026-10-03")).find((t) => t.id === "alone-ramp")?.label).toBe(
+      "Alone time: 2.5 to 3 hours",
+    );
+    expect(careTasksFor(d("2026-10-07")).find((t) => t.id === "alone-ramp")?.label).toBe(
+      "Alone time: 2.5 to 3 hours",
+    );
+    expect(careTasksFor(d("2026-10-08")).map((t) => t.id)).not.toContain("alone-ramp");
+    const today = careTasksFor(d("2026-09-24")).find((t) => t.id === "alone-ramp");
+    expect(today?.detail).toMatch(/frozen Kong/);
+    expect(today?.detail).toMatch(/do not come back mid-cry/i);
+  });
+
+  it("repeats yesterday's alone duration when a rep was a cry", () => {
+    const logs = [{ date: "2026-09-26", option: "Barked / cried" }];
+    const held = careTasksFor(d("2026-09-27"), { aloneLogs: logs }).find((t) => t.id === "alone-ramp");
+    expect(held?.label).toBe("Alone time: 15 to 20 minutes");
+    expect(held?.detail).toMatch(/Do not move up/);
+    const calm = careTasksFor(d("2026-09-27"), {
+      aloneLogs: [{ date: "2026-09-26", option: "Calm the whole time 😌" }],
+    }).find((t) => t.id === "alone-ramp");
+    expect(calm?.label).toBe("Alone time: 30 to 45 minutes");
+  });
+
   it("schedules teeth on Tue/Thu/Sat after landing", () => {
     expect(careTasksFor(d("2026-09-29")).map((t) => t.id)).toContain("teeth"); // Tue
     expect(careTasksFor(d("2026-10-01")).map((t) => t.id)).toContain("teeth"); // Thu
