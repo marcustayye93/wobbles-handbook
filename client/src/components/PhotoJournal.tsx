@@ -159,6 +159,14 @@ export default function PhotoJournal() {
         }}
       />
 
+      <button
+        type="button"
+        onClick={() => fileRef.current?.click()}
+        className="mt-3 w-full min-h-11 h-11 rounded-2xl bg-[#C66A3D] text-[#FFFDF8] font-body font-extrabold text-[14px] flex items-center justify-center gap-1.5 press-scale"
+      >
+        <Plus size={16} /> Add Photo
+      </button>
+
       {/* empty state / add card */}
       {isLoading ? (
         <div className="keepsake-card mt-3 p-6 flex items-center justify-center">
@@ -247,7 +255,7 @@ export default function PhotoJournal() {
             onClick={() => fileRef.current?.click()}
             className="mt-3 w-full h-11 rounded-2xl border-2 border-dashed border-[#C66A3D]/40 text-[#B4512E] font-body font-extrabold text-[13px] flex items-center justify-center gap-1.5 press-scale"
           >
-            <Plus size={16} /> Add a photo
+            <Plus size={16} /> Add Photo
           </button>
         </>
       )}
